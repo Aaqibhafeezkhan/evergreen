@@ -25,10 +25,10 @@ Exit criterion: detect at least five real, sourced GitHub Actions lifecycle find
 
 ### Week 3: npm and Node.js detector
 
-- [ ] Read `package.json` and supported lockfiles
-- [ ] Resolve declared and installed versions
-- [ ] Detect package and runtime lifecycle findings
-- [ ] Implement `evergreen explain <finding-id>`
+- [x] Read `package.json` and supported lockfiles
+- [x] Resolve declared and installed versions
+- [x] Detect package and runtime lifecycle findings
+- [x] Implement `evergreen explain <finding-id>`
 
 Exit criterion: scan ten public repositories with an explainable false-positive rate below 10%.
 

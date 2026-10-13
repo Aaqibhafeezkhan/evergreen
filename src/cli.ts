@@ -4,12 +4,13 @@ import process from "node:process";
 
 import { builtInDetectors } from "./detectors/index.js";
 import { scanRepository } from "./engine.js";
-import { renderJson, renderText } from "./reporters.js";
+import { renderFindingText, renderJson, renderText } from "./reporters.js";
 
 const HELP = `Evergreen — local-first deprecation intelligence
 
 Usage:
   evergreen scan [path] [--json]
+  evergreen explain <finding-id> [path] [--json]
   evergreen --help
   evergreen --version
 `;
@@ -26,15 +27,30 @@ async function main(args: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "scan") {
+  if (command !== "scan" && command !== "explain") {
     process.stderr.write(`Unknown command: ${command ?? ""}\n\n${HELP}`);
     return 2;
   }
 
   const json = args.includes("--json");
-  const pathArgument = args.slice(1).find((argument) => !argument.startsWith("-")) ?? ".";
+  const positional = args.slice(1).filter((argument) => !argument.startsWith("-"));
+  const findingId = command === "explain" ? positional[0] : undefined;
+  if (command === "explain" && !findingId) {
+    process.stderr.write(`Missing finding ID.\n\n${HELP}`);
+    return 2;
+  }
+  const pathArgument = command === "explain" ? (positional[1] ?? ".") : (positional[0] ?? ".");
   const result = await scanRepository(pathArgument, builtInDetectors);
-  process.stdout.write(`${json ? renderJson(result) : renderText(result)}\n`);
+  if (command === "explain") {
+    const finding = result.findings.find((candidate) => candidate.id === findingId);
+    if (!finding) {
+      process.stderr.write(`Finding not found: ${findingId}\n`);
+      return 1;
+    }
+    process.stdout.write(`${json ? JSON.stringify(finding, null, 2) : renderFindingText(finding)}\n`);
+  } else {
+    process.stdout.write(`${json ? renderJson(result) : renderText(result)}\n`);
+  }
   return 0;
 }
 

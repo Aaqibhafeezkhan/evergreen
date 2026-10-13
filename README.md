@@ -32,6 +32,8 @@ The initial detector reports unsupported major versions of five first-party acti
 
 Pinned commit SHAs and dynamic expressions are intentionally left unclassified until Evergreen can resolve them without guessing.
 
+The npm detector also reads `package.json`, npm/pnpm/Yarn lockfiles, Node.js runtime declarations, and a small evidence-backed registry of deprecated direct dependencies. Use `evergreen explain <finding-id>` to inspect a finding and its sources.
+
 ## Initial product shape
 
 The CLI is the product. Detectors extend it, GitHub Actions automate it, and an MCP server will expose it to agents. A hosted backend is intentionally outside the first three-month roadmap.

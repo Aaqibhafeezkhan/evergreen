@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "evergreen.nodejs-registry.v1",
+  "rules": [
+    {
+      "id": "nodejs.runtime.eol-20",
+      "ecosystem": "nodejs",
+      "major": 20,
+      "title": "Node.js 20 is end-of-life",
+      "summary": "Node.js 20 no longer receives security or bug fixes.",
+      "severity": "high",
+      "replacement": "Node.js 22 LTS or later",
+      "deadline": "2026-03-24",
+      "sources": [
+        {
+          "title": "Node.js end-of-life releases",
+          "url": "https://nodejs.org/en/about/eol"
+        }
+      ]
+    },
+    {
+      "id": "nodejs.runtime.eol-18",
+      "ecosystem": "nodejs",
+      "major": 18,
+      "title": "Node.js 18 is end-of-life",
+      "summary": "Node.js 18 no longer receives security or bug fixes.",
+      "severity": "high",
+      "replacement": "Node.js 22 LTS or later",
+      "deadline": "2025-03-27",
+      "sources": [
+        {
+          "title": "Node.js end-of-life releases",
+          "url": "https://nodejs.org/en/about/eol"
+        }
+      ]
+    },
+    {
+      "id": "nodejs.runtime.legacy",
+      "ecosystem": "nodejs",
+      "maximumMajor": 17,
+      "title": "Legacy Node.js runtime is end-of-life",
+      "summary": "This Node.js release line is end-of-life and no longer receives security or bug fixes.",
+      "severity": "critical",
+      "replacement": "Node.js 22 LTS or later",
+      "sources": [
+        {
+          "title": "Node.js end-of-life releases",
+          "url": "https://nodejs.org/en/about/eol"
+        }
+      ]
+    }
+  ]
+}

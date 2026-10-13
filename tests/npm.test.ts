@@ -1,0 +1,97 @@
+import assert from "node:assert/strict";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { after, test } from "node:test";
+
+import { NpmDetector } from "../src/detectors/npm.js";
+
+const temporaryRoots: string[] = [];
+
+after(async () => {
+  await Promise.all(temporaryRoots.map((root) => rm(root, { recursive: true, force: true })));
+});
+
+async function repository(files: Record<string, string>): Promise<string> {
+  const root = await mkdtemp(join(tmpdir(), "evergreen-npm-"));
+  temporaryRoots.push(root);
+  await Promise.all(
+    Object.entries(files).map(([path, contents]) => writeFile(join(root, path), contents)),
+  );
+  return root;
+}
+
+test("reports EOL Node.js ranges and deprecated direct packages from package-lock", async () => {
+  const root = await repository({
+    "package.json": JSON.stringify(
+      {
+        engines: { node: "^20.0.0" },
+        dependencies: { request: "^2.88.0" },
+        devDependencies: { "node-sass": "^9.0.0" },
+      },
+      null,
+      2,
+    ),
+    "package-lock.json": JSON.stringify({
+      lockfileVersion: 3,
+      packages: {
+        "node_modules/request": { version: "2.88.2" },
+        "node_modules/node-sass": { version: "9.0.0" },
+      },
+    }),
+  });
+
+  const findings = await new NpmDetector().scan({ root });
+
+  assert.equal(findings.length, 3);
+  assert.match(findings[0]?.summary ?? "", /Node\.js 20/);
+  assert.equal(findings[0]?.severity, "medium");
+  assert.match(findings[1]?.summary ?? "", /resolved: 2\.88\.2/);
+  assert.match(findings[2]?.summary ?? "", /resolved: 9\.0\.0/);
+});
+
+test("reads pinned runtimes and reports them with higher severity", async () => {
+  const root = await repository({
+    "package.json": JSON.stringify({ volta: { node: "18.20.0" } }, null, 2),
+    ".nvmrc": "20\n",
+  });
+
+  const findings = await new NpmDetector().scan({ root });
+
+  assert.equal(findings.length, 2);
+  assert.ok(findings.every((finding) => finding.severity === "high"));
+  assert.deepEqual(
+    findings.map((finding) => finding.location.path).sort(),
+    [".nvmrc", "package.json"],
+  );
+});
+
+test("discovers resolved versions in pnpm and Yarn lockfiles", async () => {
+  const root = await repository({
+    "package.json": JSON.stringify({
+      dependencies: { request: "^2.88.0", "left-pad": "^1.3.0" },
+    }),
+    "pnpm-lock.yaml": `lockfileVersion: '9.0'\npackages:\n  request@2.88.2: {}\n`,
+    "yarn.lock": `left-pad@^1.3.0:\n  version "1.3.0"\n`,
+  });
+
+  const findings = await new NpmDetector().scan({ root });
+
+  assert.equal(findings.length, 2);
+  assert.ok(findings.some((finding) => finding.summary.includes("resolved: 2.88.2")));
+  assert.ok(findings.some((finding) => finding.summary.includes("resolved: 1.3.0")));
+});
+
+test("does not report supported Node.js ranges or transitive-only deprecated packages", async () => {
+  const root = await repository({
+    "package.json": JSON.stringify({ engines: { node: ">=22" } }),
+    "package-lock.json": JSON.stringify({
+      lockfileVersion: 3,
+      packages: { "node_modules/request": { version: "2.88.2" } },
+    }),
+  });
+
+  const findings = await new NpmDetector().scan({ root });
+
+  assert.deepEqual(findings, []);
+});

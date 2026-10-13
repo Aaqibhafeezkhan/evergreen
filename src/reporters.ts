@@ -33,3 +33,19 @@ export function renderText(result: ScanResult): string {
 
   return lines.join("\n");
 }
+
+export function renderFindingText(finding: ScanResult["findings"][number]): string {
+  const line = finding.location.line ? `:${finding.location.line}` : "";
+  const lines = [
+    `${finding.severity.toUpperCase()} ${finding.title}`,
+    `ID: ${finding.id}`,
+    `Rule: ${finding.ruleId}`,
+    `Location: ${finding.location.path}${line}`,
+    "",
+    finding.summary,
+  ];
+  if (finding.replacement) lines.push("", `Replacement: ${finding.replacement}`);
+  if (finding.deadline) lines.push(`Deadline: ${finding.deadline}`);
+  lines.push("", "Sources:", ...finding.sources.map((source) => `- ${source.title}: ${source.url}`));
+  return lines.join("\n");
+}

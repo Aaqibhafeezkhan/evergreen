@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "evergreen.npm-registry.v1",
+  "rules": [
+    {
+      "id": "npm.package.request.deprecated",
+      "ecosystem": "npm",
+      "package": "request",
+      "title": "request is deprecated",
+      "summary": "The package is fully deprecated and no new changes are expected.",
+      "severity": "high",
+      "replacement": "Native fetch or a maintained HTTP client",
+      "deadline": "2020-02-11",
+      "sources": [
+        {
+          "title": "request package deprecation notice",
+          "url": "https://www.npmjs.com/package/request"
+        }
+      ]
+    },
+    {
+      "id": "npm.package.node-sass.eol",
+      "ecosystem": "npm",
+      "package": "node-sass",
+      "title": "Node Sass is end-of-life",
+      "summary": "Node Sass is no longer maintained and its repository has been archived.",
+      "severity": "high",
+      "replacement": "sass",
+      "deadline": "2024-07-24",
+      "sources": [
+        {
+          "title": "Node Sass is end-of-life",
+          "url": "https://sass-lang.com/blog/node-sass-is-end-of-life/"
+        }
+      ]
+    },
+    {
+      "id": "npm.package.left-pad.deprecated",
+      "ecosystem": "npm",
+      "package": "left-pad",
+      "title": "left-pad is deprecated",
+      "summary": "The package author recommends the built-in String.prototype.padStart method.",
+      "severity": "medium",
+      "replacement": "String.prototype.padStart()",
+      "sources": [
+        {
+          "title": "left-pad package deprecation notice",
+          "url": "https://www.npmjs.com/package/left-pad"
+        }
+      ]
+    }
+  ]
+}

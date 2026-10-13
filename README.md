@@ -2,7 +2,7 @@
 
 Evergreen is a local-first deprecation intelligence engine for software repositories. It connects upcoming ecosystem changes to the exact files they affect and produces evidence-backed migration context for humans and AI coding agents.
 
-> Early development: the current release establishes the product contracts and CLI foundation.
+> Early development: the current release includes the first GitHub Actions lifecycle detector.
 
 ## Product principles
 
@@ -21,6 +21,16 @@ npm install
 npm run dev -- scan .
 npm test
 ```
+
+The initial detector reports unsupported major versions of five first-party actions with exact file and line locations:
+
+- `actions/checkout`
+- `actions/setup-node`
+- `actions/cache`
+- `actions/upload-artifact`
+- `actions/download-artifact`
+
+Pinned commit SHAs and dynamic expressions are intentionally left unclassified until Evergreen can resolve them without guessing.
 
 ## Initial product shape
 

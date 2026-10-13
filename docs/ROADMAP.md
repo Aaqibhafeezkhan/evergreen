@@ -10,16 +10,16 @@ This is the working roadmap. Scope changes require an explicit decision recorded
 - [x] Define rule and finding contracts
 - [x] Create the CLI entry point
 - [x] Add deterministic output and tests
-- [ ] Validate the contracts with three real deprecation examples
+- [x] Validate the contracts with five real deprecation examples
 
 Exit criterion: `evergreen scan` runs locally and produces valid text and JSON reports.
 
 ### Week 2: GitHub Actions detector
 
-- [ ] Discover workflow files
-- [ ] Parse action references with file and line locations
-- [ ] Match references against the bundled registry
-- [ ] Add fixtures for true and false positives
+- [x] Discover workflow files
+- [x] Parse action references with file and line locations
+- [x] Match references against the bundled registry
+- [x] Add fixtures for true and false positives
 
 Exit criterion: detect at least five real, sourced GitHub Actions lifecycle findings.
 

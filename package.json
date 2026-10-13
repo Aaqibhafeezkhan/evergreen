@@ -7,7 +7,7 @@
     "evergreen": "dist/src/cli.js"
   },
   "files": [
-    "dist",
+    "dist/src",
     "registry"
   ],
   "scripts": {

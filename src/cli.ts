@@ -2,6 +2,7 @@
 
 import process from "node:process";
 
+import { builtInDetectors } from "./detectors/index.js";
 import { scanRepository } from "./engine.js";
 import { renderJson, renderText } from "./reporters.js";
 
@@ -32,7 +33,7 @@ async function main(args: string[]): Promise<number> {
 
   const json = args.includes("--json");
   const pathArgument = args.slice(1).find((argument) => !argument.startsWith("-")) ?? ".";
-  const result = await scanRepository(pathArgument);
+  const result = await scanRepository(pathArgument, builtInDetectors);
   process.stdout.write(`${json ? renderJson(result) : renderText(result)}\n`);
   return 0;
 }

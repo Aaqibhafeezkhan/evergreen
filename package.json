@@ -1,25 +1,43 @@
 {
-  "name": "evergreen",
-  "version": "0.0.1",
+  "name": "evergreen-deprecation",
+  "version": "0.1.0-alpha.0",
   "description": "Local-first deprecation intelligence for software repositories.",
+  "keywords": [
+    "deprecation",
+    "dependencies",
+    "github-actions",
+    "nodejs",
+    "ai-agents"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arminazimi/evergreen.git"
+  },
+  "homepage": "https://github.com/arminazimi/evergreen#readme",
+  "bugs": "https://github.com/arminazimi/evergreen/issues",
   "type": "module",
   "bin": {
     "evergreen": "dist/src/cli.js"
   },
   "files": [
     "dist/src",
-    "registry"
+    "registry",
+    "schemas"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "npm run build --silent && node dist/src/cli.js",
     "test": "npm run build --silent && node --test dist/tests/**/*.test.js",
-    "check": "npm run build && npm test"
+    "check": "npm run build && npm test",
+    "prepack": "npm run check"
   },
   "engines": {
     "node": ">=22"
   },
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@types/semver": "^7.8.0",

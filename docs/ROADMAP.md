@@ -34,10 +34,10 @@ Exit criterion: scan ten public repositories with an explainable false-positive 
 
 ### Week 4: first usable release
 
-- [ ] Implement baselines
-- [ ] Stabilize text and JSON output
+- [x] Implement baselines
+- [x] Stabilize text and JSON output
 - [ ] Publish an alpha npm package
-- [ ] Write end-to-end documentation
+- [x] Write end-to-end documentation
 
 Exit criterion: a new user can install and obtain a useful finding in under five minutes.
 

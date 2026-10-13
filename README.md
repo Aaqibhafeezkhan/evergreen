@@ -12,14 +12,34 @@ Evergreen is a local-first deprecation intelligence engine for software reposito
 - Agent-ready: every human-readable report has a machine-readable equivalent.
 - Extensible: ecosystems are added through detectors rather than core rewrites.
 
-## Development
+## Quickstart
 
 Requirements: Node.js 22 or newer.
 
 ```bash
+npx evergreen-deprecation scan .
+```
+
+Create a baseline for accepted existing findings, then report only new lifecycle regressions:
+
+```bash
+npx evergreen-deprecation baseline .
+npx evergreen-deprecation scan . --baseline .evergreen-baseline.json
+```
+
+Inspect the evidence and migration direction for one result:
+
+```bash
+npx evergreen-deprecation explain '<finding-id>' .
+```
+
+Evergreen runs locally and does not upload repository contents.
+
+## Development
+
+```bash
 npm install
-npm run dev -- scan .
-npm test
+npm run check
 ```
 
 The initial detector reports unsupported major versions of five first-party actions with exact file and line locations:

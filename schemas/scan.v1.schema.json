@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/scan.v1.schema.json",
+  "title": "Evergreen scan result v1",
+  "type": "object",
+  "required": ["schemaVersion", "root", "scannedAt", "findings", "diagnostics"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.scan.v1" },
+    "root": { "type": "string" },
+    "scannedAt": { "type": "string", "format": "date-time" },
+    "diagnostics": { "type": "array", "items": { "type": "string" } },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "ruleId", "detector", "title", "summary", "severity", "location", "sources"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "ruleId": { "type": "string" },
+          "detector": { "type": "string" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "severity": { "enum": ["info", "low", "medium", "high", "critical"] },
+          "location": {
+            "type": "object",
+            "required": ["path"],
+            "additionalProperties": false,
+            "properties": {
+              "path": { "type": "string" },
+              "line": { "type": "integer", "minimum": 1 },
+              "column": { "type": "integer", "minimum": 1 }
+            }
+          },
+          "replacement": { "type": "string" },
+          "deadline": { "type": "string", "format": "date" },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["title", "url"],
+              "additionalProperties": false,
+              "properties": {
+                "title": { "type": "string" },
+                "url": { "type": "string", "format": "uri" },
+                "accessedAt": { "type": "string", "format": "date" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/baseline.v1.schema.json",
+  "title": "Evergreen baseline v1",
+  "type": "object",
+  "required": ["schemaVersion", "createdAt", "findings"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.baseline.v1" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fingerprint", "ruleId", "path"],
+        "additionalProperties": false,
+        "properties": {
+          "fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "ruleId": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      }
+    }
+  }
+}

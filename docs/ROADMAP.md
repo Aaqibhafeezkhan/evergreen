@@ -1,0 +1,95 @@
+# Three-month roadmap
+
+This is the working roadmap. Scope changes require an explicit decision recorded in `docs/decisions/`.
+
+## Month 1 — Prove the core
+
+### Week 1: contracts and CLI foundation
+
+- [x] Define product principles and non-goals
+- [x] Define rule and finding contracts
+- [x] Create the CLI entry point
+- [x] Add deterministic output and tests
+- [ ] Validate the contracts with three real deprecation examples
+
+Exit criterion: `evergreen scan` runs locally and produces valid text and JSON reports.
+
+### Week 2: GitHub Actions detector
+
+- [ ] Discover workflow files
+- [ ] Parse action references with file and line locations
+- [ ] Match references against the bundled registry
+- [ ] Add fixtures for true and false positives
+
+Exit criterion: detect at least five real, sourced GitHub Actions lifecycle findings.
+
+### Week 3: npm and Node.js detector
+
+- [ ] Read `package.json` and supported lockfiles
+- [ ] Resolve declared and installed versions
+- [ ] Detect package and runtime lifecycle findings
+- [ ] Implement `evergreen explain <finding-id>`
+
+Exit criterion: scan ten public repositories with an explainable false-positive rate below 10%.
+
+### Week 4: first usable release
+
+- [ ] Implement baselines
+- [ ] Stabilize text and JSON output
+- [ ] Publish an alpha npm package
+- [ ] Write end-to-end documentation
+
+Exit criterion: a new user can install and obtain a useful finding in under five minutes.
+
+## Month 2 — Become extensible
+
+### Week 5: detector SDK
+
+- [ ] Publish detector interfaces
+- [ ] Isolate built-in detectors from the core
+- [ ] Create a detector authoring example
+
+### Week 6: Python detector
+
+- [ ] Support `pyproject.toml`, `requirements.txt`, and common lockfiles
+- [ ] Add Python runtime and package lifecycle rules
+
+### Week 7: source usage analysis
+
+- [ ] Locate imports, calls, and configuration keys
+- [ ] Estimate migration impact from affected usages
+- [ ] Keep analysis narrow and language-aware
+
+### Week 8: GitHub Action
+
+- [ ] Add pull-request annotations
+- [ ] Report only new findings against a baseline
+- [ ] Support severity gates
+
+Exit criterion for Month 2: external contributors can add a detector without editing the core.
+
+## Month 3 — Become agent-native
+
+### Week 9: migration packets
+
+- [ ] Implement `evergreen context <finding-id>`
+- [ ] Include affected files, constraints, steps, sources, and verification commands
+
+### Week 10: local MCP server
+
+- [ ] Expose scan, explain, context, and verify tools
+- [ ] Keep all analysis local
+
+### Week 11: agent skills
+
+- [ ] Provide thin, vendor-neutral usage instructions
+- [ ] Test the workflow with multiple coding agents
+
+### Week 12: public launch
+
+- [ ] Publish v0.1
+- [ ] Test 20 representative repositories
+- [ ] Publish accuracy and performance results
+- [ ] Prepare contributor issues and a short demo
+
+Exit criterion for Month 3: a human or agent can discover, understand, migrate, and verify one supported deprecation without a hosted Evergreen service.

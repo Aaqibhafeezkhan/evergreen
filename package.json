@@ -1,0 +1,27 @@
+{
+  "name": "evergreen",
+  "version": "0.0.1",
+  "description": "Local-first deprecation intelligence for software repositories.",
+  "type": "module",
+  "bin": {
+    "evergreen": "dist/src/cli.js"
+  },
+  "files": [
+    "dist",
+    "registry"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "npm run build --silent && node dist/src/cli.js",
+    "test": "npm run build --silent && node --test dist/tests/**/*.test.js",
+    "check": "npm run build && npm test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}

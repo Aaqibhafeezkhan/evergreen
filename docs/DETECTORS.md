@@ -61,6 +61,34 @@ const registry = validateRegistry(JSON.parse(contents), {
 
 Validation rejects a missing or unexpected schema version, a non-array `rules` value, and the first invalid rule with its array index. `isDeprecationRule` validates the fields shared by every Evergreen lifecycle rule.
 
+## Source usage contracts
+
+Detectors can enrich findings with concrete repository usages through the public `analyzeSourceUsage` helper. Pass all matched rules in one batch so the repository is traversed once:
+
+```ts
+import {
+  analyzeSourceUsage,
+  type SourceUsageContract,
+} from "evergreen-deprecation/sdk";
+
+const contracts: SourceUsageContract[] = [{
+  id: "legacy-client",
+  matchers: [
+    { kind: "import", language: "typescript", module: "legacy-client" },
+    {
+      kind: "call",
+      language: "typescript",
+      module: "legacy-client",
+      targets: ["default", "get"],
+    },
+  ],
+}];
+
+const analyses = await analyzeSourceUsage(root, contracts);
+```
+
+Import and call matchers resolve common aliases in JavaScript, TypeScript, and Python. Configuration-key matchers support Python settings plus JSON, YAML, TOML, and INI-style files, and can optionally require a value fragment. Results include exact locations, excerpts, and a deterministic `none`, `low`, `medium`, or `high` migration-impact estimate. Keep matchers narrow: a lifecycle finding may safely have zero source usages, but an ambiguous match should not be reported as evidence.
+
 ## Compatibility policy
 
 `evergreen.detector.v1` remains compatible throughout the `0.1.x` line. Additive fields will be optional. A future breaking interface will use a new API version so an old adapter fails clearly instead of producing unreliable findings.

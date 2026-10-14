@@ -14,6 +14,65 @@ export interface SourceLocation {
   column?: number;
 }
 
+export const sourceLanguageValues = [
+  "javascript",
+  "typescript",
+  "python",
+  "json",
+  "yaml",
+  "toml",
+  "ini",
+] as const;
+
+export type SourceLanguage = (typeof sourceLanguageValues)[number];
+
+export interface ImportUsageMatcher {
+  kind: "import";
+  language: "javascript" | "typescript" | "python";
+  module: string;
+}
+
+export interface CallUsageMatcher {
+  kind: "call";
+  language: "javascript" | "typescript" | "python";
+  module: string;
+  targets: string[];
+}
+
+export interface ConfigUsageMatcher {
+  kind: "config-key";
+  language: SourceLanguage;
+  key: string;
+  valueIncludes?: string;
+}
+
+export type UsageMatcher = ImportUsageMatcher | CallUsageMatcher | ConfigUsageMatcher;
+
+export interface SourceUsageContract {
+  id: string;
+  matchers: UsageMatcher[];
+}
+
+export interface SourceUsage {
+  kind: "import" | "call" | "config-key";
+  language: SourceLanguage;
+  symbol: string;
+  location: SourceLocation;
+  excerpt: string;
+}
+
+export interface MigrationImpact {
+  usageCount: number;
+  affectedFiles: number;
+  level: "none" | "low" | "medium" | "high";
+}
+
+export interface SourceUsageAnalysis {
+  contractId: string;
+  usages: SourceUsage[];
+  impact: MigrationImpact;
+}
+
 export interface DeprecationRule {
   id: string;
   ecosystem: string;
@@ -36,6 +95,8 @@ export interface Finding {
   replacement?: string;
   deadline?: string;
   sources: EvidenceSource[];
+  usages?: SourceUsage[];
+  impact?: MigrationImpact;
 }
 
 export interface ScanResult {

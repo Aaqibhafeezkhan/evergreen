@@ -43,6 +43,7 @@
     "dev": "npm run build --silent && node dist/src/cli.js",
     "test": "npm run build --silent && node --test dist/tests/**/*.test.js",
     "check": "npm run build && npm test",
+    "benchmark:usage": "npm run build --silent && node dist/benchmarks/source-usage.js",
     "prepack": "npm run check"
   },
   "engines": {

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { after, test } from "node:test";
 
 import { NpmDetector } from "../src/detectors/npm.js";
@@ -16,7 +16,11 @@ async function repository(files: Record<string, string>): Promise<string> {
   const root = await mkdtemp(join(tmpdir(), "evergreen-npm-"));
   temporaryRoots.push(root);
   await Promise.all(
-    Object.entries(files).map(([path, contents]) => writeFile(join(root, path), contents)),
+    Object.entries(files).map(async ([path, contents]) => {
+      const absolutePath = join(root, path);
+      await mkdir(dirname(absolutePath), { recursive: true });
+      await writeFile(absolutePath, contents);
+    }),
   );
   return root;
 }
@@ -39,6 +43,8 @@ test("reports EOL Node.js ranges and deprecated direct packages from package-loc
         "node_modules/node-sass": { version: "9.0.0" },
       },
     }),
+    "src/client.ts": `import request from "request";\nrequest.get("https://example.com");\n`,
+    "src/styles.js": `const sass = require("node-sass");\nsass.renderSync({ file: "app.scss" });\n`,
   });
 
   const findings = await new NpmDetector().scan({ root });
@@ -48,6 +54,11 @@ test("reports EOL Node.js ranges and deprecated direct packages from package-loc
   assert.equal(findings[0]?.severity, "medium");
   assert.match(findings[1]?.summary ?? "", /resolved: 2\.88\.2/);
   assert.match(findings[2]?.summary ?? "", /resolved: 9\.0\.0/);
+  const requestFinding = findings.find((finding) => finding.ruleId.includes("request"));
+  const sassFinding = findings.find((finding) => finding.ruleId.includes("node-sass"));
+  assert.equal(requestFinding?.impact?.usageCount, 2);
+  assert.equal(sassFinding?.impact?.usageCount, 2);
+  assert.equal(requestFinding?.usages?.[1]?.location.path, "src/client.ts");
 });
 
 test("reads pinned runtimes and reports them with higher severity", async () => {

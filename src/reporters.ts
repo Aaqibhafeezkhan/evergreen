@@ -22,6 +22,15 @@ export function renderText(result: ScanResult): string {
     if (finding.deadline) {
       lines.push(`Deadline: ${finding.deadline}`);
     }
+    if (finding.impact) {
+      lines.push(
+        `Impact: ${finding.impact.level} (${finding.impact.usageCount} usages across ${finding.impact.affectedFiles} files)`,
+      );
+    }
+    for (const usage of finding.usages ?? []) {
+      const usageLine = usage.location.line ? `:${usage.location.line}` : "";
+      lines.push(`Usage: ${usage.location.path}${usageLine} — ${usage.kind} ${usage.symbol}`);
+    }
     for (const source of finding.sources) {
       lines.push(`Source: ${source.url}`);
     }
@@ -46,6 +55,21 @@ export function renderFindingText(finding: ScanResult["findings"][number]): stri
   ];
   if (finding.replacement) lines.push("", `Replacement: ${finding.replacement}`);
   if (finding.deadline) lines.push(`Deadline: ${finding.deadline}`);
+  if (finding.impact) {
+    lines.push(
+      `Impact: ${finding.impact.level} (${finding.impact.usageCount} usages across ${finding.impact.affectedFiles} files)`,
+    );
+  }
+  if (finding.usages?.length) {
+    lines.push(
+      "",
+      "Affected usages:",
+      ...finding.usages.map((usage) => {
+        const usageLine = usage.location.line ? `:${usage.location.line}` : "";
+        return `- ${usage.location.path}${usageLine} — ${usage.kind} ${usage.symbol}`;
+      }),
+    );
+  }
   lines.push("", "Sources:", ...finding.sources.map((source) => `- ${source.title}: ${source.url}`));
   return lines.join("\n");
 }

@@ -47,6 +47,8 @@ version = "2.6.1"
 name = "django-nose"
 version = "1.4.7"
 `,
+    "app.py": `import nose\nnose.run()\nfrom Crypto.Cipher import AES\n`,
+    "settings.py": `TEST_RUNNER = "django_nose.NoseTestSuiteRunner"\n`,
   });
 
   const findings = await new PythonDetector().scan({ root });
@@ -56,6 +58,18 @@ version = "1.4.7"
   assert.ok(findings.some((finding) => finding.summary.includes("resolved: 1.3.7")));
   assert.ok(findings.some((finding) => finding.summary.includes("resolved: 2.6.1")));
   assert.ok(findings.some((finding) => finding.summary.includes("resolved: 1.4.7")));
+  assert.equal(
+    findings.find((finding) => finding.ruleId.includes("package.nose"))?.impact?.usageCount,
+    2,
+  );
+  assert.equal(
+    findings.find((finding) => finding.ruleId.includes("pycrypto"))?.impact?.usageCount,
+    1,
+  );
+  assert.equal(
+    findings.find((finding) => finding.ruleId.includes("django-nose"))?.impact?.usageCount,
+    1,
+  );
 });
 
 test("reads requirements files, pinned runtimes, and Pipfile.lock", async () => {

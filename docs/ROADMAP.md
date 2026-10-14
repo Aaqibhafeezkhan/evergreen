@@ -56,9 +56,9 @@ Exit criterion: a new user can install and obtain a useful finding in under five
 
 ### Week 7: source usage analysis
 
-- [ ] Locate imports, calls, and configuration keys
-- [ ] Estimate migration impact from affected usages
-- [ ] Keep analysis narrow and language-aware
+- [x] Locate imports, calls, and configuration keys
+- [x] Estimate migration impact from affected usages
+- [x] Keep analysis narrow and language-aware
 
 ### Week 8: GitHub Action
 

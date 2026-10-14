@@ -3,10 +3,12 @@ import { relative, resolve } from "node:path";
 
 import { parse as parseToml } from "smol-toml";
 
-import type { DeprecationRule, Severity } from "../domain.js";
+import type { DeprecationRule, Severity, UsageMatcher } from "../domain.js";
+import { analyzeSourceUsage } from "../source-usage.js";
 import {
   DETECTOR_API_VERSION,
   isDeprecationRule,
+  isUsageMatcher,
   validateRegistry,
 } from "../sdk.js";
 import type { Detector, DetectorContext, DetectorFinding } from "../sdk.js";
@@ -19,6 +21,7 @@ interface PythonRuntimeRule extends DeprecationRule {
 interface PythonPackageRule extends DeprecationRule {
   kind: "package";
   package: string;
+  usage?: UsageMatcher[];
 }
 
 type PythonRule = PythonRuntimeRule | PythonPackageRule;
@@ -309,7 +312,9 @@ function isPythonRule(value: unknown): value is PythonRule {
   const candidate = value as Partial<PythonRule>;
   return (
     (candidate.kind === "runtime" && typeof candidate.maximumVersion === "string") ||
-    (candidate.kind === "package" && typeof candidate.package === "string")
+    (candidate.kind === "package" &&
+      typeof candidate.package === "string" &&
+      (candidate.usage === undefined || candidate.usage.every(isUsageMatcher)))
   );
 }
 
@@ -377,11 +382,20 @@ export class PythonDetector implements Detector {
       }
     }
 
-    for (const rule of rules) {
-      if (rule.kind !== "package") continue;
-      const dependency = dependencies.get(normalizePackageName(rule.package));
-      if (!dependency) continue;
+    const matchedPackageRules = rules.filter(
+      (rule): rule is PythonPackageRule =>
+        rule.kind === "package" && dependencies.has(normalizePackageName(rule.package)),
+    );
+    const usageAnalyses = await analyzeSourceUsage(
+      context.root,
+      matchedPackageRules.map((rule) => ({ id: rule.id, matchers: rule.usage ?? [] })),
+    );
+    const usageByRule = new Map(usageAnalyses.map((analysis) => [analysis.contractId, analysis]));
+
+    for (const rule of matchedPackageRules) {
+      const dependency = dependencies.get(normalizePackageName(rule.package))!;
       const resolved = [...(resolvedVersions.get(dependency.name) ?? [])].sort();
+      const usage = usageByRule.get(rule.id)!;
       findings.push({
         id: `${rule.id}:${relative(context.root, dependency.path)}:${dependency.line}`,
         ruleId: rule.id,
@@ -395,6 +409,8 @@ export class PythonDetector implements Detector {
         ...(rule.replacement ? { replacement: rule.replacement } : {}),
         ...(rule.deadline ? { deadline: rule.deadline } : {}),
         sources: rule.sources,
+        usages: usage.usages,
+        impact: usage.impact,
       });
     }
 

@@ -16,8 +16,18 @@ export interface Baseline {
 }
 
 export function findingFingerprint(finding: Finding): string {
+  const usages = finding.usages
+    ?.map((usage) => [usage.kind, usage.location.path, usage.symbol])
+    .sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
   return createHash("sha256")
-    .update(JSON.stringify([finding.ruleId, finding.location.path, finding.summary]))
+    .update(
+      JSON.stringify([
+        finding.ruleId,
+        finding.location.path,
+        finding.summary,
+        ...(usages && usages.length > 0 ? [usages] : []),
+      ]),
+    )
     .digest("hex");
 }
 

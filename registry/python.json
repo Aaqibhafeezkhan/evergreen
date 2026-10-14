@@ -31,6 +31,11 @@
       "summary": "The project warns that nose has been in maintenance mode for years and recommends alternatives for new projects.",
       "severity": "high",
       "replacement": "pytest, nose2, or unittest",
+      "usage": [
+        { "kind": "import", "language": "python", "module": "nose" },
+        { "kind": "call", "language": "python", "module": "nose", "targets": ["run", "main"] },
+        { "kind": "config-key", "language": "ini", "key": "test_suite", "valueIncludes": "nose.collector" }
+      ],
       "sources": [
         {
           "title": "nose note to users",
@@ -47,6 +52,11 @@
       "summary": "The package states that it is in maintenance mode and recommends pytest or Django unittest for new projects.",
       "severity": "high",
       "replacement": "pytest-django or Django unittest",
+      "usage": [
+        { "kind": "import", "language": "python", "module": "django_nose" },
+        { "kind": "call", "language": "python", "module": "django_nose", "targets": ["NoseTestSuiteRunner"] },
+        { "kind": "config-key", "language": "python", "key": "TEST_RUNNER", "valueIncludes": "django_nose" }
+      ],
       "sources": [
         {
           "title": "django-nose project notice",
@@ -64,6 +74,9 @@
       "severity": "critical",
       "replacement": "pycryptodome or cryptography",
       "deadline": "2022-01-27",
+      "usage": [
+        { "kind": "import", "language": "python", "module": "Crypto" }
+      ],
       "sources": [
         {
           "title": "Archived PyCrypto repository warning",

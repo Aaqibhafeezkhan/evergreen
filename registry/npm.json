@@ -10,6 +10,12 @@
       "severity": "high",
       "replacement": "Native fetch or a maintained HTTP client",
       "deadline": "2020-02-11",
+      "usage": [
+        { "kind": "import", "language": "javascript", "module": "request" },
+        { "kind": "call", "language": "javascript", "module": "request", "targets": ["default", "get", "post", "put", "delete", "head", "patch"] },
+        { "kind": "import", "language": "typescript", "module": "request" },
+        { "kind": "call", "language": "typescript", "module": "request", "targets": ["default", "get", "post", "put", "delete", "head", "patch"] }
+      ],
       "sources": [
         {
           "title": "request package deprecation notice",
@@ -26,6 +32,12 @@
       "severity": "high",
       "replacement": "sass",
       "deadline": "2024-07-24",
+      "usage": [
+        { "kind": "import", "language": "javascript", "module": "node-sass" },
+        { "kind": "call", "language": "javascript", "module": "node-sass", "targets": ["render", "renderSync"] },
+        { "kind": "import", "language": "typescript", "module": "node-sass" },
+        { "kind": "call", "language": "typescript", "module": "node-sass", "targets": ["render", "renderSync"] }
+      ],
       "sources": [
         {
           "title": "Node Sass is end-of-life",
@@ -41,6 +53,12 @@
       "summary": "The package author recommends the built-in String.prototype.padStart method.",
       "severity": "medium",
       "replacement": "String.prototype.padStart()",
+      "usage": [
+        { "kind": "import", "language": "javascript", "module": "left-pad" },
+        { "kind": "call", "language": "javascript", "module": "left-pad", "targets": ["default"] },
+        { "kind": "import", "language": "typescript", "module": "left-pad" },
+        { "kind": "call", "language": "typescript", "module": "left-pad", "targets": ["default"] }
+      ],
       "sources": [
         {
           "title": "left-pad package deprecation notice",

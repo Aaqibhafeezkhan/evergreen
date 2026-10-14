@@ -48,6 +48,40 @@
                 "accessedAt": { "type": "string", "format": "date" }
               }
             }
+          },
+          "usages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["kind", "language", "symbol", "location", "excerpt"],
+              "additionalProperties": false,
+              "properties": {
+                "kind": { "enum": ["import", "call", "config-key"] },
+                "language": { "enum": ["javascript", "typescript", "python", "json", "yaml", "toml", "ini"] },
+                "symbol": { "type": "string" },
+                "excerpt": { "type": "string" },
+                "location": {
+                  "type": "object",
+                  "required": ["path"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": { "type": "string" },
+                    "line": { "type": "integer", "minimum": 1 },
+                    "column": { "type": "integer", "minimum": 1 }
+                  }
+                }
+              }
+            }
+          },
+          "impact": {
+            "type": "object",
+            "required": ["usageCount", "affectedFiles", "level"],
+            "additionalProperties": false,
+            "properties": {
+              "usageCount": { "type": "integer", "minimum": 0 },
+              "affectedFiles": { "type": "integer", "minimum": 0 },
+              "level": { "enum": ["none", "low", "medium", "high"] }
+            }
           }
         }
       }

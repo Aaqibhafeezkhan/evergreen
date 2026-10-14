@@ -56,6 +56,18 @@ The npm detector also reads `package.json`, npm/pnpm/Yarn lockfiles, Node.js run
 
 The Python detector reads PEP 621 and Poetry metadata from `pyproject.toml`, `requirements*.txt`, common runtime-version files, and uv/Poetry/PDM/Pipenv lockfiles. It reports unsupported Python declarations and lifecycle risks in direct dependencies while ignoring transitive-only lockfile entries.
 
+## Source usage analysis
+
+Package lifecycle findings now include the concrete imports, calls, and configuration keys that make a migration necessary. Matching is language-aware and alias-aware for JavaScript, TypeScript, and Python, with configuration-key support for JSON, YAML, TOML, INI, and Python settings. Each match includes its exact file, line, column, and source excerpt, plus a migration-impact estimate based on affected usages and files.
+
+The analyzer scans the repository once for a batch of detector contracts and ignores generated, dependency, build, and environment directories. Run the repeatable accuracy and scan-time benchmark with:
+
+```bash
+npm run benchmark:usage
+```
+
+See [the benchmark notes](docs/BENCHMARKS.md) for the corpus and interpretation.
+
 ## Detector SDK
 
 External detectors can use the versioned interface exported by `evergreen-deprecation/sdk`. The scan engine composes compatible detectors without importing any built-in implementation.

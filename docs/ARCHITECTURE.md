@@ -20,6 +20,8 @@ The detector SDK is the seam between the scan engine and detector adapters. Its 
 
 The Python detector is the first new ecosystem implemented entirely through this seam. Its manifest and lockfile parsing remains inside the detector adapter; the engine requires no Python-specific behavior.
 
+Source usage analysis is a shared batch module below the detector seam. A detector supplies declarative, language-specific match contracts; the module owns repository traversal, import binding resolution, call matching, configuration matching, deduplication, and impact calculation. This keeps language heuristics out of detector adapters and lets all matched package rules share one repository pass. Findings remain valid when no usages are found, because package metadata establishes the lifecycle risk independently of source usage.
+
 ## Trust boundaries
 
 - Repository contents are untrusted input.

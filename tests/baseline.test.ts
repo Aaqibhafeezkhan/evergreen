@@ -32,6 +32,40 @@ test("fingerprints ignore line movement but include material finding content", (
     findingFingerprint(finding),
     findingFingerprint({ ...finding, summary: "The dependency version changed" }),
   );
+  assert.notEqual(
+    findingFingerprint(finding),
+    findingFingerprint({
+      ...finding,
+      usages: [
+        {
+          kind: "call",
+          language: "typescript",
+          symbol: "example.run",
+          location: { path: "src/index.ts", line: 2, column: 1 },
+          excerpt: "example.run();",
+        },
+      ],
+    }),
+  );
+  const usageFinding = {
+    ...finding,
+    usages: [
+      {
+        kind: "call" as const,
+        language: "typescript" as const,
+        symbol: "example.run",
+        location: { path: "src/index.ts", line: 2, column: 1 },
+        excerpt: "example.run();",
+      },
+    ],
+  };
+  assert.equal(
+    findingFingerprint(usageFinding),
+    findingFingerprint({
+      ...usageFinding,
+      usages: [{ ...usageFinding.usages[0]!, location: { path: "src/index.ts", line: 20 } }],
+    }),
+  );
 });
 
 test("a baseline suppresses matching findings and reports the count", () => {

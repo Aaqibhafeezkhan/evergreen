@@ -1,5 +1,5 @@
-import { severityValues } from "./domain.js";
-import type { DeprecationRule, Finding } from "./domain.js";
+import { severityValues, sourceLanguageValues } from "./domain.js";
+import type { DeprecationRule, Finding, UsageMatcher } from "./domain.js";
 
 export const DETECTOR_API_VERSION = "evergreen.detector.v1" as const;
 
@@ -74,6 +74,32 @@ export function isDeprecationRule(value: unknown): value is DeprecationRule {
   );
 }
 
+export function isUsageMatcher(value: unknown): value is UsageMatcher {
+  if (!isRecord(value) || !sourceLanguageValues.includes(value.language as never)) return false;
+  if (value.kind === "import") {
+    return (
+      ["javascript", "typescript", "python"].includes(value.language as string) &&
+      isNonEmptyString(value.module)
+    );
+  }
+  if (value.kind === "call") {
+    return (
+      ["javascript", "typescript", "python"].includes(value.language as string) &&
+      isNonEmptyString(value.module) &&
+      Array.isArray(value.targets) &&
+      value.targets.length > 0 &&
+      value.targets.every(isNonEmptyString)
+    );
+  }
+  if (value.kind === "config-key") {
+    return (
+      isNonEmptyString(value.key) &&
+      (value.valueIncludes === undefined || isNonEmptyString(value.valueIncludes))
+    );
+  }
+  return false;
+}
+
 export function validateRegistry<Rule>(
   value: unknown,
   definition: RegistryDefinition<Rule>,
@@ -123,11 +149,19 @@ export function defineDetector<const Adapter extends Detector>(adapter: Adapter)
   return adapter;
 }
 
+export { analyzeSourceUsage } from "./source-usage.js";
+
 export type {
   DeprecationRule,
   EvidenceSource,
   Finding,
+  MigrationImpact,
   ScanResult,
   Severity,
+  SourceLanguage,
   SourceLocation,
+  SourceUsage,
+  SourceUsageAnalysis,
+  SourceUsageContract,
+  UsageMatcher,
 } from "./domain.js";

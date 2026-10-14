@@ -29,6 +29,16 @@ test("scan result is deterministic apart from its timestamp", async () => {
           severity: "high",
           location: { path: "a.txt", line: 4 },
           sources: [{ title: "Official source", url: "https://example.com/one" }],
+          usages: [
+            {
+              kind: "call",
+              language: "typescript",
+              symbol: "example.run",
+              location: { path: "src/example.ts", line: 3, column: 1 },
+              excerpt: "example.run();",
+            },
+          ],
+          impact: { usageCount: 1, affectedFiles: 1, level: "low" },
         },
       ];
     },
@@ -41,6 +51,8 @@ test("scan result is deterministic apart from its timestamp", async () => {
     ["fixture:one", "fixture:two"],
   );
   assert.match(renderText(result), /HIGH First/);
+  assert.match(renderText(result), /Impact: low \(1 usages across 1 files\)/);
+  assert.match(renderText(result), /src\/example\.ts:3/);
   assert.equal(JSON.parse(renderJson(result)).schemaVersion, "evergreen.scan.v1");
 });
 

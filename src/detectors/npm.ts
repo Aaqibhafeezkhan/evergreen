@@ -7,10 +7,13 @@ import { parse as parseYaml } from "yaml";
 import type {
   DeprecationRule,
   Severity,
+  UsageMatcher,
 } from "../domain.js";
+import { analyzeSourceUsage } from "../source-usage.js";
 import {
   DETECTOR_API_VERSION,
   isDeprecationRule,
+  isUsageMatcher,
   validateRegistry,
 } from "../sdk.js";
 import type {
@@ -22,6 +25,7 @@ import type {
 
 interface PackageRule extends DeprecationRule {
   package: string;
+  usage?: UsageMatcher[];
 }
 
 interface NodeRule extends DeprecationRule {
@@ -259,7 +263,9 @@ export class NpmDetector implements Detector {
           schemaVersion: "evergreen.npm-registry.v1",
           isRule: (value): value is PackageRule =>
             isDeprecationRule(value) &&
-            typeof (value as Partial<PackageRule>).package === "string",
+            typeof (value as Partial<PackageRule>).package === "string" &&
+            ((value as Partial<PackageRule>).usage === undefined ||
+              ((value as Partial<PackageRule>).usage?.every(isUsageMatcher) ?? false)),
         },
       ),
       loadRegistry(
@@ -308,12 +314,19 @@ export class NpmDetector implements Detector {
       }
     }
 
-    for (const rule of packageRules) {
-      const dependency = declared.get(rule.package);
-      if (!dependency) continue;
+    const matchedPackageRules = packageRules.filter((rule) => declared.has(rule.package));
+    const usageAnalyses = await analyzeSourceUsage(
+      context.root,
+      matchedPackageRules.map((rule) => ({ id: rule.id, matchers: rule.usage ?? [] })),
+    );
+    const usageByRule = new Map(usageAnalyses.map((analysis) => [analysis.contractId, analysis]));
+
+    for (const rule of matchedPackageRules) {
+      const dependency = declared.get(rule.package)!;
       const resolved = [...(resolvedVersions.get(rule.package) ?? [])].sort(semver.compare);
       const resolvedText = resolved.length > 0 ? resolved.join(", ") : "not found in a supported lockfile";
       const line = propertyLine(manifestContents, rule.package);
+      const usage = usageByRule.get(rule.id)!;
       findings.push({
         id: `${rule.id}:package.json:${line}`,
         ruleId: rule.id,
@@ -324,6 +337,8 @@ export class NpmDetector implements Detector {
         ...(rule.replacement ? { replacement: rule.replacement } : {}),
         ...(rule.deadline ? { deadline: rule.deadline } : {}),
         sources: rule.sources,
+        usages: usage.usages,
+        impact: usage.impact,
       });
     }
 

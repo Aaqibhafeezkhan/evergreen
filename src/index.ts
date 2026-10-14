@@ -14,4 +14,7 @@ export type {
   GitHubAnnotation,
   SeverityGate,
 } from "./github-action.js";
+export { EvergreenAgentTools, FindingNotObservedError } from "./agent-tools.js";
+export type { DeprecationList, DeprecationSummary, MigrationVerification } from "./agent-tools.js";
+export { createEvergreenMcpServer, MCP_TOOL_NAMES } from "./mcp.js";
 export * from "./sdk.js";

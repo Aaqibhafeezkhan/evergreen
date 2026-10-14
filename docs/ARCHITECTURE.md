@@ -24,12 +24,17 @@ Source usage analysis is a shared batch module below the detector seam. A detect
 
 The GitHub Action is an adapter over a single action-runner module. That module owns scanning, optional baseline comparison, severity-gate evaluation, annotation data, and report persistence behind one interface. The bundled entry point only translates environment inputs and outcomes to GitHub workflow commands; the composite wrapper uploads the already-generated report even when the gate fails.
 
-Migration context is produced by a pure module whose interface accepts a scan result and finding ID. It owns lookup, affected-file derivation, constraints, ordered steps, sources, and verification commands. The CLI is its first adapter; the local MCP server will reuse the same interface.
+Migration context is produced by a pure module whose interface accepts a scan result and finding ID. It owns lookup, affected-file derivation, constraints, ordered steps, sources, and verification commands. The CLI and local MCP server reuse the same interface.
+
+The agent-tools module owns the complete scan-to-verification workflow behind a transport-independent interface. It remembers findings observed during one session so verification cannot mistake an arbitrary or unknown ID for a successful migration. Verification performs a fresh scan, compares the stable rule-and-path identity, and returns suggested commands without executing them. The MCP module is a thin stdio adapter over this interface; it contains no detector or migration logic.
+
+The MCP entry point uses the official TypeScript SDK's local stdio transport. It does not expose an HTTP listener, make outbound requests, or call a hosted Evergreen service. Repository analysis and session state stay on the user's machine; only structured tool results travel through the local stdio connection to the agent host.
 
 ## Trust boundaries
 
 - Repository contents are untrusted input.
 - Registry entries are reviewed data, not executable code.
+- The MCP server is stdio-only and has no network transport.
 - Detectors cannot make network calls through the core contract.
 - A finding must identify its detector, rule, evidence source, and affected location.
 - AI-generated interpretation may enrich a finding but cannot create a core finding.

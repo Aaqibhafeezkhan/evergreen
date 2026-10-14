@@ -41,6 +41,14 @@ npx evergreen-deprecation context '<finding-id>' . --json
 
 Migration packets contain rule-specific constraints and steps, exact affected files and usages, authoritative sources, and suggested verification commands. Evergreen never executes those commands automatically. See the [migration packet guide](docs/MIGRATION_PACKETS.md).
 
+Connect a coding agent through the local MCP server:
+
+```bash
+npx --yes --package evergreen-deprecation evergreen-mcp
+```
+
+The stdio server exposes `scan_repository`, `list_deprecations`, `explain_deprecation`, `create_migration_context`, and `verify_migration`. See the [local MCP guide](docs/MCP.md) for host configuration, the intended workflow, and privacy guarantees.
+
 Evergreen runs locally and does not upload repository contents.
 
 ## Development
@@ -102,6 +110,6 @@ See the [detector authoring guide](docs/DETECTORS.md) and the [minimal detector 
 
 ## Initial product shape
 
-The CLI is the product. Detectors extend it, GitHub Actions automate it, and an MCP server will expose it to agents. A hosted backend is intentionally outside the first three-month roadmap.
+The CLI is the product. Detectors extend it, GitHub Actions automate it, and the local MCP server exposes it to agents. A hosted backend is intentionally outside the first three-month roadmap.
 
 See [the roadmap](docs/ROADMAP.md) and [architecture](docs/ARCHITECTURE.md).

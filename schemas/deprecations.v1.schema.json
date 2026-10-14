@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/deprecations.v1.schema.json",
+  "title": "Evergreen deprecation list v1",
+  "type": "object",
+  "required": ["schemaVersion", "repositoryRoot", "scannedAt", "count", "deprecations"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.deprecations.v1" },
+    "repositoryRoot": { "type": "string" },
+    "scannedAt": { "type": "string", "format": "date-time" },
+    "count": { "type": "integer", "minimum": 0 },
+    "deprecations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "ruleId", "title", "severity", "location", "usageCount", "affectedFiles"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "ruleId": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "severity": { "enum": ["info", "low", "medium", "high", "critical"] },
+          "location": { "$ref": "scan.v1.schema.json#/properties/findings/items/properties/location" },
+          "usageCount": { "type": "integer", "minimum": 0 },
+          "affectedFiles": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

@@ -27,10 +27,15 @@
       "types": "./dist/src/sdk.d.ts",
       "import": "./dist/src/sdk.js"
     },
+    "./mcp": {
+      "types": "./dist/src/mcp.d.ts",
+      "import": "./dist/src/mcp.js"
+    },
     "./package.json": "./package.json"
   },
   "bin": {
-    "evergreen": "dist/src/cli.js"
+    "evergreen": "dist/src/cli.js",
+    "evergreen-mcp": "dist/src/mcp-cli.js"
   },
   "files": [
     "dist/src",
@@ -42,6 +47,7 @@
     "build": "tsc -p tsconfig.json",
     "build:action": "ncc build src/action.ts -o dist/action --minify --transpile-only",
     "dev": "npm run build --silent && node dist/src/cli.js",
+    "mcp": "npm run build --silent && node dist/src/mcp-cli.js",
     "test": "npm run build --silent && node --test dist/tests/**/*.test.js",
     "check": "npm run build && npm run build:action && npm test && npm run check:action-bundle",
     "check:action-bundle": "git diff --exit-code -- dist/action/index.js",
@@ -62,8 +68,10 @@
     "typescript": "^5.9.0"
   },
   "dependencies": {
+    "@modelcontextprotocol/server": "^2.3.1",
     "semver": "^7.8.5",
     "smol-toml": "^1.9.1",
-    "yaml": "^2.9.1"
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
   }
 }

@@ -8,6 +8,7 @@ import { builtInDetectors } from "./detectors/index.js";
 import { scanRepository } from "./engine.js";
 import { createMigrationPacket } from "./migration-packet.js";
 import { renderFindingText, renderJson, renderMigrationPacketText, renderText } from "./reporters.js";
+import { VERSION } from "./version.js";
 
 const HELP = `Evergreen — local-first deprecation intelligence
 
@@ -20,8 +21,6 @@ Usage:
   evergreen --help
   evergreen --version
 `;
-
-const VERSION = "0.1.0-alpha.0";
 
 async function main(args: string[]): Promise<number> {
   if (args.includes("--help") || args.includes("-h") || args.length === 0) {

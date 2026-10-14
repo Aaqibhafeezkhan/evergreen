@@ -77,8 +77,8 @@ Exit criterion for Month 2: external contributors can add a detector without edi
 
 ### Week 10: local MCP server
 
-- [ ] Expose scan, explain, context, and verify tools
-- [ ] Keep all analysis local
+- [x] Expose scan, explain, context, and verify tools
+- [x] Keep all analysis local
 
 ### Week 11: agent skills
 

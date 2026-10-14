@@ -72,6 +72,18 @@ test("registry validation checks the envelope, schema, and every rule", () => {
     title: "Example rule",
     summary: "Example summary",
     severity: "low",
+    migration: {
+      constraints: ["Preserve behavior."],
+      steps: [
+        {
+          id: "replace-example",
+          title: "Replace example",
+          instructions: "Replace the deprecated declaration.",
+          targets: "declaration",
+        },
+      ],
+      verification: [{ command: "npm test", purpose: "Run tests." }],
+    },
     sources: [{ title: "Example source", url: "https://example.com/rule" }],
   };
 
@@ -87,6 +99,10 @@ test("registry validation checks the envelope, schema, and every rule", () => {
   assert.throws(
     () => validateRegistry({ schemaVersion: "example.registry.v1", rules: [{}] }, definition),
     /index 0/,
+  );
+  assert.equal(
+    isDeprecationRule({ ...rule, migration: { ...rule.migration, verification: [] } }),
+    false,
   );
 });
 

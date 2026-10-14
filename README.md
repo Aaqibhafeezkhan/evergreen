@@ -39,6 +39,8 @@ Generate portable migration context for a human or coding agent:
 npx evergreen-deprecation context '<finding-id>' . --json
 ```
 
+Migration packets contain rule-specific constraints and steps, exact affected files and usages, authoritative sources, and suggested verification commands. Evergreen never executes those commands automatically. See the [migration packet guide](docs/MIGRATION_PACKETS.md).
+
 Evergreen runs locally and does not upload repository contents.
 
 ## Development

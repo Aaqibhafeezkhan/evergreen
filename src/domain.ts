@@ -73,6 +73,24 @@ export interface SourceUsageAnalysis {
   impact: MigrationImpact;
 }
 
+export interface MigrationGuidanceStep {
+  id: string;
+  title: string;
+  instructions: string;
+  targets: "declaration" | "usages" | "all";
+}
+
+export interface VerificationCommand {
+  command: string;
+  purpose: string;
+}
+
+export interface MigrationGuidance {
+  constraints: string[];
+  steps: MigrationGuidanceStep[];
+  verification: VerificationCommand[];
+}
+
 export interface DeprecationRule {
   id: string;
   ecosystem: string;
@@ -82,6 +100,7 @@ export interface DeprecationRule {
   replacement?: string;
   deadline?: string;
   sources: EvidenceSource[];
+  migration?: MigrationGuidance;
 }
 
 export interface Finding {
@@ -97,6 +116,7 @@ export interface Finding {
   sources: EvidenceSource[];
   usages?: SourceUsage[];
   impact?: MigrationImpact;
+  migration?: MigrationGuidance;
 }
 
 export interface ScanResult {

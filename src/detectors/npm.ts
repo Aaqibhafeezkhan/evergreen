@@ -216,6 +216,7 @@ function declarationFinding(
     location: { path: relative(root, declaration.path), line: declaration.line },
     ...(rule.replacement ? { replacement: rule.replacement } : {}),
     ...(rule.deadline ? { deadline: rule.deadline } : {}),
+    ...(rule.migration ? { migration: rule.migration } : {}),
     sources: rule.sources,
   };
 }
@@ -337,6 +338,7 @@ export class NpmDetector implements Detector {
         location: { path: "package.json", line },
         ...(rule.replacement ? { replacement: rule.replacement } : {}),
         ...(rule.deadline ? { deadline: rule.deadline } : {}),
+        ...(rule.migration ? { migration: rule.migration } : {}),
         sources: rule.sources,
         usages: usage.usages,
         impact: usage.impact,

@@ -378,6 +378,7 @@ export class PythonDetector implements Detector {
           location: { path, line: declaration.line },
           ...(runtimeRule.replacement ? { replacement: runtimeRule.replacement } : {}),
           ...(runtimeRule.deadline ? { deadline: runtimeRule.deadline } : {}),
+          ...(runtimeRule.migration ? { migration: runtimeRule.migration } : {}),
           sources: runtimeRule.sources,
         });
       }
@@ -409,6 +410,7 @@ export class PythonDetector implements Detector {
         },
         ...(rule.replacement ? { replacement: rule.replacement } : {}),
         ...(rule.deadline ? { deadline: rule.deadline } : {}),
+        ...(rule.migration ? { migration: rule.migration } : {}),
         sources: rule.sources,
         usages: usage.usages,
         impact: usage.impact,

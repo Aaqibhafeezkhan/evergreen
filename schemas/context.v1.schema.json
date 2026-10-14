@@ -30,12 +30,13 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "title", "instructions", "paths"],
+        "required": ["id", "title", "instructions", "targets", "paths"],
         "additionalProperties": false,
         "properties": {
           "id": { "type": "string" },
           "title": { "type": "string" },
           "instructions": { "type": "string" },
+          "targets": { "enum": ["declaration", "usages", "all"] },
           "paths": {
             "type": "array",
             "items": { "type": "string" }

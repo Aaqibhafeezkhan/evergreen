@@ -119,6 +119,7 @@ export class GitHubActionsDetector implements Detector {
           location: { path, line: reference.line },
           ...(rule.replacement ? { replacement: rule.replacement } : {}),
           ...(rule.deadline ? { deadline: rule.deadline } : {}),
+          ...(rule.migration ? { migration: rule.migration } : {}),
           sources: rule.sources,
         });
       }

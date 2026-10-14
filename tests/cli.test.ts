@@ -51,13 +51,14 @@ test("CLI scans, explains, creates context, and suppresses baseline findings", a
     schemaVersion: string;
     affectedFiles: string[];
     constraints: string[];
-    steps: unknown[];
+    steps: Array<{ id: string }>;
     verification: unknown[];
   };
   assert.equal(packet.schemaVersion, "evergreen.context.v1");
   assert.ok(packet.affectedFiles.length > 0);
   assert.ok(packet.constraints.length > 0);
   assert.ok(packet.steps.length > 0);
+  assert.ok(packet.steps.some((step) => step.id === "upgrade-action-ref"));
   assert.ok(packet.verification.length > 0);
 
   const baselinePath = join(root, "baseline.json");

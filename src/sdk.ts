@@ -1,5 +1,5 @@
 import { severityValues, sourceLanguageValues } from "./domain.js";
-import type { DeprecationRule, Finding, UsageMatcher } from "./domain.js";
+import type { DeprecationRule, Finding, MigrationGuidance, UsageMatcher } from "./domain.js";
 
 export const DETECTOR_API_VERSION = "evergreen.detector.v1" as const;
 
@@ -64,6 +64,7 @@ export function isDeprecationRule(value: unknown): value is DeprecationRule {
 
   if (value.replacement !== undefined && !isNonEmptyString(value.replacement)) return false;
   if (value.deadline !== undefined && !isNonEmptyString(value.deadline)) return false;
+  if (value.migration !== undefined && !isMigrationGuidance(value.migration)) return false;
 
   return value.sources.every(
     (source) =>
@@ -71,6 +72,45 @@ export function isDeprecationRule(value: unknown): value is DeprecationRule {
       isNonEmptyString(source.title) &&
       isNonEmptyString(source.url) &&
       (source.accessedAt === undefined || isNonEmptyString(source.accessedAt)),
+  );
+}
+
+export function isMigrationGuidance(value: unknown): value is MigrationGuidance {
+  if (
+    !isRecord(value) ||
+    !Array.isArray(value.constraints) ||
+    value.constraints.length === 0 ||
+    !value.constraints.every(isNonEmptyString) ||
+    !Array.isArray(value.steps) ||
+    value.steps.length === 0 ||
+    !Array.isArray(value.verification) ||
+    value.verification.length === 0
+  ) {
+    return false;
+  }
+  const ids = new Set<string>();
+  const validSteps = value.steps.every((step) => {
+    if (
+      !isRecord(step) ||
+      !isNonEmptyString(step.id) ||
+      !isNonEmptyString(step.title) ||
+      !isNonEmptyString(step.instructions) ||
+      !["declaration", "usages", "all"].includes(step.targets as string) ||
+      ids.has(step.id)
+    ) {
+      return false;
+    }
+    ids.add(step.id);
+    return true;
+  });
+  return (
+    validSteps &&
+    value.verification.every(
+      (command) =>
+        isRecord(command) &&
+        isNonEmptyString(command.command) &&
+        isNonEmptyString(command.purpose),
+    )
   );
 }
 
@@ -156,6 +196,8 @@ export type {
   EvidenceSource,
   Finding,
   MigrationImpact,
+  MigrationGuidance,
+  MigrationGuidanceStep,
   ScanResult,
   Severity,
   SourceLanguage,
@@ -164,4 +206,5 @@ export type {
   SourceUsageAnalysis,
   SourceUsageContract,
   UsageMatcher,
+  VerificationCommand,
 } from "./domain.js";

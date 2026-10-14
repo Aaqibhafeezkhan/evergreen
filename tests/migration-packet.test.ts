@@ -59,7 +59,7 @@ test("creates a deterministic, agent-ready migration packet", () => {
     "verify-migration",
   ]);
   assert.deepEqual(packet.verification.map((item) => item.command), [
-    "npm test",
+    "npm run test --if-present",
     "npm run build --if-present",
     "npx evergreen-deprecation scan .",
   ]);
@@ -83,6 +83,14 @@ test("validates packets and keeps the JSON Schema top-level contract in sync", a
   assert.throws(
     () => validateMigrationPacket({ ...packet, verification: [] }),
     /Invalid migration steps or verification commands/,
+  );
+  assert.throws(
+    () => validateMigrationPacket({ ...packet, affectedFiles: ["package.json"] }),
+    /evidence is inconsistent/,
+  );
+  assert.throws(
+    () => validateMigrationPacket({ ...packet, sources: [] }),
+    /Invalid migration packet scope or evidence/,
   );
 
   const schema = JSON.parse(

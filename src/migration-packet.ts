@@ -1,16 +1,19 @@
 import { severityValues, sourceLanguageValues } from "./domain.js";
-import type { EvidenceSource, Finding, ScanResult, SourceLocation, SourceUsage } from "./domain.js";
+import type {
+  EvidenceSource,
+  Finding,
+  MigrationGuidance,
+  MigrationGuidanceStep,
+  ScanResult,
+  SourceLocation,
+  SourceUsage,
+  VerificationCommand,
+} from "./domain.js";
 
-export interface MigrationStep {
-  id: string;
-  title: string;
-  instructions: string;
+export type { VerificationCommand } from "./domain.js";
+
+export interface MigrationStep extends MigrationGuidanceStep {
   paths: string[];
-}
-
-export interface VerificationCommand {
-  command: string;
-  purpose: string;
 }
 
 export interface MigrationPacket {
@@ -68,6 +71,38 @@ function isUsage(value: unknown): value is SourceUsage {
   );
 }
 
+function isGuidance(value: unknown): value is MigrationGuidance {
+  if (
+    !isRecord(value) ||
+    !Array.isArray(value.constraints) ||
+    value.constraints.length === 0 ||
+    !value.constraints.every(isNonEmptyString) ||
+    !Array.isArray(value.steps) ||
+    value.steps.length === 0 ||
+    !Array.isArray(value.verification) ||
+    value.verification.length === 0
+  ) return false;
+  const ids = new Set<string>();
+  return (
+    value.steps.every((step) => {
+      if (
+        !isRecord(step) ||
+        ![step.id, step.title, step.instructions].every(isNonEmptyString) ||
+        !["declaration", "usages", "all"].includes(step.targets as string) ||
+        ids.has(step.id as string)
+      ) return false;
+      ids.add(step.id as string);
+      return true;
+    }) &&
+    value.verification.every(
+      (command) =>
+        isRecord(command) &&
+        isNonEmptyString(command.command) &&
+        isNonEmptyString(command.purpose),
+    )
+  );
+}
+
 function isFinding(value: unknown): value is Finding {
   return (
     isRecord(value) &&
@@ -77,7 +112,8 @@ function isFinding(value: unknown): value is Finding {
     Array.isArray(value.sources) &&
     value.sources.length > 0 &&
     value.sources.every(isSource) &&
-    (value.usages === undefined || (Array.isArray(value.usages) && value.usages.every(isUsage)))
+    (value.usages === undefined || (Array.isArray(value.usages) && value.usages.every(isUsage))) &&
+    (value.migration === undefined || isGuidance(value.migration))
   );
 }
 
@@ -109,15 +145,37 @@ export function validateMigrationPacket(value: unknown): MigrationPacket {
   ) {
     throw new MigrationPacketValidationError("Invalid migration packet scope or evidence.");
   }
+  const expectedFiles = [
+    ...new Set([
+      value.finding.location.path,
+      ...value.usages.map((usage) => usage.location.path),
+    ]),
+  ].sort((left, right) => left.localeCompare(right));
+  if (
+    JSON.stringify(value.usages) !== JSON.stringify(value.finding.usages ?? []) ||
+    JSON.stringify(value.sources) !== JSON.stringify(value.finding.sources) ||
+    JSON.stringify(value.affectedFiles) !== JSON.stringify(expectedFiles)
+  ) {
+    throw new MigrationPacketValidationError("Migration packet evidence is inconsistent with its finding.");
+  }
+  const stepIds = new Set<string>();
+  const affected = new Set(value.affectedFiles);
   const validStep = (step: unknown): boolean =>
     isRecord(step) &&
     [step.id, step.title, step.instructions].every(isNonEmptyString) &&
+    ["declaration", "usages", "all"].includes(step.targets as string) &&
+    !stepIds.has(step.id as string) &&
     Array.isArray(step.paths) &&
-    step.paths.every(isNonEmptyString);
+    step.paths.length > 0 &&
+    step.paths.every((path) => isNonEmptyString(path) && affected.has(path)) &&
+    Boolean(stepIds.add(step.id as string));
+  const commands = new Set<string>();
   const validVerification = (verification: unknown): boolean =>
     isRecord(verification) &&
     isNonEmptyString(verification.command) &&
-    isNonEmptyString(verification.purpose);
+    !commands.has(verification.command) &&
+    isNonEmptyString(verification.purpose) &&
+    Boolean(commands.add(verification.command));
   if (
     !Array.isArray(value.steps) ||
     value.steps.length === 0 ||
@@ -137,46 +195,67 @@ function affectedFiles(finding: Finding): string[] {
 }
 
 function constraintsFor(finding: Finding): string[] {
-  return [
+  return [...new Set([
     finding.replacement ? `Target replacement: ${finding.replacement}.` : undefined,
     finding.deadline ? `Migration deadline: ${finding.deadline}.` : undefined,
+    ...(finding.migration?.constraints ?? []),
     finding.usages?.length
       ? `Preserve behavior across ${finding.usages.length} identified source usage${finding.usages.length === 1 ? "" : "s"}.`
       : "No concrete source usages were identified; verify dynamic and generated references manually.",
     "Keep the migration within the evidence and affected files in this packet unless verification reveals additional scope.",
-  ].filter((value): value is string => value !== undefined);
+  ].filter((value): value is string => value !== undefined))];
 }
 
 function stepsFor(finding: Finding, paths: string[]): MigrationStep[] {
   const primary: SourceLocation = finding.location;
+  const usagePaths = [...new Set((finding.usages ?? []).map((usage) => usage.location.path))]
+    .sort((left, right) => left.localeCompare(right));
   const steps: MigrationStep[] = [
     {
       id: "review-evidence",
       title: "Review lifecycle evidence",
       instructions: `Confirm the reported lifecycle state for ${finding.title} against the authoritative sources.`,
+      targets: "declaration",
       paths: [primary.path],
     },
-    {
+  ];
+  if (finding.migration) {
+    steps.push(
+      ...finding.migration.steps.map((step): MigrationStep => ({
+        ...step,
+        paths:
+          step.targets === "declaration"
+            ? [primary.path]
+            : step.targets === "usages"
+              ? (usagePaths.length > 0 ? usagePaths : [primary.path])
+              : paths,
+      })),
+    );
+  } else {
+    steps.push({
       id: "update-declaration",
       title: "Update the deprecated declaration",
       instructions: finding.replacement
         ? `Replace the deprecated declaration with ${finding.replacement}.`
         : "Remove or update the deprecated declaration using the cited ecosystem guidance.",
+      targets: "declaration",
       paths: [primary.path],
-    },
-  ];
-  if (finding.usages?.length) {
-    steps.push({
-      id: "migrate-usages",
-      title: "Migrate affected usages",
-      instructions: "Update the listed imports, calls, and configuration keys while preserving behavior.",
-      paths,
     });
+    if (finding.usages?.length) {
+      steps.push({
+        id: "migrate-usages",
+        title: "Migrate affected usages",
+        instructions: "Update the listed imports, calls, and configuration keys while preserving behavior.",
+        targets: "usages",
+        paths: usagePaths,
+      });
+    }
   }
   steps.push({
     id: "verify-migration",
     title: "Verify the migration",
     instructions: "Run the suggested verification commands and re-scan the repository.",
+    targets: "all",
     paths,
   });
   return steps;
@@ -185,7 +264,7 @@ function stepsFor(finding: Finding, paths: string[]): MigrationStep[] {
 function verificationFor(finding: Finding): VerificationCommand[] {
   const ecosystemCommands: Record<string, VerificationCommand[]> = {
     npm: [
-      { command: "npm test", purpose: "Run the repository test suite." },
+      { command: "npm run test --if-present", purpose: "Run the repository test suite when configured." },
       { command: "npm run build --if-present", purpose: "Verify the project still builds." },
     ],
     python: [
@@ -195,13 +274,14 @@ function verificationFor(finding: Finding): VerificationCommand[] {
       { command: "git diff --check", purpose: "Validate the edited workflow diff." },
     ],
   };
-  return [
-    ...(ecosystemCommands[finding.detector] ?? []),
+  const commands = [
+    ...(finding.migration?.verification ?? ecosystemCommands[finding.detector] ?? []),
     {
       command: "npx evergreen-deprecation scan .",
       purpose: "Confirm the lifecycle finding no longer appears.",
     },
   ];
+  return [...new Map(commands.map((command) => [command.command, command])).values()];
 }
 
 export function createMigrationPacket(result: ScanResult, findingId: string): MigrationPacket {

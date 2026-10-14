@@ -61,6 +61,29 @@ const registry = validateRegistry(JSON.parse(contents), {
 
 Validation rejects a missing or unexpected schema version, a non-array `rules` value, and the first invalid rule with its array index. `isDeprecationRule` validates the fields shared by every Evergreen lifecycle rule.
 
+Rules may include optional migration guidance so `evergreen context` can produce ecosystem-specific packets without hard-coding detector knowledge in the CLI:
+
+```json
+{
+  "migration": {
+    "constraints": ["Preserve observable behavior."],
+    "steps": [
+      {
+        "id": "replace-declaration",
+        "title": "Replace the declaration",
+        "instructions": "Move to the supported replacement.",
+        "targets": "declaration"
+      }
+    ],
+    "verification": [
+      { "command": "npm test", "purpose": "Run the repository tests." }
+    ]
+  }
+}
+```
+
+Step targets are `declaration`, `usages`, or `all`. The packet module resolves those targets to exact repository paths. Step IDs must be unique within a rule, and constraints, steps, and verification commands must all be non-empty. External detectors without migration guidance receive deterministic generic fallback steps.
+
 ## Source usage contracts
 
 Detectors can enrich findings with concrete repository usages through the public `analyzeSourceUsage` helper. Pass all matched rules in one batch so the repository is traversed once:

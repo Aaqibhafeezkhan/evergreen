@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add the versioned Evergreen brand strategy, logo system, accessible design
+  tokens, usage guide, distribution templates, and proprietary brand terms.
+- Apply the approved Evergreen identity and product descriptor across repository,
+  documentation, npm, Agent Skill, and GitHub Action source surfaces.
+
 ## 0.1.0 - 2026-10-14
 
 - Add the versioned detector SDK at `evergreen-deprecation/sdk`.

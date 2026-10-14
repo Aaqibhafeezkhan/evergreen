@@ -4,9 +4,11 @@
   "description": "Local-first deprecation intelligence for software repositories.",
   "keywords": [
     "deprecation",
+    "lifecycle",
     "dependencies",
     "github-actions",
     "nodejs",
+    "mcp",
     "ai-agents"
   ],
   "repository": {

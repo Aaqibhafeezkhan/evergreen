@@ -4,7 +4,14 @@ title: Evergreen documentation
 
 # Evergreen
 
-Evergreen is local-first deprecation intelligence for software repositories and coding agents. It discovers supported lifecycle risks, connects them to exact files and usages, and produces evidence-backed migration context without a hosted service.
+<p class="evergreen-kicker">LIFECYCLE INTELLIGENCE / 01</p>
+
+<p class="evergreen-tagline">Know what breaks next.</p>
+
+Evergreen is local-first deprecation intelligence for software repositories. It
+discovers supported lifecycle risks, connects them to exact files and usages, and
+produces evidence-backed migration context for humans and coding agents without a
+hosted service.
 
 ## Start here
 
@@ -18,6 +25,9 @@ Evergreen is local-first deprecation intelligence for software repositories and 
 - [Architecture and trust boundaries](ARCHITECTURE.md)
 - [Roadmap](ROADMAP.md)
 - [Post-launch notes and next roadmap](NEXT.md)
+- [Brand guide](https://github.com/arminazimi/evergreen/blob/main/brand/BRAND_GUIDE.md)
+- [Brand asset terms](https://github.com/arminazimi/evergreen/blob/main/brand/LICENSE.md)
+- [Distribution brand checklist](DISTRIBUTION_BRAND.md)
 
 ## Install
 

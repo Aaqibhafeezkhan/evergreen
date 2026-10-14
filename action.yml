@@ -1,10 +1,10 @@
-name: Evergreen lifecycle scan
-description: Find new deprecations, annotate pull requests, enforce severity gates, and upload a JSON report.
+name: Evergreen lifecycle intelligence
+description: Scan repositories locally for evidence-backed deprecations and lifecycle risks.
 author: Evergreen
 
 branding:
   icon: activity
-  color: green
+  color: gray-dark
 
 inputs:
   path:

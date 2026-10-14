@@ -1,4 +1,5 @@
 title: Evergreen
-description: Local-first deprecation intelligence for repositories and coding agents.
+description: Local-first deprecation intelligence for software repositories.
 theme: jekyll-theme-minimal
 show_downloads: true
+logo: /evergreen/assets/brand/evergreen-mark-adaptive.svg

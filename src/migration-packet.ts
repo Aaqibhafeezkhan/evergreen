@@ -201,7 +201,7 @@ function constraintsFor(finding: Finding): string[] {
     ...(finding.migration?.constraints ?? []),
     finding.usages?.length
       ? `Preserve behavior across ${finding.usages.length} identified source usage${finding.usages.length === 1 ? "" : "s"}.`
-      : "No concrete source usages were identified; verify dynamic and generated references manually.",
+      : "No additional source usages were identified beyond the declaration; verify dynamic and generated references manually.",
     "Keep the migration within the evidence and affected files in this packet unless verification reveals additional scope.",
   ].filter((value): value is string => value !== undefined))];
 }
@@ -277,7 +277,7 @@ function verificationFor(finding: Finding): VerificationCommand[] {
   const commands = [
     ...(finding.migration?.verification ?? ecosystemCommands[finding.detector] ?? []),
     {
-      command: "npx evergreen-deprecation scan .",
+      command: "evergreen scan . --json",
       purpose: "Confirm the lifecycle finding no longer appears.",
     },
   ];

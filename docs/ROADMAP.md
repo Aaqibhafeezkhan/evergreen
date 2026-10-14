@@ -82,8 +82,8 @@ Exit criterion for Month 2: external contributors can add a detector without edi
 
 ### Week 11: agent skills
 
-- [ ] Provide thin, vendor-neutral usage instructions
-- [ ] Test the workflow with multiple coding agents
+- [x] Provide thin, vendor-neutral usage instructions
+- [x] Test the workflow with multiple coding agents
 
 ### Week 12: public launch
 

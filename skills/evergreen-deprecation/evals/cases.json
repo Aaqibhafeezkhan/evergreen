@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "evergreen.skill-evals.v1",
+  "cases": [
+    {
+      "id": "scan-lifecycle",
+      "prompt": "Scan this repository for deprecated runtimes, packages, and GitHub Actions.",
+      "shouldTrigger": true,
+      "reason": "Direct Evergreen discovery workflow."
+    },
+    {
+      "id": "explain-finding",
+      "prompt": "Explain this Evergreen finding and show me the authoritative lifecycle evidence.",
+      "shouldTrigger": true,
+      "reason": "Direct finding explanation workflow."
+    },
+    {
+      "id": "migrate-finding",
+      "prompt": "Use the Evergreen finding ID to build context and migrate the affected usages.",
+      "shouldTrigger": true,
+      "reason": "Direct migration-packet workflow."
+    },
+    {
+      "id": "verify-finding",
+      "prompt": "Verify that the deprecation Evergreen reported is gone after my changes.",
+      "shouldTrigger": true,
+      "reason": "Direct migration verification workflow."
+    },
+    {
+      "id": "generic-upgrade",
+      "prompt": "Upgrade every dependency in this project to the latest version.",
+      "shouldTrigger": false,
+      "reason": "Broad dependency maintenance without an Evergreen lifecycle finding."
+    },
+    {
+      "id": "security-audit",
+      "prompt": "Run a vulnerability audit and fix every security issue.",
+      "shouldTrigger": false,
+      "reason": "Security scanning is outside Evergreen's lifecycle scope."
+    },
+    {
+      "id": "source-api",
+      "prompt": "Replace this deprecated React component API with the new hook.",
+      "shouldTrigger": false,
+      "reason": "Source-framework API migration is not a supported Evergreen detector."
+    },
+    {
+      "id": "unrelated-bug",
+      "prompt": "Diagnose and fix the flaky pagination test.",
+      "shouldTrigger": false,
+      "reason": "Unrelated debugging workflow."
+    }
+  ]
+}

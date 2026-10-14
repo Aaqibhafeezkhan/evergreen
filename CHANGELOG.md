@@ -10,6 +10,7 @@
 - Add a reusable GitHub Action with pull-request annotations, baseline regression filtering, severity gates, and JSON report artifacts.
 - Add validated, rule-specific `evergreen context` migration packets for humans and coding agents.
 - Add a local stdio MCP server with versioned scan, list, explain, context, and migration-verification tools.
+- Add a portable Agent Skill for the scan, explain, migrate, and verify workflow with trigger evaluation cases.
 
 ## 0.1.0-alpha.0
 

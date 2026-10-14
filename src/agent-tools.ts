@@ -107,7 +107,7 @@ export class EvergreenAgentTools {
     const suggestedCommands = [
       ...(observed.migration?.verification ?? []),
       {
-        command: "npx evergreen-deprecation scan .",
+        command: "evergreen scan . --json",
         purpose: "Confirm the lifecycle finding no longer appears.",
       },
     ].filter(

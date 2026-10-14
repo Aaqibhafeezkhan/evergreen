@@ -30,6 +30,8 @@ The agent-tools module owns the complete scan-to-verification workflow behind a 
 
 The MCP entry point uses the official TypeScript SDK's local stdio transport. It does not expose an HTTP listener, make outbound requests, or call a hosted Evergreen service. Repository analysis and session state stay on the user's machine; only structured tool results travel through the local stdio connection to the agent host.
 
+The portable Agent Skill is a thin instruction adapter over the MCP and CLI interfaces. It owns no lifecycle facts, detector behavior, migration constraints, or permission grants. This keeps the prompt surface vendor-neutral and lets executable contracts remain the single source of truth.
+
 ## Trust boundaries
 
 - Repository contents are untrusted input.

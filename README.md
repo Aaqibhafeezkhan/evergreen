@@ -49,6 +49,10 @@ npx --yes --package evergreen-deprecation evergreen-mcp
 
 The stdio server exposes `scan_repository`, `list_deprecations`, `explain_deprecation`, `create_migration_context`, and `verify_migration`. See the [local MCP guide](docs/MCP.md) for host configuration, the intended workflow, and privacy guarantees.
 
+## Agent Skill
+
+The package includes a thin, vendor-neutral Agent Skill at [`skills/evergreen-deprecation`](skills/evergreen-deprecation/SKILL.md). Install that folder in any host implementing the open Agent Skills format. It teaches discovery, explanation, migration, and verification while leaving detection and migration logic inside Evergreen. See the [Agent Skill guide](docs/AGENT_SKILLS.md) for installation, evaluation, limits, and security assumptions.
+
 Evergreen runs locally and does not upload repository contents.
 
 ## Development

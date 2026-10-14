@@ -61,7 +61,7 @@ test("creates a deterministic, agent-ready migration packet", () => {
   assert.deepEqual(packet.verification.map((item) => item.command), [
     "npm run test --if-present",
     "npm run build --if-present",
-    "npx evergreen-deprecation scan .",
+    "evergreen scan . --json",
   ]);
   assert.deepEqual(createMigrationPacket(result, packet.finding.id), packet);
 });

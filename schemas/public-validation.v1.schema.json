@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/public-validation.v1.schema.json",
+  "title": "Evergreen public validation corpus v1",
+  "type": "object",
+  "required": ["schemaVersion", "repositories"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.public-validation.v1" },
+    "repositories": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["repository", "commit", "ecosystem", "expected"],
+        "additionalProperties": false,
+        "properties": {
+          "repository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+          "commit": { "type": "string", "pattern": "^[a-fA-F0-9]{40}$" },
+          "ecosystem": { "enum": ["node", "node-actions", "python"] },
+          "expected": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["ruleId", "path"],
+              "additionalProperties": false,
+              "properties": {
+                "ruleId": { "type": "string", "minLength": 1 },
+                "path": { "type": "string", "minLength": 1 },
+                "line": { "type": "integer", "minimum": 1 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

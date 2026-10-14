@@ -7,6 +7,7 @@
 - Add an external detector example, authoring guide, and compatibility suite.
 - Add Python runtime and direct-package lifecycle detection for pyproject, requirements, version files, and common lockfiles.
 - Add language-aware source usage analysis with exact imports, calls, configuration keys, and migration-impact estimates.
+- Add a reusable GitHub Action with pull-request annotations, baseline regression filtering, severity gates, and JSON report artifacts.
 
 ## 0.1.0-alpha.0
 

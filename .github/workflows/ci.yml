@@ -19,3 +19,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - name: Dogfood Evergreen action
+        uses: ./
+        with:
+          fail-on-severity: high
+          report-name: evergreen-report-${{ github.sha }}

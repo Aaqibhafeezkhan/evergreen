@@ -68,6 +68,24 @@ npm run benchmark:usage
 
 See [the benchmark notes](docs/BENCHMARKS.md) for the corpus and interpretation.
 
+## GitHub Action
+
+Evergreen can annotate pull requests, suppress accepted findings with a baseline, fail on a chosen severity, and upload the complete JSON report:
+
+```yaml
+permissions:
+  contents: read
+
+steps:
+  - uses: actions/checkout@v7
+  - uses: arminazimi/evergreen@main
+    with:
+      baseline: .evergreen-baseline.json
+      fail-on-severity: high
+```
+
+The project is still pre-release, so the example follows `main`; pin a commit SHA when reproducibility matters. See the [GitHub Action guide](docs/GITHUB_ACTION.md) for setup, inputs, permissions, artifacts, and privacy boundaries.
+
 ## Detector SDK
 
 External detectors can use the versioned interface exported by `evergreen-deprecation/sdk`. The scan engine composes compatible detectors without importing any built-in implementation.

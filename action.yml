@@ -1,0 +1,57 @@
+name: Evergreen lifecycle scan
+description: Find new deprecations, annotate pull requests, enforce severity gates, and upload a JSON report.
+author: Evergreen
+
+branding:
+  icon: activity
+  color: green
+
+inputs:
+  path:
+    description: Repository path to scan.
+    required: false
+    default: .
+  baseline:
+    description: Optional baseline path, relative to the scanned repository.
+    required: false
+    default: ""
+  fail-on-severity:
+    description: Lowest severity that fails the job (none, info, low, medium, high, or critical).
+    required: false
+    default: high
+  report-name:
+    description: Name of the uploaded machine-readable report artifact.
+    required: false
+    default: evergreen-report
+  upload-report:
+    description: Upload the JSON report to GitHub Actions artifacts.
+    required: false
+    default: "true"
+
+outputs:
+  report-path:
+    description: Absolute path to the generated JSON report.
+    value: ${{ steps.scan.outputs.report-path }}
+  finding-count:
+    description: Number of findings remaining after baseline comparison.
+    value: ${{ steps.scan.outputs.finding-count }}
+
+runs:
+  using: composite
+  steps:
+    - id: scan
+      name: Scan repository
+      shell: bash
+      run: node "$GITHUB_ACTION_PATH/dist/action/index.js"
+      env:
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_BASELINE: ${{ inputs.baseline }}
+        INPUT_FAIL-ON-SEVERITY: ${{ inputs.fail-on-severity }}
+    - name: Upload machine-readable report
+      if: always() && inputs.upload-report == 'true'
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ inputs.report-name }}
+        path: ${{ steps.scan.outputs.report-path }}
+        if-no-files-found: error
+        retention-days: 14

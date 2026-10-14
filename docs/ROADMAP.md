@@ -62,9 +62,9 @@ Exit criterion: a new user can install and obtain a useful finding in under five
 
 ### Week 8: GitHub Action
 
-- [ ] Add pull-request annotations
-- [ ] Report only new findings against a baseline
-- [ ] Support severity gates
+- [x] Add pull-request annotations
+- [x] Report only new findings against a baseline
+- [x] Support severity gates
 
 Exit criterion for Month 2: external contributors can add a detector without editing the core.
 

@@ -9,6 +9,7 @@ import type {
   Severity,
   UsageMatcher,
 } from "../domain.js";
+import { findPackageFile } from "../package-files.js";
 import { analyzeSourceUsage } from "../source-usage.js";
 import {
   DETECTOR_API_VERSION,
@@ -70,10 +71,10 @@ async function readOptional(path: string): Promise<string | undefined> {
 }
 
 async function loadRegistry<Rule>(
-  url: URL,
+  path: string | URL,
   definition: RegistryDefinition<Rule>,
 ): Promise<readonly Rule[]> {
-  return validateRegistry(JSON.parse(await readFile(url, "utf8")) as unknown, definition).rules;
+  return validateRegistry(JSON.parse(await readFile(path, "utf8")) as unknown, definition).rules;
 }
 
 function addResolved(target: ResolvedVersions, name: string, version: unknown): void {
@@ -258,7 +259,7 @@ export class NpmDetector implements Detector {
 
     const [packageRules, nodeRules, resolvedVersions] = await Promise.all([
       loadRegistry(
-        new URL("../../../registry/npm.json", import.meta.url),
+        await findPackageFile("registry/npm.json", import.meta.url),
         {
           schemaVersion: "evergreen.npm-registry.v1",
           isRule: (value): value is PackageRule =>
@@ -269,7 +270,7 @@ export class NpmDetector implements Detector {
         },
       ),
       loadRegistry(
-        new URL("../../../registry/nodejs.json", import.meta.url),
+        await findPackageFile("registry/nodejs.json", import.meta.url),
         {
           schemaVersion: "evergreen.nodejs-registry.v1",
           isRule: (value): value is NodeRule =>

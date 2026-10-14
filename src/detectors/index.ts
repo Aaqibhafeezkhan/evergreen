@@ -1,4 +1,4 @@
-import type { Detector } from "../domain.js";
+import type { Detector } from "../sdk.js";
 import { githubActionsDetector } from "./github-actions.js";
 import { npmDetector } from "./npm.js";
 

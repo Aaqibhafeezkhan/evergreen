@@ -36,7 +36,7 @@ Exit criterion: scan ten public repositories with an explainable false-positive 
 
 - [x] Implement baselines
 - [x] Stabilize text and JSON output
-- [ ] Publish an alpha npm package
+- [x] Publish an alpha npm package
 - [x] Write end-to-end documentation
 
 Exit criterion: a new user can install and obtain a useful finding in under five minutes.
@@ -45,9 +45,9 @@ Exit criterion: a new user can install and obtain a useful finding in under five
 
 ### Week 5: detector SDK
 
-- [ ] Publish detector interfaces
-- [ ] Isolate built-in detectors from the core
-- [ ] Create a detector authoring example
+- [x] Publish detector interfaces
+- [x] Isolate built-in detectors from the core
+- [x] Create a detector authoring example
 
 ### Week 6: Python detector
 

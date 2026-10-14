@@ -16,11 +16,25 @@
   "homepage": "https://github.com/arminazimi/evergreen#readme",
   "bugs": "https://github.com/arminazimi/evergreen/issues",
   "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/src/sdk.d.ts",
+      "import": "./dist/src/sdk.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "evergreen": "dist/src/cli.js"
   },
   "files": [
     "dist/src",
+    "examples",
     "registry",
     "schemas"
   ],

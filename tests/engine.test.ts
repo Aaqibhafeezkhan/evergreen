@@ -1,19 +1,20 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import type { Detector } from "../src/domain.js";
 import { scanRepository } from "../src/engine.js";
 import { renderJson, renderText } from "../src/reporters.js";
+import { DETECTOR_API_VERSION } from "../src/sdk.js";
+import type { Detector } from "../src/sdk.js";
 
 test("scan result is deterministic apart from its timestamp", async () => {
   const detector: Detector = {
-    name: "fixture",
+    apiVersion: DETECTOR_API_VERSION,
+    id: "fixture",
     async scan() {
       return [
         {
           id: "fixture:two",
           ruleId: "two",
-          detector: "fixture",
           title: "Second",
           summary: "Second finding",
           severity: "low",
@@ -23,7 +24,6 @@ test("scan result is deterministic apart from its timestamp", async () => {
         {
           id: "fixture:one",
           ruleId: "one",
-          detector: "fixture",
           title: "First",
           summary: "First finding",
           severity: "high",

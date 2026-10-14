@@ -6,11 +6,19 @@ import { parse as parseYaml } from "yaml";
 
 import type {
   DeprecationRule,
-  Detector,
-  DetectorContext,
-  Finding,
   Severity,
 } from "../domain.js";
+import {
+  DETECTOR_API_VERSION,
+  isDeprecationRule,
+  validateRegistry,
+} from "../sdk.js";
+import type {
+  Detector,
+  DetectorContext,
+  DetectorFinding,
+  RegistryDefinition,
+} from "../sdk.js";
 
 interface PackageRule extends DeprecationRule {
   package: string;
@@ -28,16 +36,6 @@ interface PackageManifest {
   peerDependencies?: Record<string, string>;
   engines?: { node?: string };
   volta?: { node?: string };
-}
-
-interface PackageRegistry {
-  schemaVersion: "evergreen.npm-registry.v1";
-  rules: PackageRule[];
-}
-
-interface NodeRegistry {
-  schemaVersion: "evergreen.nodejs-registry.v1";
-  rules: NodeRule[];
 }
 
 interface RuntimeDeclaration {
@@ -67,12 +65,11 @@ async function readOptional(path: string): Promise<string | undefined> {
   }
 }
 
-async function loadJson<T>(url: URL, schemaVersion: string): Promise<T> {
-  const value = JSON.parse(await readFile(url, "utf8")) as T & { schemaVersion?: string };
-  if (value.schemaVersion !== schemaVersion) {
-    throw new Error(`Unsupported registry: ${value.schemaVersion ?? "missing schema version"}`);
-  }
-  return value;
+async function loadRegistry<Rule>(
+  url: URL,
+  definition: RegistryDefinition<Rule>,
+): Promise<readonly Rule[]> {
+  return validateRegistry(JSON.parse(await readFile(url, "utf8")) as unknown, definition).rules;
 }
 
 function addResolved(target: ResolvedVersions, name: string, version: unknown): void {
@@ -203,12 +200,11 @@ function declarationFinding(
   declaration: RuntimeDeclaration,
   rule: NodeRule,
   detectedMajor: number,
-): Finding {
+): DetectorFinding {
   const severity: Severity = declaration.kind === "pinned runtime" ? rule.severity : "medium";
   return {
     id: `${rule.id}:${declaration.path}:${declaration.line}`,
     ruleId: rule.id,
-    detector: "npm",
     title: rule.title,
     summary: `${declaration.kind} ${declaration.value} includes Node.js ${detectedMajor}. ${rule.summary}`,
     severity,
@@ -248,26 +244,38 @@ function manifestRuntimeDeclarations(
 }
 
 export class NpmDetector implements Detector {
-  readonly name = "npm";
+  readonly apiVersion = DETECTOR_API_VERSION;
+  readonly id = "npm";
 
-  async scan(context: DetectorContext): Promise<Finding[]> {
+  async scan(context: DetectorContext): Promise<DetectorFinding[]> {
     const manifestPath = resolve(context.root, "package.json");
     const manifestContents = await readOptional(manifestPath);
     if (!manifestContents) return [];
 
-    const [packageRegistry, nodeRegistry, resolvedVersions] = await Promise.all([
-      loadJson<PackageRegistry>(
+    const [packageRules, nodeRules, resolvedVersions] = await Promise.all([
+      loadRegistry(
         new URL("../../../registry/npm.json", import.meta.url),
-        "evergreen.npm-registry.v1",
+        {
+          schemaVersion: "evergreen.npm-registry.v1",
+          isRule: (value): value is PackageRule =>
+            isDeprecationRule(value) &&
+            typeof (value as Partial<PackageRule>).package === "string",
+        },
       ),
-      loadJson<NodeRegistry>(
+      loadRegistry(
         new URL("../../../registry/nodejs.json", import.meta.url),
-        "evergreen.nodejs-registry.v1",
+        {
+          schemaVersion: "evergreen.nodejs-registry.v1",
+          isRule: (value): value is NodeRule =>
+            isDeprecationRule(value) &&
+            (typeof (value as Partial<NodeRule>).major === "number" ||
+              typeof (value as Partial<NodeRule>).maximumMajor === "number"),
+        },
       ),
       collectResolvedVersions(context.root),
     ]);
     const manifest = JSON.parse(manifestContents) as PackageManifest;
-    const findings: Finding[] = [];
+    const findings: DetectorFinding[] = [];
 
     const declarations = manifestRuntimeDeclarations(
       context.root,
@@ -284,7 +292,7 @@ export class NpmDetector implements Detector {
     const seenRuntimeRules = new Set<string>();
     for (const declaration of declarations) {
       for (const major of runtimeMajors(declaration.value)) {
-        const rule = ruleForMajor(nodeRegistry.rules, major);
+        const rule = ruleForMajor([...nodeRules], major);
         const key = rule ? `${rule.id}:${declaration.path}:${declaration.line}` : "";
         if (rule && !seenRuntimeRules.has(key)) {
           findings.push(declarationFinding(context.root, declaration, rule, major));
@@ -300,7 +308,7 @@ export class NpmDetector implements Detector {
       }
     }
 
-    for (const rule of packageRegistry.rules) {
+    for (const rule of packageRules) {
       const dependency = declared.get(rule.package);
       if (!dependency) continue;
       const resolved = [...(resolvedVersions.get(rule.package) ?? [])].sort(semver.compare);
@@ -309,7 +317,6 @@ export class NpmDetector implements Detector {
       findings.push({
         id: `${rule.id}:package.json:${line}`,
         ruleId: rule.id,
-        detector: this.name,
         title: rule.title,
         summary: `${rule.package} is declared in ${dependency.section} as ${dependency.range}; resolved: ${resolvedText}. ${rule.summary}`,
         severity: rule.severity,

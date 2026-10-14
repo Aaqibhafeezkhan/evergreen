@@ -1,0 +1,133 @@
+import { severityValues } from "./domain.js";
+import type { DeprecationRule, Finding } from "./domain.js";
+
+export const DETECTOR_API_VERSION = "evergreen.detector.v1" as const;
+
+export interface DetectorContext {
+  /** Absolute path to the repository being scanned. */
+  readonly root: string;
+}
+
+export type DetectorFinding = Omit<Finding, "detector">;
+
+export interface Detector {
+  readonly apiVersion: typeof DETECTOR_API_VERSION;
+  readonly id: string;
+  scan(context: DetectorContext): Promise<readonly DetectorFinding[]>;
+}
+
+export interface RegistryDefinition<Rule> {
+  readonly schemaVersion: string;
+  readonly isRule: (value: unknown) => value is Rule;
+}
+
+export interface Registry<Rule> {
+  readonly schemaVersion: string;
+  readonly rules: readonly Rule[];
+}
+
+export class DetectorCompatibilityError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "DetectorCompatibilityError";
+  }
+}
+
+export class RegistryValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "RegistryValidationError";
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+export function isDeprecationRule(value: unknown): value is DeprecationRule {
+  if (!isRecord(value)) return false;
+  if (
+    !isNonEmptyString(value.id) ||
+    !isNonEmptyString(value.ecosystem) ||
+    !isNonEmptyString(value.title) ||
+    !isNonEmptyString(value.summary) ||
+    !severityValues.includes(value.severity as (typeof severityValues)[number]) ||
+    !Array.isArray(value.sources) ||
+    value.sources.length === 0
+  ) {
+    return false;
+  }
+
+  if (value.replacement !== undefined && !isNonEmptyString(value.replacement)) return false;
+  if (value.deadline !== undefined && !isNonEmptyString(value.deadline)) return false;
+
+  return value.sources.every(
+    (source) =>
+      isRecord(source) &&
+      isNonEmptyString(source.title) &&
+      isNonEmptyString(source.url) &&
+      (source.accessedAt === undefined || isNonEmptyString(source.accessedAt)),
+  );
+}
+
+export function validateRegistry<Rule>(
+  value: unknown,
+  definition: RegistryDefinition<Rule>,
+): Registry<Rule> {
+  if (!isRecord(value)) {
+    throw new RegistryValidationError("Registry must be a JSON object.");
+  }
+  if (value.schemaVersion !== definition.schemaVersion) {
+    throw new RegistryValidationError(
+      `Unsupported registry schema: ${String(value.schemaVersion ?? "missing")}; expected ${definition.schemaVersion}.`,
+    );
+  }
+  if (!Array.isArray(value.rules)) {
+    throw new RegistryValidationError("Registry rules must be an array.");
+  }
+
+  for (const [index, rule] of value.rules.entries()) {
+    if (!definition.isRule(rule)) {
+      throw new RegistryValidationError(`Invalid registry rule at index ${index}.`);
+    }
+  }
+
+  return { schemaVersion: definition.schemaVersion, rules: value.rules };
+}
+
+export function assertDetectorCompatible(value: unknown): asserts value is Detector {
+  if (!isRecord(value)) {
+    throw new DetectorCompatibilityError("Detector must be an object.");
+  }
+  if (value.apiVersion !== DETECTOR_API_VERSION) {
+    throw new DetectorCompatibilityError(
+      `Unsupported detector API: ${String(value.apiVersion ?? "missing")}; expected ${DETECTOR_API_VERSION}.`,
+    );
+  }
+  if (!isNonEmptyString(value.id) || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.id)) {
+    throw new DetectorCompatibilityError(
+      "Detector id must contain lowercase letters, numbers, and single hyphens.",
+    );
+  }
+  if (typeof value.scan !== "function") {
+    throw new DetectorCompatibilityError("Detector scan must be a function.");
+  }
+}
+
+export function defineDetector<const Adapter extends Detector>(adapter: Adapter): Adapter {
+  assertDetectorCompatible(adapter);
+  return adapter;
+}
+
+export type {
+  DeprecationRule,
+  EvidenceSource,
+  Finding,
+  ScanResult,
+  Severity,
+  SourceLocation,
+} from "./domain.js";

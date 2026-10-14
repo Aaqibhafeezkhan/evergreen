@@ -1,6 +1,8 @@
 import { resolve } from "node:path";
 
-import type { Detector, ScanResult } from "./domain.js";
+import type { ScanResult } from "./domain.js";
+import { assertDetectorCompatible } from "./sdk.js";
+import type { Detector } from "./sdk.js";
 
 export async function scanRepository(
   root: string,
@@ -8,7 +10,15 @@ export async function scanRepository(
 ): Promise<ScanResult> {
   const resolvedRoot = resolve(root);
   const findings = (
-    await Promise.all(detectors.map((detector) => detector.scan({ root: resolvedRoot })))
+    await Promise.all(
+      detectors.map(async (detector) => {
+        assertDetectorCompatible(detector);
+        return (await detector.scan({ root: resolvedRoot })).map((finding) => ({
+          ...finding,
+          detector: detector.id,
+        }));
+      }),
+    )
   ).flat();
 
   return {
@@ -18,7 +28,7 @@ export async function scanRepository(
     findings: findings.sort((left, right) => left.id.localeCompare(right.id)),
     diagnostics:
       detectors.length === 0
-        ? ["No detectors are enabled yet. The first GitHub Actions detector is planned for Week 2."]
+        ? ["No detectors are enabled."]
         : [],
   };
 }

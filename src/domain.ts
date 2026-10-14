@@ -45,12 +45,3 @@ export interface ScanResult {
   findings: Finding[];
   diagnostics: string[];
 }
-
-export interface DetectorContext {
-  root: string;
-}
-
-export interface Detector {
-  name: string;
-  scan(context: DetectorContext): Promise<Finding[]>;
-}

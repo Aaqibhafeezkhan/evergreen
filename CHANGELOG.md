@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Add the versioned detector SDK at `evergreen-deprecation/sdk`.
+- Validate detector compatibility and registry envelopes before scanning.
+- Add an external detector example, authoring guide, and compatibility suite.
+
 ## 0.1.0-alpha.0
 
 - Add evidence-backed detection for five first-party GitHub Actions families.

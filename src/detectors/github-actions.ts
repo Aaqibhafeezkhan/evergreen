@@ -3,19 +3,17 @@ import { relative, resolve } from "node:path";
 
 import type {
   DeprecationRule,
-  Detector,
-  DetectorContext,
-  Finding,
 } from "../domain.js";
+import {
+  DETECTOR_API_VERSION,
+  isDeprecationRule,
+  validateRegistry,
+} from "../sdk.js";
+import type { Detector, DetectorContext, DetectorFinding } from "../sdk.js";
 
 interface GitHubActionRule extends DeprecationRule {
   action: string;
   supportedFromMajor: number;
-}
-
-interface GitHubActionsRegistry {
-  schemaVersion: "evergreen.github-actions-registry.v1";
-  rules: GitHubActionRule[];
 }
 
 interface ActionReference {
@@ -30,13 +28,14 @@ const VERSION_PATTERN = /^v?(\d+)(?:\.\d+){0,2}$/;
 async function loadRegistry(): Promise<GitHubActionRule[]> {
   const registryUrl = new URL("../../../registry/github-actions.json", import.meta.url);
   const contents = await readFile(registryUrl, "utf8");
-  const registry = JSON.parse(contents) as GitHubActionsRegistry;
-
-  if (registry.schemaVersion !== "evergreen.github-actions-registry.v1") {
-    throw new Error(`Unsupported GitHub Actions registry: ${registry.schemaVersion}`);
-  }
-
-  return registry.rules;
+  const registry = validateRegistry(JSON.parse(contents) as unknown, {
+    schemaVersion: "evergreen.github-actions-registry.v1",
+    isRule: (value): value is GitHubActionRule =>
+      isDeprecationRule(value) &&
+      typeof (value as Partial<GitHubActionRule>).action === "string" &&
+      typeof (value as Partial<GitHubActionRule>).supportedFromMajor === "number",
+  });
+  return [...registry.rules];
 }
 
 async function findWorkflowFiles(root: string): Promise<string[]> {
@@ -88,15 +87,16 @@ function majorVersion(ref: string): number | undefined {
 }
 
 export class GitHubActionsDetector implements Detector {
-  readonly name = "github-actions";
+  readonly apiVersion = DETECTOR_API_VERSION;
+  readonly id = "github-actions";
 
-  async scan(context: DetectorContext): Promise<Finding[]> {
+  async scan(context: DetectorContext): Promise<DetectorFinding[]> {
     const [rules, workflowFiles] = await Promise.all([
       loadRegistry(),
       findWorkflowFiles(context.root),
     ]);
     const rulesByAction = new Map(rules.map((rule) => [rule.action.toLowerCase(), rule]));
-    const findings: Finding[] = [];
+    const findings: DetectorFinding[] = [];
 
     for (const workflowFile of workflowFiles) {
       const contents = await readFile(workflowFile, "utf8");
@@ -112,7 +112,6 @@ export class GitHubActionsDetector implements Detector {
         findings.push({
           id: `${rule.id}:${path}:${reference.line}`,
           ruleId: rule.id,
-          detector: this.name,
           title: rule.title,
           summary: `${reference.action}@${reference.ref}: ${rule.summary}`,
           severity: rule.severity,

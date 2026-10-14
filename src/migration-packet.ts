@@ -1,3 +1,4 @@
+import { severityValues, sourceLanguageValues } from "./domain.js";
 import type { EvidenceSource, Finding, ScanResult, SourceLocation, SourceUsage } from "./domain.js";
 
 export interface MigrationStep {
@@ -23,6 +24,111 @@ export interface MigrationPacket {
   steps: MigrationStep[];
   sources: EvidenceSource[];
   verification: VerificationCommand[];
+}
+
+export class MigrationPacketValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "MigrationPacketValidationError";
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0;
+}
+
+function isLocation(value: unknown): value is SourceLocation {
+  if (!isRecord(value) || !isNonEmptyString(value.path)) return false;
+  return [value.line, value.column].every(
+    (item) => item === undefined || (Number.isInteger(item) && Number(item) >= 1),
+  );
+}
+
+function isSource(value: unknown): value is EvidenceSource {
+  return (
+    isRecord(value) &&
+    isNonEmptyString(value.title) &&
+    isNonEmptyString(value.url) &&
+    (value.accessedAt === undefined || isNonEmptyString(value.accessedAt))
+  );
+}
+
+function isUsage(value: unknown): value is SourceUsage {
+  return (
+    isRecord(value) &&
+    ["import", "call", "config-key"].includes(value.kind as string) &&
+    sourceLanguageValues.includes(value.language as never) &&
+    isNonEmptyString(value.symbol) &&
+    isLocation(value.location) &&
+    typeof value.excerpt === "string"
+  );
+}
+
+function isFinding(value: unknown): value is Finding {
+  return (
+    isRecord(value) &&
+    [value.id, value.ruleId, value.detector, value.title, value.summary].every(isNonEmptyString) &&
+    severityValues.includes(value.severity as never) &&
+    isLocation(value.location) &&
+    Array.isArray(value.sources) &&
+    value.sources.length > 0 &&
+    value.sources.every(isSource) &&
+    (value.usages === undefined || (Array.isArray(value.usages) && value.usages.every(isUsage)))
+  );
+}
+
+export function validateMigrationPacket(value: unknown): MigrationPacket {
+  if (!isRecord(value) || value.schemaVersion !== "evergreen.context.v1") {
+    throw new MigrationPacketValidationError("Unsupported migration packet schema.");
+  }
+  if (
+    !isNonEmptyString(value.generatedAt) ||
+    Number.isNaN(Date.parse(value.generatedAt)) ||
+    !isNonEmptyString(value.repositoryRoot) ||
+    !isFinding(value.finding)
+  ) {
+    throw new MigrationPacketValidationError("Invalid migration packet metadata or finding.");
+  }
+  if (
+    !Array.isArray(value.affectedFiles) ||
+    value.affectedFiles.length === 0 ||
+    !value.affectedFiles.every(isNonEmptyString) ||
+    new Set(value.affectedFiles).size !== value.affectedFiles.length ||
+    !Array.isArray(value.usages) ||
+    !value.usages.every(isUsage) ||
+    !Array.isArray(value.constraints) ||
+    value.constraints.length === 0 ||
+    !value.constraints.every(isNonEmptyString) ||
+    !Array.isArray(value.sources) ||
+    value.sources.length === 0 ||
+    !value.sources.every(isSource)
+  ) {
+    throw new MigrationPacketValidationError("Invalid migration packet scope or evidence.");
+  }
+  const validStep = (step: unknown): boolean =>
+    isRecord(step) &&
+    [step.id, step.title, step.instructions].every(isNonEmptyString) &&
+    Array.isArray(step.paths) &&
+    step.paths.every(isNonEmptyString);
+  const validVerification = (verification: unknown): boolean =>
+    isRecord(verification) &&
+    isNonEmptyString(verification.command) &&
+    isNonEmptyString(verification.purpose);
+  if (
+    !Array.isArray(value.steps) ||
+    value.steps.length === 0 ||
+    !value.steps.every(validStep) ||
+    !Array.isArray(value.verification) ||
+    value.verification.length === 0 ||
+    !value.verification.every(validVerification)
+  ) {
+    throw new MigrationPacketValidationError("Invalid migration steps or verification commands.");
+  }
+  return value as unknown as MigrationPacket;
 }
 
 function affectedFiles(finding: Finding): string[] {
@@ -102,7 +208,7 @@ export function createMigrationPacket(result: ScanResult, findingId: string): Mi
   const finding = result.findings.find((candidate) => candidate.id === findingId);
   if (!finding) throw new Error(`Finding not found: ${findingId}`);
   const paths = affectedFiles(finding);
-  return {
+  return validateMigrationPacket({
     schemaVersion: "evergreen.context.v1",
     generatedAt: result.scannedAt,
     repositoryRoot: result.root,
@@ -113,5 +219,5 @@ export function createMigrationPacket(result: ScanResult, findingId: string): Mi
     steps: stepsFor(finding, paths),
     sources: finding.sources,
     verification: verificationFor(finding),
-  };
+  });
 }

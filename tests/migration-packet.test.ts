@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { test } from "node:test";
 
 import type { ScanResult } from "../src/domain.js";
-import { createMigrationPacket } from "../src/migration-packet.js";
+import { createMigrationPacket, validateMigrationPacket } from "../src/migration-packet.js";
 
 const result: ScanResult = {
   schemaVersion: "evergreen.scan.v1",
@@ -66,4 +68,25 @@ test("creates a deterministic, agent-ready migration packet", () => {
 
 test("rejects a missing finding", () => {
   assert.throws(() => createMigrationPacket(result, "missing"), /Finding not found: missing/);
+});
+
+test("validates packets and keeps the JSON Schema top-level contract in sync", async () => {
+  const packet = createMigrationPacket(result, result.findings[0]!.id);
+  assert.equal(
+    validateMigrationPacket(JSON.parse(JSON.stringify(packet))).schemaVersion,
+    packet.schemaVersion,
+  );
+  assert.throws(
+    () => validateMigrationPacket({ ...packet, schemaVersion: "evergreen.context.v2" }),
+    /Unsupported migration packet schema/,
+  );
+  assert.throws(
+    () => validateMigrationPacket({ ...packet, verification: [] }),
+    /Invalid migration steps or verification commands/,
+  );
+
+  const schema = JSON.parse(
+    await readFile(resolve("schemas/context.v1.schema.json"), "utf8"),
+  ) as { required: string[] };
+  assert.deepEqual([...schema.required].sort(), Object.keys(packet).sort());
 });

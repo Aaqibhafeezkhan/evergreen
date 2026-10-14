@@ -33,6 +33,12 @@ Inspect the evidence and migration direction for one result:
 npx evergreen-deprecation explain '<finding-id>' .
 ```
 
+Generate portable migration context for a human or coding agent:
+
+```bash
+npx evergreen-deprecation context '<finding-id>' . --json
+```
+
 Evergreen runs locally and does not upload repository contents.
 
 ## Development

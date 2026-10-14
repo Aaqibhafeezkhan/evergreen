@@ -72,7 +72,7 @@ Exit criterion for Month 2: external contributors can add a detector without edi
 
 ### Week 9: migration packets
 
-- [ ] Implement `evergreen context <finding-id>`
+- [x] Implement `evergreen context <finding-id>`
 - [ ] Include affected files, constraints, steps, sources, and verification commands
 
 ### Week 10: local MCP server

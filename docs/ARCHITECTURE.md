@@ -24,6 +24,8 @@ Source usage analysis is a shared batch module below the detector seam. A detect
 
 The GitHub Action is an adapter over a single action-runner module. That module owns scanning, optional baseline comparison, severity-gate evaluation, annotation data, and report persistence behind one interface. The bundled entry point only translates environment inputs and outcomes to GitHub workflow commands; the composite wrapper uploads the already-generated report even when the gate fails.
 
+Migration context is produced by a pure module whose interface accepts a scan result and finding ID. It owns lookup, affected-file derivation, constraints, ordered steps, sources, and verification commands. The CLI is its first adapter; the local MCP server will reuse the same interface.
+
 ## Trust boundaries
 
 - Repository contents are untrusted input.

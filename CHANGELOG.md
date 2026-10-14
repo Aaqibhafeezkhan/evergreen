@@ -8,6 +8,7 @@
 - Add Python runtime and direct-package lifecycle detection for pyproject, requirements, version files, and common lockfiles.
 - Add language-aware source usage analysis with exact imports, calls, configuration keys, and migration-impact estimates.
 - Add a reusable GitHub Action with pull-request annotations, baseline regression filtering, severity gates, and JSON report artifacts.
+- Add the first `evergreen context` migration-packet contract and CLI command.
 
 ## 0.1.0-alpha.0
 

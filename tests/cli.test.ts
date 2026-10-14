@@ -26,7 +26,7 @@ async function fixtureRepository(): Promise<string> {
   return root;
 }
 
-test("CLI scans, explains, creates a baseline, and suppresses known findings", async () => {
+test("CLI scans, explains, creates context, and suppresses baseline findings", async () => {
   const root = await fixtureRepository();
   const firstScan = await execute(process.execPath, [cli, "scan", root, "--json"]);
   const result = JSON.parse(firstScan.stdout) as { findings: Array<{ id: string }> };
@@ -39,6 +39,26 @@ test("CLI scans, explains, creates a baseline, and suppresses known findings", a
     root,
   ]);
   assert.match(explanation.stdout, /Sources:/);
+
+  const context = await execute(process.execPath, [
+    cli,
+    "context",
+    result.findings[0]?.id ?? "",
+    root,
+    "--json",
+  ]);
+  const packet = JSON.parse(context.stdout) as {
+    schemaVersion: string;
+    affectedFiles: string[];
+    constraints: string[];
+    steps: unknown[];
+    verification: unknown[];
+  };
+  assert.equal(packet.schemaVersion, "evergreen.context.v1");
+  assert.ok(packet.affectedFiles.length > 0);
+  assert.ok(packet.constraints.length > 0);
+  assert.ok(packet.steps.length > 0);
+  assert.ok(packet.verification.length > 0);
 
   const baselinePath = join(root, "baseline.json");
   await execute(process.execPath, [cli, "baseline", root, "--output", baselinePath]);

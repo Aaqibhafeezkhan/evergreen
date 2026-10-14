@@ -6,7 +6,8 @@ import { resolve } from "node:path";
 import { applyBaseline, createBaseline, readBaseline, writeBaseline } from "./baseline.js";
 import { builtInDetectors } from "./detectors/index.js";
 import { scanRepository } from "./engine.js";
-import { renderFindingText, renderJson, renderText } from "./reporters.js";
+import { createMigrationPacket } from "./migration-packet.js";
+import { renderFindingText, renderJson, renderMigrationPacketText, renderText } from "./reporters.js";
 
 const HELP = `Evergreen — local-first deprecation intelligence
 
@@ -15,6 +16,7 @@ Usage:
   evergreen scan [path] --baseline <file> [--json]
   evergreen baseline [path] [--output <file>]
   evergreen explain <finding-id> [path] [--json]
+  evergreen context <finding-id> [path] [--json]
   evergreen --help
   evergreen --version
 `;
@@ -33,7 +35,7 @@ async function main(args: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "scan" && command !== "explain" && command !== "baseline") {
+  if (command !== "scan" && command !== "explain" && command !== "context" && command !== "baseline") {
     process.stderr.write(`Unknown command: ${command ?? ""}\n\n${HELP}`);
     return 2;
   }
@@ -54,12 +56,14 @@ async function main(args: string[]): Promise<number> {
     const index = args.indexOf(name);
     return index === -1 ? undefined : args[index + 1];
   };
-  const findingId = command === "explain" ? positional[0] : undefined;
-  if (command === "explain" && !findingId) {
+  const findingId = command === "explain" || command === "context" ? positional[0] : undefined;
+  if ((command === "explain" || command === "context") && !findingId) {
     process.stderr.write(`Missing finding ID.\n\n${HELP}`);
     return 2;
   }
-  const pathArgument = command === "explain" ? (positional[1] ?? ".") : (positional[0] ?? ".");
+  const pathArgument = command === "explain" || command === "context"
+    ? (positional[1] ?? ".")
+    : (positional[0] ?? ".");
   let result = await scanRepository(pathArgument, builtInDetectors);
   if (command === "baseline") {
     const output = resolve(optionValue("--output") ?? ".evergreen-baseline.json");
@@ -72,7 +76,15 @@ async function main(args: string[]): Promise<number> {
   if (baselinePath) {
     result = applyBaseline(result, await readBaseline(resolve(baselinePath)));
   }
-  if (command === "explain") {
+  if (command === "context") {
+    try {
+      const packet = createMigrationPacket(result, findingId!);
+      process.stdout.write(`${json ? JSON.stringify(packet, null, 2) : renderMigrationPacketText(packet)}\n`);
+    } catch (error) {
+      process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+      return 1;
+    }
+  } else if (command === "explain") {
     const finding = result.findings.find((candidate) => candidate.id === findingId);
     if (!finding) {
       process.stderr.write(`Finding not found: ${findingId}\n`);

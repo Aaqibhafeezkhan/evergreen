@@ -1,4 +1,5 @@
 import type { ScanResult } from "./domain.js";
+import type { MigrationPacket } from "./migration-packet.js";
 
 export function renderJson(result: ScanResult): string {
   return JSON.stringify(result, null, 2);
@@ -71,5 +72,31 @@ export function renderFindingText(finding: ScanResult["findings"][number]): stri
     );
   }
   lines.push("", "Sources:", ...finding.sources.map((source) => `- ${source.title}: ${source.url}`));
+  return lines.join("\n");
+}
+
+export function renderMigrationPacketText(packet: MigrationPacket): string {
+  const lines = [
+    `Migration context: ${packet.finding.title}`,
+    `Finding: ${packet.finding.id}`,
+    `Severity: ${packet.finding.severity}`,
+    "",
+    "Affected files:",
+    ...packet.affectedFiles.map((path) => `- ${path}`),
+    "",
+    "Constraints:",
+    ...packet.constraints.map((constraint) => `- ${constraint}`),
+    "",
+    "Migration steps:",
+    ...packet.steps.map((step, index) => `${index + 1}. ${step.title}: ${step.instructions}`),
+    "",
+    "Verification:",
+    ...packet.verification.map((verification) =>
+      `- ${verification.command} — ${verification.purpose}`
+    ),
+    "",
+    "Sources:",
+    ...packet.sources.map((source) => `- ${source.title}: ${source.url}`),
+  ];
   return lines.join("\n");
 }

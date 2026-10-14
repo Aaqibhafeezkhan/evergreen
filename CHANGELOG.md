@@ -6,6 +6,9 @@
   tokens, usage guide, distribution templates, and proprietary brand terms.
 - Apply the approved Evergreen identity and product descriptor across repository,
   documentation, npm, Agent Skill, and GitHub Action source surfaces.
+- Add the read-only `evergreen doctor` command with deterministic text and JSON
+  output, local/GitHub/GitLab environment checks, remediation guidance, and a
+  versioned public compatibility matrix.
 
 ## 0.1.0 - 2026-10-14
 

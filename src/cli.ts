@@ -7,6 +7,7 @@ import { applyBaseline, createBaseline, readBaseline, writeBaseline } from "./ba
 import { builtInDetectors } from "./detectors/index.js";
 import { scanRepository } from "./engine.js";
 import { createMigrationPacket } from "./migration-packet.js";
+import { diagnoseEnvironment, renderDoctorText } from "./doctor.js";
 import { renderFindingText, renderJson, renderMigrationPacketText, renderText } from "./reporters.js";
 import { VERSION } from "./version.js";
 
@@ -18,6 +19,7 @@ Usage:
   evergreen baseline [path] [--output <file>]
   evergreen explain <finding-id> [path] [--json]
   evergreen context <finding-id> [path] [--json]
+  evergreen doctor [path] [--json]
   evergreen --help
   evergreen --version
 `;
@@ -34,7 +36,7 @@ async function main(args: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "scan" && command !== "explain" && command !== "context" && command !== "baseline") {
+  if (command !== "scan" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "doctor") {
     process.stderr.write(`Unknown command: ${command ?? ""}\n\n${HELP}`);
     return 2;
   }
@@ -63,6 +65,11 @@ async function main(args: string[]): Promise<number> {
   const pathArgument = command === "explain" || command === "context"
     ? (positional[1] ?? ".")
     : (positional[0] ?? ".");
+  if (command === "doctor") {
+    const result = await diagnoseEnvironment(pathArgument);
+    process.stdout.write(`${json ? JSON.stringify(result, null, 2) : renderDoctorText(result)}\n`);
+    return result.summary.failed > 0 ? 1 : 0;
+  }
   let result = await scanRepository(pathArgument, builtInDetectors);
   if (command === "baseline") {
     const output = resolve(optionValue("--output") ?? ".evergreen-baseline.json");

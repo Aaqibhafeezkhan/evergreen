@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arminazimi.github.io/evergreen/schemas/doctor.v1.schema.json",
+  "title": "Evergreen doctor result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "root", "context", "summary", "checks", "privacy"],
+  "properties": {
+    "schemaVersion": { "const": "evergreen.doctor.v1" },
+    "root": { "type": "string" },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "platform", "nodeVersion"],
+      "properties": {
+        "kind": { "enum": ["local", "github-actions", "gitlab-ci"] },
+        "platform": { "type": "string" },
+        "nodeVersion": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "passed", "warnings", "failed"],
+      "properties": {
+        "status": { "enum": ["ready", "ready-with-warnings", "not-ready"] },
+        "passed": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "category", "status", "summary", "details"],
+        "properties": {
+          "id": { "type": "string" },
+          "category": { "enum": ["runtime", "package", "mcp", "skill", "plugin", "ci"] },
+          "status": { "enum": ["pass", "warning", "fail"] },
+          "summary": { "type": "string" },
+          "details": { "type": "string" },
+          "remediation": { "type": "string" }
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repositoryDataUploaded", "configurationMutated"],
+      "properties": {
+        "repositoryDataUploaded": { "const": false },
+        "configurationMutated": { "const": false }
+      }
+    }
+  }
+}

@@ -78,3 +78,23 @@ test("CLI scans, explains, creates context, and suppresses baseline findings", a
   assert.deepEqual(filtered.findings, []);
   assert.match(filtered.diagnostics.at(-1) ?? "", /Suppressed 2 findings/);
 });
+
+test("CLI doctor reports the local environment in text and JSON", async () => {
+  const root = await fixtureRepository();
+  const textResult = await execute(process.execPath, [cli, "doctor", root]);
+  assert.match(textResult.stdout, /Evergreen doctor/);
+  assert.match(textResult.stdout, /Privacy: no repository data was uploaded/);
+
+  const jsonResult = await execute(process.execPath, [cli, "doctor", root, "--json"]);
+  const result = JSON.parse(jsonResult.stdout) as {
+    schemaVersion: string;
+    summary: { failed: number };
+    checks: Array<{ category: string }>;
+  };
+  assert.equal(result.schemaVersion, "evergreen.doctor.v1");
+  assert.equal(result.summary.failed, 0);
+  assert.deepEqual(
+    result.checks.map((check) => check.category),
+    ["runtime", "package", "mcp", "skill", "plugin", "ci"],
+  );
+});

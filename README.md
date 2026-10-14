@@ -32,6 +32,17 @@ Requirements: Node.js 22 or newer.
 npx evergreen-deprecation scan .
 ```
 
+Verify that the CLI, local MCP server, Agent Skill, plugin foundations, and CI
+workspace are ready without changing configuration or uploading repository data:
+
+```bash
+npx evergreen-deprecation doctor .
+npx evergreen-deprecation doctor . --json
+```
+
+See the [public compatibility matrix](docs/COMPATIBILITY.md) for supported,
+experimental, and unsupported combinations.
+
 Create a baseline for accepted existing findings, then report only new lifecycle regressions:
 
 ```bash

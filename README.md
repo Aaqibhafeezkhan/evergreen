@@ -121,3 +121,9 @@ See the [detector authoring guide](docs/DETECTORS.md) and the [minimal detector 
 The CLI is the product. Detectors extend it, GitHub Actions automate it, and the local MCP server exposes it to agents. A hosted backend is intentionally outside the first three-month roadmap.
 
 See [the roadmap](docs/ROADMAP.md), [architecture](docs/ARCHITECTURE.md), and [contribution guide](CONTRIBUTING.md).
+
+## License and brand
+
+Evergreen source code is licensed under the [Apache License 2.0](LICENSE). The
+Evergreen name, logo, and files in [`brand/`](brand/) are proprietary brand assets
+and are covered by separate [brand asset terms](brand/LICENSE.md).

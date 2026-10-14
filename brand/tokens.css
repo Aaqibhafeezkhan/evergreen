@@ -1,0 +1,46 @@
+:root {
+  --evergreen-color-obsidian: #0a0a0c;
+  --evergreen-color-black-cherry: #2b0b15;
+  --evergreen-color-deep-burgundy: #571729;
+  --evergreen-color-garnet: #8f3048;
+  --evergreen-color-dusty-rose: #b96779;
+  --evergreen-color-warm-ivory: #f3ece8;
+  --evergreen-color-muted-pine: #365c4c;
+
+  --evergreen-font-sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --evergreen-font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+
+  --evergreen-space-1: 4px;
+  --evergreen-space-2: 8px;
+  --evergreen-space-3: 12px;
+  --evergreen-space-4: 16px;
+  --evergreen-space-6: 24px;
+  --evergreen-space-8: 32px;
+  --evergreen-space-12: 48px;
+  --evergreen-space-16: 64px;
+  --evergreen-space-24: 96px;
+  --evergreen-space-32: 128px;
+
+  --evergreen-radius-compact: 8px;
+  --evergreen-radius-card: 16px;
+  --evergreen-radius-panel: 24px;
+}
+
+[data-evergreen-theme="dark"] {
+  --evergreen-canvas: var(--evergreen-color-obsidian);
+  --evergreen-surface: var(--evergreen-color-black-cherry);
+  --evergreen-text: var(--evergreen-color-warm-ivory);
+  --evergreen-text-accent: var(--evergreen-color-dusty-rose);
+  --evergreen-success: var(--evergreen-color-muted-pine);
+}
+
+[data-evergreen-theme="light"] {
+  --evergreen-canvas: var(--evergreen-color-warm-ivory);
+  --evergreen-surface: #fff;
+  --evergreen-text: var(--evergreen-color-obsidian);
+  --evergreen-text-accent: var(--evergreen-color-garnet);
+  --evergreen-success: var(--evergreen-color-muted-pine);
+}
+

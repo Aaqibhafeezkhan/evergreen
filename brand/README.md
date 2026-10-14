@@ -1,10 +1,12 @@
 # Evergreen brand assets
 
-This directory contains the first production-vector pass of Evergreen's selected
-`Version Notches` identity direction.
+This directory contains Evergreen's production `Version Notches` identity,
+brand guidance, reusable templates, and canonical exports.
 
 The versioned positioning, audience, voice, naming, tagline, and typography rules
-are defined in [`BRAND_BRIEF.md`](BRAND_BRIEF.md).
+are defined in [`BRAND_BRIEF.md`](BRAND_BRIEF.md). Practical logo, color,
+accessibility, layout, template, and export rules are in
+[`BRAND_GUIDE.md`](BRAND_GUIDE.md).
 
 ## Mark construction
 
@@ -39,6 +41,10 @@ represents one evidence-backed transition between versions.
 - `assets/evergreen-mark-mono-light.svg` — single-color light mark
 - Matching `512 × 512` transparent PNG exports for each mark variant
 - `evergreen-logo-sheet.svg` — review sheet with lockups and small-size checks
+- `templates/` — editable social, avatar, banner, and marketplace sources
+- `exports/` — canonical PNG renders of every template preset
+- `tokens.json` and `tokens.css` — machine-readable design tokens
+- `export-presets.json` — canonical source, output, size, and background mappings
 
 The wordmark on the review sheet is still live type so typography can be selected
 and edited. It follows the approved Inter typography and uses IBM Plex Mono for
@@ -54,3 +60,10 @@ node at 4:30, and uses a documented major/minor/patch construction grid.
 This is a preliminary obvious-confusion review, not legal trademark clearance.
 Before a v1 brand launch, repeat image-similarity searches on the final outlined
 lockup and obtain jurisdiction-specific trademark advice if registration is planned.
+
+## Asset rights
+
+Evergreen source code remains under Apache License 2.0. The Evergreen name, logo,
+wordmark, templates, and other brand assets are proprietary and are not licensed
+under Apache 2.0. Limited permission for unmodified, truthful references to the
+official project is described in [`LICENSE.md`](LICENSE.md).

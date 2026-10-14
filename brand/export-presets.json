@@ -1,0 +1,88 @@
+{
+  "version": "1.0.0",
+  "format": "png",
+  "density": 144,
+  "presets": [
+    {
+      "name": "social-preview-dark",
+      "source": "templates/social-preview-dark.svg",
+      "output": "exports/social-preview-dark.png",
+      "width": 1280,
+      "height": 640,
+      "background": "#0A0A0C"
+    },
+    {
+      "name": "social-preview-light",
+      "source": "templates/social-preview-light.svg",
+      "output": "exports/social-preview-light.png",
+      "width": 1280,
+      "height": 640,
+      "background": "#F3ECE8"
+    },
+    {
+      "name": "avatar-dark",
+      "source": "templates/avatar-dark.svg",
+      "output": "exports/avatar-dark.png",
+      "width": 512,
+      "height": 512,
+      "background": "#0A0A0C"
+    },
+    {
+      "name": "avatar-light",
+      "source": "templates/avatar-light.svg",
+      "output": "exports/avatar-light.png",
+      "width": 512,
+      "height": 512,
+      "background": "#F3ECE8"
+    },
+    {
+      "name": "banner-dark",
+      "source": "templates/banner-dark.svg",
+      "output": "exports/banner-dark.png",
+      "width": 1500,
+      "height": 500,
+      "background": "#0A0A0C"
+    },
+    {
+      "name": "banner-light",
+      "source": "templates/banner-light.svg",
+      "output": "exports/banner-light.png",
+      "width": 1500,
+      "height": 500,
+      "background": "#F3ECE8"
+    },
+    {
+      "name": "marketplace-feature-dark",
+      "source": "templates/marketplace-feature-dark.svg",
+      "output": "exports/marketplace-feature-dark.png",
+      "width": 965,
+      "height": 482,
+      "background": "#2B0B15"
+    },
+    {
+      "name": "marketplace-feature-light",
+      "source": "templates/marketplace-feature-light.svg",
+      "output": "exports/marketplace-feature-light.png",
+      "width": 965,
+      "height": 482,
+      "background": "#F3ECE8"
+    },
+    {
+      "name": "marketplace-logo-dark",
+      "source": "assets/evergreen-mark-dark.svg",
+      "output": "exports/marketplace-logo-dark.png",
+      "width": 512,
+      "height": 512,
+      "background": "transparent"
+    },
+    {
+      "name": "marketplace-logo-light",
+      "source": "assets/evergreen-mark-light.svg",
+      "output": "exports/marketplace-logo-light.png",
+      "width": 512,
+      "height": 512,
+      "background": "transparent"
+    }
+  ]
+}
+

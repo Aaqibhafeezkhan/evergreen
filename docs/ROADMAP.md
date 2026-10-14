@@ -88,8 +88,10 @@ Exit criterion for Month 2: external contributors can add a detector without edi
 ### Week 12: public launch
 
 - [ ] Publish v0.1
-- [ ] Test 20 representative repositories
-- [ ] Publish accuracy and performance results
-- [ ] Prepare contributor issues and a short demo
+- [x] Test 20 representative repositories
+- [x] Publish accuracy and performance results
+- [x] Prepare contributor issues and a short demo
+- [ ] Launch public documentation
+- [ ] Record post-launch findings and the next roadmap
 
 Exit criterion for Month 3: a human or agent can discover, understand, migrate, and verify one supported deprecation without a hosted Evergreen service.

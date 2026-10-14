@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: arminazimi/evergreen@main
+      - uses: arminazimi/evergreen@v0.1.0
         with:
           baseline: .evergreen-baseline.json
           fail-on-severity: high
 ```
 
-During pre-release development, `main` provides the newest Action. Pin a full commit SHA for reproducible or security-sensitive workflows.
+Version tags provide stable release references. Pin a full commit SHA when your threat model requires immutable third-party action references.
 
 Create and commit the baseline locally when existing findings are accepted:
 

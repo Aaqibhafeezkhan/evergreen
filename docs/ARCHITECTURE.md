@@ -44,4 +44,4 @@ The portable Agent Skill is a thin instruction adapter over the MCP and CLI inte
 
 ## Hosting
 
-No backend is required. The CLI and MCP server run locally, the GitHub Action runs on the repository's runner, and the rule registry ships with signed project releases. Documentation may be hosted as a static site.
+No backend is required. The CLI and MCP server run locally, the GitHub Action runs on the repository's runner, and the rule registry ships with signed project releases. Documentation is a static GitHub Pages site built from `docs/`; it receives no repository source code.

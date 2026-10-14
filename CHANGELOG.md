@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.0 - 2026-10-14
+
 - Add the versioned detector SDK at `evergreen-deprecation/sdk`.
 - Validate detector compatibility and registry envelopes before scanning.
 - Add an external detector example, authoring guide, and compatibility suite.
@@ -11,6 +13,8 @@
 - Add validated, rule-specific `evergreen context` migration packets for humans and coding agents.
 - Add a local stdio MCP server with versioned scan, list, explain, context, and migration-verification tools.
 - Add a portable Agent Skill for the scan, explain, migrate, and verify workflow with trigger evaluation cases.
+- Validate 27 expected lifecycle findings across 20 pinned public repositories with no observed false positives or false negatives.
+- Add public documentation, a reproducible 90-second demo, contribution templates, and the post-launch roadmap.
 
 ## 0.1.0-alpha.0
 

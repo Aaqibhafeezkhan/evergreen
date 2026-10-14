@@ -1,0 +1,35 @@
+name: Bug report
+description: Report an incorrect, missing, or unusable Evergreen result.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for providing a small, reproducible report. Remove secrets before attaching repository content.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include the smallest fixture or public repository commit and the exact Evergreen command.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Paste the relevant text or JSON finding.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Evergreen version
+      placeholder: 0.1.0
+    validations:
+      required: true

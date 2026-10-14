@@ -1,8 +1,12 @@
 # Evergreen
 
+[![CI](https://github.com/arminazimi/evergreen/actions/workflows/ci.yml/badge.svg)](https://github.com/arminazimi/evergreen/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/evergreen-deprecation.svg)](https://www.npmjs.com/package/evergreen-deprecation)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 Evergreen is a local-first deprecation intelligence engine for software repositories. It connects upcoming ecosystem changes to the exact files they affect and produces evidence-backed migration context for humans and AI coding agents.
 
-> Early development: current main includes GitHub Actions, Node.js, npm, and Python lifecycle detectors.
+Version 0.1 includes GitHub Actions, Node.js, npm, and Python lifecycle detectors. Read the [public documentation](https://arminazimi.github.io/evergreen/), run the [90-second demo](docs/DEMO.md), or inspect the [v0.1 validation report](docs/VALIDATION.md).
 
 ## Product principles
 
@@ -98,13 +102,13 @@ permissions:
 
 steps:
   - uses: actions/checkout@v7
-  - uses: arminazimi/evergreen@main
+  - uses: arminazimi/evergreen@v0.1.0
     with:
       baseline: .evergreen-baseline.json
       fail-on-severity: high
 ```
 
-The project is still pre-release, so the example follows `main`; pin a commit SHA when reproducibility matters. See the [GitHub Action guide](docs/GITHUB_ACTION.md) for setup, inputs, permissions, artifacts, and privacy boundaries.
+Pin a full commit SHA instead of a version tag when your threat model requires immutable third-party action references. See the [GitHub Action guide](docs/GITHUB_ACTION.md) for setup, inputs, permissions, artifacts, and privacy boundaries.
 
 ## Detector SDK
 
@@ -116,4 +120,4 @@ See the [detector authoring guide](docs/DETECTORS.md) and the [minimal detector 
 
 The CLI is the product. Detectors extend it, GitHub Actions automate it, and the local MCP server exposes it to agents. A hosted backend is intentionally outside the first three-month roadmap.
 
-See [the roadmap](docs/ROADMAP.md) and [architecture](docs/ARCHITECTURE.md).
+See [the roadmap](docs/ROADMAP.md), [architecture](docs/ARCHITECTURE.md), and [contribution guide](CONTRIBUTING.md).

@@ -1,0 +1,39 @@
+name: Detector or rule proposal
+description: Propose evidence-backed lifecycle coverage.
+title: "proposal: "
+labels: ["enhancement", "area: detector"]
+body:
+  - type: input
+    id: ecosystem
+    attributes:
+      label: Ecosystem or tool
+    validations:
+      required: true
+  - type: textarea
+    id: declarations
+    attributes:
+      label: Files and declarations to inspect
+      description: Name manifests, lockfiles, workflow syntax, or runtime pins.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Authoritative lifecycle evidence
+      description: Link maintainer or platform documentation with dates and replacement guidance.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Matching boundaries
+      description: Describe true positives, lookalikes, dynamic cases, and intentional exclusions.
+    validations:
+      required: true
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migration and verification
+      description: Describe behavior that must be preserved and checks a maintainer should run.
+    validations:
+      required: true

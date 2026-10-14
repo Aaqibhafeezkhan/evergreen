@@ -1,0 +1,128 @@
+import { execFile } from "node:child_process";
+import { readFile, rm, mkdtemp } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { performance } from "node:perf_hooks";
+import { promisify } from "node:util";
+
+import { builtInDetectors } from "../src/detectors/index.js";
+import type { Finding } from "../src/domain.js";
+import { scanRepository } from "../src/engine.js";
+
+const run = promisify(execFile);
+
+interface ExpectedFinding {
+  ruleId: string;
+  path: string;
+  line?: number;
+}
+
+interface CorpusEntry {
+  repository: string;
+  commit: string;
+  ecosystem: "node" | "python" | "node-actions";
+  expected: ExpectedFinding[];
+}
+
+interface Corpus {
+  schemaVersion: "evergreen.public-validation.v1";
+  repositories: CorpusEntry[];
+}
+
+function findingKey(finding: ExpectedFinding): string {
+  return [finding.ruleId, finding.path, finding.line ?? ""].join(":");
+}
+
+function percentile(values: number[], fraction: number): number {
+  const ordered = [...values].sort((left, right) => left - right);
+  const index = Math.max(0, Math.ceil(ordered.length * fraction) - 1);
+  return ordered[index] ?? 0;
+}
+
+const observeOnly = process.argv.includes("--observe");
+const corpus = JSON.parse(
+  await readFile(resolve("benchmarks/public-repositories.json"), "utf8"),
+) as Corpus;
+
+if (corpus.repositories.length !== 20) {
+  throw new Error(`Expected exactly 20 repositories, received ${corpus.repositories.length}.`);
+}
+
+const root = await mkdtemp(join(tmpdir(), "evergreen-public-validation-"));
+const results: Array<{
+  repository: string;
+  commit: string;
+  ecosystem: CorpusEntry["ecosystem"];
+  durationMs: number;
+  findings: ExpectedFinding[];
+  truePositives: number;
+  falsePositives: number;
+  falseNegatives: number;
+}> = [];
+
+try {
+  for (const [index, entry] of corpus.repositories.entries()) {
+    const checkout = join(root, String(index));
+    await run("git", ["init", "--quiet", checkout]);
+    await run("git", ["-C", checkout, "fetch", "--quiet", "--depth", "1", `https://github.com/${entry.repository}.git`, entry.commit], {
+      env: { ...process.env, GIT_TERMINAL_PROMPT: "0" },
+      maxBuffer: 10 * 1024 * 1024,
+    });
+    await run("git", ["-C", checkout, "checkout", "--quiet", "--detach", "FETCH_HEAD"]);
+
+    const startedAt = performance.now();
+    const scan = await scanRepository(checkout, builtInDetectors);
+    const durationMs = Number((performance.now() - startedAt).toFixed(2));
+    const findings = scan.findings.map((finding: Finding) => ({
+      ruleId: finding.ruleId,
+      path: finding.location.path,
+      ...(finding.location.line === undefined ? {} : { line: finding.location.line }),
+    }));
+    const expected = new Set(entry.expected.map(findingKey));
+    const actual = new Set(findings.map(findingKey));
+    const truePositives = [...actual].filter((key) => expected.has(key)).length;
+    results.push({
+      repository: entry.repository,
+      commit: entry.commit,
+      ecosystem: entry.ecosystem,
+      durationMs,
+      findings,
+      truePositives,
+      falsePositives: [...actual].filter((key) => !expected.has(key)).length,
+      falseNegatives: [...expected].filter((key) => !actual.has(key)).length,
+    });
+  }
+
+  const truePositives = results.reduce((total, result) => total + result.truePositives, 0);
+  const falsePositives = results.reduce((total, result) => total + result.falsePositives, 0);
+  const falseNegatives = results.reduce((total, result) => total + result.falseNegatives, 0);
+  const durations = results.map((result) => result.durationMs);
+  const precision = truePositives + falsePositives === 0
+    ? 1
+    : truePositives / (truePositives + falsePositives);
+  const recall = truePositives + falseNegatives === 0
+    ? 1
+    : truePositives / (truePositives + falseNegatives);
+  const report = {
+    schemaVersion: "evergreen.public-validation-result.v1",
+    mode: observeOnly ? "observe" : "verify",
+    repositories: results,
+    summary: {
+      repositoryCount: results.length,
+      findingCount: results.reduce((total, result) => total + result.findings.length, 0),
+      truePositives,
+      falsePositives,
+      falseNegatives,
+      precision: Number(precision.toFixed(4)),
+      recall: Number(recall.toFixed(4)),
+      medianScanMs: Number(percentile(durations, 0.5).toFixed(2)),
+      p95ScanMs: Number(percentile(durations, 0.95).toFixed(2)),
+      slowestScanMs: Number(Math.max(...durations).toFixed(2)),
+    },
+  };
+
+  console.log(JSON.stringify(report, null, 2));
+  if (!observeOnly && (falsePositives > 0 || falseNegatives > 0)) process.exitCode = 1;
+} finally {
+  await rm(root, { recursive: true, force: true });
+}

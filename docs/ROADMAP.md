@@ -51,8 +51,8 @@ Exit criterion: a new user can install and obtain a useful finding in under five
 
 ### Week 6: Python detector
 
-- [ ] Support `pyproject.toml`, `requirements.txt`, and common lockfiles
-- [ ] Add Python runtime and package lifecycle rules
+- [x] Support `pyproject.toml`, `requirements.txt`, and common lockfiles
+- [x] Add Python runtime and package lifecycle rules
 
 ### Week 7: source usage analysis
 

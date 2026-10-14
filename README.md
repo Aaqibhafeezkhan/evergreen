@@ -2,7 +2,7 @@
 
 Evergreen is a local-first deprecation intelligence engine for software repositories. It connects upcoming ecosystem changes to the exact files they affect and produces evidence-backed migration context for humans and AI coding agents.
 
-> Early development: the current release includes GitHub Actions, Node.js, and npm lifecycle detectors.
+> Early development: current main includes GitHub Actions, Node.js, npm, and Python lifecycle detectors.
 
 ## Product principles
 
@@ -53,6 +53,8 @@ The initial detector reports unsupported major versions of five first-party acti
 Pinned commit SHAs and dynamic expressions are intentionally left unclassified until Evergreen can resolve them without guessing.
 
 The npm detector also reads `package.json`, npm/pnpm/Yarn lockfiles, Node.js runtime declarations, and a small evidence-backed registry of deprecated direct dependencies. Use `evergreen explain <finding-id>` to inspect a finding and its sources.
+
+The Python detector reads PEP 621 and Poetry metadata from `pyproject.toml`, `requirements*.txt`, common runtime-version files, and uv/Poetry/PDM/Pipenv lockfiles. It reports unsupported Python declarations and lifecycle risks in direct dependencies while ignoring transitive-only lockfile entries.
 
 ## Detector SDK
 

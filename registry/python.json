@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "evergreen.python-registry.v1",
+  "rules": [
+    {
+      "id": "python.runtime.eol-3.9-and-older",
+      "kind": "runtime",
+      "ecosystem": "python",
+      "maximumVersion": "3.9",
+      "title": "Python 3.9 and older are end-of-life",
+      "summary": "These Python release lines no longer receive security or bug fixes from the Python core team.",
+      "severity": "high",
+      "replacement": "A supported Python release",
+      "deadline": "2025-10-31",
+      "sources": [
+        {
+          "title": "Status of Python versions",
+          "url": "https://devguide.python.org/versions/"
+        },
+        {
+          "title": "PEP 596 — Python 3.9 release schedule",
+          "url": "https://peps.python.org/pep-0596/"
+        }
+      ]
+    },
+    {
+      "id": "python.package.nose.maintenance-only",
+      "kind": "package",
+      "ecosystem": "python",
+      "package": "nose",
+      "title": "nose is maintenance-only",
+      "summary": "The project warns that nose has been in maintenance mode for years and recommends alternatives for new projects.",
+      "severity": "high",
+      "replacement": "pytest, nose2, or unittest",
+      "sources": [
+        {
+          "title": "nose note to users",
+          "url": "https://nose.readthedocs.io/en/latest/"
+        }
+      ]
+    },
+    {
+      "id": "python.package.django-nose.maintenance-only",
+      "kind": "package",
+      "ecosystem": "python",
+      "package": "django-nose",
+      "title": "django-nose is maintenance-only",
+      "summary": "The package states that it is in maintenance mode and recommends pytest or Django unittest for new projects.",
+      "severity": "high",
+      "replacement": "pytest-django or Django unittest",
+      "sources": [
+        {
+          "title": "django-nose project notice",
+          "url": "https://pypi.org/project/django-nose/"
+        }
+      ]
+    },
+    {
+      "id": "python.package.pycrypto.obsolete",
+      "kind": "package",
+      "ecosystem": "python",
+      "package": "pycrypto",
+      "title": "PyCrypto is obsolete and vulnerable",
+      "summary": "The archived project warns that PyCrypto 2.x is unmaintained, obsolete, and contains security vulnerabilities.",
+      "severity": "critical",
+      "replacement": "pycryptodome or cryptography",
+      "deadline": "2022-01-27",
+      "sources": [
+        {
+          "title": "Archived PyCrypto repository warning",
+          "url": "https://github.com/pycrypto/pycrypto"
+        }
+      ]
+    }
+  ]
+}

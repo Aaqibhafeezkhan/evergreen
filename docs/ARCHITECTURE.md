@@ -18,6 +18,8 @@ The project remains one TypeScript package with explicit module seams. The publi
 
 The detector SDK is the seam between the scan engine and detector adapters. Its interface is deliberately small: an API version, a stable detector ID, and one `scan` operation. Built-in detectors are composed by the CLI and are not imported by the core engine. The engine owns detector attribution, sorting, and output contracts.
 
+The Python detector is the first new ecosystem implemented entirely through this seam. Its manifest and lockfile parsing remains inside the detector adapter; the engine requires no Python-specific behavior.
+
 ## Trust boundaries
 
 - Repository contents are untrusted input.

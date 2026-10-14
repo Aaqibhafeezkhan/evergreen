@@ -5,6 +5,7 @@
 - Add the versioned detector SDK at `evergreen-deprecation/sdk`.
 - Validate detector compatibility and registry envelopes before scanning.
 - Add an external detector example, authoring guide, and compatibility suite.
+- Add Python runtime and direct-package lifecycle detection for pyproject, requirements, version files, and common lockfiles.
 
 ## 0.1.0-alpha.0
 

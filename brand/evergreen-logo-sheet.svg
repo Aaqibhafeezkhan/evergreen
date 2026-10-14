@@ -47,12 +47,12 @@
   <rect x="40" y="590" width="1520" height="270" rx="24" fill="#19181A"/>
 
   <g transform="translate(92 150) scale(.95)"><use href="#brand-mark"/></g>
-  <text x="355" y="290" fill="#F3ECE8" font-family="Inter, Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="5">EVERGREEN</text>
-  <text x="357" y="326" fill="#BDB7B4" font-family="ui-monospace, monospace" font-size="13" letter-spacing="1.5">LIFECYCLE INTELLIGENCE</text>
+  <text x="355" y="290" fill="#F3ECE8" font-family="Inter Variable, Inter, Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="5">EVERGREEN</text>
+  <text x="357" y="326" fill="#BDB7B4" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" letter-spacing="1.5">KNOW WHAT BREAKS NEXT.</text>
 
   <g transform="translate(872 150) scale(.95)"><use href="#light-mark"/></g>
-  <text x="1135" y="290" fill="#0A0A0C" font-family="Inter, Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="5">EVERGREEN</text>
-  <text x="1137" y="326" fill="#571729" font-family="ui-monospace, monospace" font-size="13" letter-spacing="1.5">LIFECYCLE INTELLIGENCE</text>
+  <text x="1135" y="290" fill="#0A0A0C" font-family="Inter Variable, Inter, Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="5">EVERGREEN</text>
+  <text x="1137" y="326" fill="#571729" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" letter-spacing="1.5">KNOW WHAT BREAKS NEXT.</text>
 
   <g transform="translate(100 625) scale(.72)"><use href="#mono-mark"/></g>
   <g transform="translate(335 677) scale(.32)"><use href="#brand-mark"/></g>
@@ -60,7 +60,7 @@
   <text x="340" y="815" fill="#BDB7B4" font-family="ui-monospace, monospace" font-size="14">64px</text>
   <text x="468" y="815" fill="#BDB7B4" font-family="ui-monospace, monospace" font-size="14">32px</text>
 
-  <g font-family="ui-monospace, monospace" font-size="13" fill="#BDB7B4">
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" fill="#BDB7B4">
     <circle cx="760" cy="710" r="34" fill="#0A0A0C" stroke="#3A393C"/>
     <text x="720" y="775">#0A0A0C</text>
     <circle cx="910" cy="710" r="34" fill="#571729"/>

@@ -3,6 +3,9 @@
 This directory contains the first production-vector pass of Evergreen's selected
 `Version Notches` identity direction.
 
+The versioned positioning, audience, voice, naming, tagline, and typography rules
+are defined in [`BRAND_BRIEF.md`](BRAND_BRIEF.md).
+
 ## Mark construction
 
 - Canvas: `256 × 256`
@@ -38,7 +41,8 @@ represents one evidence-backed transition between versions.
 - `evergreen-logo-sheet.svg` — review sheet with lockups and small-size checks
 
 The wordmark on the review sheet is still live type so typography can be selected
-separately. Before the final release, convert the approved wordmark to outlines.
+and edited. It follows the approved Inter typography and uses IBM Plex Mono for
+the tagline. Before the final release, convert the approved wordmark to outlines.
 
 ## Preliminary similarity review
 

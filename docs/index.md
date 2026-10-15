@@ -18,6 +18,7 @@ hosted service.
 - [90-second demo](DEMO.md)
 - [v0.1 validation results](VALIDATION.md)
 - [Environment doctor and compatibility matrix](COMPATIBILITY.md)
+- [Capability manifest and auto-discovery contract](CAPABILITIES.md)
 - [Migration packets](MIGRATION_PACKETS.md)
 - [Local MCP server](MCP.md)
 - [Agent Skill](AGENT_SKILLS.md)

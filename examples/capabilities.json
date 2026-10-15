@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "evergreen.capabilities.v1",
+  "manifestVersion": "1.0.0",
+  "product": {
+    "name": "Evergreen",
+    "package": "evergreen-deprecation",
+    "version": "0.1.0"
+  },
+  "compatibility": {
+    "node": ">=22",
+    "schemaMajor": 1,
+    "unknownFields": "ignore",
+    "unknownCapabilityIds": "ignore",
+    "unknownSurfaceIds": "ignore",
+    "unlistedCapabilities": "unsupported",
+    "unlistedEcosystems": "unsupported",
+    "unknownSchemaMajor": "reject"
+  },
+  "ecosystems": [
+    { "id": "github-actions", "status": "supported", "detectorIds": ["github-actions"] },
+    { "id": "nodejs", "status": "supported", "detectorIds": ["npm"] },
+    { "id": "npm", "status": "supported", "detectorIds": ["npm"] },
+    { "id": "python", "status": "supported", "detectorIds": ["python"] }
+  ],
+  "capabilities": [
+    { "id": "repository.scan", "status": "supported", "version": "1", "description": "Scan a local repository with all built-in lifecycle detectors.", "ecosystems": ["github-actions", "nodejs", "npm", "python"] },
+    { "id": "deprecation.list", "status": "supported", "version": "1", "description": "List compact lifecycle findings from a fresh local scan.", "ecosystems": ["github-actions", "nodejs", "npm", "python"] },
+    { "id": "deprecation.explain", "status": "supported", "version": "1", "description": "Explain one evidence-backed finding by its exact identifier.", "ecosystems": ["github-actions", "nodejs", "npm", "python"] },
+    { "id": "migration.context.create", "status": "supported", "version": "1", "description": "Create a validated migration packet for one finding.", "ecosystems": ["github-actions", "nodejs", "npm", "python"] },
+    { "id": "migration.verify", "status": "supported", "version": "1", "description": "Re-scan and verify that an observed finding is absent.", "ecosystems": ["github-actions", "nodejs", "npm", "python"] },
+    { "id": "environment.doctor", "status": "supported", "version": "1", "description": "Diagnose local and CI prerequisites without changing configuration.", "ecosystems": [] },
+    { "id": "repository.remote-scan", "status": "unsupported", "version": "1", "description": "Upload a repository to a hosted Evergreen scanner.", "ecosystems": [] },
+    { "id": "migration.execute", "status": "unsupported", "version": "1", "description": "Execute migration edits or suggested verification commands automatically.", "ecosystems": [] }
+  ],
+  "surfaces": [
+    { "id": "cli", "kind": "cli", "status": "supported", "version": "0.1.0", "entryPoints": ["evergreen"], "capabilityIds": ["repository.scan", "deprecation.list", "deprecation.explain", "migration.context.create", "environment.doctor"] },
+    { "id": "mcp", "kind": "mcp", "status": "supported", "version": "0.1.0", "entryPoints": ["evergreen-mcp"], "capabilityIds": ["repository.scan", "deprecation.list", "deprecation.explain", "migration.context.create", "migration.verify"] },
+    { "id": "skill", "kind": "skill", "status": "supported", "version": "1", "entryPoints": ["skills/evergreen-deprecation/SKILL.md"], "capabilityIds": ["repository.scan", "deprecation.list", "deprecation.explain", "migration.context.create", "migration.verify"] },
+    { "id": "plugin", "kind": "plugin", "status": "experimental", "version": "0", "entryPoints": ["evergreen-mcp", "skills/evergreen-deprecation/SKILL.md"], "capabilityIds": ["repository.scan", "deprecation.list", "deprecation.explain", "migration.context.create", "migration.verify"] },
+    { "id": "ci.github-actions", "kind": "ci", "status": "supported", "version": "0.1.0", "entryPoints": ["action.yml", "evergreen"], "capabilityIds": ["repository.scan", "environment.doctor"] },
+    { "id": "ci.gitlab", "kind": "ci", "status": "experimental", "version": "0.1.0", "entryPoints": ["evergreen"], "capabilityIds": ["repository.scan", "environment.doctor"] }
+  ]
+}

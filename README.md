@@ -43,6 +43,15 @@ npx evergreen-deprecation doctor . --json
 See the [public compatibility matrix](docs/COMPATIBILITY.md) for supported,
 experimental, and unsupported combinations.
 
+Discover Evergreen's versioned capabilities and entry points programmatically:
+
+```bash
+npx evergreen-deprecation capabilities --json
+```
+
+The [auto-discovery contract](docs/CAPABILITIES.md) defines the shared identifiers
+used by the CLI, MCP server, Agent Skill, plugins, and CI integrations.
+
 Create a baseline for accepted existing findings, then report only new lifecycle regressions:
 
 ```bash

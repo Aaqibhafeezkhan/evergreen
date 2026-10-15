@@ -9,6 +9,9 @@
 - Add the read-only `evergreen doctor` command with deterministic text and JSON
   output, local/GitHub/GitLab environment checks, remediation guidance, and a
   versioned public compatibility matrix.
+- Add the deterministic `evergreen capabilities --json` auto-discovery contract,
+  shared capability identifiers, public JSON Schema, committed example, and
+  forward-compatibility rules.
 
 ## 0.1.0 - 2026-10-14
 

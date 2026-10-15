@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arminazimi.github.io/evergreen/schemas/capabilities.v1.schema.json",
+  "title": "Evergreen capability manifest v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "manifestVersion", "product", "compatibility", "ecosystems", "capabilities", "surfaces"],
+  "properties": {
+    "schemaVersion": { "const": "evergreen.capabilities.v1" },
+    "manifestVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "product": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["name", "package", "version"],
+      "properties": {
+        "name": { "const": "Evergreen" },
+        "package": { "const": "evergreen-deprecation" },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["node", "schemaMajor", "unknownFields", "unknownCapabilityIds", "unknownSurfaceIds", "unlistedCapabilities", "unlistedEcosystems", "unknownSchemaMajor"],
+      "properties": {
+        "node": { "type": "string", "minLength": 1 },
+        "schemaMajor": { "const": 1 },
+        "unknownFields": { "const": "ignore" },
+        "unknownCapabilityIds": { "const": "ignore" },
+        "unknownSurfaceIds": { "const": "ignore" },
+        "unlistedCapabilities": { "const": "unsupported" },
+        "unlistedEcosystems": { "const": "unsupported" },
+        "unknownSchemaMajor": { "const": "reject" }
+      }
+    },
+    "ecosystems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["id", "status", "detectorIds"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "status": { "$ref": "#/$defs/supportStatus" },
+          "detectorIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/capability" }
+    },
+    "surfaces": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/surface" }
+    }
+  },
+  "$defs": {
+    "supportStatus": { "enum": ["supported", "experimental", "unsupported"] },
+    "identifier": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$" },
+    "capability": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "status", "version", "description", "ecosystems"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "status": { "$ref": "#/$defs/supportStatus" },
+        "version": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "ecosystems": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "surface": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "kind", "status", "version", "entryPoints", "capabilityIds"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "kind": { "enum": ["cli", "mcp", "skill", "plugin", "ci"] },
+        "status": { "$ref": "#/$defs/supportStatus" },
+        "version": { "type": "string", "minLength": 1 },
+        "entryPoints": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "capabilityIds": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/identifier" }, "uniqueItems": true }
+      }
+    }
+  }
+}

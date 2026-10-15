@@ -4,6 +4,7 @@ import process from "node:process";
 import { resolve } from "node:path";
 
 import { applyBaseline, createBaseline, readBaseline, writeBaseline } from "./baseline.js";
+import { getCapabilityManifest, renderCapabilitiesText } from "./capabilities.js";
 import { builtInDetectors } from "./detectors/index.js";
 import { scanRepository } from "./engine.js";
 import { createMigrationPacket } from "./migration-packet.js";
@@ -20,6 +21,7 @@ Usage:
   evergreen explain <finding-id> [path] [--json]
   evergreen context <finding-id> [path] [--json]
   evergreen doctor [path] [--json]
+  evergreen capabilities [--json]
   evergreen --help
   evergreen --version
 `;
@@ -36,12 +38,17 @@ async function main(args: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "scan" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "doctor") {
+  if (command !== "scan" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "doctor" && command !== "capabilities") {
     process.stderr.write(`Unknown command: ${command ?? ""}\n\n${HELP}`);
     return 2;
   }
 
   const json = args.includes("--json");
+  if (command === "capabilities") {
+    const manifest = getCapabilityManifest();
+    process.stdout.write(`${json ? JSON.stringify(manifest, null, 2) : renderCapabilitiesText(manifest)}\n`);
+    return 0;
+  }
   const valueOptions = new Set(["--baseline", "--output"]);
   const positional: string[] = [];
   for (let index = 1; index < args.length; index += 1) {

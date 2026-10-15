@@ -21,13 +21,34 @@ No account or API key is required.
 
 ## Evaluation
 
-Trigger evaluation cases live in `skills/evergreen-deprecation/evals/cases.json`. They cover four intended requests and four nearby requests that should use another workflow. CI validates the portable frontmatter, small instruction surface, vendor neutrality, complete tool mapping, safety invariants, and both evaluation branches.
+Trigger evaluation cases live in `skills/evergreen-deprecation/evals/cases.json`. The versioned corpus contains 60 prompts: 30 expected triggers and 30 expected non-triggers, including 12 deliberately ambiguous requests. Each of the `agent-skills`, `codex`, and `claude` discovery lanes has 20 cases with an even positive/negative split.
+
+Run the deterministic metadata-selection proxy from the repository root:
+
+```sh
+npm run eval:skill-triggers
+```
+
+The command builds the evaluator, prints JSON results overall and by host lane, lists any failed case IDs, and exits unsuccessfully when the corpus has fewer than 50 cases, recall is below 90%, or the false-trigger rate is 5% or higher. It has no model, network, account, or API-key dependency, so CI and contributors can reproduce the same baseline.
+
+Current published baseline:
+
+| Lane | Cases | Recall | False-trigger rate |
+| --- | ---: | ---: | ---: |
+| All | 60 | 100% | 0% |
+| Agent Skills | 20 | 100% | 0% |
+| Codex | 20 | 100% | 0% |
+| Claude | 20 | 100% | 0% |
+
+This is a contract test for the concepts exposed by the skill metadata, not a claim that every model version will make an identical routing decision. Live host checks can add observations without weakening the deterministic CI gate. Generic dependency upgrades, vulnerability or security audits, deprecated application APIs, and unrelated modernization are explicit negative cases.
+
+CI also validates the portable frontmatter, small instruction surface, vendor neutrality, complete tool mapping, and safety invariants.
 
 Independent forward tests exercise three different agent situations:
 
 | Agent situation | Observable success criterion | Result |
 | --- | --- | --- |
-| Skill discovery | Classify every trigger and non-trigger case without reading expected answers. | 8/8 correct; one broad phrase tightened. |
+| Skill discovery | Classify every trigger and non-trigger case through the metadata contract without reading expected answers. | 60/60 correct across three lanes. |
 | MCP-capable agent | Discover, explain, create context, migrate, and verify through the real stdio protocol in one session. | Passed with all five tools; checkout finding verified absent. |
 | CLI-only agent | Complete the same lifecycle using only documented CLI fallbacks and a fresh final scan. | Passed; request migration changed only two packet files and ended with zero findings. |
 

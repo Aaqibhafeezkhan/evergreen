@@ -55,6 +55,7 @@
     "check": "npm run build && npm run build:action && npm test && npm run check:action-bundle",
     "check:action-bundle": "git diff --exit-code -- dist/action/index.js",
     "benchmark:usage": "npm run build --silent && node dist/benchmarks/source-usage.js",
+    "eval:skill-triggers": "npm run build --silent && node dist/benchmarks/skill-trigger-eval.js",
     "validate:public-repos": "npm run build --silent && node dist/benchmarks/public-repositories.js",
     "observe:public-repos": "npm run build --silent && node dist/benchmarks/public-repositories.js --observe",
     "prepack": "npm run check"

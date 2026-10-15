@@ -1,53 +1,67 @@
 {
-  "schemaVersion": "evergreen.skill-evals.v1",
+  "schemaVersion": "evergreen.skill-evals.v2",
   "cases": [
-    {
-      "id": "scan-lifecycle",
-      "prompt": "Scan this repository for deprecated runtimes, packages, and GitHub Actions.",
-      "shouldTrigger": true,
-      "reason": "Direct Evergreen discovery workflow."
-    },
-    {
-      "id": "explain-finding",
-      "prompt": "Explain this Evergreen finding and show me the authoritative lifecycle evidence.",
-      "shouldTrigger": true,
-      "reason": "Direct finding explanation workflow."
-    },
-    {
-      "id": "migrate-finding",
-      "prompt": "Use the Evergreen finding ID to build context and migrate the affected usages.",
-      "shouldTrigger": true,
-      "reason": "Direct migration-packet workflow."
-    },
-    {
-      "id": "verify-finding",
-      "prompt": "Verify that the deprecation Evergreen reported is gone after my changes.",
-      "shouldTrigger": true,
-      "reason": "Direct migration verification workflow."
-    },
-    {
-      "id": "generic-upgrade",
-      "prompt": "Upgrade every dependency in this project to the latest version.",
-      "shouldTrigger": false,
-      "reason": "Broad dependency maintenance without an Evergreen lifecycle finding."
-    },
-    {
-      "id": "security-audit",
-      "prompt": "Run a vulnerability audit and fix every security issue.",
-      "shouldTrigger": false,
-      "reason": "Security scanning is outside Evergreen's lifecycle scope."
-    },
-    {
-      "id": "source-api",
-      "prompt": "Replace this deprecated React component API with the new hook.",
-      "shouldTrigger": false,
-      "reason": "Source-framework API migration is not a supported Evergreen detector."
-    },
-    {
-      "id": "unrelated-bug",
-      "prompt": "Diagnose and fix the flaky pagination test.",
-      "shouldTrigger": false,
-      "reason": "Unrelated debugging workflow."
-    }
+    { "id": "as-scan-repository", "host": "agent-skills", "kind": "positive", "prompt": "Scan this repository for deprecated runtimes, packages, and GitHub Actions.", "shouldTrigger": true, "reason": "Direct repository lifecycle discovery." },
+    { "id": "as-node-eol", "host": "agent-skills", "kind": "positive", "prompt": "Check whether the Node.js runtime used by this repo is end of life.", "shouldTrigger": true, "reason": "Runtime lifecycle question." },
+    { "id": "as-action-sunset", "host": "agent-skills", "kind": "positive", "prompt": "Find GitHub Actions in our workflows that have been sunset.", "shouldTrigger": true, "reason": "Supported CI dependency lifecycle scan." },
+    { "id": "as-package-support", "host": "agent-skills", "kind": "positive", "prompt": "Which package declarations in this repository are out of support?", "shouldTrigger": true, "reason": "Package lifecycle discovery." },
+    { "id": "as-explain-finding", "host": "agent-skills", "kind": "positive", "prompt": "Explain this Evergreen finding and its lifecycle evidence.", "shouldTrigger": true, "reason": "Direct Evergreen explanation workflow." },
+    { "id": "as-migrate-finding", "host": "agent-skills", "kind": "positive", "prompt": "Use this finding ID to prepare and perform the migration.", "shouldTrigger": true, "reason": "Direct finding migration workflow." },
+    { "id": "as-verify-report", "host": "agent-skills", "kind": "positive", "prompt": "Verify that the deprecation in the Evergreen report is gone.", "shouldTrigger": true, "reason": "Direct Evergreen verification workflow." },
+    { "id": "as-python-unsupported", "host": "agent-skills", "kind": "ambiguous", "prompt": "Is the Python runtime declared by this repo unsupported now?", "shouldTrigger": true, "reason": "Lifecycle intent is present despite the question form." },
+    { "id": "as-lifecycle-inventory", "host": "agent-skills", "kind": "ambiguous", "prompt": "Give me the lifecycle status of this repository's dependencies.", "shouldTrigger": true, "reason": "Explicit lifecycle inventory." },
+    { "id": "as-retired-action", "host": "agent-skills", "kind": "positive", "prompt": "Our workflow uses a retired GitHub Action; find it and plan the migration.", "shouldTrigger": true, "reason": "Supported action lifecycle migration." },
+    { "id": "as-upgrade-all", "host": "agent-skills", "kind": "negative", "prompt": "Upgrade every dependency in this project to the latest version.", "shouldTrigger": false, "reason": "Routine dependency upgrade is a non-goal." },
+    { "id": "as-security-audit", "host": "agent-skills", "kind": "negative", "prompt": "Run a vulnerability and security audit on the repository.", "shouldTrigger": false, "reason": "Security auditing is a non-goal." },
+    { "id": "as-react-api", "host": "agent-skills", "kind": "negative", "prompt": "Replace this deprecated React component API with the new hook.", "shouldTrigger": false, "reason": "Deprecated source API is outside detector scope." },
+    { "id": "as-flaky-test", "host": "agent-skills", "kind": "negative", "prompt": "Diagnose and fix the flaky pagination test.", "shouldTrigger": false, "reason": "Unrelated debugging request." },
+    { "id": "as-install-evergreen", "host": "agent-skills", "kind": "ambiguous", "prompt": "Install Evergreen and show me the help command.", "shouldTrigger": false, "reason": "Product setup alone is not lifecycle work." },
+    { "id": "as-modernize-typescript", "host": "agent-skills", "kind": "negative", "prompt": "Modernize this TypeScript codebase and simplify the architecture.", "shouldTrigger": false, "reason": "Unrelated modernization is a non-goal." },
+    { "id": "as-action-latest", "host": "agent-skills", "kind": "ambiguous", "prompt": "Update every GitHub Action to its latest release.", "shouldTrigger": false, "reason": "Routine update lacks lifecycle intent." },
+    { "id": "as-snyk", "host": "agent-skills", "kind": "negative", "prompt": "Run Snyk and remediate all high-severity findings.", "shouldTrigger": false, "reason": "Vulnerability tooling belongs to security workflow." },
+    { "id": "as-rest-endpoint", "host": "agent-skills", "kind": "negative", "prompt": "Migrate our deprecated REST endpoint to v2.", "shouldTrigger": false, "reason": "Application API migration is outside repository dependency lifecycle." },
+    { "id": "as-license-audit", "host": "agent-skills", "kind": "negative", "prompt": "Audit package licenses and flag copyleft dependencies.", "shouldTrigger": false, "reason": "License compliance is unrelated." },
+
+    { "id": "codex-runtime-scan", "host": "codex", "kind": "positive", "prompt": "Inspect the repo for end-of-life runtimes before the release.", "shouldTrigger": true, "reason": "Repository runtime lifecycle scan." },
+    { "id": "codex-node-support", "host": "codex", "kind": "positive", "prompt": "Does package.json pin a Node runtime that is out of support?", "shouldTrigger": true, "reason": "Manifest runtime lifecycle check." },
+    { "id": "codex-actions-deprecated", "host": "codex", "kind": "positive", "prompt": "Report deprecated GitHub Actions across all workflows.", "shouldTrigger": true, "reason": "Supported action discovery." },
+    { "id": "codex-package-eol", "host": "codex", "kind": "positive", "prompt": "Identify dependencies in this repo whose maintenance has ended.", "shouldTrigger": true, "reason": "Dependency lifecycle inventory." },
+    { "id": "codex-explain", "host": "codex", "kind": "positive", "prompt": "Explain the Evergreen scan result, impact, and authoritative sources.", "shouldTrigger": true, "reason": "Direct Evergreen finding explanation." },
+    { "id": "codex-context", "host": "codex", "kind": "positive", "prompt": "Create migration context for this deprecation finding.", "shouldTrigger": true, "reason": "Direct context workflow." },
+    { "id": "codex-verify", "host": "codex", "kind": "positive", "prompt": "Re-scan and verify this Evergreen finding no longer appears.", "shouldTrigger": true, "reason": "Direct verification workflow." },
+    { "id": "codex-ci-obsolete", "host": "codex", "kind": "ambiguous", "prompt": "Check whether our CI action versions are obsolete.", "shouldTrigger": true, "reason": "CI dependency lifecycle intent." },
+    { "id": "codex-python-eol", "host": "codex", "kind": "positive", "prompt": "Find any end-of-life Python runtime declared in the repository.", "shouldTrigger": true, "reason": "Supported runtime discovery." },
+    { "id": "codex-support-window", "host": "codex", "kind": "ambiguous", "prompt": "Review the support window for our runtime and dependencies.", "shouldTrigger": true, "reason": "Explicit lifecycle review." },
+    { "id": "codex-npm-update", "host": "codex", "kind": "negative", "prompt": "Update all npm packages and regenerate the lockfile.", "shouldTrigger": false, "reason": "Routine package update is a non-goal." },
+    { "id": "codex-cve", "host": "codex", "kind": "negative", "prompt": "Find every CVE affecting dependencies and patch them.", "shouldTrigger": false, "reason": "CVE auditing is a security workflow." },
+    { "id": "codex-method", "host": "codex", "kind": "negative", "prompt": "Rewrite calls to this deprecated method.", "shouldTrigger": false, "reason": "Source method migration is outside scope." },
+    { "id": "codex-refactor", "host": "codex", "kind": "negative", "prompt": "Refactor the repository into smaller modules.", "shouldTrigger": false, "reason": "Unrelated refactoring request." },
+    { "id": "codex-evergreen-docs", "host": "codex", "kind": "ambiguous", "prompt": "Summarize Evergreen's README for me.", "shouldTrigger": false, "reason": "Product mention without lifecycle work." },
+    { "id": "codex-renovate", "host": "codex", "kind": "negative", "prompt": "Configure Renovate to bump dependencies weekly.", "shouldTrigger": false, "reason": "Automated routine upgrades are a non-goal." },
+    { "id": "codex-actions-bump", "host": "codex", "kind": "ambiguous", "prompt": "Bump actions/checkout to the latest version.", "shouldTrigger": false, "reason": "Single routine action upgrade lacks lifecycle intent." },
+    { "id": "codex-dependabot", "host": "codex", "kind": "negative", "prompt": "Fix the Dependabot alert for lodash.", "shouldTrigger": false, "reason": "Security alert remediation is outside scope." },
+    { "id": "codex-graphql", "host": "codex", "kind": "negative", "prompt": "Remove the deprecated GraphQL field from our client.", "shouldTrigger": false, "reason": "Application API migration is outside scope." },
+    { "id": "codex-performance", "host": "codex", "kind": "negative", "prompt": "Profile the CLI and reduce startup time.", "shouldTrigger": false, "reason": "Performance work is unrelated." },
+
+    { "id": "claude-lifecycle-scan", "host": "claude", "kind": "positive", "prompt": "Run a repository lifecycle scan for unsupported dependencies.", "shouldTrigger": true, "reason": "Explicit repository lifecycle scan." },
+    { "id": "claude-node-retired", "host": "claude", "kind": "positive", "prompt": "The Node.js runtime in this repo may be retired; confirm it.", "shouldTrigger": true, "reason": "Runtime lifecycle confirmation." },
+    { "id": "claude-workflow-eol", "host": "claude", "kind": "positive", "prompt": "Are any GitHub Actions in these workflows end-of-life?", "shouldTrigger": true, "reason": "Supported action lifecycle question." },
+    { "id": "claude-package-deprecated", "host": "claude", "kind": "positive", "prompt": "Locate deprecated package declarations in the repository.", "shouldTrigger": true, "reason": "Supported package declaration discovery." },
+    { "id": "claude-finding-evidence", "host": "claude", "kind": "positive", "prompt": "Show the evidence and impact for this deprecation finding.", "shouldTrigger": true, "reason": "Finding explanation workflow." },
+    { "id": "claude-evergreen-migrate", "host": "claude", "kind": "positive", "prompt": "Follow the Evergreen migration for the selected finding.", "shouldTrigger": true, "reason": "Direct Evergreen migration workflow." },
+    { "id": "claude-evergreen-verify", "host": "claude", "kind": "positive", "prompt": "Perform Evergreen verification after the migration.", "shouldTrigger": true, "reason": "Direct Evergreen verification workflow." },
+    { "id": "claude-requirements-support", "host": "claude", "kind": "ambiguous", "prompt": "Check requirements.txt for packages that are no longer maintained.", "shouldTrigger": true, "reason": "Package lifecycle intent despite indirect wording." },
+    { "id": "claude-toolchain-eol", "host": "claude", "kind": "positive", "prompt": "Inventory end-of-life toolchain dependencies in this repo.", "shouldTrigger": true, "reason": "Repository toolchain lifecycle inventory." },
+    { "id": "claude-action-unsupported", "host": "claude", "kind": "ambiguous", "prompt": "This CI pipeline may use an unsupported action; investigate.", "shouldTrigger": true, "reason": "CI dependency lifecycle investigation." },
+    { "id": "claude-packages-latest", "host": "claude", "kind": "negative", "prompt": "Bring all packages up to their latest versions.", "shouldTrigger": false, "reason": "Routine package upgrade is a non-goal." },
+    { "id": "claude-osv", "host": "claude", "kind": "negative", "prompt": "Use OSV to audit dependency vulnerabilities.", "shouldTrigger": false, "reason": "Vulnerability audit is a non-goal." },
+    { "id": "claude-prop", "host": "claude", "kind": "negative", "prompt": "Replace the deprecated prop in this UI component.", "shouldTrigger": false, "reason": "Source component API migration is outside scope." },
+    { "id": "claude-format", "host": "claude", "kind": "negative", "prompt": "Format the codebase and fix lint errors.", "shouldTrigger": false, "reason": "Formatting and linting are unrelated." },
+    { "id": "claude-evergreen-logo", "host": "claude", "kind": "ambiguous", "prompt": "Change the Evergreen logo colors in the documentation.", "shouldTrigger": false, "reason": "Brand work is not lifecycle work." },
+    { "id": "claude-lockfile", "host": "claude", "kind": "negative", "prompt": "Refresh the lockfile without changing application code.", "shouldTrigger": false, "reason": "Routine dependency maintenance is outside scope." },
+    { "id": "claude-action-update", "host": "claude", "kind": "ambiguous", "prompt": "Update actions/setup-node to the newest release.", "shouldTrigger": false, "reason": "Routine action update lacks lifecycle intent." },
+    { "id": "claude-security", "host": "claude", "kind": "negative", "prompt": "Perform a security audit of the npm dependency tree.", "shouldTrigger": false, "reason": "Security auditing is a non-goal." },
+    { "id": "claude-endpoint", "host": "claude", "kind": "negative", "prompt": "Replace our deprecated API endpoint throughout the app.", "shouldTrigger": false, "reason": "Application endpoint migration is outside scope." },
+    { "id": "claude-readme", "host": "claude", "kind": "negative", "prompt": "Improve the README installation examples.", "shouldTrigger": false, "reason": "Documentation editing is unrelated." }
   ]
 }

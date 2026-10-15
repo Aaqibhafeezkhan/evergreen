@@ -32,6 +32,8 @@ The MCP entry point uses the official TypeScript SDK's local stdio transport. It
 
 The portable Agent Skill is a thin instruction adapter over the MCP and CLI interfaces. It owns no lifecycle facts, detector behavior, migration constraints, or permission grants. This keeps the prompt surface vendor-neutral and lets executable contracts remain the single source of truth.
 
+Codex and Claude plugins are generated host adapters over that portable Skill and the same local MCP launch contract. Their manifests may express host-specific discovery and presentation fields, but they cannot own workflow or executable behavior. A deterministic assembly module pins both adapters to the root package version, copies the canonical Skill byte-for-byte, and rejects drift in CI. See the [plugin packaging architecture](PLUGIN_PACKAGING.md) and [Decision 0003](decisions/0003-shared-plugin-packaging.md).
+
 ## Trust boundaries
 
 - Repository contents are untrusted input.

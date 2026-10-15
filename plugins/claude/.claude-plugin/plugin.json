@@ -1,0 +1,23 @@
+{
+  "name": "evergreen",
+  "version": "0.1.0",
+  "description": "Find, explain, migrate, and verify evidence-backed software lifecycle risks.",
+  "author": {
+    "name": "Evergreen",
+    "url": "https://github.com/arminazimi/evergreen"
+  },
+  "homepage": "https://arminazimi.github.io/evergreen/",
+  "repository": "https://github.com/arminazimi/evergreen",
+  "license": "Apache-2.0",
+  "keywords": [
+    "deprecation",
+    "lifecycle",
+    "mcp",
+    "developer-tools"
+  ],
+  "displayName": "Evergreen",
+  "metadata": {
+    "requiredNode": ">=22",
+    "runtimePackage": "evergreen-deprecation@0.1.0"
+  }
+}

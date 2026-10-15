@@ -22,6 +22,7 @@ hosted service.
 - [Migration packets](MIGRATION_PACKETS.md)
 - [Local MCP server](MCP.md)
 - [Agent Skill](AGENT_SKILLS.md)
+- [Codex and Claude plugin packaging](PLUGIN_PACKAGING.md)
 - [GitHub Action](GITHUB_ACTION.md)
 - [Detector SDK](DETECTORS.md)
 - [Architecture and trust boundaries](ARCHITECTURE.md)

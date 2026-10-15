@@ -1,0 +1,52 @@
+# Plugin packaging architecture
+
+Evergreen publishes two host adapters over one workflow. The canonical Skill remains `skills/evergreen-deprecation/SKILL.md`; the executable source of truth remains the `evergreen-deprecation` npm package and its local stdio MCP server. Generated plugins contain no detector, migration, or verification implementation.
+
+## Package layout
+
+```text
+skills/evergreen-deprecation/SKILL.md     canonical workflow
+tools/plugin-packages.ts                  release assembly and MCP definition
+plugins/codex/                            generated Codex adapter
+plugins/claude/                           generated Claude adapter
+```
+
+Both generated packages contain a byte-identical copy of the canonical Skill and the same `.mcp.json`. The MCP configuration runs the exact npm version recorded in `package.json`, so a plugin cannot silently combine one manifest release with a different Evergreen runtime.
+
+## Host differences
+
+| Concern | Codex package | Claude package |
+| --- | --- | --- |
+| Manifest | `.codex-plugin/plugin.json` | `.claude-plugin/plugin.json` |
+| Skill discovery | Explicit `./skills/` path | Standard `skills/` location |
+| MCP discovery | Explicit `./.mcp.json` path | Standard `.mcp.json` location |
+| Presentation | Codex `interface` object | Claude `displayName` and directory metadata |
+| Shared behavior | Generated canonical Skill | Generated canonical Skill |
+| Runtime | Exact `evergreen-deprecation` npm version | Exact `evergreen-deprecation` npm version |
+
+This follows the current [OpenAI plugin package structure](https://developers.openai.com/plugins/build/plugins) and [Claude Code plugin manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference). Host metadata is an adapter only; it must not contain lifecycle rules or workflow logic.
+
+## Assembly and drift gate
+
+Regenerate both packages after changing the Skill, plugin metadata, npm version, or MCP launch contract:
+
+```sh
+npm run build:plugins
+```
+
+Verify committed packages without modifying them:
+
+```sh
+npm run check:plugins
+```
+
+The check compares every expected byte and rejects missing, changed, or unexpected files under either generated package root. `npm run check` includes this gate.
+
+## Compatibility and ownership
+
+- Plugin version and MCP runtime version equal the root package version.
+- The runtime inherits the root requirement of Node.js 22 or newer.
+- Codex uses its compatibility manifest so the local stdio MCP command can ship with the Skill.
+- Claude uses its standard plugin layout; strict manifest and MCP validation targets Claude Code 2.1.281 or newer, where those checks are documented.
+- Evergreen maintainers own both generated packages and publish them from the same tagged source commit as the npm release.
+- A host-only metadata change may vary between adapters. A workflow or runtime change begins in the canonical Skill or executable modules and is then regenerated.

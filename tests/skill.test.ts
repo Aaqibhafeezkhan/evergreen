@@ -101,3 +101,23 @@ test("skill trigger contract rejects explicit non-goals", () => {
     true,
   );
 });
+
+test("skill distribution documents canonical discovery and host compatibility", async () => {
+  const [readme, skillReadme, guide, compatibility] = await Promise.all([
+    readFile(resolve("README.md"), "utf8"),
+    readFile(resolve("skills/evergreen-deprecation/README.md"), "utf8"),
+    readFile(resolve("docs/AGENT_SKILLS.md"), "utf8"),
+    readFile(resolve("docs/COMPATIBILITY.md"), "utf8"),
+  ]);
+  const documentation = [readme, skillReadme, guide].join("\n");
+
+  assert.match(readme, /https:\/\/skills\.sh\/b\/arminazimi\/evergreen/);
+  assert.match(documentation, /npx skills add arminazimi\/evergreen/);
+  assert.match(documentation, /npx skills update evergreen-deprecation/);
+  assert.match(guide, /arminazimi\/evergreen@evergreen-deprecation/);
+
+  for (const host of ["Codex", "Claude Code", "Cursor", "GitHub Copilot", "Gemini CLI"]) {
+    assert.match(skillReadme, new RegExp(`\\| ${host} \\|`));
+    assert.match(compatibility, new RegExp(host));
+  }
+});

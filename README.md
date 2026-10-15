@@ -10,6 +10,7 @@
 
 [![CI](https://github.com/arminazimi/evergreen/actions/workflows/ci.yml/badge.svg)](https://github.com/arminazimi/evergreen/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/evergreen-deprecation.svg)](https://www.npmjs.com/package/evergreen-deprecation)
+[![skills.sh](https://skills.sh/b/arminazimi/evergreen)](https://skills.sh/arminazimi/evergreen/evergreen-deprecation)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 Evergreen is local-first deprecation intelligence for software repositories. It connects upcoming ecosystem changes to the exact files they affect and produces evidence-backed migration context for humans and coding agents.
@@ -83,7 +84,19 @@ The stdio server exposes `scan_repository`, `list_deprecations`, `explain_deprec
 
 ## Agent Skill
 
-The package includes a thin, vendor-neutral Agent Skill at [`skills/evergreen-deprecation`](skills/evergreen-deprecation/SKILL.md). Install that folder in any host implementing the open Agent Skills format. It teaches discovery, explanation, migration, and verification while leaving detection and migration logic inside Evergreen. See the [Agent Skill guide](docs/AGENT_SKILLS.md) for installation, evaluation, limits, and security assumptions.
+Install the vendor-neutral Agent Skill from the monorepo:
+
+```bash
+npx skills add arminazimi/evergreen
+```
+
+Pull future revisions with:
+
+```bash
+npx skills update evergreen-deprecation
+```
+
+The [`evergreen-deprecation` Skill](skills/evergreen-deprecation/README.md) teaches discovery, explanation, migration, and verification while leaving detection and migration logic inside Evergreen. It is discoverable on [skills.sh](https://skills.sh/arminazimi/evergreen/evergreen-deprecation) and has been install-validated for Codex, Claude Code, Cursor, GitHub Copilot, and Gemini CLI. See the [Agent Skill guide](docs/AGENT_SKILLS.md) for evaluation, compatibility, limits, and security assumptions.
 
 Evergreen runs locally and does not upload repository contents.
 

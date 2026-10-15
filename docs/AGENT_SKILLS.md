@@ -10,7 +10,25 @@ This split prevents prompt drift: improving a detector or migration packet chang
 
 ## Installation
 
-The npm package includes the complete `skills/evergreen-deprecation` folder. Copy or link that folder into any skills-compatible host's configured skill directory. Directory discovery and enablement are host concerns; the skill itself does not assume a specific coding agent.
+The skills CLI discovers the Skill directly from the Evergreen monorepo. No dedicated distribution repository is needed:
+
+```sh
+npx skills add arminazimi/evergreen
+```
+
+The repository currently exposes one Skill. For a non-interactive or explicitly selected install, use:
+
+```sh
+npx skills add arminazimi/evergreen --skill evergreen-deprecation --yes
+```
+
+Update it with:
+
+```sh
+npx skills update evergreen-deprecation
+```
+
+The npm package also includes the complete `skills/evergreen-deprecation` folder for hosts that prefer a manual copy or link.
 
 The host also needs one Evergreen execution path:
 
@@ -18,6 +36,20 @@ The host also needs one Evergreen execution path:
 - the `evergreen` CLI available on `PATH`.
 
 No account or API key is required.
+
+## Discovery and host compatibility
+
+On 2026-10-15, `npx skills add arminazimi/evergreen --list` discovered exactly one Skill named `evergreen-deprecation`. A clean project installation then selected and installed that Skill for five representative skills CLI targets:
+
+| Host | `--agent` value | Install result |
+| --- | --- | --- |
+| Codex | `codex` | Passed |
+| Claude Code | `claude-code` | Passed |
+| Cursor | `cursor` | Passed |
+| GitHub Copilot | `github-copilot` | Passed |
+| Gemini CLI | `gemini-cli` | Passed |
+
+The same install registered the Skill with skills.sh. It is discoverable as `arminazimi/evergreen@evergreen-deprecation` at [skills.sh](https://skills.sh/arminazimi/evergreen/evergreen-deprecation). The skills CLI security summary reported Gen Agent Trust Hub **Safe**, Socket **0 alerts**, and Snyk **Low Risk** at validation time. These external assessments can change and do not replace review of the installed files.
 
 ## Evaluation
 
@@ -61,4 +93,5 @@ Forward-test observations are recorded on the Week 11 GitHub issue when the phas
 - MCP verification needs the same server session that observed the finding. The CLI fallback uses a fresh scan and conservatively compares the rule and declaration path.
 - The skill grants no permissions. Suggested verification commands remain subject to the host's normal authorization rules.
 - The bundle contains no executable skill scripts and declares no pre-approved tools.
+- Installing through the skills CLI copies or links instruction files into the selected host's Skill directory; it does not install the Evergreen runtime itself.
 - Repository analysis remains local. The selected host receives structured Evergreen results, which can include paths and short source excerpts, so its own privacy policy still applies.

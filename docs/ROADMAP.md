@@ -95,3 +95,15 @@ Exit criterion for Month 2: external contributors can add a detector without edi
 - [x] Record post-launch findings and the next roadmap
 
 Exit criterion for Month 3: a human or agent can discover, understand, migrate, and verify one supported deprecation without a hosted Evergreen service.
+
+## Committed long-range expansion
+
+### Phase 18 — Language and platform expansion
+
+- [ ] Add evidence-backed Go lifecycle detection ([#43](https://github.com/arminazimi/evergreen/issues/43))
+  - Parse Go versions and toolchain directives from supported `go.mod` and `go.work` files.
+  - Detect lifecycle risks for the Go runtime and evidence-backed direct modules.
+  - Map supported imports and usages into migration context and verification steps.
+  - Gate release on conformance fixtures and a pinned public-repository corpus.
+
+Go support will use the existing detector SDK and remain local-first and deterministic. It will not require the Go toolchain, network access, or a hosted Evergreen service for ordinary repository scans. The scope decision is recorded in [Decision 0002](decisions/0002-go-ecosystem-support.md).

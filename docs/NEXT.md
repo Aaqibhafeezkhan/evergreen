@@ -15,7 +15,7 @@ title: Post-launch notes and next roadmap
 ## Next roadmap
 
 1. Expand the evidence registry with maintainer-reviewed lifecycle rules and freshness metadata.
-2. Add ecosystem adapters based on contributor demand, starting with container base images and Java toolchains.
+2. Add ecosystem adapters in quality-gated waves, including container base images, Java toolchains, and evidence-backed Go runtime and module lifecycle support tracked in [#43](https://github.com/arminazimi/evergreen/issues/43).
 3. Improve monorepo discovery while preserving deterministic, bounded traversal.
 4. Add machine-readable suppression reasons and expiry dates to baselines.
 5. Automate the pinned public-corpus run on a scheduled workflow without turning network availability into a pull-request gate.

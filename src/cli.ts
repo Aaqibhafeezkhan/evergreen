@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
+import { spawnSync } from "node:child_process";
+import http from "node:http";
 import process from "node:process";
 import { resolve } from "node:path";
 
 import { applyBaseline, createBaseline, readBaseline, writeBaseline } from "./baseline.js";
 import { getCapabilityManifest, renderCapabilitiesText } from "./capabilities.js";
 import { checkDependency, CheckDependencyError } from "./check-dependency.js";
+import { DataUpdateError, renderDataUpdateText, updateData } from "./data-update.js";
 import { getDataStatus, renderDataStatusText } from "./data-status.js";
 import { builtInDetectors } from "./detectors/index.js";
 import type { Severity } from "./domain.js";
@@ -24,6 +27,7 @@ Usage:
   evergreen baseline [path] [--output <file>]
   evergreen check <purl> [--fail-on <severity|none>] [--json]
   evergreen data status [--json]
+  evergreen data update [--json]
   evergreen explain <finding-id> [path] [--json]
   evergreen context <finding-id> [path] [--json]
   evergreen doctor [path] [--json]
@@ -31,6 +35,23 @@ Usage:
   evergreen --help
   evergreen --version
 `;
+
+/**
+ * `data update` is the one command that uses the network, and it must honor the standard proxy variables. Node does
+ * that for `fetch` only when started with NODE_USE_ENV_PROXY, so when a proxy is configured the command runs again
+ * in a child process that has it (Node 22.21 and later). Returns that child's exit code, or undefined to carry on.
+ */
+function relaunchWithEnvironmentProxy(): number | undefined {
+  const proxied = ["HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy"].some((name) => process.env[name]);
+  if (!proxied || process.env.NODE_USE_ENV_PROXY) return undefined;
+  if (typeof http.setGlobalProxyFromEnv === "function") return undefined;
+  if (!process.allowedNodeEnvironmentFlags.has("--use-env-proxy")) {
+    process.stderr.write("A proxy is configured, but this Node.js cannot use it for downloads. Use Node.js 22.21 or newer.\n");
+    return undefined;
+  }
+  const child = spawnSync(process.execPath, [...process.execArgv, ...process.argv.slice(1)], { stdio: "inherit", env: { ...process.env, NODE_USE_ENV_PROXY: "1" } });
+  return child.status ?? 1;
+}
 
 async function main(args: string[]): Promise<number> {
   if (args.includes("--help") || args.includes("-h") || args.length === 0) {
@@ -71,6 +92,21 @@ async function main(args: string[]): Promise<number> {
   }
   if (command === "data") {
     const subcommand = args[1];
+    if (subcommand === "update") {
+      const relaunched = relaunchWithEnvironmentProxy();
+      if (relaunched !== undefined) return relaunched;
+      try {
+        const result = await updateData();
+        process.stdout.write(`${json ? JSON.stringify(result, null, 2) : renderDataUpdateText(result)}\n`);
+        return 0;
+      } catch (error) {
+        if (error instanceof DataUpdateError) {
+          process.stderr.write(`${error.message}\n`);
+          return 1;
+        }
+        throw error;
+      }
+    }
     if (subcommand !== "status") {
       process.stderr.write(`Unknown data command: ${subcommand ?? ""}\n\n${HELP}`);
       return 2;

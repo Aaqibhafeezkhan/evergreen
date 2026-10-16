@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { relative, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import semver from "semver";
 import { parse as parseYaml } from "yaml";
@@ -9,6 +9,7 @@ import type {
   Severity,
   UsageMatcher,
 } from "../domain.js";
+import { relativePosix } from "../paths.js";
 import { findPackageFile } from "../package-files.js";
 import { analyzeSourceUsage } from "../source-usage.js";
 import {
@@ -208,12 +209,12 @@ function declarationFinding(
 ): DetectorFinding {
   const severity: Severity = declaration.kind === "pinned runtime" ? rule.severity : "medium";
   return {
-    id: `${rule.id}:${declaration.path}:${declaration.line}`,
+    id: `${rule.id}:${relativePosix(root, declaration.path)}:${declaration.line}`,
     ruleId: rule.id,
     title: rule.title,
     summary: `${declaration.kind} ${declaration.value} includes Node.js ${detectedMajor}. ${rule.summary}`,
     severity,
-    location: { path: relative(root, declaration.path), line: declaration.line },
+    location: { path: relativePosix(root, declaration.path), line: declaration.line },
     ...(rule.replacement ? { replacement: rule.replacement } : {}),
     ...(rule.deadline ? { deadline: rule.deadline } : {}),
     ...(rule.migration ? { migration: rule.migration } : {}),

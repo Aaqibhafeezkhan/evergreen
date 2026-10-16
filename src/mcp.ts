@@ -1,10 +1,13 @@
-import { completable, McpServer, ResourceNotFoundError, ResourceTemplate } from "@modelcontextprotocol/server";
+import { readFileSync } from "node:fs";
+
+import { completable, fromJsonSchema, McpServer, ResourceNotFoundError, ResourceTemplate } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 
 import { EvergreenAgentTools } from "./agent-tools.js";
 import { bundledRules, checkDependency } from "./check-dependency.js";
 import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-prompt.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
+import { findPackageFileSync } from "./package-files.js";
 import { VERSION } from "./version.js";
 
 export const MCP_TOOL_NAMES = [
@@ -28,6 +31,61 @@ const findingInput = {
   finding_id: z.string().min(1).describe("Exact finding ID returned by Evergreen."),
   ...repositoryInput,
 };
+
+/** The published JSON Schema each tool's structured content conforms to. */
+export const MCP_OUTPUT_SCHEMA_FILES = {
+  scan_repository: "scan.v1.schema.json",
+  list_deprecations: "deprecations.v1.schema.json",
+  explain_deprecation: "finding.v1.schema.json",
+  create_migration_context: "context.v1.schema.json",
+  verify_migration: "verification.v1.schema.json",
+  check_dependency: "check.v1.schema.json",
+} as const satisfies Record<(typeof MCP_TOOL_NAMES)[number], string>;
+
+type JsonObject = Record<string, unknown>;
+
+function readSchema(file: string): JsonObject {
+  return JSON.parse(readFileSync(findPackageFileSync(`schemas/${file}`, import.meta.url), "utf8")) as JsonObject;
+}
+
+function resolvePointer(document: JsonObject, pointer: string): unknown {
+  return pointer
+    .split("/")
+    .filter(Boolean)
+    .map((part) => decodeURIComponent(part).replaceAll("~1", "/").replaceAll("~0", "~"))
+    .reduce<unknown>((node, key) => (node as JsonObject | undefined)?.[key], document);
+}
+
+/**
+ * Replaces every `$ref` to another schema file (such as `scan.v1.schema.json#/properties/findings/items`) with the
+ * schema it points to. A client reads the advertised schema on its own and cannot fetch sibling files, so what the
+ * server publishes must not depend on them. References inside one document (`#/$defs/...`) are kept.
+ */
+export function inlineSchemaReferences(node: unknown, file: string): unknown {
+  if (Array.isArray(node)) return node.map((item) => inlineSchemaReferences(item, file));
+  if (typeof node !== "object" || node === null) return node;
+  const object = node as JsonObject;
+  const reference = object.$ref;
+  if (typeof reference === "string" && !reference.startsWith("#")) {
+    const [target, pointer = ""] = reference.split("#");
+    const resolved = resolvePointer(readSchema(target!), pointer);
+    if (resolved === undefined) throw new Error(`${file}: cannot resolve ${reference}`);
+    const { $ref: _reference, ...siblings } = object;
+    const inlined = inlineSchemaReferences(resolved, target!) as JsonObject;
+    return { ...inlined, ...(inlineSchemaReferences(siblings, file) as JsonObject) };
+  }
+  return Object.fromEntries(Object.entries(object).map(([key, value]) => [key, inlineSchemaReferences(value, file)]));
+}
+
+/** The advertised, self-contained form of a tool's published output schema. */
+export function toolOutputSchema(tool: keyof typeof MCP_OUTPUT_SCHEMA_FILES): JsonObject {
+  const file = MCP_OUTPUT_SCHEMA_FILES[tool];
+  return inlineSchemaReferences(readSchema(file), file) as JsonObject;
+}
+
+function outputSchema(tool: keyof typeof MCP_OUTPUT_SCHEMA_FILES) {
+  return fromJsonSchema(toolOutputSchema(tool) as Parameters<typeof fromJsonSchema>[0]);
+}
 
 export const MCP_TOOL_ANNOTATIONS = {
   readOnlyHint: true,
@@ -163,6 +221,7 @@ export function createEvergreenMcpServer(
       description:
         "Run all built-in Evergreen detectors against a local repository and return the complete versioned scan result.",
       inputSchema: z.object(repositoryInput),
+      outputSchema: outputSchema("scan_repository"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
     async ({ repository_path }) => {
@@ -183,6 +242,7 @@ export function createEvergreenMcpServer(
       description:
         "Run a fresh local scan and return a compact, versioned list of lifecycle findings.",
       inputSchema: z.object(repositoryInput),
+      outputSchema: outputSchema("list_deprecations"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
     async ({ repository_path }) => {
@@ -203,6 +263,7 @@ export function createEvergreenMcpServer(
       description:
         "Run a fresh local scan and return one complete evidence-backed finding by ID.",
       inputSchema: z.object(findingInput),
+      outputSchema: outputSchema("explain_deprecation"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
     async ({ finding_id, repository_path }) => {
@@ -223,6 +284,7 @@ export function createEvergreenMcpServer(
       description:
         "Create a validated, rule-specific migration packet for one finding from a fresh local scan.",
       inputSchema: z.object(findingInput),
+      outputSchema: outputSchema("create_migration_context"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
     async ({ finding_id, repository_path }) => {
@@ -243,6 +305,7 @@ export function createEvergreenMcpServer(
       description:
         "Re-scan locally and check whether a finding observed earlier in this MCP session is gone. Suggested project commands are returned but never executed.",
       inputSchema: z.object(findingInput),
+      outputSchema: outputSchema("verify_migration"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
     async ({ finding_id, repository_path }) => {
@@ -273,6 +336,7 @@ export function createEvergreenMcpServer(
           .optional()
           .describe("Exact version to check; overrides a version written in the PURL."),
       }),
+      outputSchema: outputSchema("check_dependency"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
     async ({ purl, version }) => {

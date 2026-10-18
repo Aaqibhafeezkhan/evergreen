@@ -14,7 +14,7 @@ canonical_url: "https://arminazimi.github.io/evergreen/rules/dotnet.runtime.end-
 | Severity | high |
 | Ecosystem | `dotnet` |
 | Component | `pkg:generic/dotnet` |
-| Affected versions | `vers:semver/>=5.0.0\|<6.0.0` |
+| Affected versions | `vers:semver/>=5.0.0\|<5.1.0` |
 | Date from the source | 2022-05-10 |
 | Replacement | .NET 10 (LTS), or the newest supported .NET release |
 | Evidence last seen | 2026-10-17 |

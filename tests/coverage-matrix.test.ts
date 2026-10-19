@@ -18,6 +18,7 @@ import {
 import type { CoverageDescriptions } from "../tools/coverage-matrix.js";
 
 const ROW_NAMES = [
+  "CI runner images",
   "Container base images",
   ".NET",
   "Go",
@@ -26,6 +27,7 @@ const ROW_NAMES = [
   "GitHub Actions",
   "Node.js and npm",
   "Python",
+  "Ruby",
   "Rust",
   "Other language and platform ecosystems",
 ];

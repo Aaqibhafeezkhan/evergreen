@@ -68,7 +68,7 @@ const workflowCapabilityIds = [
 
 const manifest = {
   schemaVersion: "evergreen.capabilities.v1",
-  manifestVersion: "1.1.0",
+  manifestVersion: "1.2.0",
   product: {
     name: "Evergreen",
     package: "evergreen-deprecation",
@@ -96,6 +96,7 @@ const manifest = {
     { id: "nodejs", status: "supported", maturity: "stable", detectorIds: ["npm"] },
     { id: "npm", status: "supported", maturity: "stable", detectorIds: ["npm"] },
     { id: "python", status: "supported", maturity: "stable", detectorIds: ["python"] },
+    { id: "ruby", status: "experimental", maturity: "experimental", detectorIds: ["ruby"] },
     { id: "rust", status: "experimental", maturity: "experimental", detectorIds: ["rust"] },
   ],
   capabilities: [
@@ -104,35 +105,35 @@ const manifest = {
       status: "supported",
       version: "1",
       description: "Scan a local repository with all built-in lifecycle detectors.",
-      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "rust"],
+      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "ruby", "rust"],
     },
     {
       id: "deprecation.list",
       status: "supported",
       version: "1",
       description: "List compact lifecycle findings from a fresh local scan.",
-      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "rust"],
+      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "ruby", "rust"],
     },
     {
       id: "deprecation.explain",
       status: "supported",
       version: "1",
       description: "Explain one evidence-backed finding by its exact identifier.",
-      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "rust"],
+      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "ruby", "rust"],
     },
     {
       id: "migration.context.create",
       status: "supported",
       version: "1",
       description: "Create a validated migration packet for one finding.",
-      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "rust"],
+      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "ruby", "rust"],
     },
     {
       id: "migration.verify",
       status: "supported",
       version: "1",
       description: "Re-scan and verify that an observed finding is absent.",
-      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "rust"],
+      ecosystems: ["ci-images", "container", "dotnet", "github-actions", "go", "java", "kubernetes", "nodejs", "npm", "python", "ruby", "rust"],
     },
     {
       id: "environment.doctor",

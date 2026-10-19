@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Promote the .NET detector to beta (decision 0013). The corpus has twelve blind-selected .NET repositories on top
+  of the six targeted ones (84 expected `dotnet` findings, precision 1 and recall 1 on the full run), and corpus
+  entries gain an optional `selection` field that the maturity test counts.
+- Add end-of-support rules for .NET Core 1.0, 1.1, 2.0, 2.1, 2.2, and 3.0, and deprecation rules for the NuGet
+  packages `Microsoft.Azure.DocumentDB`, `Microsoft.Azure.ServiceBus`, and `Microsoft.Azure.Storage.Blob`.
+  Repositories that target these lines now get findings where they had none.
+
 ## 0.4.0 - 2026-10-19
 
 - Honor per-version npm deprecation notices and resolved dependency versions; remove nine false alarms and independently review twelve additional public-corpus findings. (#825)

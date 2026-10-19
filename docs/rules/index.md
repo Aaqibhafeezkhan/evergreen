@@ -8,6 +8,14 @@ canonical_url: "https://arminazimi.github.io/evergreen/rules/"
 
 Every lifecycle claim Evergreen makes comes from a reviewed rule with an authoritative source. Each rule has a page with its status, affected versions, dates, sources, and migration steps. These pages are generated from the registry; see [Lifecycle rules](../RULES.md).
 
+## android
+
+- [Google Play Billing Library 5 is past its deprecation deadline](android.play-billing.version-5.html) — deprecated, `android.play-billing.version-5`
+- [Google Play Billing Library 6 is past its deprecation deadline](android.play-billing.version-6.html) — deprecated, `android.play-billing.version-6`
+- [Google Play Billing Library 7 is past its deprecation deadline](android.play-billing.version-7.html) — deprecated, `android.play-billing.version-7`
+- [Google Play Billing Library 8 reaches its new-app and update deadline on 2027-08-31](android.play-billing.version-8.html) — scheduled end of life, `android.play-billing.version-8`
+- [Google Play Billing Library 9 reaches its new-app and update deadline on 2028-08-31](android.play-billing.version-9.html) — scheduled end of life, `android.play-billing.version-9`
+
 ## ci-images
 
 - [Azure Pipelines macOS 14 Sonoma hosted image is scheduled for removal](ci-images.azure-pipelines.macos-14.html) — scheduled end of life, `ci-images.azure-pipelines.macos-14`

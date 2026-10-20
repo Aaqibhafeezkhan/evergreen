@@ -89,6 +89,23 @@
       }
     },
     {
+      "id": "cpp",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": null,
+      "evidence": {
+        "repositoriesWithFindings": 1,
+        "expectedFindings": 3,
+        "zeroFindingRepositories": 0,
+        "repositories": 0,
+        "blindRepositories": 0
+      }
+    },
+    {
       "id": "dotnet",
       "level": "beta",
       "earnedLevel": "beta",

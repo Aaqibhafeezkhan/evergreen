@@ -71,6 +71,7 @@ test("the bundle lists every registry and the SHA map, and matches the published
     "registry/android.json",
     "registry/ci-images.json",
     "registry/container.json",
+    "registry/cpp.json",
     "registry/dotnet.json",
     "registry/github-actions-shas.json",
     "registry/github-actions.json",

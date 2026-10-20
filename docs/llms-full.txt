@@ -640,7 +640,7 @@ combination works.
 
 ## PHP detector
 
-The `php` detector is **experimental**: its level is recorded as `experimental` in `benchmarks/thresholds.json`. Its lifecycle rules are in `registry/php.json` and ship in the [data bundle](DATA.md). Public corpus pins for it are tracked with the PHP validation work; until a recorded full corpus run includes them, the dashboard's last-run counts for `php` stay at zero.
+The `php` detector is **experimental**: its level is recorded as `experimental` in `benchmarks/thresholds.json`. Five public repositories in [Validation](VALIDATION.md#php-corpus) cover it. Its lifecycle rules are in `registry/php.json` and ship in the [data bundle](DATA.md). Until a recorded full corpus run includes those pins, the dashboard's last-run counts for `php` stay at zero.
 
 ### Supported files and declarations
 
@@ -1309,6 +1309,12 @@ Every finding in these repositories is recorded, not only the Java ones, and eac
 Five public repositories at pinned commits cover the `ruby` detector: `rack/rack` (no findings), `Shopify/packwerk` (`.ruby-version` 3.0.4, plus three `actions/checkout@v2` pins), `thoughtbot/suspenders` (`.ruby-version` 3.2.2, plus one `actions/checkout@v4` pin), `github/view_component` (`.ruby-version` 2.7.1), and `puma/puma` (a Gemfile `ruby "3.2.0"` directive in a local benchmark).
 
 Because the corpus scans every detector, every finding in these repositories is recorded, not only the Ruby ones. Each expected finding was checked by reading its line at the pinned commit, and its `groundTruthSource` is a `maintainer-review` note naming the path and line; none of these repositories has a reviewed migration entry in the mining log for the finding, so none is cited as `migration-commit`. The EOL dates come from the [Ruby maintenance branches](https://www.ruby-lang.org/en/downloads/branches/) page, not from these repositories.
+
+## PHP corpus
+
+Five public repositories at pinned commits cover the `php` detector: `laravel/laravel` (a current Laravel application skeleton, no findings), `jobbyphp/jobby` (`swiftmailer/swiftmailer`), `ZF-Commons/ZfcUser` (`zendframework/zend-stdlib`), `MacPaw/behat-orm-context` (`config.platform.php` 7.4.33, plus `actions/checkout@v4` and `actions/cache@v4` pins), and `Kalpa-Services/mmg-wp-plugin` (`config.platform.php` 7.4, plus `actions/checkout@v4`, `actions/github-script@v6`, and `actions/setup-go@v4` pins).
+
+Because the corpus scans every detector, every finding in these repositories is recorded, not only the PHP ones. Each expected finding was checked by reading its line at the pinned commit, and its `groundTruthSource` is a `maintainer-review` note naming the path and line; none of these repositories has a reviewed migration entry in the mining log for the finding, so none is cited as `migration-commit`. Package abandonment comes from Packagist and the Laminas / Symfony announcements; the PHP 7.4 end-of-life date comes from the [PHP unsupported branches](https://www.php.net/supported-versions.php) page, not from these repositories.
 
 ## .NET blind selection
 

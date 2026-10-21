@@ -359,6 +359,23 @@
       }
     },
     {
+      "id": "serverless",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": null,
+      "evidence": {
+        "repositoriesWithFindings": 1,
+        "expectedFindings": 1,
+        "zeroFindingRepositories": 8,
+        "repositories": 26,
+        "blindRepositories": 0
+      }
+    },
+    {
       "id": "swift",
       "level": "experimental",
       "earnedLevel": "experimental",

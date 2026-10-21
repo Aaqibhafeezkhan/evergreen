@@ -140,14 +140,52 @@ export function changesFrom(payload, readPrevious = () => "") {
   }
 }
 
+/**
+ * Splits EVERGREEN_CHECK_COMMAND into argv. It is either a JSON array of strings, or words separated by
+ * whitespace, where double quotes keep spaces inside one word (and are removed).
+ */
+function parseCheckCommand(value) {
+  const trimmed = value.trim();
+  if (trimmed.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed) && parsed.every((item) => typeof item === "string")) return parsed;
+    } catch {
+      // Not JSON: split it as words below.
+    }
+  }
+  const words = [];
+  let word;
+  let quoted = false;
+  for (const char of trimmed) {
+    if (char === '"') {
+      quoted = !quoted;
+      word ??= "";
+    } else if (!quoted && /\s/.test(char)) {
+      if (word !== undefined) words.push(word);
+      word = undefined;
+    } else {
+      word = (word ?? "") + char;
+    }
+  }
+  if (word !== undefined) words.push(word);
+  return words;
+}
+
 function checkCommand() {
   const override = process.env.EVERGREEN_CHECK_COMMAND;
-  if (override) return override.split(/\s+/).filter(Boolean);
+  const words = override ? parseCheckCommand(override) : [];
+  if (words.length > 0) return words;
   return ["npx", "--yes", "--package", PACKAGE_SPEC, "evergreen"];
 }
 
+/** On Windows the command runs through the shell, which splits an unquoted word at its spaces. */
+function shellWord(word) {
+  return process.platform === "win32" && /\s/.test(word) ? `"${word}"` : word;
+}
+
 function runCheck(purl, version) {
-  const [command, ...args] = checkCommand();
+  const [command, ...args] = checkCommand().map(shellWord);
   const target = version ? `${purl}@${version}` : purl;
   const result = spawnSync(command, [...args, "check", target, "--json", "--fail-on", "none"], { encoding: "utf8", timeout: 45_000, shell: process.platform === "win32" });
   if (result.status !== 0) return { error: (result.stderr || result.error?.message || "evergreen check failed").trim().split("\n")[0] };

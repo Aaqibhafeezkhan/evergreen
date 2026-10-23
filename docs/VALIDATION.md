@@ -142,6 +142,32 @@ Five public repositories at pinned commits cover the `ci-images` detector: `oatp
 
 Because the corpus scans every detector, every finding in these repositories is recorded, not only the CI image ones. Each expected finding was checked by reading its line at the pinned commit, and its `groundTruthSource` is a `maintainer-review` note naming the path and line. The Azure dates come from the [hosted image deprecation schedule](https://learn.microsoft.com/azure/devops/pipelines/agents/hosted-deprecation-schedule) and the [Azure DevOps blog deprecation plan](https://devblogs.microsoft.com/devops/upcoming-updates-for-azure-pipelines-agents-images/), not from these repositories. All five were chosen knowing their image labels, so each records `selection: "targeted"`.
 
+## The 300-repository corpus
+
+The corpus now has 300 repositories: the 189 earlier entries and 111 added in one pass, every one with `selection: "blind"`. They fill the ecosystems that had the fewest repositories: container, Go, Rust, Ruby, PHP, Android, C/C++, CI runner images, Dart, Terraform, database runtimes, and shell got seven each, and serverless, GitHub Actions, and Swift got nine each.
+
+The blind rule, fixed on 2026-10-23 before Evergreen ran on these additions: for each query below, run `gh search code <query> --limit 60`, walk the results in the order returned that day, and keep the first N unique repositories that are not forks, not archived, not larger than 50,000 KB on GitHub, and not already in the corpus (or chosen by an earlier query); where the entry says root only, the matching path must be at the repository root. Pin each at its default-branch commit on that date. Licensing: only repository metadata, pinned commit IDs, paths, line numbers, and one short quoted line per finding are stored; no repository content is vendored, and each repository is fetched from GitHub at its pinned commit at run time. The query returns different results on another day, so the pinned list, not a re-run, is the record.
+
+- `go` (7): `gh search code go 1.22 --filename go.mod`; `gh search code go 1.26 --filename go.mod`: `lwolf/kube-cleanup-operator`, `ICKelin/gtun`, `keycard-tech/keycard-go`, `Johonsoy/SmartStashDB`, `replicate/cog`, `charmbracelet/wish`, `slackhq/go-audit`.
+- `rust` (7): `gh search code atty --filename Cargo.toml`; `gh search code ansi_term --filename Cargo.toml`; `gh search code tempdir --filename Cargo.toml`: `nikivdev/code`, `rathole-org/rathole`, `ogham/dog`, `suptejas/fleet`, `dflemstr/rq`, `databricks/click`, `gchp/iota`.
+- `ruby` (7): `gh search code 3.1.4 --filename .ruby-version`; `gh search code 2.7.8 --filename .ruby-version`; `gh search code 3.4.1 --filename .ruby-version`: `67272-App-Design-Dev/PATS_v1_r7`, `HomeBusProjects/HomeBus`, `Kgomotso196/Blog`, `nmacawile/rails-chat-api`, `maedadev/bizside-ruby`, `nsidc/vagrant-vsphere`, `nov/web_authn_sample`.
+- `android` (7): `gh search code com.android.billingclient:billing --filename build.gradle`; `gh search code com.android.billingclient:billing --filename build.gradle.kts`: `Aefyr/SAI`, `anjlab/android-inapp-billing-v3`, `Eajy/MaterialDesignDemo`, `serso/android-checkout`, `facebook/facebook-android-sdk`, `BranchMetrics/android-branch-deep-linking-attribution`, `d4rken-org/octi`.
+- `cpp` (7): `gh search code cmake_minimum_required(VERSION 2.8 --filename CMakeLists.txt`; `gh search code cmake_minimum_required(VERSION 3.28 --filename CMakeLists.txt`: `BYVoid/uchardet`, `Xtra-Computing/thundergbm`, `wavebitscientific/functional-fortran`, `karimnaaji/vectiler`, `Off-World-Live/obs-spout2-plugin`, `QBDI/QBDI`, `Hapaxia/SelbaWard`.
+- `ci-images` (7): `gh search code ubuntu-20.04 --filename azure-pipelines.yml`; `gh search code ubuntu-24.04 --filename azure-pipelines.yml`: `revery-ui/revery`, `microsoft/FASTER`, `hasura/graphqurl`, `inikep/lizard`, `Jackett/Jackett`, `dotnet/vscode-csharp`, `isomorphic-git/isomorphic-git`.
+- `database` (7): `gh search code postgres:13 --extension yml`; `gh search code engine_version = "5.7" --extension tf`: `gitcoinco/grants-stack`, `jayfk/launchr`, `Kuper-Tech/sbmt-outbox`, `replicase/pgcapture`, `tmknom/example-pragmatic-terraform`, `PacktPublishing/Effective-DevOps-with-AWS-Second-Edition`, `RajitPaul11/terraform_aws`.
+- `container` (7): `gh search code FROM node:24 --filename Dockerfile`; `gh search code FROM node:16 --filename Dockerfile`: `daimon3332/address`, `SpectrAI-Initiative/InnoClaw`, `navikt/security-playbook`, `rsmbl/Resemble.js`, `fanchangyong/deershare`, `firemakergk/aquar-home`, `sibbl/hass-lovelace-kindle-screensaver`.
+- `terraform` (7): `gh search code required_version 1.12 --extension tf`; `gh search code required_version ~> 1.12 --extension tf`; `gh search code required_version --extension tf --filename versions.tf`: `skax-ca/iac-module-library`, `ql4b/cloudless-infra`, `terraform-google-modules/terraform-google-container-vm`, `cloudposse/terraform-aws-cicd`, `cloudposse/terraform-aws-ec2-instance`, `terraform-google-modules/terraform-google-log-export`, `GoogleCloudPlatform/notebooks-blueprint-security`.
+- `node-actions` (9): `gh search code actions/checkout@v2 --extension yml`; `gh search code actions/checkout@v6 --extension yml`: `jugglerchris/rust-html2text`, `CausalAIBook/MetricsMLNotebooks`, `realabbas/Github-Actions-React-Native`, `ktye/i`, `lamdow8/lamdow8.github.io`, `bjdash/apic`, `lpereira/lwan`, `shivammathur/setup-php`, `hellofresh/action-changed-files`.
+- `shell` (7): `gh search code #Requires -Version 7 --extension ps1`; `gh search code PowerShellVersion --filename psd1`: `domaindrivendev/Swashbuckle.AspNetCore`, `PowerShell/PSReadLine`, `SteeltoeOSS/Steeltoe`, `Kevin-Robertson/Inveigh`, `psake/psake`, `cyberark/ACLight`, `pester/Pester`.
+- `php` (7): `gh search code ^7.4 --filename composer.json`; `gh search code ^8.3 --filename composer.json`: `dreamfactorysoftware/dreamfactory`, `doctrine/annotations`, `symfony/routing`, `driesvints/blade-icons`, `spatie/laravel-backup`, `mckenziearts/laravel-notify`, `spatie/db-dumper`.
+- `dart` (7): `gh search code ^3.8.0 --filename pubspec.yaml`; `gh search code ^3.10.0 --filename pubspec.yaml`: `bensonarafat/super_tooltip`, `Mr-Pepe/syncable`, `rithik-dev/firebase_phone_auth_handler`, `dickermoshe/convex-dart`, `OpenFlutter/fluwx`, `Yubico/yubioath-flutter`, `dartgfx/gpux`.
+- `serverless` (9): `gh search code nodejs14.x --filename serverless.yml`; `gh search code python3.8 --filename template.yaml`; `gh search code nodejs22.x --filename serverless.yml`: `SmartThingsCommunity/weather-color-light-smartapp-nodejs`, `ZeroSharp/serverless-php`, `Toola-bakery/Toola`, `ashokatechmin/Messcat`, `serverlesspub/imagemagick-aws-lambda-2`, `awslabs/aws-config-rdklib`, `aws-samples/aws-lambda-extensions`, `slackapi/bolt-js`, `webpro-nl/knip`.
+- `swift` (9): `gh search code xcode --filename .xcode-version`; `gh search code IPHONEOS_DEPLOYMENT_TARGET = 12.0 --filename project.pbxproj`: `sarthak-behl/Signal-iOS`, `palak-ios-play/SecureChat-iOS`, `NorthWolfLabs/CodexGauge`, `Shopify/mobile-buy-sdk-ios`, `ReSwift/ReSwift`, `Swinject/Swinject`, `aslanyanhaik/youtube-iOS`, `square/Valet`, `swiftlang/swift-corelibs-xctest`.
+
+Ground truth: for each repository the harness report was read line by line at the pinned commit, and every expected finding has a `maintainer-review` note quoting the path, line, and the matching text. The Go, Rust, Ruby, Android, C/C++, CI image, serverless, and GitHub Actions findings were also cross-checked against an independent `grep` over the pinned files (not Evergreen's output); the only differences are the scope boundaries below. Because the corpus scans every detector, every finding in these repositories is recorded, not only the ones for the ecosystem it was selected for. Findings of the npm, Node.js, Python, and .NET detectors were checked by reading the line, not by a second search. Several repositories that matched a version query have no finding in that ecosystem, which is expected: a range such as PHP `^7.4 || ^8.0` or Dart `sdk: ^3.8.0` still allows a supported release and is not an end-of-life declaration.
+
+Scope boundaries seen while checking, none of which is a finding in this corpus: the GitHub Actions detector reads only the root `.github/workflows` directory, so nested workflows (`pkg/cli/init-templates/base/.github/workflows` in `replicate/cog`, a `fixtures` directory in `webpro-nl/knip`) and composite `action.yml` files (`realabbas/Github-Actions-React-Native`, `awslabs/aws-config-rdklib`, `sarthak-behl/Signal-iOS`) are not scanned; the CI image detector reads files named `azure-pipelines.yml`, not `azure-pipelines-full.yml` (`microsoft/FASTER`); and the Android detector does not report a Play Billing pin written as `"gplayImplementation"("...")` (`d4rken-org/octi`) or inside an `androidTestImplementation` call (`BranchMetrics/android-branch-deep-linking-attribution`). These are candidates for follow-up issues, not corpus entries.
+
 ## Precision thresholds
 
 [`benchmarks/thresholds.json`](../benchmarks/thresholds.json) sets a precision floor per detector (`github-actions`, `nodejs`, `npm`, `python`, `dotnet`, `java`, `kubernetes`, `serverless`, and `swift` enforce it; a detector is named by the first segment of its rule ids). The harness scores each detector, prints the figures under `detectors` in its JSON, and reports `thresholdViolations`. A stable detector below its `minPrecision` (0.95 today) fails the run with a line such as:
@@ -391,31 +417,31 @@ Every difference has one of three causes, none of them a wrong finding:
 Precision is true positives over true positives plus false positives; recall is true positives over true positives plus false negatives. Both come from the last full corpus run recorded in [`benchmarks/thresholds.json`](../benchmarks/thresholds.json), so a reader can regenerate every number: run `npm run record:corpus-run`, then `npm run build:coverage`. The table below is generated; a test fails when it drifts from the recorded run. `nodejs` is the Node.js runtime rules served by the npm detector. A dash means the last full run did not score that detector.
 
 <!-- accuracy-tables:start -->
-Measured on 145 pinned repositories at commit `122d612` on 2026-10-21. Regenerate with `npm run build:coverage` after `npm run record:corpus-run`.
+Measured on 300 pinned repositories at commit `1d3e43f` on 2026-10-23. Regenerate with `npm run build:coverage` after `npm run record:corpus-run`.
 
 | Detector | Maturity | True positives | False positives | False negatives | Precision | Recall |
 | --- | --- | --- | --- | --- | --- | --- |
-| android | Experimental | 4 | 0 | 0 | 1.000 | 1.000 |
-| ci-images | Experimental | 8 | 0 | 0 | 1.000 | 1.000 |
-| container | Experimental | 19 | 0 | 0 | 1.000 | 1.000 |
-| cpp | Experimental | 11 | 0 | 0 | 1.000 | 1.000 |
-| dart | Experimental | — | — | — | — | — |
-| database | Experimental | — | — | — | — | — |
-| dotnet | Beta | 105 | 0 | 0 | 1.000 | 1.000 |
-| github-actions | Supported | 261 | 0 | 0 | 1.000 | 1.000 |
-| go | Experimental | 8 | 0 | 0 | 1.000 | 1.000 |
-| java | Beta | 6 | 0 | 0 | 1.000 | 1.000 |
-| kubernetes | Beta | 29 | 0 | 0 | 1.000 | 1.000 |
-| nodejs | Supported | 44 | 0 | 0 | 1.000 | 1.000 |
-| npm | Supported | 49 | 0 | 0 | 1.000 | 1.000 |
+| android | Experimental | 9 | 0 | 0 | 1.000 | 1.000 |
+| ci-images | Experimental | 13 | 0 | 0 | 1.000 | 1.000 |
+| container | Experimental | 57 | 0 | 0 | 1.000 | 1.000 |
+| cpp | Experimental | 18 | 0 | 0 | 1.000 | 1.000 |
+| dart | Experimental | 8 | 0 | 0 | 1.000 | 1.000 |
+| database | Experimental | 16 | 0 | 0 | 1.000 | 1.000 |
+| dotnet | Beta | 304 | 0 | 0 | 1.000 | 1.000 |
+| github-actions | Supported | 662 | 0 | 0 | 1.000 | 1.000 |
+| go | Experimental | 51 | 0 | 0 | 1.000 | 1.000 |
+| java | Beta | 60 | 0 | 0 | 1.000 | 1.000 |
+| kubernetes | Beta | 67 | 0 | 0 | 1.000 | 1.000 |
+| nodejs | Supported | 64 | 0 | 0 | 1.000 | 1.000 |
+| npm | Supported | 54 | 0 | 0 | 1.000 | 1.000 |
 | php | Experimental | 5 | 0 | 0 | 1.000 | 1.000 |
-| python | Supported | 20 | 0 | 0 | 1.000 | 1.000 |
-| ruby | Experimental | 7 | 0 | 0 | 1.000 | 1.000 |
-| rust | Experimental | 5 | 0 | 0 | 1.000 | 1.000 |
-| serverless | Beta | 20 | 0 | 0 | 1.000 | 1.000 |
-| shell | Experimental | — | — | — | — | — |
-| swift | Beta | 15 | 0 | 0 | 1.000 | 1.000 |
-| terraform | Experimental | — | — | — | — | — |
+| python | Supported | 24 | 0 | 0 | 1.000 | 1.000 |
+| ruby | Experimental | 24 | 0 | 0 | 1.000 | 1.000 |
+| rust | Experimental | 18 | 0 | 0 | 1.000 | 1.000 |
+| serverless | Beta | 26 | 0 | 0 | 1.000 | 1.000 |
+| shell | Experimental | 12 | 0 | 0 | 1.000 | 1.000 |
+| swift | Beta | 16 | 0 | 0 | 1.000 | 1.000 |
+| terraform | Experimental | 7 | 0 | 0 | 1.000 | 1.000 |
 <!-- accuracy-tables:end -->
 
 ## Interpretation and limits

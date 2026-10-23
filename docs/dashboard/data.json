@@ -1,9 +1,9 @@
 {
   "schemaVersion": "evergreen.dashboard-data.v1",
-  "referenceDay": "2026-10-21",
+  "referenceDay": "2026-10-23",
   "corpus": {
     "file": "benchmarks/public-repositories.json",
-    "repositories": 189
+    "repositories": 300
   },
   "sources": {
     "thresholds": "benchmarks/thresholds.json",
@@ -11,10 +11,10 @@
     "decision": "docs/decisions/0013-detector-maturity.md"
   },
   "run": {
-    "date": "2026-10-21",
-    "commit": "122d612",
-    "repositories": 145,
-    "findings": 616,
+    "date": "2026-10-23",
+    "commit": "1d3e43f",
+    "repositories": 300,
+    "findings": 1515,
     "runAgeDays": 0,
     "recordedPrecision": 1,
     "recordedRecall": 1,
@@ -34,22 +34,91 @@
         "enforced": false
       },
       "run": {
-        "truePositives": 4,
+        "truePositives": 9,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 4,
-        "expectedFindings": 4,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 1
+        "repositoriesWithFindings": 7,
+        "expectedFindings": 9,
+        "zeroFindingRepositories": 4,
+        "repositories": 12,
+        "blindRepositories": 8
       }
     },
     {
       "id": "ci-images",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": {
+        "truePositives": 13,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 7,
+        "expectedFindings": 13,
+        "zeroFindingRepositories": 1,
+        "repositories": 12,
+        "blindRepositories": 7
+      }
+    },
+    {
+      "id": "container",
+      "level": "experimental",
+      "earnedLevel": "beta",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": {
+        "truePositives": 57,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 25,
+        "expectedFindings": 57,
+        "zeroFindingRepositories": 3,
+        "repositories": 12,
+        "blindRepositories": 7
+      }
+    },
+    {
+      "id": "cpp",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": {
+        "truePositives": 18,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 13,
+        "expectedFindings": 18,
+        "zeroFindingRepositories": 1,
+        "repositories": 12,
+        "blindRepositories": 8
+      }
+    },
+    {
+      "id": "dart",
       "level": "experimental",
       "earnedLevel": "experimental",
       "precisionFloor": {
@@ -66,109 +135,52 @@
       "evidence": {
         "repositoriesWithFindings": 4,
         "expectedFindings": 8,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
-      }
-    },
-    {
-      "id": "container",
-      "level": "experimental",
-      "earnedLevel": "experimental",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": false
-      },
-      "run": {
-        "truePositives": 19,
-        "falsePositives": 0,
-        "falseNegatives": 0,
-        "precision": 1,
-        "recall": 1
-      },
-      "evidence": {
-        "repositoriesWithFindings": 14,
-        "expectedFindings": 39,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
-      }
-    },
-    {
-      "id": "cpp",
-      "level": "experimental",
-      "earnedLevel": "experimental",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": false
-      },
-      "run": {
-        "truePositives": 11,
-        "falsePositives": 0,
-        "falseNegatives": 0,
-        "precision": 1,
-        "recall": 1
-      },
-      "evidence": {
-        "repositoriesWithFindings": 7,
-        "expectedFindings": 11,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 1
-      }
-    },
-    {
-      "id": "dart",
-      "level": "experimental",
-      "earnedLevel": "experimental",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": false
-      },
-      "run": null,
-      "evidence": {
-        "repositoriesWithFindings": 4,
-        "expectedFindings": 8,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
+        "zeroFindingRepositories": 3,
+        "repositories": 12,
+        "blindRepositories": 7
       }
     },
     {
       "id": "database",
       "level": "experimental",
-      "earnedLevel": "experimental",
+      "earnedLevel": "beta",
       "precisionFloor": {
         "value": 0.95,
         "enforced": false
       },
-      "run": null,
-      "evidence": {
-        "repositoriesWithFindings": 6,
-        "expectedFindings": 8,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 1
-      }
-    },
-    {
-      "id": "dotnet",
-      "level": "beta",
-      "earnedLevel": "beta",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": true
-      },
       "run": {
-        "truePositives": 105,
+        "truePositives": 16,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 10,
-        "expectedFindings": 112,
+        "repositoriesWithFindings": 11,
+        "expectedFindings": 16,
+        "zeroFindingRepositories": 2,
+        "repositories": 12,
+        "blindRepositories": 8
+      }
+    },
+    {
+      "id": "dotnet",
+      "level": "beta",
+      "earnedLevel": "stable",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": true
+      },
+      "run": {
+        "truePositives": 304,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 20,
+        "expectedFindings": 304,
         "zeroFindingRepositories": 9,
         "repositories": 18,
         "blindRepositories": 12
@@ -183,41 +195,41 @@
         "enforced": true
       },
       "run": {
-        "truePositives": 261,
+        "truePositives": 662,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 66,
-        "expectedFindings": 379,
-        "zeroFindingRepositories": 2,
-        "repositories": 11,
-        "blindRepositories": 0
+        "repositoriesWithFindings": 110,
+        "expectedFindings": 662,
+        "zeroFindingRepositories": 5,
+        "repositories": 20,
+        "blindRepositories": 9
       }
     },
     {
       "id": "go",
       "level": "experimental",
-      "earnedLevel": "experimental",
+      "earnedLevel": "beta",
       "precisionFloor": {
         "value": 0.95,
         "enforced": false
       },
       "run": {
-        "truePositives": 8,
+        "truePositives": 51,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 9,
-        "expectedFindings": 14,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
+        "repositoriesWithFindings": 20,
+        "expectedFindings": 51,
+        "zeroFindingRepositories": 3,
+        "repositories": 12,
+        "blindRepositories": 7
       }
     },
     {
@@ -229,7 +241,7 @@
         "enforced": true
       },
       "run": {
-        "truePositives": 6,
+        "truePositives": 60,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
@@ -252,7 +264,7 @@
         "enforced": true
       },
       "run": {
-        "truePositives": 29,
+        "truePositives": 67,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
@@ -275,15 +287,15 @@
         "enforced": true
       },
       "run": {
-        "truePositives": 44,
+        "truePositives": 64,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 13,
-        "expectedFindings": 44,
+        "repositoriesWithFindings": 20,
+        "expectedFindings": 64,
         "zeroFindingRepositories": 8,
         "repositories": 26,
         "blindRepositories": 0
@@ -298,15 +310,15 @@
         "enforced": true
       },
       "run": {
-        "truePositives": 49,
+        "truePositives": 54,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 13,
-        "expectedFindings": 49,
+        "repositoriesWithFindings": 15,
+        "expectedFindings": 54,
         "zeroFindingRepositories": 8,
         "repositories": 26,
         "blindRepositories": 0
@@ -330,9 +342,9 @@
       "evidence": {
         "repositoriesWithFindings": 4,
         "expectedFindings": 5,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
+        "zeroFindingRepositories": 7,
+        "repositories": 12,
+        "blindRepositories": 7
       }
     },
     {
@@ -344,15 +356,15 @@
         "enforced": true
       },
       "run": {
-        "truePositives": 20,
+        "truePositives": 24,
         "falsePositives": 0,
         "falseNegatives": 0,
         "precision": 1,
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 17,
-        "expectedFindings": 20,
+        "repositoriesWithFindings": 21,
+        "expectedFindings": 24,
         "zeroFindingRepositories": 2,
         "repositories": 17,
         "blindRepositories": 0
@@ -360,6 +372,121 @@
     },
     {
       "id": "ruby",
+      "level": "experimental",
+      "earnedLevel": "beta",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": {
+        "truePositives": 24,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 14,
+        "expectedFindings": 24,
+        "zeroFindingRepositories": 3,
+        "repositories": 12,
+        "blindRepositories": 7
+      }
+    },
+    {
+      "id": "rust",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": {
+        "truePositives": 18,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 12,
+        "expectedFindings": 18,
+        "zeroFindingRepositories": 1,
+        "repositories": 12,
+        "blindRepositories": 7
+      }
+    },
+    {
+      "id": "serverless",
+      "level": "beta",
+      "earnedLevel": "beta",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": true
+      },
+      "run": {
+        "truePositives": 26,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 14,
+        "expectedFindings": 26,
+        "zeroFindingRepositories": 3,
+        "repositories": 19,
+        "blindRepositories": 14
+      }
+    },
+    {
+      "id": "shell",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": {
+        "truePositives": 12,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 5,
+        "expectedFindings": 12,
+        "zeroFindingRepositories": 2,
+        "repositories": 12,
+        "blindRepositories": 8
+      }
+    },
+    {
+      "id": "swift",
+      "level": "beta",
+      "earnedLevel": "beta",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": true
+      },
+      "run": {
+        "truePositives": 16,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "repositoriesWithFindings": 11,
+        "expectedFindings": 16,
+        "zeroFindingRepositories": 5,
+        "repositories": 22,
+        "blindRepositories": 16
+      }
+    },
+    {
+      "id": "terraform",
       "level": "experimental",
       "earnedLevel": "experimental",
       "precisionFloor": {
@@ -374,114 +501,11 @@
         "recall": 1
       },
       "evidence": {
-        "repositoriesWithFindings": 7,
-        "expectedFindings": 7,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
-      }
-    },
-    {
-      "id": "rust",
-      "level": "experimental",
-      "earnedLevel": "experimental",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": false
-      },
-      "run": {
-        "truePositives": 5,
-        "falsePositives": 0,
-        "falseNegatives": 0,
-        "precision": 1,
-        "recall": 1
-      },
-      "evidence": {
-        "repositoriesWithFindings": 4,
-        "expectedFindings": 5,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
-      }
-    },
-    {
-      "id": "serverless",
-      "level": "beta",
-      "earnedLevel": "beta",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": true
-      },
-      "run": {
-        "truePositives": 20,
-        "falsePositives": 0,
-        "falseNegatives": 0,
-        "precision": 1,
-        "recall": 1
-      },
-      "evidence": {
-        "repositoriesWithFindings": 9,
-        "expectedFindings": 20,
-        "zeroFindingRepositories": 2,
-        "repositories": 10,
-        "blindRepositories": 5
-      }
-    },
-    {
-      "id": "shell",
-      "level": "experimental",
-      "earnedLevel": "experimental",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": false
-      },
-      "run": null,
-      "evidence": {
-        "repositoriesWithFindings": 4,
-        "expectedFindings": 11,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 1
-      }
-    },
-    {
-      "id": "swift",
-      "level": "beta",
-      "earnedLevel": "beta",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": true
-      },
-      "run": {
-        "truePositives": 15,
-        "falsePositives": 0,
-        "falseNegatives": 0,
-        "precision": 1,
-        "recall": 1
-      },
-      "evidence": {
-        "repositoriesWithFindings": 11,
-        "expectedFindings": 16,
-        "zeroFindingRepositories": 2,
-        "repositories": 13,
-        "blindRepositories": 7
-      }
-    },
-    {
-      "id": "terraform",
-      "level": "experimental",
-      "earnedLevel": "experimental",
-      "precisionFloor": {
-        "value": 0.95,
-        "enforced": false
-      },
-      "run": null,
-      "evidence": {
         "repositoriesWithFindings": 5,
         "expectedFindings": 7,
-        "zeroFindingRepositories": 1,
-        "repositories": 5,
-        "blindRepositories": 0
+        "zeroFindingRepositories": 3,
+        "repositories": 12,
+        "blindRepositories": 7
       }
     }
   ],

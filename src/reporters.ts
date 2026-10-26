@@ -36,7 +36,7 @@ function markdownSource(source: { title: string; url: string }): string {
   try {
     const url = new URL(source.url);
     if (url.protocol !== "http:" && url.protocol !== "https:") return title + " (" + escapeMarkdown(source.url) + ")";
-    const destination = url.href.replace(/[()<>\s]/g, (character) => encodeURIComponent(character));
+    const destination = url.href.replace(/[()<>\s]/g, (character) => "%" + character.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0"));
     return "[" + title + "](" + destination + ")";
   } catch {
     return title + " (" + escapeMarkdown(source.url) + ")";

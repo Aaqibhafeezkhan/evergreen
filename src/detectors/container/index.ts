@@ -29,6 +29,74 @@ const SKIPPED_DIRECTORIES = new Set([".git", "node_modules", "vendor", "dist", "
 const DOCKERFILE_NAME = /^(?:Dockerfile|Containerfile)(?:\.[A-Za-z0-9_.-]+)?$|\.(?:Dockerfile|Containerfile)$/;
 const COMPOSE_NAME = /^(?:docker-)?compose(?:\.[A-Za-z0-9_.-]+)?\.ya?ml$/;
 const VARIANT = /^(?:alpine(?:\d+(?:\.\d+)*)?|slim|bookworm|bullseye|buster|stretch|trixie|jessie|jammy|noble|focal|oracle|oraclelinux\d*|debian|ubuntu|minimal)$/;
+
+const DEBIAN_CODENAMES = new Map<string, string>([
+  ["buzz", "1.1"],
+  ["rex", "1.2"],
+  ["bo", "1.3"],
+  ["hamm", "2.0"],
+  ["slink", "2.1"],
+  ["potato", "2.2"],
+  ["woody", "3.0"],
+  ["sarge", "3.1"],
+  ["etch", "4"],
+  ["lenny", "5"],
+  ["squeeze", "6"],
+  ["wheezy", "7"],
+  ["jessie", "8"],
+  ["stretch", "9"],
+  ["buster", "10"],
+  ["bullseye", "11"],
+  ["bookworm", "12"],
+  ["trixie", "13"],
+  ["forky", "14"],
+]);
+
+const UBUNTU_CODENAMES = new Map<string, string>([
+  ["warty", "4.10"],
+  ["hoary", "5.04"],
+  ["breezy", "5.10"],
+  ["dapper", "6.06"],
+  ["edgy", "6.10"],
+  ["feisty", "7.04"],
+  ["gutsy", "7.10"],
+  ["hardy", "8.04"],
+  ["intrepid", "8.10"],
+  ["jaunty", "9.04"],
+  ["karmic", "9.10"],
+  ["lucid", "10.04"],
+  ["maverick", "10.10"],
+  ["natty", "11.04"],
+  ["oneiric", "11.10"],
+  ["precise", "12.04"],
+  ["quantal", "12.10"],
+  ["raring", "13.04"],
+  ["saucy", "13.10"],
+  ["trusty", "14.04"],
+  ["utopic", "14.10"],
+  ["vivid", "15.04"],
+  ["wily", "15.10"],
+  ["xenial", "16.04"],
+  ["yakkety", "16.10"],
+  ["zesty", "17.04"],
+  ["artful", "17.10"],
+  ["bionic", "18.04"],
+  ["cosmic", "18.10"],
+  ["disco", "19.04"],
+  ["eoan", "19.10"],
+  ["focal", "20.04"],
+  ["groovy", "20.10"],
+  ["hirsute", "21.04"],
+  ["impish", "21.10"],
+  ["jammy", "22.04"],
+  ["kinetic", "22.10"],
+  ["lunar", "23.04"],
+  ["mantic", "23.10"],
+  ["noble", "24.04"],
+  ["oracular", "24.10"],
+  ["plucky", "25.04"],
+]);
+
 /** Extra suffix parts that mcr.microsoft.com/dotnet tags carry: CPU architectures, image flavors, distros, and Windows builds. */
 const DOTNET_VARIANT = /^(?:amd64|arm64v8|arm64|arm32v7|chiseled|extra|composite|distroless|cbl|mariner\d+(?:\.\d+)?|azurelinux\d+(?:\.\d+)?|nanoserver|windowsservercore|ltsc20\d\d|\d{4})$/;
 /**
@@ -159,6 +227,14 @@ type TagClass =
   | { kind: "versions"; lowest: string; highest: string }
   | { kind: "unclassified"; reason: string };
 
+/** Replaces a Debian or Ubuntu codename at the start of a Docker Hub tag with its release number, so `debian:buster` reads as `debian:10`. */
+function resolveCodename(repository: string, tag: string): string {
+  const name = tag.split("-")[0]!;
+  const codenames = repository === "library/debian" ? DEBIAN_CODENAMES : repository === "library/ubuntu" ? UBUNTU_CODENAMES : undefined;
+  const release = codenames?.get(name);
+  return release === undefined ? tag : tag.replace(name, release);
+}
+
 /** The versions a tag can stand for, or why it cannot be read as a release line. */
 function classifyTag(tag: string | undefined, digest: string | undefined, extraVariant?: RegExp): TagClass {
   if (tag === undefined) {
@@ -274,7 +350,7 @@ export class ContainerDetector implements Detector {
       const imageRules = rulesFor(image, rules, dotnetRules);
       if (!imageRules) continue;
 
-      const tag = classifyTag(image.tag, image.digest, image.registry === MICROSOFT_REGISTRY ? DOTNET_VARIANT : undefined);
+      const tag = classifyTag(image.registry === "docker.io" && image.tag !== undefined ? resolveCodename(image.repository, image.tag) : image.tag, image.digest, image.registry === MICROSOFT_REGISTRY ? DOTNET_VARIANT : undefined);
       if (tag.kind === "unclassified") {
         unclassified.push({ component: image.repository, reference: candidate.value, reason: tag.reason, location });
         continue;

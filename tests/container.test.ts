@@ -65,6 +65,14 @@ test("container passes detector conformance on every fixture", async () => {
           expected(node, "Dockerfile", 2, "node:16"),
           expected(node, "Dockerfile", 5, "node:16-alpine"),
           expected("container.python.eol-3.10-and-older", "Dockerfile", 8, "docker.io/library/python:3.8-slim"),
+          expected("container.ubuntu.eol-20.04-and-older", "os-images.Dockerfile", 1, "ubuntu:20.04"),
+          expected("container.debian.eol-11-and-older", "os-images.Dockerfile", 2, "debian:10"),
+          expected("container.alpine.eol-3.20-and-older", "os-images.Dockerfile", 3, "alpine:3.17"),
+          expected("container.debian.eol-11-and-older", "os-images.Dockerfile", 4, "debian:buster"),
+          expected("container.ubuntu.eol-20.04-and-older", "os-images.Dockerfile", 5, "ubuntu:focal"),
+          expected("container.ubuntu.eol-22.04", "os-images.Dockerfile", 6, "ubuntu:22.04"),
+          expected("container.debian.eol-11-and-older", "os-images.Dockerfile", 7, "debian:11"),
+          expected("container.alpine.eol-3.21", "os-images.Dockerfile", 8, "alpine:3.21"),
         ]),
       },
     ],
@@ -85,6 +93,20 @@ test("container passes detector conformance on every fixture", async () => {
     fixtures: [{ name: "container malformed", root: resolve(fixtures, "malformed"), expectedFindings: [] }],
     checks: [malformedInputCheck],
   });
+});
+
+test("Ubuntu and Debian codenames are resolved to release lines", async () => {
+  const root = await repository({ Dockerfile: "FROM ubuntu:bionic\nFROM debian:buster-slim\nFROM alpine:3.12\nFROM debian:10\nFROM ubuntu:18.04\nFROM ubuntu:focal\n" });
+  const analysis = await containerDetector.analyze({ root });
+  assert.deepEqual(analysis.findings.map((finding) => [finding.ruleId, finding.location.line]), [
+    ["container.ubuntu.eol-20.04-and-older", 1],
+    ["container.debian.eol-11-and-older", 2],
+    ["container.alpine.eol-3.20-and-older", 3],
+    ["container.debian.eol-11-and-older", 4],
+    ["container.ubuntu.eol-20.04-and-older", 5],
+    ["container.ubuntu.eol-20.04-and-older", 6],
+  ]);
+  assert.deepEqual(analysis.unclassified, []);
 });
 
 test("dynamic, untagged, and floating references are reported as unclassified, never guessed", async () => {

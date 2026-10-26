@@ -7,8 +7,10 @@ import { purlIdentity } from "../../purl.js";
 import { validateRegistryV2 } from "../../registry.js";
 import type { RegistryV2Rule } from "../../registry.js";
 import { DETECTOR_API_VERSION } from "../../sdk.js";
-import type { Detector, DetectorAnalysis, DetectorContext, DetectorFinding, DetectorInputs } from "../../sdk.js";
+import type { Detector, DetectorAnalysis, DetectorContext, DetectorFinding, DetectorInputs, DetectorUnclassifiedReference } from "../../sdk.js";
 import { parseVersLenient, versContains } from "../../vers/index.js";
+import { parseManagedKubernetes } from "./kubernetes.js";
+import type { ManagedKubernetesProduct } from "./kubernetes.js";
 import { parseTerraformLock } from "./parse-lock.js";
 import { parseTerraformFile } from "./parse-terraform.js";
 import { parseTerraformPlanJson } from "./plan.js";
@@ -29,7 +31,16 @@ import { parseTerraformVersionFile, parseToolVersionsTerraform } from "./parse-v
  * the rest of one minor line, so it matches a rule that contains both ends of that line. Any other constraint
  * (`>= 1.5`, `~> 1.9`, a range) admits versions outside any single release line, so it is only matched against
  * a rule that covers every version. A rule whose VERS is malformed never matches and does not hide a later rule.
- * Terraform is never run and nothing is fetched.
+ *
+ * It also reads the managed Kubernetes control-plane version. On a resource it reads `kubernetes_version` for
+ * `azurerm_kubernetes_cluster` and `min_master_version` for `google_container_cluster`. On a module it decides
+ * the vendor from the `source` address first: `terraform-aws-modules/eks/aws` (EKS) takes `cluster_version` and
+ * `kubernetes_version`, `Azure/aks/azurerm` (AKS) takes `kubernetes_version`, and
+ * `terraform-google-modules/kubernetes-engine/google` (GKE) takes `kubernetes_version` and `min_master_version`.
+ * A module source that is missing or not one of those addresses is not guessed: its version attributes are
+ * listed as unclassified. A partial version such as `1.33` is matched as the whole minor line. A value that is a
+ * variable, local, or module reference, an interpolation, or otherwise not one plain literal is listed as
+ * unclassified too. Terraform is never run and nothing is fetched.
  */
 
 const MAXIMUM_DEPTH = 8;
@@ -41,7 +52,8 @@ const TERRAFORM_PURL = "pkg:generic/terraform";
 const REGISTRY_HOST = "registry.terraform.io";
 const EXACT_VERSION = /^=?\s*(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/;
 const PESSIMISTIC_PATCH = /^~>\s*(\d+)\.(\d+)\.(\d+)$/;
-const ENGINE_VERSION = /^(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:-[0-9A-Za-z][0-9A-Za-z._-]*)?$/;
+/** A major, major.minor, or major.minor.patch release with an optional prerelease suffix. */
+const PARTIAL_VERSION = /^(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:-[0-9A-Za-z][0-9A-Za-z._-]*)?$/;
 const OPEN_END = "999999999";
 
 /** The Package URL of each database engine product as written in `registry/database.json`. */
@@ -53,6 +65,13 @@ const ENGINE_PURLS: Readonly<Record<string, string>> = {
   redis: "pkg:generic/redis",
   mongo: "pkg:generic/mongodb",
   mongodb: "pkg:generic/mongodb",
+};
+
+/** The Package URL of each managed Kubernetes product as written in `registry/terraform.json`. */
+const MANAGED_KUBERNETES_PURLS: Readonly<Record<ManagedKubernetesProduct, string>> = {
+  "amazon-eks": "pkg:generic/amazon-eks",
+  "google-kubernetes-engine": "pkg:generic/google-kubernetes-engine",
+  "azure-kubernetes-service": "pkg:generic/azure-kubernetes-service",
 };
 
 function isPlanJsonFileName(name: string): boolean {
@@ -166,8 +185,12 @@ function ruleForDeclared(rules: readonly RegistryV2Rule[], value: string): Regis
   return rules.find(coversEveryVersion);
 }
 
-function ruleForEngineDeclared(rules: readonly RegistryV2Rule[], value: string): RegistryV2Rule | undefined {
-  const match = ENGINE_VERSION.exec(value.trim());
+/**
+ * The first rule whose VERS range contains every release a partial version could mean, for a database
+ * engine version or a managed Kubernetes control-plane version: `12` admits 12.x, and `1.33` admits 1.33.x.
+ */
+function ruleForPartialVersion(rules: readonly RegistryV2Rule[], value: string): RegistryV2Rule | undefined {
+  const match = PARTIAL_VERSION.exec(value.trim());
   if (!match) return undefined;
   const [, major, minor, patch] = match;
   const low = `${major}.${minor ?? "0"}.${patch ?? "0"}`;
@@ -203,6 +226,7 @@ export class TerraformDetector implements Detector {
     const byPurl = rulesByPurl(await this.loadRules());
     const cliRules = byPurl.get(TERRAFORM_PURL) ?? [];
     const findings: DetectorFinding[] = [];
+    const unclassified: DetectorUnclassifiedReference[] = [];
     const report = (
       rule: RegistryV2Rule,
       path: string,
@@ -258,6 +282,42 @@ export class TerraformDetector implements Detector {
             if (rule) report(rule, path, declaration.line, `${path} requires provider ${source.namespace}/${source.name} ${declaration.value}. ${rule.summary}`);
           }
         }
+
+        for (const declaration of parseManagedKubernetes(contents)) {
+          if (declaration.product === undefined) {
+            unclassified.push({
+              component: "kubernetes",
+              reference: declaration.value,
+              reason: "the module source is not a known managed Kubernetes module",
+              location: { path, line: declaration.line },
+            });
+            continue;
+          }
+          const rules = byPurl.get(purlIdentity(MANAGED_KUBERNETES_PURLS[declaration.product])) ?? [];
+          if (!declaration.literal) {
+            unclassified.push({
+              component: declaration.product,
+              reference: declaration.value,
+              reason: /^(var|local|module)\./.test(declaration.value)
+                ? "the value is a variable or module reference, so Evergreen does not judge it"
+                : "the value is not one plain version literal, so Evergreen does not judge it",
+              location: { path, line: declaration.line },
+            });
+            continue;
+          }
+          const rule = ruleForPartialVersion(rules, declaration.value);
+          if (rule) {
+            const target = declaration.block === "module" ? `module.${declaration.name}` : `${declaration.block}.${declaration.name}`;
+            report(rule, path, declaration.line, `${path} sets ${target} ${declaration.attribute} ${declaration.value}. ${rule.summary}`);
+          } else if (!PARTIAL_VERSION.test(declaration.value.trim())) {
+            unclassified.push({
+              component: declaration.product,
+              reference: declaration.value,
+              reason: "the value is not a Kubernetes version number, so Evergreen does not judge it",
+              location: { path, line: declaration.line },
+            });
+          }
+        }
       }
     }
 
@@ -287,7 +347,7 @@ export class TerraformDetector implements Detector {
           const purl = ENGINE_PURLS[declaration.engine.toLowerCase()];
           if (!purl) continue;
           const rules = byPurl.get(purlIdentity(purl)) ?? [];
-          const rule = ruleForEngineDeclared(rules, declaration.value);
+          const rule = ruleForPartialVersion(rules, declaration.value);
           if (rule) {
             report(rule, path, declaration.address, `${path} (${declaration.address}) resolves ${declaration.resource}.${declaration.name} engine ${declaration.engine} ${declaration.value}. ${rule.summary}`);
           }
@@ -299,7 +359,7 @@ export class TerraformDetector implements Detector {
       if (left.location.path !== right.location.path) return left.location.path < right.location.path ? -1 : 1;
       return (left.location.line ?? 0) - (right.location.line ?? 0) || left.id.localeCompare(right.id);
     });
-    return { findings, unclassified: [] };
+    return { findings, unclassified };
   }
 }
 

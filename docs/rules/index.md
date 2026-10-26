@@ -143,6 +143,10 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 - [org.hibernate:hibernate-entitymanager has moved to org.hibernate.orm:hibernate-entitymanager](java.maven.org.hibernate.hibernate-entitymanager.relocated.html) — deprecated, `java.maven.org.hibernate.hibernate-entitymanager.relocated`
 - [org.slf4j:slf4j-log4j12 has moved to org.slf4j:slf4j-reload4j](java.maven.org.slf4j.slf4j-log4j12.relocated.html) — deprecated, `java.maven.org.slf4j.slf4j-log4j12.relocated`
 
+- [Spring Boot 1.x is out of open-source support](java.maven.spring-boot.legacy-1x.end-of-support.html) — end of support, `java.maven.spring-boot.legacy-1x.end-of-support`
+- [Spring Boot 2.x is out of open-source support](java.maven.spring-boot.legacy-2x.end-of-support.html) — end of support, `java.maven.spring-boot.legacy-2x.end-of-support`
+- [Spring Boot 3.x is out of open-source support](java.maven.spring-boot.legacy-3x.end-of-support.html) — end of support, `java.maven.spring-boot.legacy-3x.end-of-support`
+
 ## kubernetes
 
 - [MutatingWebhookConfiguration admissionregistration.k8s.io/v1beta1 is no longer served](kubernetes.admissionregistration-k8s-io.mutatingwebhookconfiguration.v1beta1.removed.html) — removed, `kubernetes.admissionregistration-k8s-io.mutatingwebhookconfiguration.v1beta1.removed`

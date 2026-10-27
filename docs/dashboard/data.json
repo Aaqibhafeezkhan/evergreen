@@ -434,6 +434,23 @@
       }
     },
     {
+      "id": "scala",
+      "level": "experimental",
+      "earnedLevel": "experimental",
+      "precisionFloor": {
+        "value": 0.95,
+        "enforced": false
+      },
+      "run": null,
+      "evidence": {
+        "repositoriesWithFindings": 1,
+        "expectedFindings": 2,
+        "zeroFindingRepositories": 0,
+        "repositories": 0,
+        "blindRepositories": 0
+      }
+    },
+    {
       "id": "serverless",
       "level": "beta",
       "earnedLevel": "beta",

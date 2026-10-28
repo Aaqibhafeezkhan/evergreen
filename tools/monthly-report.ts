@@ -13,6 +13,8 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join, resolve, dirname } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import type { Snapshot } from "./adoption-metrics.js";
+
 import { getCapabilityManifest } from "../src/capabilities.js";
 import { REGISTRY_V2_SCHEMA_VERSION } from "../src/registry.js";
 import type { RegistryV2, RegistryV2Rule } from "../src/registry.js";
@@ -65,6 +67,23 @@ export interface ContributorMetrics {
   isShallow: boolean;
 }
 
+export interface AdoptionChannel {
+  label: string;
+  value: number | "unavailable";
+  note?: string | undefined;
+}
+
+export interface AdoptionMetrics {
+  /** The most recent snapshot date found in metrics/adoption/ for the report month. */
+  snapshotDate: string | null;
+  /** GitHub stars (north-star). */
+  githubStars: number | "unavailable";
+  /** Previous-month GitHub stars for trend comparison (null when unavailable). */
+  previousStars: number | null;
+  /** Per-channel breakdown rows. */
+  channels: AdoptionChannel[];
+}
+
 export interface MonthlyReportData {
   month: string;
   asOfDate: string;
@@ -73,6 +92,7 @@ export interface MonthlyReportData {
   ecosystems: EcosystemMetrics;
   corpus: CorpusMetrics;
   contributors: ContributorMetrics;
+  adoption: AdoptionMetrics;
 }
 
 export type GitRunner = (args: readonly string[]) => string;
@@ -317,6 +337,84 @@ export function collectContributorMetrics(
   }
 }
 
+export interface CollectAdoptionOptions {
+  /** Directory containing adoption snapshots (default: metrics/adoption). */
+  adoptionDir?: string | undefined;
+  /** The current report month (YYYY-MM). */
+  month?: string | undefined;
+}
+
+/**
+ * Reads the most-recent adoption snapshot for the given month and the previous month from
+ * metrics/adoption/<date>.json files. Never uses the network.
+ */
+export async function collectAdoptionMetrics(options: CollectAdoptionOptions = {}): Promise<AdoptionMetrics> {
+  const adoptionDir = options.adoptionDir ?? resolve("metrics/adoption");
+  const month = options.month ?? new Date().toISOString().slice(0, 7);
+
+  const [yearStr, monthStr] = month.split("-");
+  let prevYear = Number(yearStr);
+  let prevMonth = Number(monthStr) - 1;
+  if (prevMonth === 0) {
+    prevMonth = 12;
+    prevYear -= 1;
+  }
+  const previousMonth = `${prevYear}-${String(prevMonth).padStart(2, "0")}`;
+
+  /** Returns the newest snapshot file for a given month prefix, or null. */
+  async function newestSnapshotForMonth(prefix: string): Promise<Snapshot | null> {
+    let entries: string[] = [];
+    try {
+      entries = await readdir(adoptionDir);
+    } catch {
+      return null;
+    }
+    const matches = entries
+      .filter((f) => f.startsWith(prefix) && f.endsWith(".json"))
+      .sort()
+      .reverse();
+    if (matches.length === 0) return null;
+    try {
+      return JSON.parse(await readFile(join(adoptionDir, matches[0]!), "utf8")) as Snapshot;
+    } catch {
+      return null;
+    }
+  }
+
+  /** Reads a numeric ok-metric value from a snapshot. */
+  function metricValue(snapshot: Snapshot | null, key: string): number | "unavailable" {
+    if (!snapshot) return "unavailable";
+    const m = snapshot.metrics?.[key];
+    if (!m || m.status !== "ok" || typeof m.value !== "number") return "unavailable";
+    return m.value;
+  }
+
+  const current = await newestSnapshotForMonth(month);
+  const previous = await newestSnapshotForMonth(previousMonth);
+
+  const stars = metricValue(current, "githubStars");
+  const prevStars = metricValue(previous, "githubStars");
+
+  const repeatRaw = metricValue(current, "repeatActionRepositories");
+  const repeatNote =
+    repeatRaw !== "unavailable" && typeof repeatRaw === "number" ? `${repeatRaw} recurring` : undefined;
+
+  const channels: AdoptionChannel[] = [
+    { label: "GitHub Action repositories", value: metricValue(current, "githubActionRepositories"), note: repeatNote },
+    { label: "Pre-commit hook repositories", value: metricValue(current, "preCommitRepositories") },
+    { label: "GitLab component repositories", value: metricValue(current, "gitlabComponentRepositories") },
+    { label: "npm weekly downloads", value: metricValue(current, "npmWeeklyDownloads") },
+    { label: "skills.sh installs", value: metricValue(current, "skillsShInstalls") },
+  ];
+
+  return {
+    snapshotDate: current?.date ?? null,
+    githubStars: stars,
+    previousStars: prevStars !== "unavailable" ? prevStars : null,
+    channels,
+  };
+}
+
 export interface CollectReportOptions {
   date?: string | undefined;
   rootDir?: string | undefined;
@@ -330,10 +428,11 @@ export async function collectReportData(options: CollectReportOptions = {}): Pro
   const month = dateInput.slice(0, 7);
   const asOfDate = dateInput.length >= 10 ? dateInput.slice(0, 10) : `${month}-01`;
 
-  const [rules, ecosystems, corpus] = await Promise.all([
+  const [rules, ecosystems, corpus, adoption] = await Promise.all([
     collectRuleMetrics(join(root, "registry"), month),
     Promise.resolve(collectEcosystemMetrics()),
     collectCorpusMetrics(join(root, "benchmarks", "public-repositories.json")),
+    collectAdoptionMetrics({ adoptionDir: join(root, "metrics", "adoption"), month }),
   ]);
 
   const gitRunner = options.gitRunner ?? createGitRunner(root);
@@ -347,6 +446,7 @@ export async function collectReportData(options: CollectReportOptions = {}): Pro
     ecosystems,
     corpus,
     contributors,
+    adoption,
   };
 }
 
@@ -377,6 +477,27 @@ export function generateMonthlyReport(data: MonthlyReportData): string {
     ? `${data.contributors.totalContributors} contributors (partial: shallow history)`
     : `${data.contributors.totalContributors} contributors`;
   lines.push(`| Contributors | ${contributorHighlight} | ${formatNumber(data.contributors.monthCommits)} commits in ${data.month} |`);
+  const starsCell =
+    data.adoption.githubStars !== "unavailable" ? `${formatNumber(data.adoption.githubStars)} GitHub stars` : "unavailable";
+  const adoptionMomentum = (() => {
+    if (
+      data.adoption.githubStars !== "unavailable" &&
+      data.adoption.previousStars !== null &&
+      data.adoption.previousStars !== data.adoption.githubStars
+    ) {
+      const diff = data.adoption.githubStars - data.adoption.previousStars;
+      const sign = diff > 0 ? "+" : "";
+      return `${formatNumber(data.adoption.githubStars)} stars (${sign}${diff} vs last month)`;
+    }
+    if (data.adoption.snapshotDate) {
+      return `snapshot ${data.adoption.snapshotDate}`;
+    }
+    if (data.adoption.githubStars !== "unavailable") {
+      return `${formatNumber(data.adoption.githubStars)} stars`;
+    }
+    return "unavailable";
+  })();
+  lines.push(`| Adoption | ${starsCell} | ${adoptionMomentum} |`);
   lines.push("");
 
   // Lifecycle rules section
@@ -458,6 +579,48 @@ export function generateMonthlyReport(data: MonthlyReportData): string {
   );
   for (const [eco, metrics] of corpusEcoEntries) {
     lines.push(`| ${eco} | ${formatNumber(metrics.repositories)} | ${formatNumber(metrics.expectedFindings)} |`);
+  }
+  lines.push("");
+
+  // Adoption section
+  lines.push("## Adoption");
+  lines.push("");
+  lines.push("Public signals from open sources only. Evergreen has no telemetry.");
+  lines.push("");
+  if (data.adoption.snapshotDate) {
+    lines.push(`*Snapshot: ${data.adoption.snapshotDate}*`);
+    lines.push("");
+  }
+  lines.push("### North-star trend");
+  lines.push("");
+  if (data.adoption.githubStars !== "unavailable") {
+    const trend =
+      data.adoption.previousStars !== null
+        ? ` (${data.adoption.githubStars >= data.adoption.previousStars ? "+" : ""}${data.adoption.githubStars - data.adoption.previousStars} vs previous month)`
+        : "";
+    lines.push(`**GitHub stars:** ${formatNumber(data.adoption.githubStars)}${trend}`);
+  } else {
+    lines.push("**GitHub stars:** unavailable");
+  }
+  lines.push("");
+  lines.push("### Channel breakdown");
+  lines.push("");
+  lines.push("| Channel | Count |");
+  lines.push("| --- | --- |");
+  for (const channel of data.adoption.channels) {
+    const countCell =
+      channel.value === "unavailable"
+        ? "unavailable"
+        : channel.note
+          ? `${formatNumber(channel.value)} (${channel.note})`
+          : formatNumber(channel.value);
+    lines.push(`| ${channel.label} | ${countCell} |`);
+  }
+  lines.push("");
+  if (data.adoption.snapshotDate) {
+    lines.push(`Methodology and sources: [docs/ADOPTION.md](docs/ADOPTION.md) · Snapshot: [\`metrics/adoption/${data.adoption.snapshotDate}.json\`](metrics/adoption/${data.adoption.snapshotDate}.json)`);
+  } else {
+    lines.push("Methodology and sources: [docs/ADOPTION.md](docs/ADOPTION.md)");
   }
   lines.push("");
 

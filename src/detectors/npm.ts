@@ -26,6 +26,8 @@ import type {
   DetectorFinding,
   RegistryDefinition,
   DetectorInputs,
+  DetectorAnalysis,
+  DetectorUnclassifiedReference,
 } from "../sdk.js";
 
 interface PackageRule extends DeprecationRule {
@@ -225,6 +227,127 @@ function parseYarnLock(contents: string, { versions: target, graph }: LockData):
   }
 }
 
+function packageFromBunDescriptor(rawKey: string): { name: string; version: string } | undefined {
+  const key = rawKey.replace(/\(.+\)$/, "");
+  const separator = key.lastIndexOf("@");
+  if (separator <= 0) return undefined;
+  let name = key.slice(0, separator);
+  let version = key.slice(separator + 1);
+  if (name.includes("@npm:")) {
+    name = name.slice(name.indexOf("@npm:") + 5);
+  } else if (name.startsWith("npm:")) {
+    name = name.slice(4);
+  }
+  if (version.startsWith("npm:")) version = version.slice(4);
+  return semver.valid(version) ? { name, version } : undefined;
+}
+
+function stripJsonc(contents: string): string {
+  let result = "";
+  let i = 0;
+  const len = contents.length;
+  let inString = false;
+
+  while (i < len) {
+    const char = contents[i]!;
+
+    if (inString) {
+      result += char;
+      if (char === "\\") {
+        i++;
+        if (i < len) result += contents[i]!;
+      } else if (char === '"') {
+        inString = false;
+      }
+      i++;
+      continue;
+    }
+
+    if (char === '"') {
+      inString = true;
+      result += char;
+      i++;
+    } else if (char === "/" && contents[i + 1] === "/") {
+      i += 2;
+      while (i < len && contents[i] !== "\n" && contents[i] !== "\r") {
+        i++;
+      }
+    } else if (char === "/" && contents[i + 1] === "*") {
+      i += 2;
+      while (i < len && !(contents[i] === "*" && contents[i + 1] === "/")) {
+        if (contents[i] === "\n" || contents[i] === "\r") {
+          result += contents[i];
+        }
+        i++;
+      }
+      if (i < len) i += 2;
+    } else if (char === ",") {
+      let nextPos = i + 1;
+      let isTrailing = false;
+      while (nextPos < len) {
+        const nextChar = contents[nextPos]!;
+        if (nextChar === " " || nextChar === "\t" || nextChar === "\n" || nextChar === "\r") {
+          nextPos++;
+        } else if (nextChar === "/" && contents[nextPos + 1] === "/") {
+          nextPos += 2;
+          while (nextPos < len && contents[nextPos] !== "\n" && contents[nextPos] !== "\r") {
+            nextPos++;
+          }
+        } else if (nextChar === "/" && contents[nextPos + 1] === "*") {
+          nextPos += 2;
+          while (nextPos < len && !(contents[nextPos] === "*" && contents[nextPos + 1] === "/")) {
+            nextPos++;
+          }
+          if (nextPos < len) nextPos += 2;
+        } else if (nextChar === "}" || nextChar === "]") {
+          isTrailing = true;
+          break;
+        } else {
+          break;
+        }
+      }
+      if (isTrailing) {
+        result += " ";
+      } else {
+        result += ",";
+      }
+      i++;
+    } else {
+      result += char;
+      i++;
+    }
+  }
+
+  return result;
+}
+
+function parseBunLock(contents: string, { versions: target, graph }: LockData): void {
+  let lock: { packages?: Record<string, unknown>; workspaces?: Record<string, unknown> };
+  try {
+    lock = JSON.parse(stripJsonc(contents)) as { packages?: Record<string, unknown>; workspaces?: Record<string, unknown> };
+  } catch {
+    return;
+  }
+  if (!lock || typeof lock !== "object") return;
+  const packages = lock.packages;
+  if (!packages || typeof packages !== "object") return;
+
+  for (const [key, entry] of Object.entries(packages)) {
+    if (!Array.isArray(entry) || entry.length === 0) continue;
+    const descriptor = typeof entry[0] === "string" ? entry[0] : "";
+    const parsed = packageFromBunDescriptor(descriptor) ?? packageFromBunDescriptor(key);
+    if (!parsed) continue;
+    addResolved(target, parsed.name, parsed.version);
+
+    const meta = entry.slice(1).find((item): item is Record<string, unknown> => typeof item === "object" && item !== null && !Array.isArray(item));
+    if (meta) {
+      const deps = meta.dependencies as Record<string, unknown> | undefined;
+      const optDeps = meta.optionalDependencies as Record<string, unknown> | undefined;
+      addEdges(graph, parsed.name, deps, optDeps);
+    }
+  }
+}
+
 async function collectLockData(root: string): Promise<LockData> {
   const resolved: LockData = { versions: new Map(), graph: new Map() };
   const lockfiles = await Promise.all([
@@ -232,12 +355,14 @@ async function collectLockData(root: string): Promise<LockData> {
     readOptional(resolve(root, "npm-shrinkwrap.json")),
     readOptional(resolve(root, "pnpm-lock.yaml")),
     readOptional(resolve(root, "yarn.lock")),
+    readOptional(resolve(root, "bun.lock")),
   ]);
 
   if (lockfiles[0]) parsePackageLock(lockfiles[0], resolved);
   if (lockfiles[1]) parsePackageLock(lockfiles[1], resolved);
   if (lockfiles[2]) parsePnpmLock(lockfiles[2], resolved);
   if (lockfiles[3]) parseYarnLock(lockfiles[3], resolved);
+  if (lockfiles[4]) parseBunLock(lockfiles[4], resolved);
   return resolved;
 }
 
@@ -384,14 +509,29 @@ export class NpmDetector implements Detector {
   readonly id = "npm";
   /** The files `scan` may read; conformance fails a scan that reads another. */
   readonly inputs: DetectorInputs = {
-    fileNames: ["package.json", "package-lock.json", "npm-shrinkwrap.json", "pnpm-lock.yaml", "yarn.lock", ".nvmrc", ".node-version", "pnpm-workspace.yaml", "lerna.json"],
+    fileNames: ["package.json", "package-lock.json", "npm-shrinkwrap.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb", ".nvmrc", ".node-version", "pnpm-workspace.yaml", "lerna.json"],
     sourceExtensions: [".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".mts", ".cts", ".json", ".yaml", ".yml"],
   };
 
   async scan(context: DetectorContext): Promise<DetectorFinding[]> {
+    return [...(await this.analyze(context)).findings];
+  }
+
+  async analyze(context: DetectorContext): Promise<DetectorAnalysis> {
     const rootManifest = await readOptional(resolve(context.root, "package.json"));
     const workspaceDirectories = await discoverNpmWorkspaces(context.root);
-    if (!rootManifest && workspaceDirectories.length === 0) return [];
+    if (!rootManifest && workspaceDirectories.length === 0) return { findings: [], unclassified: [] };
+
+    const unclassified: DetectorUnclassifiedReference[] = [];
+    const rootLockb = await readOptional(resolve(context.root, "bun.lockb"));
+    if (rootLockb !== undefined) {
+      unclassified.push({
+        component: "bun.lockb",
+        reference: "bun.lockb",
+        reason: "the lockfile is binary (bun.lockb), which Evergreen does not parse; run `bun install` with Bun 1.2+ to generate a text bun.lock file",
+        location: { path: "bun.lockb", line: 1 },
+      });
+    }
 
     const [packageRules, nodeRules, rootLock] = await Promise.all([
       loadRegistry(
@@ -434,6 +574,17 @@ export class NpmDetector implements Detector {
         return;
       }
       const own = directory === "" ? { versions: new Map<string, Set<string>>(), graph: new Map<string, Set<string>>() } : await collectLockData(resolve(context.root, directory));
+      if (directory !== "") {
+        const workspaceLockb = await readOptional(resolve(context.root, directory, "bun.lockb"));
+        if (workspaceLockb !== undefined) {
+          unclassified.push({
+            component: "bun.lockb",
+            reference: "bun.lockb",
+            reason: "the lockfile is binary (bun.lockb), which Evergreen does not parse; run `bun install` with Bun 1.2+ to generate a text bun.lock file",
+            location: { path: relativePosix(context.root, resolve(context.root, directory, "bun.lockb")), line: 1 },
+          });
+        }
+      }
       const resolved: ResolvedVersions = new Map(rootLock.versions);
       for (const [name, versions] of own.versions) resolved.set(name, new Set([...(resolved.get(name) ?? []), ...versions]));
       const graph: DependencyGraph = new Map(rootLock.graph);
@@ -535,7 +686,7 @@ export class NpmDetector implements Detector {
       });
     }
 
-    return findings;
+    return { findings, unclassified };
   }
 }
 

@@ -28,6 +28,18 @@ on:
           `GITHUB_TOKEN` when the caller can read the organization with its
           default token; otherwise pass a dedicated read-only token.
         required: false
+      slack-webhook-url:
+        description: >-
+          Incoming-webhook URL for a Slack channel. When set, a digest of the
+          rollup result is posted after every scan. Leave empty to skip Slack
+          notifications.
+        required: false
+      teams-webhook-url:
+        description: >-
+          Workflow-webhook URL for a Microsoft Teams channel. When set, a digest
+          of the rollup result is posted after every scan. Leave empty to skip
+          Teams notifications.
+        required: false
   workflow_dispatch:
     inputs:
       organization:
@@ -43,8 +55,8 @@ on:
       max-jobs:
         description: Maximum number of repositories scanned in parallel (bounded concurrency).
         required: false
-        default: "10"
-        type: string
+        default: 10
+        type: number
 
 permissions:
   contents: read
@@ -91,3 +103,115 @@ jobs:
         with:
           fail-on-severity: ${{ inputs.fail-on-severity }}
           report-name: evergreen-report-${{ matrix.repo }}
+
+  notify:
+    name: Send digest
+    needs: [list, scan]
+    # Run even when some scan jobs fail so teams always get the weekly digest.
+    if: ${{ always() && needs.list.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    steps:
+      - name: Check webhook configuration
+        id: webhooks
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack-webhook-url }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.teams-webhook-url }}
+        run: |
+          slack="false"
+          teams="false"
+          any="false"
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            slack="true"
+            any="true"
+          fi
+          if [ -n "$TEAMS_WEBHOOK_URL" ]; then
+            teams="true"
+            any="true"
+          fi
+          {
+            echo "slack=$slack"
+            echo "teams=$teams"
+            echo "any=$any"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Download scan reports
+        if: ${{ steps.webhooks.outputs.any == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p reports
+          gh api \
+            "/repos/$REPO/actions/runs/$RUN_ID/artifacts?per_page=100" \
+            --paginate \
+            --jq '.artifacts[] | select(.name | startswith("evergreen-report-")) | .id' \
+          | while read -r id; do
+              gh api "/repos/$REPO/actions/artifacts/$id/zip" > "reports/${id}.zip" 2>/dev/null || true
+              unzip -q -o "reports/${id}.zip" -d "reports/${id}" 2>/dev/null || true
+              rm -f "reports/${id}.zip"
+            done
+          echo "Downloaded $(find reports -name '*.json' | wc -l | tr -d ' ') report(s)."
+
+      - name: Build digest text
+        if: ${{ steps.webhooks.outputs.any == 'true' }}
+        run: |
+          reports=()
+          while IFS= read -r -d '' file; do
+            reports+=("$file")
+          done < <(find reports -name '*.json' -print0 | sort -z)
+          if [ "${#reports[@]}" -eq 0 ]; then
+            echo "Evergreen organization scan complete: no reports found." > digest.txt
+          else
+            npx --yes evergreen-deprecation@0.7.1 rollup "${reports[@]}" > digest.txt
+          fi
+
+      - name: Post to Slack
+        if: ${{ steps.webhooks.outputs.slack == 'true' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack-webhook-url }}
+        run: |
+          payload="$(jq -n --rawfile raw digest.txt '
+            ($raw | gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub(">"; "&gt;")) as $escaped |
+            (if ($escaped | length) > 3000 then (($escaped[:2989] | sub("&[a-z]{0,3}$"; "")) + "\n…truncated") else $escaped end) as $final |
+            {
+              text: "Evergreen organization digest",
+              blocks: [
+                {type: "header", text: {type: "plain_text", text: "Evergreen organization digest", emoji: false}},
+                {type: "section", text: {type: "mrkdwn", text: $final}}
+              ]
+            }
+          ')"
+          curl --silent --show-error --fail \
+            -X POST "$SLACK_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$payload"
+
+      - name: Post to Teams
+        if: ${{ steps.webhooks.outputs.teams == 'true' }}
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.teams-webhook-url }}
+        run: |
+          payload="$(jq -n --rawfile raw digest.txt '{
+            type: "message",
+            attachments: [{
+              contentType: "application/vnd.microsoft.card.adaptive",
+              contentUrl: null,
+              content: {
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                type: "AdaptiveCard",
+                version: "1.4",
+                body: [
+                  {type: "TextBlock", text: "Evergreen organization digest", weight: "Bolder", size: "Medium", wrap: true},
+                  {type: "TextBlock", text: $raw, wrap: true}
+                ]
+              }
+            }]
+          }')"
+          curl --silent --show-error --fail \
+            -X POST "$TEAMS_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$payload"

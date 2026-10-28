@@ -22,3 +22,23 @@ On 2026-10-21 on the development machine:
 Tree-sitter took about 4.9 times as long at the median, roughly 1.1 ms per file, in exchange for finding multi-line calls, aliases and re-exports and rejecting method calls that only share a name with an import (see `tests/usage-parity.test.ts`). The figures are reference points, not a CI gate.
 
 The benchmark corpus is intentionally controlled. The automated test suite separately covers JavaScript and TypeScript import forms, aliases, Python imports and calls, configuration keys, ignored dependency directories, and comment/string false positives.
+
+## Time to first useful finding
+
+Run `npm run benchmark:first-run` to time a clean run of the quickstart to its first useful finding.
+
+The benchmark tracks Evergreen's adoption goal: a new user goes from `npx` to a useful, explained finding in under two minutes (120 s) on any supported OS without prior installation or configuration.
+
+### Methodology
+
+The local benchmark (`benchmarks/first-run.ts`) measures wall-clock time from invoking the scan in a clean temporary directory containing a minimal project with known lifecycle issues (`tests/fixtures/smoke/package.json`). It tests:
+
+1. Project and manifest discovery.
+2. Rule evaluation against bundled offline lifecycle data.
+3. Emission of the first useful finding (`npm.package.request.deprecated` at `package.json:5` and the Node.js end-of-life runtime).
+
+On 2026-10-28, running `npm run benchmark:first-run` against the local build on macOS (Apple silicon, Node.js 26) completed the clean scan in 0.28 s, reporting 4 findings. Treat this duration as an observational local reference point.
+
+### Release workflow timing
+
+In CI, the release workflow (`.github/workflows/release.yml`) uses its own inline timing in the `quickstart` job across clean Linux, macOS, and Windows runners after npm publish. The runner executes the package smoke script first (which warms the npm package cache) and then times `scan . --json` on the smoke fixture, isolating execution from npm registry latency. The job asserts that the scan finishes within the two-minute budget (`durationMs <= 120000`) and writes the measured duration to `$GITHUB_STEP_SUMMARY`. Actual per-release runner measurements appear in each release run's summary.

@@ -11,6 +11,7 @@ hosted service.
 
 ## Start here
 
+- [Five-step quickstart](QUICKSTART.md)
 - [90-second demo](DEMO.md)
 - [Start contributing](CONTRIBUTE.md)
 - [v0.1 validation results](VALIDATION.md)

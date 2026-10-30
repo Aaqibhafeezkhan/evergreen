@@ -68,6 +68,7 @@ test("serverless passes detector conformance on every fixture", async () => {
         expectedFindings: [
           expected(byId("serverless.aws-lambda.nodejs14.x"), "main.tf", 3),
           expected(byId("serverless.google-cloud-functions.nodejs14"), "main.tf", 30),
+          expected(byId("serverless.google-cloud-functions.python38"), "main.tf", 38),
           expected(byId("serverless.aws-lambda.nodejs14.x"), "serverless.yml", 4),
           expected(byId("serverless.aws-lambda.python3.8"), "serverless.yml", 9),
           expected(byId("serverless.aws-lambda.nodejs14.x"), "template.yaml", 7),
@@ -102,6 +103,7 @@ test("matches AWS and Google identifiers by Package URL and ignores Azure versio
     [
       ["serverless.aws-lambda.nodejs14.x", "main.tf", 3],
       ["serverless.google-cloud-functions.nodejs14", "main.tf", 30],
+      ["serverless.google-cloud-functions.python38", "main.tf", 38],
       ["serverless.aws-lambda.nodejs14.x", "serverless.yml", 4],
       ["serverless.aws-lambda.python3.8", "serverless.yml", 9],
       ["serverless.aws-lambda.nodejs14.x", "template.yaml", 7],
@@ -111,7 +113,7 @@ test("matches AWS and Google identifiers by Package URL and ignores Azure versio
       ["serverless.aws-lambda.ruby2.7", "template.yml", 12],
     ],
   );
-  assert.ok(!findings.some((finding) => finding.location.path === "main.tf" && (finding.location.line === 13 || finding.location.line === 23 || finding.location.line === 38)));
+  assert.ok(!findings.some((finding) => finding.location.path === "main.tf" && (finding.location.line === 13 || finding.location.line === 23)));
 });
 
 test("a Node.js 12 Lambda runtime is reported, while a lookalike and a supported runtime are not", async () => {
@@ -190,13 +192,13 @@ test("the engine attributes a serverless finding to the detector", async () => {
 test("every curated Serverless rule has migration guidance with real verification commands", async () => {
   for (const rule of await committedRules()) {
     assert.ok(rule.migration && rule.migration.constraints.length >= 1 && rule.migration.steps.length >= 1, rule.id);
-    if (rule.id.startsWith("serverless.google-cloud-functions.")) {
+    if (rule.id.startsWith("serverless.google-cloud-functions.") || rule.id.startsWith("serverless.google-appengine-runtime.")) {
       assert.ok(
         rule.migration.verification.length >= 1 &&
           rule.migration.verification.every(
             (check) => check.command.startsWith("terraform ") && !check.command.includes("sam ") && !check.command.includes("serverless "),
           ),
-        `${rule.id}: Google Cloud Functions verification must be Terraform-only`,
+        `${rule.id}: Google Cloud verification must be Terraform-only`,
       );
       continue;
     }

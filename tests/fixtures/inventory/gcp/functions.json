@@ -1,0 +1,61 @@
+[
+  {
+    "name": "projects/evergreen-demo-427819/locations/us-central1/functions/legacy-thumbnail",
+    "runtime": "nodejs14",
+    "entryPoint": "generateThumbnail",
+    "serviceAccountEmail": "functions@evergreen-demo-427819.iam.gserviceaccount.com",
+    "status": "ACTIVE",
+    "httpsTrigger": {
+      "url": "https://us-central1-evergreen-demo-427819.cloudfunctions.net/legacy-thumbnail"
+    },
+    "environmentVariables": {
+      "THUMBNAIL_BUCKET": "evergreen-demo-thumbnails"
+    }
+  },
+  {
+    "name": "projects/evergreen-demo-427819/locations/us-central1/functions/billing-report",
+    "environment": "GEN_2",
+    "buildConfig": {
+      "runtime": "nodejs16",
+      "entryPoint": "handleBilling",
+      "source": {
+        "storageSource": {
+          "bucket": "gcf-v2-sources-427819-us-central1"
+        }
+      }
+    },
+    "serviceConfig": {
+      "serviceAccountEmail": "billing@evergreen-demo-427819.iam.gserviceaccount.com",
+      "uri": "https://billing-report-abc12-uc.a.run.app",
+      "environmentVariables": {
+        "DATABASE_HOST": "10.128.0.42",
+        "API_TOKEN": "s3cr3t-token"
+      }
+    },
+    "state": "ACTIVE"
+  },
+  {
+    "name": "projects/evergreen-demo-427819/locations/europe-west1/functions/audit-export",
+    "environment": "GEN_2",
+    "buildConfig": {
+      "runtime": "python312",
+      "entryPoint": "exportAudit"
+    },
+    "state": "ACTIVE"
+  },
+  {
+    "name": "projects/evergreen-demo-427819/locations/us-central1/functions/image-resize",
+    "runtime": "go121",
+    "entryPoint": "Resize",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "projects/evergreen-demo-427819/locations/us-central1/functions/healthy-api",
+    "environment": "GEN_2",
+    "buildConfig": {
+      "runtime": "nodejs24",
+      "entryPoint": "api"
+    },
+    "state": "ACTIVE"
+  }
+]

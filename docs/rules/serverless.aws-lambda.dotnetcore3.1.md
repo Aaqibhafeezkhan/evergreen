@@ -67,7 +67,9 @@ The `serverless` detector. See [Detectors](../DETECTORS.md) and [Compatibility](
 - [AWS Lambda Python 3.7 runtime is end-of-life](serverless.aws-lambda.python3.7.html)
 - [AWS Lambda Python 3.8 runtime is end-of-life](serverless.aws-lambda.python3.8.html)
 - [AWS Lambda Ruby 2.7 runtime is end-of-life](serverless.aws-lambda.ruby2.7.html)
-- [Google Cloud Functions Node.js 14 runtime is end-of-life](serverless.google-cloud-functions.nodejs14.html)
+- [App Engine Go 1.11 runtime is past end of support](serverless.google-appengine-runtime.go111.html)
+- [App Engine Go 1.12 runtime is past end of support](serverless.google-appengine-runtime.go112.html)
+- [App Engine Go 1.13 runtime is past end of support](serverless.google-appengine-runtime.go113.html)
 
 
 ## Data

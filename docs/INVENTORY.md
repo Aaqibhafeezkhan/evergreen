@@ -56,4 +56,4 @@ Cloud Run has no managed language runtime. The importer reads only container ima
 
 **Fixtures**
 
-`tests/fixtures/inventory/gcp/` holds one sanitized sample per document type, and `examples/inventory/` holds the two exports the README uses. They were produced by the commands above and then reduced to the fields this importer reads, with every project id, number, service account, URL, and environment value replaced by a placeholder. They were not captured from a live Google Cloud project; the shapes follow the documented output of `gcloud` JSON formatting.
+`tests/fixtures/inventory/gcp/` holds one sanitized sample per document type, and `examples/inventory/` holds two runnable samples. Each follows the JSON the commands above print, reduced to the fields this importer reads, with every project id, number, service account, URL, IP address, and environment value replaced by a placeholder. No `gcloud` CLI version is recorded because the contributor who added this importer had no Google Cloud project to capture exports from; the shapes follow the documented JSON output of the commands above rather than a recorded response.

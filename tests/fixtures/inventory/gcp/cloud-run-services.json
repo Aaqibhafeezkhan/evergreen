@@ -1,0 +1,150 @@
+[
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "invoice-api",
+      "namespace": "427819",
+      "labels": {
+        "cloud.googleapis.com/location": "us-central1"
+      }
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "serviceAccountName": "run@evergreen-demo-427819.iam.gserviceaccount.com",
+          "containers": [
+            {
+              "image": "node:20.15.0",
+              "env": [
+                {
+                  "name": "DB_PASSWORD",
+                  "value": "s3cr3t-token"
+                }
+              ],
+              "ports": [
+                {
+                  "containerPort": 8080
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "status": {
+      "url": "https://invoice-api-abc12-uc.a.run.app"
+    }
+  },
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "reporting"
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "containers": [
+            {
+              "image": "library/python:3.8-slim"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "internal-api"
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "containers": [
+            {
+              "image": "us-docker.pkg.dev/evergreen-demo-427819/repo/api:1.2.3"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "private-worker"
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "containers": [
+            {
+              "image": "gcr.io/evergreen-demo-427819/worker@sha256:0123456789abcdef"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "digest-pinned"
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "containers": [
+            {
+              "image": "nginx@sha256:fedcba9876543210"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "latest-tag"
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "containers": [
+            {
+              "image": "busybox:latest"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "serving.knative.dev/v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "multi-container"
+    },
+    "spec": {
+      "template": {
+        "spec": {
+          "containers": [
+            {
+              "image": "redis:6.2"
+            },
+            {
+              "image": "alpine:3.20"
+            }
+          ]
+        }
+      }
+    }
+  }
+]

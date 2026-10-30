@@ -6,6 +6,7 @@ import { validateRegistryV2 } from "../src/registry.js";
 
 const AWS_RUNTIMES = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html";
 const GOOGLE_RUNTIMES = "https://cloud.google.com/functions/docs/runtime-support";
+const GOOGLE_APPENGINE = "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule";
 
 /** Deadlines taken from the vendor tables on 2026-10-29 (AWS deprecation date; Google decommission date). */
 const SOURCE_DEADLINES = {
@@ -26,14 +27,15 @@ async function rules() {
   return validateRegistryV2(JSON.parse(await readFile("registry/serverless.json", "utf8"))).rules;
 }
 
-test("the serverless registry has seven valid rules that cite the vendor runtime tables", async () => {
+test("the serverless registry holds the curated AWS and Google Cloud rules, each citing its vendor table", async () => {
   const all = await rules();
-  assert.equal(all.length, 7);
+  assert.equal(all.length, 74);
+  const aws = all.filter((rule) => rule.id.startsWith("serverless.aws-lambda."));
   assert.deepEqual(
-    all.map((rule) => rule.id).sort(),
-    Object.keys(SOURCE_DEADLINES).sort(),
+    aws.map((rule) => rule.id).sort(),
+    Object.keys(SOURCE_DEADLINES).filter((id) => id.startsWith("serverless.aws-lambda.")).sort(),
   );
-  for (const rule of all) {
+  for (const rule of aws) {
     const expected = SOURCE_DEADLINES[rule.id as keyof typeof SOURCE_DEADLINES];
     assert.ok(expected, rule.id);
     assert.ok(rule.sources.every((source) => source.url.startsWith("https://")), rule.id);
@@ -42,6 +44,17 @@ test("the serverless registry has seven valid rules that cite the vendor runtime
       `${rule.id} cites ${expected.source}`,
     );
     assert.match(rule.summary, new RegExp(expected.identifier.replace(/\./g, "\\.")));
+  }
+
+  const functions = all.filter((rule) => rule.id.startsWith("serverless.google-cloud-functions."));
+  const appEngine = all.filter((rule) => rule.id.startsWith("serverless.google-appengine-runtime."));
+  assert.equal(functions.length, 32);
+  assert.equal(appEngine.length, 36);
+  for (const rule of [...functions, ...appEngine]) {
+    const source = rule.id.startsWith("serverless.google-cloud-functions.") ? GOOGLE_RUNTIMES : GOOGLE_APPENGINE;
+    assert.ok(rule.sources.some((entry) => entry.url === source), `${rule.id} cites ${source}`);
+    assert.match(rule.summary, /runtime ID /, rule.id);
+    assert.equal(rule.vers, "vers:semver/*", rule.id);
   }
 });
 

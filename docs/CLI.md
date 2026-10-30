@@ -104,6 +104,22 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
+### `drift`
+
+```bash
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
+```
+
+Reports every place a repository states a runtime version and whether those values select the same release line. Each pin carries its file and line, the source it came from, the value as written, and the release it resolves to offline; a floor above the lowest pin is reported as a floor conflict. Nothing is written. See [Drift](DRIFT.md) for the sources and granularity of each runtime.
+
+| Flag | What it does |
+| --- | --- |
+| `[path]` | Repository path. Default `.`. |
+| `--json` | Print the `evergreen.drift.v1` document defined by [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when any runtime drifted or has a floor conflict. |
+| `--runtime <id>` | Report one runtime only. |
+| `--align <release>` | Print a unified diff that makes the pins Evergreen understands select `release`; requires `--runtime`. Refused pins are listed on stderr, and no file is written. |
+
 ### `badge`
 
 ```bash

@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.left-pad.deprecated.json"
 
 # left-pad is deprecated
 
+**Deprecated.** The source gives no day. Replacement: String.prototype.padStart(). Source: [left-pad package deprecation notice](https://www.npmjs.com/package/left-pad).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/left-pad
+```
+
 The package author recommends the built-in String.prototype.padStart method.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

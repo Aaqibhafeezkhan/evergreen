@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.hapi.joi.deprecated.json"
 
 # @hapi/joi is deprecated
 
+**Deprecated.** The source gives no day. Replacement: joi. Source: [@hapi/joi package deprecation notice](https://www.npmjs.com/package/@hapi/joi).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/%40hapi/joi
+```
+
 npm marks @hapi/joi as deprecated and directs users to the joi package.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

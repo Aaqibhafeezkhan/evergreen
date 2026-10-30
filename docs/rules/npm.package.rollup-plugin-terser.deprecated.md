@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.rollup-plugin-terser.deprecated.json"
 
 # rollup-plugin-terser is deprecated
 
+**Deprecated.** The source gives no day. Replacement: @rollup/plugin-terser. Source: [rollup-plugin-terser on npm](https://www.npmjs.com/package/rollup-plugin-terser).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/rollup-plugin-terser
+```
+
 npm marks rollup-plugin-terser as deprecated: "This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser"
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

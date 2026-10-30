@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.repl.builtinmodules.json"
 
 # Repl.builtinModules is deprecated
 
+**Deprecated.** The source gives no day. Replacement: require('node:module').builtinModules. Source: [Node.js deprecations: DEP0191](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js deprecates repl.builtinModules (DEP0191: documentation-only since v24.0.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

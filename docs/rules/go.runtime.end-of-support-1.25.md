@@ -7,6 +7,14 @@ json_twin: "/rules/go.runtime.end-of-support-1.25.json"
 
 # Go 1.25 is no longer supported
 
+**End of support** as of 2026-08-19. Replacement: Go 1.26 or later. Source: [Go release history and support policy](https://go.dev/doc/devel/release).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/golang
+```
+
 The Go release policy supports a major release until two newer major releases exist. Go 1.25 support ended when Go 1.27 was released.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

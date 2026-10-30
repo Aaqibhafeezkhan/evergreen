@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.process.getactive.json"
 
 # Process._getActiveRequests and process._getActiveHandles are deprecated
 
+**Deprecated.** The source gives no day. Replacement: process.getActiveResourcesInfo(). Source: [Node.js deprecations: DEP0161](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js deprecates process._getActiveRequests and process._getActiveHandles (DEP0161: documentation-only since v17.6.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

@@ -7,6 +7,14 @@ json_twin: "/rules/python.symbol.asyncio.child-watcher.json"
 
 # asyncio child watcher functions are deprecated
 
+**Deprecated.** The source gives no day. Replacement: Remove manual child watcher configuration. Source: [What's New in Python 3.12](https://docs.python.org/3/whatsnew/3.12.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/python
+```
+
 Python 3.12 deprecates asyncio.set_child_watcher() and asyncio.get_child_watcher(), to be removed in Python 3.14; the event loop now uses the best available child watcher for each platform.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

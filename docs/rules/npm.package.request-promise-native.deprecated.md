@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.request-promise-native.deprecated.json"
 
 # request-promise-native is deprecated
 
+**Deprecated.** The source gives no day. Replacement: Native fetch or a maintained promise-based HTTP client. Source: [request-promise-native package deprecation notice](https://www.npmjs.com/package/request-promise-native).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/request-promise-native
+```
+
 npm states that request-promise-native is deprecated because it extends the deprecated request package.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

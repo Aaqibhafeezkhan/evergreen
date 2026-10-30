@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.q.deprecated.json"
 
 # q is deprecated
 
+**Deprecated.** The source gives no day. Replacement: Native Promise. Source: [q package deprecation notice](https://www.npmjs.com/package/q).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/q
+```
+
 The q maintainer states that consumers can almost certainly migrate to native JavaScript promises.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

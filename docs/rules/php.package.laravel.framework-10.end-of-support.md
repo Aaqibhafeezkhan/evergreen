@@ -7,6 +7,14 @@ json_twin: "/rules/php.package.laravel.framework-10.end-of-support.json"
 
 # Laravel 10 is no longer supported
 
+**End of support** as of 2025-02-04. Replacement: Laravel 13. Source: [Laravel support policy](https://laravel.com/docs/releases#support-policy).
+
+Check a version:
+
+```bash
+evergreen check pkg:composer/laravel/framework
+```
+
 Laravel's support policy states that security fixes for Laravel 10 ended on 2025-02-04; the release no longer receives security or bug fixes from the Laravel project.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

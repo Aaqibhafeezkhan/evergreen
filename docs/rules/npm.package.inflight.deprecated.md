@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.inflight.deprecated.json"
 
 # inflight is deprecated
 
+**Deprecated.** The source gives no day. Replacement: lru-cache. Source: [inflight package deprecation notice](https://www.npmjs.com/package/inflight).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/inflight
+```
+
 npm states that inflight is unsupported, leaks memory, and recommends lru-cache for keyed request coalescing.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

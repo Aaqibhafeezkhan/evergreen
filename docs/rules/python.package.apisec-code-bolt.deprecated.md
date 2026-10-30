@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.apisec-code-bolt.deprecated.json"
 
 # apisec-code-bolt was renamed
 
+**Deprecated.** The source gives no day. Replacement: apisec-surface. Source: [apisec-surface rename notice](https://pypi.org/project/apisec-surface/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/apisec-code-bolt
+```
+
 The maintainer states that apisec-code-bolt was renamed to apisec-surface and receives no further releases under the old name.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

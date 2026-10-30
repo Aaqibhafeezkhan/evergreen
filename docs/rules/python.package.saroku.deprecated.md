@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.saroku.deprecated.json"
 
 # saroku was renamed to trikesh
 
+**Deprecated.** The source gives no day. Replacement: trikesh. Source: [saroku rename notice](https://pypi.org/project/saroku/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/saroku
+```
+
 The maintainer states that saroku was renamed and is no longer maintained under that name.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

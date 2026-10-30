@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.tslint.deprecated.json"
 
 # tslint is deprecated
 
+**Deprecated.** The source gives no day. Replacement: ESLint with typescript-eslint. Source: [tslint on npm](https://www.npmjs.com/package/tslint).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/tslint
+```
+
 npm marks tslint as deprecated: "TSLint has been deprecated in favor of ESLint. Please see https://github.com/palantir/tslint/issues/4534 for more information."
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

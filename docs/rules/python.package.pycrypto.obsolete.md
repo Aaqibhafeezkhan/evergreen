@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.pycrypto.obsolete.json"
 
 # PyCrypto is obsolete and vulnerable
 
+**End of life** as of 2022-01-27. Replacement: pycryptodome or cryptography. Source: [Archived PyCrypto repository warning](https://github.com/pycrypto/pycrypto).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/pycrypto
+```
+
 The archived project warns that PyCrypto 2.x is unmaintained, obsolete, and contains security vulnerabilities.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

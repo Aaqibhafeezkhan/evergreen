@@ -7,6 +7,14 @@ json_twin: "/rules/rust.crate.tempdir.unmaintained.json"
 
 # tempdir is no longer maintained
 
+**Deprecated.** The source gives no day. Replacement: tempfile. Source: [RustSec advisory RUSTSEC-2018-0017](https://rustsec.org/advisories/RUSTSEC-2018-0017.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:cargo/tempdir
+```
+
 The tempdir crate has been deprecated and its functionality merged into tempfile.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

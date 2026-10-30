@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.url.parse.json"
 
 # url.parse is deprecated
 
+**Deprecated.** The source gives no day. Replacement: The WHATWG URL API, new URL(). Source: [Node.js deprecations: DEP0169 url.parse](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js deprecates url.parse() because its behavior is not standardized and error-prone with security implications (DEP0169): documentation-only since v19.0.0 and v18.13.0, application runtime warning since v24.0.0.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

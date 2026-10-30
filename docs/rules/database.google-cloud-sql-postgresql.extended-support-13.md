@@ -7,6 +7,14 @@ json_twin: "/rules/database.google-cloud-sql-postgresql.extended-support-13.json
 
 # Cloud SQL for PostgreSQL 13 is in extended support
 
+**End of support** as of 2026-02-01. Replacement: PostgreSQL 14 or later. Source: [Cloud SQL for PostgreSQL database versions and version policies](https://cloud.google.com/sql/docs/postgres/db-versions).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/google-cloud-sql-postgresql
+```
+
 The Cloud SQL for PostgreSQL version policy lists PostgreSQL 13 with extended support starting 2026-02-01 and deprecation on 2029-02-01. The PostgreSQL community no longer supports 13, and Cloud SQL charges for extended support.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

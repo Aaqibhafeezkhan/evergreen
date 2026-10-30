@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.runtime.eol-25.json"
 
 # Node.js 25 is end-of-life
 
+**End of life** as of 2026-06-01. Replacement: Node.js 22 LTS or later. Source: [Node.js Release Working Group schedule](https://github.com/nodejs/Release/blob/main/schedule.json).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js 25 no longer receives security or bug fixes.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.path.makelong.json"
 
 # Path._makeLong is deprecated
 
+**Deprecated.** The source gives no day. Replacement: path.toNamespacedPath(). Source: [Node.js deprecations: DEP0080](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js deprecates path._makeLong (DEP0080: documentation-only since v9.0.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.util.isregexp.json"
 
 # Util.isRegExp has been removed
 
+**Removed.** The source gives no day. Replacement: arg instanceof RegExp. Source: [Node.js deprecations: DEP0055](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js removed util.isRegExp (DEP0055: documentation-only since v4.0.0, runtime deprecation since v22.0.0, end-of-life since v23.0.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

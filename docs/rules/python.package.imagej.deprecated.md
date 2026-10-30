@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.imagej.deprecated.json"
 
 # imagej was renamed to pyimagej
 
+**Deprecated.** The source gives no day. Replacement: pyimagej. Source: [imagej rename notice](https://pypi.org/project/imagej/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/imagej
+```
+
 The maintainers state that the imagej Python package was renamed to pyimagej.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

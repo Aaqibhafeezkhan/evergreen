@@ -7,6 +7,14 @@ json_twin: "/rules/php.package.fzaninotto.faker.abandoned.json"
 
 # fzaninotto/faker is abandoned
 
+**Deprecated.** The source gives no day. Source: [fzaninotto/faker on Packagist](https://packagist.org/packages/fzaninotto/faker).
+
+Check a version:
+
+```bash
+evergreen check pkg:composer/fzaninotto/faker
+```
+
 Packagist marks fzaninotto/faker as abandoned and no longer maintained.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

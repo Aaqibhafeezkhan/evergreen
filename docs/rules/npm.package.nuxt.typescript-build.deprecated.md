@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.nuxt.typescript-build.deprecated.json"
 
 # @nuxt/typescript-build is deprecated
 
+**Deprecated.** The source gives no day. Replacement: Nuxt 3 (no TypeScript build module needed). Source: [@nuxt/typescript-build on npm](https://www.npmjs.com/package/@nuxt/typescript-build).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/%40nuxt/typescript-build
+```
+
 npm marks @nuxt/typescript-build as deprecated: "Nuxt 2 has reached EOL and is no longer actively maintained. See https://nuxt.com/blog/nuxt2-eol for more details."
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

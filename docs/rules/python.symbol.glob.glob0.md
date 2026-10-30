@@ -7,6 +7,14 @@ json_twin: "/rules/python.symbol.glob.glob0.json"
 
 # Glob.glob0 and glob.glob1 are deprecated
 
+**Deprecated.** The source gives no day. Replacement: glob.glob() with a path-like root_dir. Source: [What's New in Python 3.13](https://docs.python.org/3/whatsnew/3.13.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/python
+```
+
 Python 3.13 deprecates glob.glob0 and glob.glob1.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

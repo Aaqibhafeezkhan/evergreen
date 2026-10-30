@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.lodash-isequal.deprecated.json"
 
 # lodash.isequal is deprecated
 
+**Deprecated.** The source gives no day. Replacement: node:util.isDeepStrictEqual. Source: [lodash.isequal package deprecation notice](https://www.npmjs.com/package/lodash.isequal).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/lodash.isequal
+```
+
 npm recommends replacing lodash.isequal with node:util.isDeepStrictEqual.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

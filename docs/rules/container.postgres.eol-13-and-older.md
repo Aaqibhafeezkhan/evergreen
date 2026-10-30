@@ -7,6 +7,14 @@ json_twin: "/rules/container.postgres.eol-13-and-older.json"
 
 # PostgreSQL image major versions 13 and older are end-of-life
 
+**End of life** as of 2025-11-13. Replacement: A postgres image on a supported major version (the upgrade needs a dump/restore or pg_upgrade). Source: [PostgreSQL versioning policy](https://www.postgresql.org/support/versioning/).
+
+Check a version:
+
+```bash
+evergreen check pkg:docker/library/postgres
+```
+
 The PostgreSQL project no longer releases fixes for these major versions.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.nomnom.deprecated.json"
 
 # nomnom is deprecated
 
+**Deprecated.** The source gives no day. Source: [nomnom package deprecation notice](https://www.npmjs.com/package/nomnom).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/nomnom
+```
+
 npm states that nomnom is no longer supported.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

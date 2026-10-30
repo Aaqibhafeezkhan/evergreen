@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.django-2.2.eol.json"
 
 # Django 2.2 LTS is end-of-life
 
+**End of life** as of 2022-04-11. Replacement: Django 5.2 LTS or a newer supported release. Source: [Django supported versions](https://www.djangoproject.com/download/#supported-versions).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/django
+```
+
 The Django project lists the 2.2 release series as unsupported: it no longer receives security updates or bug fixes, and its end of extended support was April 11, 2022.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

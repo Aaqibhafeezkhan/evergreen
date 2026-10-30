@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.ghops.eol.json"
 
 # ghops is deprecated and no longer maintained
 
+**End of life.** The source gives no day. Replacement: repoindex. Source: [ghops deprecation notice](https://pypi.org/project/ghops/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/ghops
+```
+
 The maintainer states that ghops is deprecated and no longer maintained, and directs users to repoindex.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

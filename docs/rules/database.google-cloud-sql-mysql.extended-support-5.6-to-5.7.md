@@ -7,6 +7,14 @@ json_twin: "/rules/database.google-cloud-sql-mysql.extended-support-5.6-to-5.7.j
 
 # Cloud SQL for MySQL 5.6 and 5.7 are in extended support
 
+**End of support** as of 2025-02-01. Replacement: MySQL 8.0 or later. Source: [Cloud SQL for MySQL database versions and version policies](https://cloud.google.com/sql/docs/mysql/db-versions).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/google-cloud-sql-mysql
+```
+
 The Cloud SQL for MySQL version policy lists MySQL 5.6 and 5.7 with extended support starting 2025-02-01 and deprecation on 2028-02-01. Oracle no longer supports those release series, and Cloud SQL charges for extended support.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

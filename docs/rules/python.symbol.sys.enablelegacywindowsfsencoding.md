@@ -7,6 +7,14 @@ json_twin: "/rules/python.symbol.sys.enablelegacywindowsfsencoding.json"
 
 # Sys._enablelegacywindowsfsencoding is deprecated
 
+**Deprecated.** The source gives no day. Replacement: the PYTHONLEGACYWINDOWSFSENCODING environment variable. Source: [What's New in Python 3.13](https://docs.python.org/3/whatsnew/3.13.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/python
+```
+
 Python 3.13 deprecates sys._enablelegacywindowsfsencoding, to be removed in Python 3.16.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

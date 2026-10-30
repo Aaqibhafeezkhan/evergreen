@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.assert.calltracker.json"
 
 # Assert.CallTracker has been removed
 
+**Removed.** The source gives no day. Source: [Node.js deprecations: DEP0173](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js removed assert.CallTracker (DEP0173: runtime deprecation since v20.1.0, end-of-life since v25.0.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

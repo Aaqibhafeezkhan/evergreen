@@ -7,6 +7,14 @@ json_twin: "/rules/osv.npm.request.json"
 
 # request has unfixed OSV advisories
 
+**Deprecated.** The source gives no day. Source: [GHSA-p8p7-x288-28g6](https://osv.dev/vulnerability/GHSA-p8p7-x288-28g6).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/request
+```
+
 OSV lists GHSA-p8p7-x288-28g6 against request with no fixed version in the affected ranges.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.cryptiles.deprecated.json"
 
 # cryptiles is deprecated
 
+**Deprecated.** The source gives no day. Replacement: @hapi/cryptiles. Source: [cryptiles package deprecation notice](https://www.npmjs.com/package/cryptiles).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/cryptiles
+```
+
 npm states that cryptiles moved to @hapi/cryptiles and that the old distribution is no longer maintained.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.superlinked-server.deprecated.json"
 
 # superlinked-server is deprecated
 
+**Deprecated.** The source gives no day. Replacement: SIE Server and sie-sdk. Source: [superlinked-server deprecation notice](https://pypi.org/project/superlinked-server/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/superlinked-server
+```
+
 The maintainer identifies superlinked-server as a legacy package deprecated for new projects and directs users to SIE Server and sie-sdk.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

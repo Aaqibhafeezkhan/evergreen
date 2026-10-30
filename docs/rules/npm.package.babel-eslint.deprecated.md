@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.babel-eslint.deprecated.json"
 
 # babel-eslint is deprecated
 
+**Deprecated.** The source gives no day. Replacement: @babel/eslint-parser. Source: [babel-eslint on npm](https://www.npmjs.com/package/babel-eslint).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/babel-eslint
+```
+
 npm marks babel-eslint as deprecated: "babel-eslint is now @babel/eslint-parser. This package will no longer receive updates."
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

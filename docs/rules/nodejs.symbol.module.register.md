@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.module.register.json"
 
 # Module.register is deprecated
 
+**Deprecated.** The source gives no day. Replacement: module.registerHooks(). Source: [Node.js deprecations: DEP0205](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js deprecates module.register (DEP0205: documentation-only since v25.9.0, runtime deprecation since v26.0.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

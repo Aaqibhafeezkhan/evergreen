@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.django-nose.maintenance-only.json"
 
 # django-nose is maintenance-only
 
+**Deprecated.** The source gives no day. Replacement: pytest-django or Django unittest. Source: [django-nose project notice](https://pypi.org/project/django-nose/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/django-nose
+```
+
 The package states that it is in maintenance mode and recommends pytest or Django unittest for new projects.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

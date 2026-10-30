@@ -7,6 +7,14 @@ json_twin: "/rules/npm.package.types.koa-useragent.deprecated.json"
 
 # @types/koa-useragent is deprecated
 
+**Deprecated.** The source gives no day. Replacement: koa-useragent. Source: [@types/koa-useragent on npm](https://www.npmjs.com/package/@types/koa-useragent).
+
+Check a version:
+
+```bash
+evergreen check pkg:npm/%40types/koa-useragent
+```
+
 npm marks @types/koa-useragent as deprecated: "This is a stub types definition. koa-useragent provides its own type definitions, so you do not need this installed."
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

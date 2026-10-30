@@ -7,6 +7,14 @@ json_twin: "/rules/nodejs.symbol.tls.securepair.json"
 
 # Tls.SecurePair has been removed
 
+**Removed.** The source gives no day. Replacement: tls.TLSSocket. Source: [Node.js deprecations: DEP0043](https://nodejs.org/api/deprecations.html).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/nodejs
+```
+
 Node.js removed tls.SecurePair (DEP0043: documentation-only since v6.0.0, runtime deprecation since v8.0.0, end-of-life since v24.0.0).
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

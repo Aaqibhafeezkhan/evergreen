@@ -7,6 +7,14 @@ json_twin: "/rules/elixir.erlang.eol-25.json"
 
 # Erlang/OTP 25 no longer receives security updates
 
+**End of life** as of 2025-05-21. Replacement: Erlang/OTP 27 or later. Source: [Erlang/OTP security policy](https://github.com/erlang/otp/security/policy).
+
+Check a version:
+
+```bash
+evergreen check pkg:generic/erlang
+```
+
 Erlang/OTP supports the last three major releases with security updates. OTP 25 left that window when OTP 28 shipped on 2025-05-21, so the release no longer receives security updates from the Erlang/OTP project.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

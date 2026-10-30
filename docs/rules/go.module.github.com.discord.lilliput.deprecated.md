@@ -7,6 +7,14 @@ json_twin: "/rules/go.module.github.com.discord.lilliput.deprecated.json"
 
 # github.com/discord/lilliput is deprecated
 
+**Deprecated.** The source gives no day. Source: [github.com/discord/lilliput v1.5.1 go.mod](https://proxy.golang.org/github.com/discord/lilliput/@v/v1.5.1.mod).
+
+Check a version:
+
+```bash
+evergreen check pkg:golang/github.com/discord/lilliput
+```
+
 The latest github.com/discord/lilliput module declares: "discord/lilliput is unmaintained as of October 2026. There will be no further releases, including for security fixes. See https://github.com/discord/lilliput/issues/303"
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

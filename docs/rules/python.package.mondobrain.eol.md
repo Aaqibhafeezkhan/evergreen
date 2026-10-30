@@ -7,6 +7,14 @@ json_twin: "/rules/python.package.mondobrain.eol.json"
 
 # mondobrain is no longer maintained
 
+**End of life.** The source gives no day. Replacement: datawhys. Source: [mondobrain maintenance and replacement notice](https://pypi.org/project/mondobrain/).
+
+Check a version:
+
+```bash
+evergreen check pkg:pypi/mondobrain
+```
+
 The maintainer yanked mondobrain releases because the project is no longer maintained and recommends datawhys.
 
 [Look up another package or runtime](../lookup.html) · <form action="../lookup.html" method="get" role="search"><input type="search" name="q" placeholder="Search packages and runtimes" aria-label="Package or runtime" /> <button type="submit">Search</button></form>

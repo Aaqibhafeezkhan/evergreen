@@ -104,6 +104,23 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
+### `inventory`
+
+```bash
+evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
+```
+
+Reads export files the user already produced, such as `gcloud … --format=json` or `kubectl get -o json`, and reports end-of-life runtimes, images, and cluster versions that are running now, each with the exact JSON Pointer in the export the claim rests on. Evergreen never calls a cloud API and runs no command: it reads only the files given to it.
+
+| Flag | What it does |
+| --- | --- |
+| `--format auto\|<importer-id>` | Force one importer instead of detecting the format. `auto` is the default. |
+| `--json` | Print the `evergreen.inventory.v1` report. |
+| `--fail-on <severity\|none>` | Exit `1` when an affected resource is at or above this severity. Default: the config's `failOn`, else `high`. |
+| `--redact` | Replace each resource name with the first 12 hex characters of its SHA-256, in every output. |
+
+Exit codes: `2` when a file is unrecognized or unreadable (the other files are still reported), `1` when an affected resource reaches the gate, `0` otherwise. A resource with no matching rule is reported as `no-data`, never as safe. The importers and what each one reads are documented in [INVENTORY.md](INVENTORY.md).
+
 ### `badge`
 
 ```bash

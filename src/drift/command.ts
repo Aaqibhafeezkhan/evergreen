@@ -91,7 +91,8 @@ async function renderAlign(root: string, report: DriftReport, release: string): 
         refused.push(pin);
         continue;
       }
-      const lines = contents.split("\n");
+      const source = contents.endsWith("\n") ? contents.slice(0, -1) : contents;
+      const lines = source.split("\n");
       const lineText = lines[pin.line - 1];
       const replacement = lineText === undefined ? undefined : collector.align(pin, lineText, release);
       if (lineText === undefined || replacement === undefined || replacement === lineText) {
@@ -99,7 +100,7 @@ async function renderAlign(root: string, report: DriftReport, release: string): 
         continue;
       }
       lines[pin.line - 1] = replacement;
-      process.stdout.write(`${renderDiff(pin.path, contents, lines.join("\n"))}\n`);
+      process.stdout.write(`${renderDiff(pin.path, source, lines.join("\n"))}\n`);
       printed += 1;
     }
   }

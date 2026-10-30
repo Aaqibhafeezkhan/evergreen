@@ -104,6 +104,22 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
+### `upgrade-check`
+
+```bash
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+```
+
+Answers whether the project can move to a target runtime release, such as `nodejs@22` or `python@3.13`, from files already in the repository. It never installs, builds, or runs anything in the scanned project, and it never uses the network. The output is `evergreen.upgrade.v1`: a verdict, the analyzers that applied, and every blocker, warning, and unknown with its exact path, line, and evidence. See [Upgrade check](UPGRADE_CHECK.md).
+
+| Flag | What it does |
+| --- | --- |
+| `--to <runtime@version>` | Target runtime and release, for example `nodejs@22` or `python@3.13`. Required. |
+| `[path]` | Directory to read, default `.`. |
+| `--json` | Print the structured report. |
+
+Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input.
+
 ### `badge`
 
 ```bash

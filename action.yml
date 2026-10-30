@@ -98,8 +98,15 @@ inputs:
       contents: write and pull-requests: write permissions on the job.
     required: false
     default: "false"
+  suggest-fixes:
+    description: >-
+      Post one pull request review whose suggestion blocks apply the deterministic fixes for findings on
+      lines the pull request added or changed. Needs mode: diff and the pull-requests: write permission;
+      pull requests from forks are skipped because their token is read-only.
+    required: false
+    default: "false"
   github-token:
-    description: Token used to post the pull request comment or command reply, and to open, update, or close the fix pull request.
+    description: Token used to post the pull request comment, command reply, or fix suggestions, and to open, update, or close the fix pull request.
     required: false
     default: ${{ github.token }}
   attribution:
@@ -146,6 +153,7 @@ runs:
         INPUT_UPLOAD-SARIF: ${{ inputs.upload-sarif }}
         INPUT_UPLOAD-BADGE: ${{ inputs.upload-badge }}
         INPUT_PR-COMMENT: ${{ inputs.pr-comment }}
+        INPUT_SUGGEST-FIXES: ${{ inputs.suggest-fixes }}
         INPUT_COMMANDS: ${{ inputs.commands }}
         INPUT_FIX-PR: ${{ inputs.fix-pr }}
         INPUT_GITHUB-TOKEN: ${{ inputs.github-token }}

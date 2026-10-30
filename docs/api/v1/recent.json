@@ -27,6 +27,19 @@
       "title": "PostgreSQL 10 is no longer a supported major version"
     },
     {
+      "deadline": "2023-12-04",
+      "ecosystem": "serverless",
+      "event": "end-of-life",
+      "observedAt": "2026-10-29",
+      "path": "products/generic-aws-lambda-runtime-python3-7.json",
+      "productId": "generic-aws-lambda-runtime-python3-7",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.7",
+      "reviewedAt": "2026-10-29",
+      "ruleId": "serverless.aws-lambda.python3.7",
+      "severity": "high",
+      "title": "AWS Lambda Python 3.7 runtime is end-of-life"
+    },
+    {
       "ecosystem": "osv",
       "event": "deprecated",
       "observedAt": "2026-10-27",

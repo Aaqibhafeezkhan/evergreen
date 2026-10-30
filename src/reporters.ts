@@ -9,6 +9,7 @@ import type { MigrationPacket, UpgradePath } from "./migration-packet.js";
 import { VERSION } from "./version.js";
 
 export type { ScanCoverage };
+export { renderForecastMermaid, renderScanMermaid } from "./mermaid.js";
 
 /** How many paths the empty-scan text report lists before saying "... and N more". JSON coverage stays complete. */
 export const EMPTY_SCAN_PATH_LIST_LIMIT = 10;

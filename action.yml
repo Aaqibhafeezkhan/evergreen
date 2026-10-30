@@ -91,8 +91,15 @@ inputs:
       Needs the pull-requests: write permission on the job.
     required: false
     default: "false"
+  fix-pr:
+    description: >-
+      Open or update one pull request on the evergreen/fixes branch with every deterministic fix, and close
+      it when nothing is left to fix. Runs only on schedule and workflow_dispatch events. Needs the
+      contents: write and pull-requests: write permissions on the job.
+    required: false
+    default: "false"
   github-token:
-    description: Token used to post the pull request comment or command reply when pr-comment or commands is true.
+    description: Token used to post the pull request comment or command reply, and to open, update, or close the fix pull request.
     required: false
     default: ${{ github.token }}
   attribution:
@@ -140,6 +147,7 @@ runs:
         INPUT_UPLOAD-BADGE: ${{ inputs.upload-badge }}
         INPUT_PR-COMMENT: ${{ inputs.pr-comment }}
         INPUT_COMMANDS: ${{ inputs.commands }}
+        INPUT_FIX-PR: ${{ inputs.fix-pr }}
         INPUT_GITHUB-TOKEN: ${{ inputs.github-token }}
         INPUT_ATTRIBUTION: ${{ inputs.attribution }}
     - name: Upload machine-readable report

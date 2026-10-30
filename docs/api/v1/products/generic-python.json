@@ -9,10 +9,1305 @@
     "removed"
   ],
   "id": "generic-python",
-  "latestReview": "2026-10-21",
+  "latestReview": "2026-10-30",
   "name": "python",
   "purl": "pkg:generic/python",
   "rules": [
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.aifc.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of aifc with the soundfile package.",
+            "targets": "usages",
+            "title": "Replace the aifc import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the soundfile package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the aifc module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The aifc module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "aifc"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.asynchat.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of asynchat with asyncio.",
+            "targets": "usages",
+            "title": "Replace the asynchat import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "asyncio",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.12",
+          "url": "https://docs.python.org/3/whatsnew/3.12.html"
+        }
+      ],
+      "summary": "Python 3.12 removed the asynchat module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The asynchat module was removed in Python 3.12",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "asynchat"
+        }
+      ],
+      "vers": "vers:pypi/>=3.12"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.asyncore.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of asyncore with asyncio.",
+            "targets": "usages",
+            "title": "Replace the asyncore import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "asyncio",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.12",
+          "url": "https://docs.python.org/3/whatsnew/3.12.html"
+        }
+      ],
+      "summary": "Python 3.12 removed the asyncore module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The asyncore module was removed in Python 3.12",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "asyncore"
+        }
+      ],
+      "vers": "vers:pypi/>=3.12"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.audioop.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of audioop with the audioop-lts package.",
+            "targets": "usages",
+            "title": "Replace the audioop import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the audioop-lts package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the audioop module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The audioop module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "audioop"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.cgi.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of cgi with the multipart package or email.message.",
+            "targets": "usages",
+            "title": "Replace the cgi import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the multipart package or email.message",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the cgi module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The cgi module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "cgi"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.cgitb.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of cgitb with traceback.",
+            "targets": "usages",
+            "title": "Replace the cgitb import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "traceback",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the cgitb module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The cgitb module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "cgitb"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.chunk.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of chunk with struct.",
+            "targets": "usages",
+            "title": "Replace the chunk import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "struct",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the chunk module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The chunk module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "chunk"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.crypt.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of crypt with hashlib or a password-hashing library such as argon2-cffi.",
+            "targets": "usages",
+            "title": "Replace the crypt import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "hashlib or a password-hashing library such as argon2-cffi",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the crypt module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The crypt module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "crypt"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.distutils.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of distutils with setuptools.",
+            "targets": "usages",
+            "title": "Replace the distutils import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "setuptools",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 632 — Deprecate distutils module",
+          "url": "https://peps.python.org/pep-0632/"
+        },
+        {
+          "title": "What's New in Python 3.12",
+          "url": "https://docs.python.org/3/whatsnew/3.12.html"
+        }
+      ],
+      "summary": "Python 3.12 removed distutils (PEP 632), so importing it raises ModuleNotFoundError; use setuptools or another build backend.",
+      "title": "The distutils module was removed in Python 3.12",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "distutils"
+        }
+      ],
+      "vers": "vers:pypi/>=3.12"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.imghdr.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of imghdr with the filetype package.",
+            "targets": "usages",
+            "title": "Replace the imghdr import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the filetype package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the imghdr module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The imghdr module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "imghdr"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.imp.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of imp with importlib.",
+            "targets": "usages",
+            "title": "Replace the imp import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "importlib",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "What's New in Python 3.12",
+          "url": "https://docs.python.org/3/whatsnew/3.12.html"
+        },
+        {
+          "title": "Python 3.11 documentation: imp — Access the import internals",
+          "url": "https://docs.python.org/3.11/library/imp.html"
+        }
+      ],
+      "summary": "Python 3.12 removed the imp module, so importing it raises ModuleNotFoundError; use importlib.",
+      "title": "The imp module was removed in Python 3.12",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "imp"
+        }
+      ],
+      "vers": "vers:pypi/>=3.12"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.lib2to3.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of lib2to3 with libcst or tree-sitter.",
+            "targets": "usages",
+            "title": "Replace the lib2to3 import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "libcst or tree-sitter",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        },
+        {
+          "title": "What's New in Python 3.9",
+          "url": "https://docs.python.org/3/whatsnew/3.9.html"
+        }
+      ],
+      "summary": "Python 3.13 removed lib2to3, so importing it raises ModuleNotFoundError; use a maintained parser such as libcst or tree-sitter.",
+      "title": "The lib2to3 module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "lib2to3"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.mailcap.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of mailcap with mimetypes.",
+            "targets": "usages",
+            "title": "Replace the mailcap import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "mimetypes",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the mailcap module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The mailcap module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "mailcap"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.msilib.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; replace the removed module with a maintained library or remove the dependency."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Remove each reported import of msilib; it has no standard-library replacement.",
+            "targets": "usages",
+            "title": "Replace the msilib import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the msilib module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The msilib module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "msilib"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.nis.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; replace the removed module with a maintained library or remove the dependency."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Remove each reported import of nis; it has no standard-library replacement.",
+            "targets": "usages",
+            "title": "Replace the nis import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the nis module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The nis module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "nis"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.nntplib.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; replace the removed module with a maintained library or remove the dependency."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Remove each reported import of nntplib; it has no standard-library replacement.",
+            "targets": "usages",
+            "title": "Replace the nntplib import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the nntplib module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The nntplib module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "nntplib"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.ossaudiodev.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; replace the removed module with a maintained library or remove the dependency."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Remove each reported import of ossaudiodev; it has no standard-library replacement.",
+            "targets": "usages",
+            "title": "Replace the ossaudiodev import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the ossaudiodev module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The ossaudiodev module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "ossaudiodev"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.pipes.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of pipes with shlex.quote and subprocess.",
+            "targets": "usages",
+            "title": "Replace the pipes import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "shlex.quote and subprocess",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the pipes module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The pipes module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "pipes"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.smtpd.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of smtpd with the aiosmtpd package.",
+            "targets": "usages",
+            "title": "Replace the smtpd import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the aiosmtpd package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.12",
+          "url": "https://docs.python.org/3/whatsnew/3.12.html"
+        }
+      ],
+      "summary": "Python 3.12 removed the smtpd module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The smtpd module was removed in Python 3.12",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "smtpd"
+        }
+      ],
+      "vers": "vers:pypi/>=3.12"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.sndhdr.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of sndhdr with the filetype package.",
+            "targets": "usages",
+            "title": "Replace the sndhdr import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the filetype package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the sndhdr module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The sndhdr module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "sndhdr"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.spwd.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; replace the removed module with a maintained library or remove the dependency."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Remove each reported import of spwd; it has no standard-library replacement.",
+            "targets": "usages",
+            "title": "Replace the spwd import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the spwd module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The spwd module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "spwd"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.sunau.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of sunau with the soundfile package.",
+            "targets": "usages",
+            "title": "Replace the sunau import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the soundfile package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the sunau module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The sunau module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "sunau"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.telnetlib.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of telnetlib with the telnetlib3 package.",
+            "targets": "usages",
+            "title": "Replace the telnetlib import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "the telnetlib3 package",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the telnetlib module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The telnetlib module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "telnetlib"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.uu.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of uu with base64.",
+            "targets": "usages",
+            "title": "Replace the uu import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "base64",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the uu module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The uu module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "uu"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
+    {
+      "ecosystem": "python",
+      "event": "removed",
+      "id": "python.module.xdrlib.removed",
+      "migration": {
+        "constraints": [
+          "Keep the behavior of the code unchanged; check the replacement's argument and return-value differences."
+        ],
+        "steps": [
+          {
+            "id": "replace-import",
+            "instructions": "Replace each reported import of xdrlib with struct.",
+            "targets": "usages",
+            "title": "Replace the xdrlib import"
+          }
+        ],
+        "verification": [
+          {
+            "command": "python -W error::DeprecationWarning -m pytest",
+            "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+          }
+        ]
+      },
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi"
+      },
+      "purl": "pkg:generic/python",
+      "replacement": "struct",
+      "severity": "high",
+      "sources": [
+        {
+          "title": "PEP 594 — Removing dead batteries from the standard library",
+          "url": "https://peps.python.org/pep-0594/"
+        },
+        {
+          "title": "What's New in Python 3.13",
+          "url": "https://docs.python.org/3/whatsnew/3.13.html"
+        }
+      ],
+      "summary": "Python 3.13 removed the xdrlib module (PEP 594), so importing it raises ModuleNotFoundError.",
+      "title": "The xdrlib module was removed in Python 3.13",
+      "usage": [
+        {
+          "kind": "import",
+          "language": "python",
+          "module": "xdrlib"
+        }
+      ],
+      "vers": "vers:pypi/>=3.13"
+    },
     {
       "deadline": "2026-10-01",
       "ecosystem": "python",

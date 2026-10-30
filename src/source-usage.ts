@@ -111,6 +111,11 @@ async function sourceFiles(root: string): Promise<SourceFile[]> {
   return files;
 }
 
+/** True when the repository has at least one file in this language, using the same traversal as usage analysis. */
+export async function hasSourceFiles(root: string, language: SourceLanguage): Promise<boolean> {
+  return (await sourceFiles(resolve(root))).some((file) => file.language === language);
+}
+
 function javascriptBindings(clause: string, module: string): Binding[] {
   const bindings: Binding[] = [];
   const namespace = /\*\s+as\s+([A-Za-z_$][\w$]*)/.exec(clause)?.[1];

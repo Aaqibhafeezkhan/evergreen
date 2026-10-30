@@ -291,6 +291,7 @@ Each tool has an `outputSchema` (the published JSON Schema in [`schemas/`](https
 | `create_migration_context` | `finding_id`, `repository_path?` | `evergreen.context.v1` (`context.v1.schema.json`) | Validated, rule-specific migration packet. |
 | `verify_migration` | `finding_id`, `repository_path?` | `evergreen.verification.v1` (`verification.v1.schema.json`) | Re-scan and check a finding observed earlier in the session. |
 | `check_dependency` | `purl`, `version?` | `evergreen.check.v1` (`check.v1.schema.json`) | Check one package before adding it; reads no repository. |
+| `check_upgrade` | `path?`, `target` | `evergreen.upgrade.v1` (`upgrade.v1.schema.json`) | Whether the project can move to a target runtime, from files already in the repository. An `unknown` verdict is not a statement that the upgrade is safe. |
 | `forecast_repository` | `repository_path?`, `months?`, `as_of?` | `evergreen.forecast.v1` (`forecast.v1.schema.json`) | What reaches a dated end of life in the next months, grouped by month, with the repository's findings each event affects. |
 | `plan_migrations` | `repository_path?` | `evergreen.plan.v1` (`plan.v1.schema.json`) | Migration plan: waves of independent tasks a coordinating agent can hand out. |
 
@@ -301,6 +302,10 @@ Each tool has an `outputSchema` (the published JSON Schema in [`schemas/`](https
 `forecast_repository` answers "what ends of life are coming, and which of them hit this repository?" It runs a fresh local scan, then lists the lifecycle events that carry an authoritative date inside a window. Each event carries its rule, source, severity, and the findings in this repository that it will affect, grouped by calendar month with the earliest first.
 
 The window starts at `as_of` (a `YYYY-MM-DD` date; today in UTC when omitted) and defaults to `months` 12, from 1 to 36. Passing `as_of` makes the result deterministic. The output is the same `evergreen.forecast.v1` document that `evergreen forecast --json` prints. Only dated events are listed, so a package with no authoritative deadline does not appear; nothing is estimated.
+
+### Checking an upgrade before a runtime change
+
+`check_upgrade` answers "can this project move to this runtime release?" from files already in the repository. Pass `target` as `runtime@version`, for example `python@3.13`; `path` defaults to the server's working directory. The result is `evergreen.upgrade.v1`: a verdict (`ready`, `blocked`, or `unknown`), the analyzers that applied, and every blocker, warning, and unknown with its path, line, and exact evidence. An `unknown` verdict means no analyzer found evidence for that runtime in this repository. It is not a statement that the upgrade is safe.
 
 ### Resources
 
@@ -2545,6 +2550,61 @@ node dist/src/cli.js plan examples/demo --json | node examples/plan-dispatch/dis
 ```
 
 A host that wants parallel sessions creates each printed worktree itself, then runs the `migrate-finding` prompt in that tree with the task's finding id. See [Local MCP server](MCP.md) for the prompt and [Migration packets](MIGRATION_PACKETS.md) for the context each session receives.
+
+---
+
+Source: https://arminazimi.github.io/evergreen/UPGRADE_CHECK.html
+
+# Upgrade check
+
+`evergreen upgrade-check --to <runtime@version>` answers whether a project can move to a target runtime release from files already in the repository. It reads lockfiles, manifests, runtime pins, and source code, and it never installs, builds, or runs anything in the scanned project.
+
+```bash
+evergreen upgrade-check --to nodejs@22
+evergreen upgrade-check --to python@3.13 path/to/project --json
+```
+
+The report is `evergreen.upgrade.v1`. Each issue names the analyzer that reported it, a level, the affected subject, the exact path and line, a one-sentence reason, and the evidence: a lockfile or manifest value as written, or the lifecycle rule id.
+
+## Verdicts
+
+| Verdict | Meaning |
+| --- | --- |
+| `blocked` | At least one issue is a blocker: the project will not install or run on the target. |
+| `ready` | At least one analyzer applied and no blocker was found. Warnings may still be listed. |
+| `unknown` | No analyzer found evidence for this runtime in this repository. This is not a statement that the upgrade is safe. |
+
+## Levels
+
+| Level | Meaning |
+| --- | --- |
+| `blocker` | The project will not install or run on the target. |
+| `warning` | The project works on the target but uses something deprecated there. |
+| `unknown` | The evidence needed to judge an item is missing. |
+
+## Exit codes
+
+`0` for `ready` and `unknown`, `1` for `blocked`, and `2` for bad input.
+
+## What it cannot know
+
+- Native addons and other packages built at install time from the machine's toolchain.
+- Packages that do not declare a support range in their published metadata.
+- Code paths that are not visible in the repository, such as plugins loaded at runtime or generated code that is not committed.
+- Whether an upgrade is safe overall. A `ready` verdict means no analyzer found a blocker in the evidence it can read; it is not a guarantee.
+
+## Analyzers
+
+Each section below lists the files and fields an analyzer reads, the version syntax it understands, and what it reports as `unknown`.
+
+### Python standard library
+
+Applies when the repository has at least one Python source file.
+
+- **Reads:** every `.py` file the usage analysis reads (the same traversal as a scan: `.git`, virtual environments, build output, and dependency directories are skipped, as are files over 1 MB) and the module-import and symbol rules in `registry/python.json` whose package URL is `pkg:generic/python`.
+- **Version syntax:** PEP 440 ranges from the rule's `vers`, compared with the target release, as in `python@3.13`.
+- **Reports:** every `import module` and `from module import name` of a module removed by the target, and every use of a removed or deprecated function that the symbol rules describe. A `removed` rule whose range includes the target is a blocker; a `deprecated` rule whose range includes the target is a warning. Each issue is one usage location; the subject is the module or symbol and the evidence is the rule id.
+- **`unknown`:** this analyzer reports none. A rule whose range does not include the target, or a target release the PEP 440 comparison cannot read, produces no issue.
 
 ---
 

@@ -100,9 +100,14 @@ test("CLI --json and the check_upgrade MCP tool return the same report, valid ag
   const root = await mkdtemp(join(tmpdir(), "evergreen-upgrade-"));
   roots.push(root);
   await writeFile(join(root, "pyproject.toml"), '[project]\nname = "fixture"\nrequires-python = ">=3.13"\n');
+  await writeFile(join(root, "app.py"), "import cgi\n");
 
-  const child = await execute(process.execPath, [cli, "upgrade-check", "--to", "python@3.13", root, "--json"]);
+  const child = await execute(process.execPath, [cli, "upgrade-check", "--to", "python@3.13", root, "--json"]).catch(
+    (error: { stdout: string }) => error,
+  );
   const report = JSON.parse(child.stdout) as UpgradeReport;
+  assert.equal(report.verdict, "blocked");
+  assert.equal(report.issues.length, 1);
 
   const schema = JSON.parse(await readFile(resolve("schemas/upgrade.v1.schema.json"), "utf8"));
   const validate = new Ajv2020({ allErrors: true, strict: false }).compile(schema);

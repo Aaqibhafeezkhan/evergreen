@@ -42,7 +42,7 @@
   <url><loc>https://arminazimi.github.io/evergreen/eol/php.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/eol/postgresql.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/eol/powershell.html</loc><lastmod>2026-10-22</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/eol/python.html</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/eol/python.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/eol/rails.html</loc><lastmod>2026-10-23</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/eol/react-native.html</loc><lastmod>2026-10-23</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/eol/redis.html</loc><lastmod>2026-10-29</lastmod></url>
@@ -417,6 +417,31 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/php.runtime.eol-7.4.html</loc><lastmod>2026-10-19</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/php.runtime.eol-8.0.html</loc><lastmod>2026-10-19</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/php.runtime.eol-8.1.html</loc><lastmod>2026-10-19</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.aifc.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.asynchat.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.asyncore.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.audioop.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.cgi.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.cgitb.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.chunk.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.crypt.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.distutils.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.imghdr.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.imp.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.lib2to3.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.mailcap.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.msilib.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.nis.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.nntplib.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.ossaudiodev.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.pipes.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.smtpd.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.sndhdr.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.spwd.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.sunau.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.telnetlib.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.uu.removed.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/python.module.xdrlib.removed.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/python.package.agentops-toolkit.eol.html</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/python.package.aiohttp-valera-validator.eol.html</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/python.package.api-shield.deprecated.html</loc><lastmod>2026-10-16</lastmod></url>

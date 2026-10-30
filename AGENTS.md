@@ -60,6 +60,7 @@ Trust rules that apply to every change:
 | `dist/action/index.js` | `npm run build:action` (release pull request only; ordinary pull requests must not commit it) |
 | `docs/llms-full.txt` | `npm run build:llms` (source: the pages linked from `docs/llms.txt`) |
 | `docs/rules/` | `npm run build:reference` (source: `registry/*.json`) |
+| `docs/assets/og/` | `npm run build:og-images` (source: `registry/*.json`, brand social-preview template) |
 | `docs/eol/` | `npm run build:answer-pages` (source: `registry/*.json`) |
 | `docs/ROADMAP.md` | `node planning/roadmap/roadmap-md.mjs` (source: `planning/roadmap/`) |
 

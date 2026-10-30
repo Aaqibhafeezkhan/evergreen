@@ -106,9 +106,16 @@ inputs:
     required: false
     default: "false"
   github-token:
-    description: Token used to post the pull request comment, command reply, or fix suggestions, and to open, update, or close the fix pull request.
+    description: Token used to post the pull request comment, command reply, or fix suggestions, to open, update, or close the fix pull request, and to update the tracking issue.
     required: false
     default: ${{ github.token }}
+  tracking-issue:
+    description: >-
+      Keep one issue up to date on schedule and workflow_dispatch runs. It lists findings by
+      end-of-life date, says what changed since the last run, and closes when nothing is left.
+      Needs the issues: write permission on the job.
+    required: false
+    default: "false"
   attribution:
     description: >-
       Add one line to the job summary that says the scan was done by Evergreen and links to it.
@@ -156,6 +163,7 @@ runs:
         INPUT_SUGGEST-FIXES: ${{ inputs.suggest-fixes }}
         INPUT_COMMANDS: ${{ inputs.commands }}
         INPUT_FIX-PR: ${{ inputs.fix-pr }}
+        INPUT_TRACKING-ISSUE: ${{ inputs.tracking-issue }}
         INPUT_GITHUB-TOKEN: ${{ inputs.github-token }}
         INPUT_ATTRIBUTION: ${{ inputs.attribution }}
     - name: Upload machine-readable report

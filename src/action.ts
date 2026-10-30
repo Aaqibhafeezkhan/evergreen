@@ -2,12 +2,13 @@
 
 import { appendFile, readFile, stat } from "node:fs/promises";
 import process from "node:process";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { publishFixPullRequest } from "./action-fix-pr.js";
 import type { DataInfo, Finding, ScanResult, SuppressionState } from "./domain.js";
 import { runCommentCommands } from "./action-commands.js";
 import { parsePathsInput, renderComment, renderFailure, renderSummary, renderSuggestionReview, resolveScanPaths, runGitHubAction, suggestionComment } from "./github-action.js";
+import { trackingIssueEventAllowed, upsertTrackingIssue } from "./action-tracking-issue.js";
 import { upsertFixSuggestionsReview, upsertPullRequestComment } from "./pr-comment.js";
 import type { GitHubActionOutcome, GitHubAnnotation, SeverityGate, UnannotatedFindings } from "./github-action.js";
 import { createBaseline } from "./baseline.js";
@@ -159,6 +160,46 @@ async function postComment(outcome: Awaited<ReturnType<typeof runGitHubAction>>,
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.log(`::warning title=Evergreen could not post the pull request comment::${commandValue(message)}`);
+  }
+}
+
+/**
+ * Updates the one lifecycle tracking issue after the scan. Like the pull request comment, a failure
+ * warns and never changes the scan result.
+ */
+async function updateTrackingIssue(outcome: Awaited<ReturnType<typeof runGitHubAction>>): Promise<void> {
+  if (process.env["INPUT_TRACKING-ISSUE"] !== "true") return;
+  if (!trackingIssueEventAllowed(process.env.GITHUB_EVENT_NAME)) {
+    console.log("::notice title=Evergreen tracking issue skipped::tracking-issue updates one issue on schedule and workflow_dispatch runs; pull request tokens are read-only.");
+    return;
+  }
+  try {
+    const token = process.env["INPUT_GITHUB-TOKEN"];
+    const repository = process.env.GITHUB_REPOSITORY;
+    if (!token || !repository) {
+      console.log("::notice title=Evergreen tracking issue skipped::tracking-issue needs a token and GITHUB_REPOSITORY.");
+      return;
+    }
+    const workspace = process.env.GITHUB_WORKSPACE ?? process.cwd();
+    const prefix = relative(workspace, outcome.result.root).replaceAll("\\", "/");
+    const done = await upsertTrackingIssue(
+      {
+        apiUrl: process.env.GITHUB_API_URL ?? "https://api.github.com",
+        repository,
+        token,
+        serverUrl: process.env.GITHUB_SERVER_URL ?? "https://github.com",
+        ...(process.env.GITHUB_SHA ? { ref: process.env.GITHUB_SHA } : {}),
+        ...(prefix && !prefix.startsWith("..") ? { pathPrefix: prefix } : {}),
+      },
+      outcome.result.findings,
+      outcome.result.scannedAt.slice(0, 10),
+    );
+    if (done === "none") console.log("Evergreen has no tracking issue to change.");
+    else if (done === "too-large") console.log("::warning title=Evergreen tracking issue is too large::the issue body would exceed GitHub's 65,536-character limit even after shortening the findings table, so the tracking issue was not updated.");
+    else console.log(`Evergreen ${done} its lifecycle tracking issue.`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.log(`::warning title=Evergreen could not update the tracking issue::${commandValue(message)}`);
   }
 }
 
@@ -327,6 +368,7 @@ async function main(): Promise<void> {
     await postComment(outcome, event, unannotated, proposedBaseline && proposeBaselinePath ? { path: proposeBaselinePath, baseline: proposedBaseline } : undefined);
     await postFixSuggestions(outcome, event);
     await publishFixes(outcome.result);
+    await updateTrackingIssue(outcome);
     if (outcome.result.data?.stale) console.log(`::warning title=Evergreen lifecycle data is stale::The data is ${outcome.result.data.ageDays} days old, so findings may miss recent changes.`);
     console.log(
       proposedBaseline && proposeBaselinePath

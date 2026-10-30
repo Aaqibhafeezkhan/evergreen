@@ -1,6 +1,6 @@
 {
   "schemaVersion": "evergreen.baseline.v1",
-  "createdAt": "2026-10-30T17:30:23.169Z",
+  "createdAt": "2026-10-30T22:01:53.783Z",
   "findings": [
     {
       "fingerprint": "29ca519a9a7077a2f885fdc53dc72bc557726532338b9443eb3150b926c0df7f",
@@ -261,6 +261,11 @@
       "fingerprint": "e5bc582c6beab91d28eb96dd92b9c9f45916b93dfa3511ef1f4ed10d44c23930",
       "ruleId": "go.runtime.end-of-support-1.23",
       "path": "examples/gallery/go/go.work"
+    },
+    {
+      "fingerprint": "fecf9b5f4ab1e11736d0db425e8d673de969adae2cae370cd4a5871388adb083",
+      "ruleId": "go.runtime.end-of-support-1.23",
+      "path": "examples/upgrade/go-modules/go.mod"
     },
     {
       "fingerprint": "731862e5c9c5fe615d34eb3d89ea49b458761d00c7135683043b7ca7a400bdec",
@@ -575,6 +580,10 @@
     {
       "at": "2026-10-30T17:30:23.169Z",
       "count": 112
+    },
+    {
+      "at": "2026-10-30T22:01:53.783Z",
+      "count": 113
     }
   ]
 }

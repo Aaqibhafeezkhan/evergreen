@@ -422,15 +422,16 @@
         "container"
       ],
       "events": [
-        "end-of-life"
+        "end-of-life",
+        "scheduled-end-of-life"
       ],
       "id": "docker-library-ruby",
-      "latestReview": "2026-10-16",
+      "latestReview": "2026-10-29",
       "name": "ruby",
       "namespace": "library",
       "path": "products/docker-library-ruby.json",
       "purl": "pkg:docker/library/ruby",
-      "rules": 1,
+      "rules": 2,
       "type": "docker"
     },
     {
@@ -4420,7 +4421,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 522,
+  "rules": 523,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -4438,7 +4439,7 @@
     {
       "path": "types/docker.json",
       "products": 19,
-      "rules": 24,
+      "rules": 25,
       "type": "docker"
     },
     {

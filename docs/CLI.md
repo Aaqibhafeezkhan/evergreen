@@ -189,6 +189,24 @@ Writes the current findings as accepted findings, carrying the history forward f
 | --- | --- |
 | `--output <file>` | Destination file. Default `.evergreen-baseline.json`. |
 
+## Deployed inventory
+
+### `inventory`
+
+```bash
+evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
+```
+
+Reads exports that cloud, cluster, container, and host tools already produce, and reports end-of-life runtimes, engines, cluster versions, images, and operating systems that are running now. Evergreen never calls a provider: you run the export command and it reads the file. Every result names the exact place in the export the claim rests on. See [Deployed inventory](INVENTORY.md) for the export command and fields each importer reads.
+
+| Flag | What it does |
+| --- | --- |
+| `[file...]` | One or more export files. A file no importer recognizes, or one that cannot be read, is listed at the end and makes the run exit `2` after the other files are reported. |
+| `--format auto\|<importer-id>` | Choose the importer instead of auto-detection. Default `auto`. |
+| `--json` | Print an `evergreen.inventory.v1` document. |
+| `--fail-on <severity\|none>` | Exit `1` when an affected result is at or above this severity. Severities, lowest to highest: `info`, `low`, `medium`, `high`, `critical`. Default: the config's `failOn`, else `high`. |
+| `--redact` | Replace each resource name with the first 12 hex characters of its SHA-256 in every output, so a report can be shared. |
+
 ## Supply-chain checks
 
 ### `check`

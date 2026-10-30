@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/upgrade.v1.schema.json",
+  "title": "Evergreen upgrade check v1",
+  "description": "Whether a repository's resolved dependencies support a target runtime, with the exact evidence behind every issue.",
+  "type": "object",
+  "required": ["schemaVersion", "target", "verdict", "analyzers", "issues"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.upgrade.v1" },
+    "target": {
+      "type": "object",
+      "required": ["runtime", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "runtime": { "type": "string", "minLength": 1, "description": "Runtime id, such as dart, flutter, nodejs, python, php, or go." },
+        "version": { "type": "string", "minLength": 1, "description": "Target version as written, such as 3.5 or 22." }
+      }
+    },
+    "verdict": {
+      "enum": ["ready", "blocked", "unknown"],
+      "description": "blocked when any blocker was reported; unknown when no analyzer applied. unknown is not a statement that the upgrade is safe."
+    },
+    "analyzers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Ids of the analyzers that judged this target, sorted."
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["analyzer", "level", "subject", "path", "reason", "evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "analyzer": { "type": "string", "minLength": 1 },
+          "level": {
+            "enum": ["blocker", "warning", "unknown"],
+            "description": "blocker: will not install or run on the target. warning: works but is deprecated there. unknown: the evidence needed is missing."
+          },
+          "subject": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "line": { "type": "integer", "minimum": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "object",
+            "required": ["kind", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": { "enum": ["lockfile", "manifest", "rule"] },
+              "value": { "type": "string", "minLength": 1, "description": "The lockfile or manifest value as written, or a lifecycle rule id." }
+            }
+          }
+        }
+      }
+    }
+  }
+}

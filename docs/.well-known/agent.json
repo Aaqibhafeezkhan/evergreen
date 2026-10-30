@@ -65,6 +65,12 @@
       "name": "Plan migrations",
       "description": "Return a migration plan with waves of independent tasks a coordinating agent can hand out.",
       "tags": ["plan", "migration", "waves", "mcp"]
+    },
+    {
+      "id": "check_upgrade",
+      "name": "Check upgrade",
+      "description": "Answer whether the resolved dependency set supports a target runtime, with the exact lockfile or manifest evidence.",
+      "tags": ["upgrade", "runtime", "mcp"]
     }
   ]
 }

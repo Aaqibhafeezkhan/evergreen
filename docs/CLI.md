@@ -104,6 +104,22 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
+### `upgrade-check`
+
+```bash
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+```
+
+Answers, from files already in the repository, whether the project can move to the target runtime. Each blocker names the exact lockfile entry or manifest field behind it. The scan uses no network and executes nothing. See [Upgrade check](UPGRADE_CHECK.md) for the analyzers and what the check cannot know.
+
+| Flag | What it does |
+| --- | --- |
+| `--to <runtime@version>` | Required. The target to check, for example `dart@3.5`. A runtime alias such as `node` is resolved to `nodejs`. |
+| `[path]` | Repository to read, default `.`. |
+| `--json` | Print the `evergreen.upgrade.v1` report instead of text. |
+
+The verdict is `blocked`, `ready`, or `unknown`. The exit code is `1` when `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.
+
 ### `badge`
 
 ```bash

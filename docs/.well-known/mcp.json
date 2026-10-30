@@ -67,6 +67,10 @@
     {
       "name": "plan_migrations",
       "description": "Run a fresh local scan and return a migration plan: waves of independent tasks a coordinating agent can hand to other agents."
+    },
+    {
+      "name": "check_upgrade",
+      "description": "Check whether a local repository can move to a target runtime with files already in the repository, such as dart@3.5. An unknown verdict means Evergreen found no evidence, not that the upgrade is safe."
     }
   ],
   "authentication": {

@@ -104,6 +104,22 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
+### `upgrade-check`
+
+```bash
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+```
+
+Answers offline, from files already in the repository, whether the project can move to that runtime release. Each issue names the exact lockfile entry, manifest field, or lifecycle rule behind it. It does not install anything, run project commands, or use the network.
+
+| Flag | What it does |
+| --- | --- |
+| `--to <runtime@version>` | Target to judge, for example `go@1.23` or `nodejs@22`. Required. |
+| `[path]` | Repository path. Default `.`. |
+| `--json` | Print the `evergreen.upgrade.v1` report. |
+
+It exits `1` when a blocker exists, `0` for `ready` and `unknown`, and `2` for bad input. `unknown` means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. See [Upgrade checks](UPGRADE_CHECK.md).
+
 ### `badge`
 
 ```bash

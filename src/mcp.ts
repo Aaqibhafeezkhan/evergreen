@@ -9,6 +9,7 @@ import { buildForecast, DEFAULT_FORECAST_MONTHS, MAX_FORECAST_MONTHS } from "./f
 import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-prompt.js";
 import { buildPlan } from "./plan-build.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
+import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { findPackageFileSync } from "./package-files.js";
 import { VERSION } from "./version.js";
 
@@ -19,6 +20,7 @@ export const MCP_TOOL_NAMES = [
   "create_migration_context",
   "verify_migration",
   "check_dependency",
+  "check_upgrade",
   "forecast_repository",
   "plan_migrations",
 ] as const;
@@ -44,6 +46,7 @@ export const MCP_OUTPUT_SCHEMA_FILES = {
   create_migration_context: "context.v1.schema.json",
   verify_migration: "verification.v1.schema.json",
   check_dependency: "check.v1.schema.json",
+  check_upgrade: "upgrade.v1.schema.json",
   forecast_repository: "forecast.v1.schema.json",
   plan_migrations: "plan.v1.schema.json",
 } as const satisfies Record<(typeof MCP_TOOL_NAMES)[number], string>;
@@ -351,6 +354,33 @@ export function createEvergreenMcpServer(
     async ({ purl, version }) => {
       try {
         return success(await checkDependency({ purl, ...(version ? { version } : {}) }));
+      } catch (error) {
+        return failure(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "check_upgrade",
+    {
+      title: "Check upgrade",
+      description:
+        "Answer whether a local repository can move to a target runtime release, using only files already in the repository: manifests and lockfiles, no network, no commands. Pass a target such as go@1.23 or nodejs@22. Returns evergreen.upgrade.v1 with a verdict (ready, blocked, or unknown), the analyzers that ran, and each blocker, warning, or unknown with its exact evidence. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
+      inputSchema: z.object({
+        ...repositoryInput,
+        target: z
+          .string()
+          .min(1)
+          .describe("Target runtime and release, for example go@1.23 or nodejs@22."),
+      }),
+      outputSchema: outputSchema("check_upgrade"),
+      annotations: MCP_TOOL_ANNOTATIONS,
+    },
+    async ({ repository_path, target }) => {
+      try {
+        const parsed = parseUpgradeTarget(target);
+        if (parsed === undefined) throw new Error(`"${target}" is not <runtime@version>, for example go@1.23.`);
+        return success(await checkUpgrade(repository_path, parsed));
       } catch (error) {
         return failure(error);
       }

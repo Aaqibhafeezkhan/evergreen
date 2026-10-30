@@ -1,9 +1,10 @@
+import { dartSdkAnalyzer } from "./dart-sdk.js";
 import type { UpgradeAnalyzer, UpgradeIssue, UpgradeReport, UpgradeTarget } from "./types.js";
 
 export type { UpgradeAnalyzer, UpgradeIssue, UpgradeReport, UpgradeTarget } from "./types.js";
 
 /** Every built-in analyzer. Each task in the upgrade epic appends its own entry. */
-export const upgradeAnalyzers: UpgradeAnalyzer[] = [];
+export const upgradeAnalyzers: UpgradeAnalyzer[] = [dartSdkAnalyzer];
 
 const levelOrder = { blocker: 0, warning: 1, unknown: 2 } as const;
 

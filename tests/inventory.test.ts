@@ -82,8 +82,11 @@ test("--format selects one importer, and an export it does not recognize stays u
 });
 
 test("results sort by file and then by pointer", async () => {
-  const second = await exportFile("b.json", { kind: "fake", entries: [{ resource: "b0", purl: "pkg:npm/request" }, { resource: "b1", purl: "pkg:npm/request" }] });
-  const first = await exportFile("a.json", { kind: "fake", entries: [{ resource: "a0", purl: "pkg:npm/request" }] });
+  const root = await directory();
+  const first = join(root, "a.json");
+  const second = join(root, "b.json");
+  await writeFile(second, JSON.stringify({ kind: "fake", entries: [{ resource: "b0", purl: "pkg:npm/request" }, { resource: "b1", purl: "pkg:npm/request" }] }));
+  await writeFile(first, JSON.stringify({ kind: "fake", entries: [{ resource: "a0", purl: "pkg:npm/request" }] }));
   const report = await runInventory([second, first], [fakeImporter]);
   assert.deepEqual(report.results.map((result) => result.item.resource), ["a0", "b0", "b1"]);
 });

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/inventory.v1.schema.json",
+  "title": "Evergreen inventory v1",
+  "description": "What one or more export files say is running, and the lifecycle check for each item. Every item names the export file and the exact pointer its claim rests on.",
+  "type": "object",
+  "required": ["schemaVersion", "results", "unrecognized"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.inventory.v1" },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "check"],
+        "additionalProperties": false,
+        "properties": {
+          "item": { "$ref": "#/$defs/item" },
+          "check": { "$ref": "check.v1.schema.json" }
+        }
+      }
+    },
+    "unrecognized": {
+      "type": "array",
+      "description": "Files no importer recognized, or that could not be read, as given.",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": ["importer", "file", "pointer", "resource", "purl"],
+      "additionalProperties": false,
+      "properties": {
+        "importer": { "type": "string", "minLength": 1 },
+        "file": { "type": "string", "minLength": 1, "description": "The export file as given on the command line." },
+        "pointer": { "type": "string", "minLength": 1, "description": "RFC 6901 JSON Pointer to the version value; for a text export, line:<n>." },
+        "resource": { "type": "string", "minLength": 1, "description": "The resource's own name. Never an account id, ARN, or secret." },
+        "purl": { "type": "string", "pattern": "^pkg:", "description": "Version-less canonical Package URL the lifecycle rules are written against." },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

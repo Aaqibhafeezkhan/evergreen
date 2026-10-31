@@ -873,6 +873,21 @@
       "type": "generic"
     },
     {
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-dockerfile",
+      "latestReview": "2026-10-31",
+      "name": "dockerfile",
+      "path": "products/generic-dockerfile.json",
+      "purl": "pkg:generic/dockerfile",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2018-10-01",
       "ecosystems": [
         "dotnet"
@@ -1877,11 +1892,11 @@
         "removed"
       ],
       "id": "generic-python",
-      "latestReview": "2026-10-30",
+      "latestReview": "2026-10-21",
       "name": "python",
       "path": "products/generic-python.json",
       "purl": "pkg:generic/python",
-      "rules": 69,
+      "rules": 44,
       "type": "generic"
     },
     {
@@ -4441,7 +4456,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 552,
+  "rules": 529,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -4470,8 +4485,8 @@
     },
     {
       "path": "types/generic.json",
-      "products": 88,
-      "rules": 322,
+      "products": 89,
+      "rules": 299,
       "type": "generic"
     },
     {

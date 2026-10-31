@@ -20,9 +20,10 @@ import type { RootfsOsRelease, RootfsSnapshot } from "./rootfs.js";
 
 /**
  * Finds base images and Dockerfile runtime install commands whose release line has reached end of life,
+ * the deprecated Dockerfile `MAINTAINER` instruction and legacy `ENV key value` form,
  * plus the OS and runtimes that ship inside a built image's filesystem.
  *
- * It reads Dockerfile / Containerfile `FROM` and supported `RUN` lines plus Compose
+ * It reads Dockerfile / Containerfile `FROM`, supported `RUN`, and legacy syntax lines plus Compose
  * `services.*.image` values. A version is classified only when every version it can stand for is
  * inside a rule's range, so a floating image tag such as `mysql:8` is not guessed. When the scanned
  * directory is an unpacked root filesystem, or holds a local root filesystem archive, the same
@@ -36,6 +37,8 @@ const DOCKERFILE_NAME = /^(?:Dockerfile|Containerfile)(?:\.[A-Za-z0-9_.-]+)?$|\.
 const COMPOSE_NAME = /^(?:docker-)?compose(?:\.[A-Za-z0-9_.-]+)?\.ya?ml$/;
 const DEVCONTAINER_NAME = /^devcontainer\.json$/;
 const VARIANT = /^(?:alpine(?:\d+(?:\.\d+)*)?|slim|bookworm|bullseye|buster|stretch|trixie|jessie|jammy|noble|focal|oracle|oraclelinux\d*|debian|ubuntu|minimal)$/;
+const MAINTAINER_RULE = "container.dockerfile.maintainer";
+const LEGACY_ENV_RULE = "container.dockerfile.legacy-env-format";
 
 const DEBIAN_CODENAMES = new Map<string, string>([
   ["buzz", "1.1"],
@@ -132,7 +135,20 @@ interface RuntimeCandidate {
   runtime: Runtime;
 }
 
-type Candidate = ImageCandidate | RuntimeCandidate;
+interface MaintainerCandidate {
+  kind: "maintainer";
+  path: string;
+  line: number;
+}
+
+interface LegacyEnvCandidate {
+  kind: "legacy-env";
+  path: string;
+  line: number;
+  key: string;
+}
+
+type Candidate = ImageCandidate | RuntimeCandidate | MaintainerCandidate | LegacyEnvCandidate;
 
 async function candidateFiles(root: string): Promise<string[]> {
   const files: string[] = [];
@@ -178,7 +194,7 @@ async function candidates(root: string): Promise<Candidate[]> {
           value: declaration.value,
           runtime: declaration.runtime,
         });
-      } else {
+      } else if (declaration.kind === "image" || declaration.kind === "dynamic") {
         result.push({
           kind: "image",
           path,
@@ -186,6 +202,10 @@ async function candidates(root: string): Promise<Candidate[]> {
           value: declaration.value,
           dynamic: declaration.kind === "dynamic",
         });
+      } else if (declaration.kind === "maintainer") {
+        result.push({ kind: "maintainer", path, line: declaration.line });
+      } else {
+        result.push({ kind: "legacy-env", path, line: declaration.line, key: declaration.key });
       }
     }
   }
@@ -393,6 +413,8 @@ export class ContainerDetector implements Detector {
 
     const registry = validateRegistryV2(await loadDataFile("registry/container.json"));
     const rules = rulesByRepository(registry.rules);
+    const maintainerRule = registry.rules.find((rule) => rule.id === MAINTAINER_RULE);
+    const legacyEnvRule = registry.rules.find((rule) => rule.id === LEGACY_ENV_RULE);
     const dotnetRules = validateRegistryV2(await loadDataFile("registry/dotnet.json")).rules.filter(
       (rule) => rule.purl === "pkg:generic/dotnet" && rule.id.startsWith("dotnet.runtime."),
     );
@@ -425,6 +447,25 @@ export class ContainerDetector implements Detector {
             location,
             ...(rule.replacement ? { replacement: rule.replacement } : {}),
             ...(rule.deadline ? { deadline: rule.deadline } : {}),
+            ...(rule.migration ? { migration: rule.migration } : {}),
+            sources: rule.sources,
+          });
+        }
+        continue;
+      }
+      if (candidate.kind === "maintainer" || candidate.kind === "legacy-env") {
+        const rule = candidate.kind === "maintainer" ? maintainerRule : legacyEnvRule;
+        if (rule) {
+          findings.push({
+            id: `${rule.id}:${candidate.path}:${candidate.line}`,
+            ruleId: rule.id,
+            title: rule.title,
+            summary: candidate.kind === "maintainer"
+              ? `${candidate.path} uses the deprecated MAINTAINER instruction. ${rule.summary}`
+              : `${candidate.path} sets ${candidate.key} with the legacy "ENV key value" form. ${rule.summary}`,
+            severity: rule.severity,
+            location,
+            ...(rule.replacement ? { replacement: rule.replacement } : {}),
             ...(rule.migration ? { migration: rule.migration } : {}),
             sources: rule.sources,
           });

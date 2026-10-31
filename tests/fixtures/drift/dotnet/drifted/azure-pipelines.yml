@@ -1,0 +1,7 @@
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-latest
+container: mcr.microsoft.com/dotnet/sdk:6.0
+steps:
+  - script: dotnet build

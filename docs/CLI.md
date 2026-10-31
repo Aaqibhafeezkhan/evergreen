@@ -179,6 +179,7 @@ Reports every place a repository states a runtime version, with its exact file a
 | `[path]` | Repository path. Default `.`. |
 | `--json` | Print the drift report, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
 | `--check` | Exit `1` when any runtime's pins disagree or a floor is above the lowest pinned release. |
+| `--runtime <id>` | Limit the report to one runtime, such as `rust`. |
 | `--runtime <id>` | Limit the report to one runtime, such as `go`. |
 | `--align <release>` | Print a unified diff that makes every understood pin select `<release>`. Requires `--runtime`; values it will not rewrite are listed on stderr. |
 

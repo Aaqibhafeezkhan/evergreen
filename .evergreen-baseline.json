@@ -263,6 +263,11 @@
       "path": "examples/gallery/go/go.work"
     },
     {
+      "fingerprint": "fecf9b5f4ab1e11736d0db425e8d673de969adae2cae370cd4a5871388adb083",
+      "ruleId": "go.runtime.end-of-support-1.23",
+      "path": "examples/upgrade/go-modules/go.mod"
+    },
+    {
       "fingerprint": "731862e5c9c5fe615d34eb3d89ea49b458761d00c7135683043b7ca7a400bdec",
       "ruleId": "java.jdk.end-of-support-12-16",
       "path": "examples/gallery/java/maven/pom.xml"
@@ -599,6 +604,10 @@
     {
       "at": "2026-10-31T09:22:02.779Z",
       "count": 115
+    },
+    {
+      "at": "2026-10-31T09:22:02.779Z",
+      "count": 116
     }
   ]
 }

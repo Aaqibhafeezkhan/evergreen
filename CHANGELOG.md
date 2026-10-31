@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `evergreen inventory` for the lifecycle of deployed resources read from export files, starting with Docker containers and images from `docker inspect` and `docker compose ps --format json`; it reads only the files given to it and never uses the network. (#1873)
 - Make bare `evergreen init` ask what to set up: it detects the repository's CI provider and agent hosts, shows the plan, and with one confirmation (or `--yes` for scripts) writes a GitHub Actions workflow, the pre-push hook, and the Evergreen agent section; GitLab repositories get the component include to add. (`#1266`)
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)

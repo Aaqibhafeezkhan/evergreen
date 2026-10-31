@@ -1892,11 +1892,11 @@
         "removed"
       ],
       "id": "generic-python",
-      "latestReview": "2026-10-21",
+      "latestReview": "2026-10-30",
       "name": "python",
       "path": "products/generic-python.json",
       "purl": "pkg:generic/python",
-      "rules": 44,
+      "rules": 69,
       "type": "generic"
     },
     {
@@ -4456,7 +4456,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 529,
+  "rules": 554,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -4486,7 +4486,7 @@
     {
       "path": "types/generic.json",
       "products": 89,
-      "rules": 299,
+      "rules": 324,
       "type": "generic"
     },
     {

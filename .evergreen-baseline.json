@@ -1,6 +1,6 @@
 {
   "schemaVersion": "evergreen.baseline.v1",
-  "createdAt": "2026-10-30T17:30:23.169Z",
+  "createdAt": "2026-10-31T06:07:05.073Z",
   "findings": [
     {
       "fingerprint": "29ca519a9a7077a2f885fdc53dc72bc557726532338b9443eb3150b926c0df7f",
@@ -523,6 +523,11 @@
       "path": "examples/gallery/serverless/template.yaml"
     },
     {
+      "fingerprint": "69a826873e764d37af9da6a6e1ade34d3dc39f384e27f42068926629aefe234e",
+      "ruleId": "serverless.aws-lambda.nodejs16.x",
+      "path": "examples/gallery/serverless/template.yml"
+    },
+    {
       "fingerprint": "2b969efb16f40c5bdbbd758cbfc06aa6287aad9c55cdc203f3a0a83c180a5ee7",
       "ruleId": "serverless.aws-lambda.python3.8",
       "path": "examples/gallery/serverless/serverless.yml"
@@ -575,6 +580,14 @@
     {
       "at": "2026-10-30T17:30:23.169Z",
       "count": 112
+    },
+    {
+      "at": "2026-10-31T06:06:32.444Z",
+      "count": 112
+    },
+    {
+      "at": "2026-10-31T06:07:05.073Z",
+      "count": 113
     }
   ]
 }

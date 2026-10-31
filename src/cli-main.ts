@@ -106,6 +106,7 @@ Usage:
   evergreen badge [path] --snippet <markdown|html|rst> [--repo <owner/name>] [--branch <name>]   # print README markup for the published badge
   evergreen badge [path] --shields   # print shields.io endpoint JSON for the current scan
   evergreen diff <base>..<head> [path] [--json]   # findings a change introduced or fixed; exit 1 only when it introduced some
+  evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]   # report runtime versions that disagree; --align prints a patch and writes nothing
   evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]   # report every runtime version a repository states and whether they agree
   evergreen receipt [path] --before <scan.json> [--format markdown|json] [--fail-on-introduced]   # what a change resolved, left, or introduced; never runs a command
   evergreen scan [path] --by-owner [--json]   # group findings by CODEOWNERS owner; files with no owner are listed as unowned

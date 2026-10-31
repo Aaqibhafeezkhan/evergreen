@@ -1,0 +1,12 @@
+stages:
+  - test
+
+default:
+  image: python:3.10-slim
+
+test:
+  image: python:3.10
+  services:
+    - python:3.11-alpine
+  script:
+    - echo test

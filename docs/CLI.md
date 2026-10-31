@@ -114,20 +114,27 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
-### `upgrade-check`
+### `drift`
 
 ```bash
-evergreen upgrade-check --to <runtime@version> [path] [--json]
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
 ```
 
-Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
+Reports every place a repository states a runtime version and whether those values select the same release line. Each pin carries its file and line, the source it came from, the value as written, and the release it resolves to offline; a floor above the lowest pin is reported as a floor conflict. Nothing is written. See [Drift](DRIFT.md) for the sources and granularity of each runtime.
 
 | Flag | What it does |
 | --- | --- |
+| `[path]` | Repository path. Default `.`. |
+| `--json` | Print the `evergreen.drift.v1` document defined by [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when any runtime drifted or has a floor conflict. |
+| `--runtime <id>` | Report one runtime only. |
+| `--align <release>` | Print a unified diff that makes the pins Evergreen understands select `release`; requires `--runtime`. Refused pins are listed on stderr, and no file is written. |
+### `upgrade-check`
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
 | `--to <runtime@version>` | Required. Target runtime and release, for example `php@8.4` or `nodejs@22`. `node`, `py`, and `golang` are accepted as runtime aliases. |
 | `[path]` | Repository root, default `.`. |
 | `--json` | Print the `evergreen.upgrade.v1` document that conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
-
 The text output starts with the verdict, then lists every blocker, warning, and unknown as `path:line  subject  reason  [evidence]`. Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. [Upgrade check](UPGRADE_CHECK.md) lists the files and fields each analyzer reads.
 
 ### `badge`
@@ -172,6 +179,7 @@ Reports every place a repository states a runtime version, with its exact file a
 | `[path]` | Repository path. Default `.`. |
 | `--json` | Print the drift report, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
 | `--check` | Exit `1` when any runtime's pins disagree or a floor is above the lowest pinned release. |
+| `--runtime <id>` | Limit the report to one runtime, such as `rust`. |
 | `--runtime <id>` | Limit the report to one runtime, such as `go`. |
 | `--align <release>` | Print a unified diff that makes every understood pin select `<release>`. Requires `--runtime`; values it will not rewrite are listed on stderr. |
 

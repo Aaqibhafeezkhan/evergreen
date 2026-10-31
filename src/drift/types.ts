@@ -10,6 +10,8 @@ export interface RuntimePin {
   raw: string;
   /** `pin` selects the version that builds or runs; `floor` is a minimum the project supports. */
   kind: "pin" | "floor";
+  /** Pins that share a group are alternatives, such as the entries of one multi-target list. They are reported but not compared with each other. */
+  group?: string;
   /** The release line the value resolves to offline, such as `18` or `3.11`; absent when it cannot be resolved. */
   release?: string;
   /** Why `release` is absent, in one sentence. */
@@ -30,7 +32,7 @@ export interface RuntimeDrift {
   pins: RuntimePin[];
   /** Distinct releases among `pin` values, sorted ascending. */
   releases: string[];
-  /** True when the `pin` values select more than one release. */
+  /** True when no release is selected by every group of alternatives. */
   drifted: boolean;
   /** Floors above the lowest pinned release, which that pinned environment cannot satisfy. */
   floorConflicts: RuntimePin[];

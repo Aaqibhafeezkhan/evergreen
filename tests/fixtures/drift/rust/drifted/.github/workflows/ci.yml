@@ -1,0 +1,16 @@
+name: ci
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: rust:1.79.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.79.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.79.0
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.79.0
+          override: true

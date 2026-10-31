@@ -235,3 +235,37 @@ A version outside these ranges is not reported as supported. When the provider P
 ### What is not judged
 
 The importer does not judge instance classes, storage, IOPS, parameter groups, patch levels within a supported minor version, certificate authorities, Multi-AZ or read-replica topology, backup retention, encryption, or licensing. It does not judge MariaDB, SQL Server, Oracle, Db2, Memcached, or Valkey. It does not verify that an export is complete or current. It does not read an AWS account, role, or region, and it cannot see an object that the export omits.
+
+## Export files
+
+Each section below documents one importer: the exact command that produces the export, the fields Evergreen reads, the lifecycle rules it matches, and what it does not judge. Fixtures live under `tests/fixtures/inventory/`, with every identifier replaced by a placeholder; the command and CLI version that produced them are recorded in the section.
+
+## AWS Lambda
+
+```bash
+aws lambda list-functions --output json > lambda.json
+evergreen inventory lambda.json
+```
+
+`list-functions` paginates. With pagination on, the CLI prints one JSON page after another; `evergreen` accepts the single page a one-page account prints as well as the array of pages a scripted caller collects. The fixtures under `tests/fixtures/inventory/aws-lambda/` reproduce the documented output of `aws lambda list-functions --output json` from AWS CLI v2, with every identifier replaced by a placeholder; they were not captured against a live account, so no CLI version is recorded.
+
+**Fields read**
+
+| Field | Use |
+| --- | --- |
+| `Functions[].FunctionName` | `resource` and nothing more. |
+| `Functions[].Runtime` | `version`, and the runtime identifier in `pkg:generic/aws-lambda-runtime/<Runtime>`. |
+| `Functions[].PackageType` | `Image` means the function runs a container image, which has no managed runtime, so it is skipped. |
+
+Nothing else is copied: not `FunctionArn`, `Role`, environment variables, tags, account id, code, or architecture.
+
+**Rules matched**
+
+`registry/serverless.json`, the `pkg:generic/aws-lambda-runtime/<identifier>` PURLs. Every runtime the [AWS Lambda runtimes page](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) gives a deprecation date for has a rule: a runtime the page lists under Deprecated runtimes is `end-of-life` at `high`, and a runtime the page lists as supported with a projected deprecation date is `scheduled-end-of-life` at `low` with that date as its deadline. The same rules back the Serverless detector, so one lifecycle fact reaches a declaration and a live function alike.
+
+**Not judged**
+
+- Container-image functions (`PackageType: "Image"`): their runtime lives in the image, not in the function's configuration. Rebuild the image from a newer base image instead.
+- Runtimes AWS has not dated — today `nodejs26.x` and `python3.15`, which the page lists as public preview and not scheduled — are reported as `no-data`, which is not a statement that they are safe.
+- Function versions, aliases, `$LATEST`, code, layers, architecture, and memory: none of them changes the runtime lifecycle answer.
+- Functions that a different export would show: this importer reads only the file you pass, and only the functions in it.

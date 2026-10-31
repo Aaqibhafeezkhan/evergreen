@@ -1,0 +1,4 @@
+test:
+  image: ruby:3.3-alpine
+  script:
+    - bundle exec rake

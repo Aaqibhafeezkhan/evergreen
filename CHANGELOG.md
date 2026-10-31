@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `evergreen drift`, which reports every runtime version a repository states and whether the values agree, with `--align` patches and a `--check` gate; the first collector covers Ruby pins, floors, and the `Gemfile.lock` refusal. (#1836, #1841)
 - Add `evergreen drift`, which reports every runtime version a repository states and whether the values agree, and `--align`, which prints a patch without writing it. This release includes the Java collector. (#1840)
 - Add `evergreen drift`, which reports every place a repository states a runtime version, whether those versions agree, and `--align` patches that make them select one release. (#1838)
 - Add the .NET drift collector: read `global.json`, target frameworks, Microsoft .NET base images, `actions/setup-dotnet`, and GitLab CI, CircleCI, and Azure Pipelines images, and report when the releases disagree. Multi-targeting is reported without counting its entries against each other. (#1842)

@@ -68,6 +68,24 @@ The baseline, date, and ignore options also apply to `explain`, `context`, and `
 
 The `mermaid` format prints a fenced `mermaid` block that GitHub renders natively. Each section is an ecosystem and each bar runs from the observation day (`--as-of`, or today) to the deadline. A subject that has already ended is a `crit` milestone at its deadline; one that ends within 30 days is a `crit` bar. A `today` milestone follows `--as-of`. The chart draws at most 40 bars; a final line counts the rest, and `--format json` still lists every finding. [Showcase](SHOWCASE.md#mermaid-support-windows) has a complete example.
 
+### `drift`
+
+```bash
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
+```
+
+Reports every runtime version a repository states, at its exact `path:line`, and whether the values agree. It reads repository files only: no runtime is executed and no network is used. `--align` prints a unified diff; nothing is written.
+
+| Flag | What it does |
+| --- | --- |
+| `[path]` | Repository root. Default `.`. |
+| `--json` | Print the drift document, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when a runtime's pins disagree or a floor is above the lowest pinned release. |
+| `--runtime <id>` | Read one runtime only, such as `ruby`. |
+| `--align <release>` | Print a patch that makes the alignable pins select `release`, such as `3.4`. Requires `--runtime`, refuses floors and ranges, and never writes a file. |
+
+[Drift](DRIFT.md) lists the sources each runtime collector reads, its release granularity, and what it reports as unresolved.
+
 ### `forecast`
 
 ```bash

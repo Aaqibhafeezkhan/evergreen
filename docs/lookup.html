@@ -164,7 +164,7 @@ h1 {
       <p class="lede">
         Type a package or runtime name to find its reviewed lifecycle status.
         Results link to each rule's reference page and its authoritative sources.
-        This page embeds 553 rules and makes no network requests after it loads.
+        This page embeds 561 rules and makes no network requests after it loads.
       </p>
     </header>
     <main id="main">
@@ -180,7 +180,7 @@ h1 {
           aria-describedby="status"
         />
       </form>
-      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 553 lifecycle rules.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 561 lifecycle rules.</p>
       <div id="results" class="results" aria-live="polite"></div>
       <noscript>
         <p class="status">
@@ -1309,379 +1309,6 @@ h1 {
       {
         "title": "Dart changelog",
         "url": "https://dart.dev/changelog"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-mysql.end-of-support-5.6",
-    "title": "Aurora MySQL version 1 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora MySQL version 1 (MySQL 5.6 compatible) on 2023-02-28. RDS Extended Support was not offered for this version, so it receives no further Aurora security or bug fixes. Upgrade to Aurora MySQL version 3 (MySQL 8.0 compatible) or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/mysql",
-    "vers": "vers:intdot/>=5.6|\u003c5.7",
-    "deadline": "2023-02-28",
-    "replacement": "Aurora MySQL version 3 (MySQL 8.0 compatible) or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon Aurora MySQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-mysql.end-of-support-5.7",
-    "title": "Aurora MySQL version 2 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora MySQL version 2 (MySQL 5.7 compatible) on 2024-10-31. RDS Extended Support may keep it running for a fee through 2029-06-30. Upgrade to Aurora MySQL version 3 (MySQL 8.0 compatible) or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/mysql",
-    "vers": "vers:intdot/>=5.7|\u003c5.8",
-    "deadline": "2024-10-31",
-    "replacement": "Aurora MySQL version 3 (MySQL 8.0 compatible) or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon Aurora MySQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.end-of-support-11",
-    "title": "Aurora PostgreSQL 11 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora PostgreSQL 11 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2027-03-31. Upgrade to Aurora PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=11|\u003c12",
-    "deadline": "2024-02-29",
-    "replacement": "Aurora PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.end-of-support-12",
-    "title": "Aurora PostgreSQL 12 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora PostgreSQL 12 on 2025-02-28. RDS Extended Support may keep it running for a fee through 2028-02-29. Upgrade to Aurora PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=12|\u003c13",
-    "deadline": "2025-02-28",
-    "replacement": "Aurora PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.end-of-support-13",
-    "title": "Aurora PostgreSQL 13 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora PostgreSQL 13 on 2026-02-28. RDS Extended Support may keep it running for a fee through 2029-02-28. Upgrade to Aurora PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=13|\u003c14",
-    "deadline": "2026-02-28",
-    "replacement": "Aurora PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.scheduled-end-of-support-14",
-    "title": "Aurora PostgreSQL 14 reaches end of standard support on 2027-02-28",
-    "summary": "AWS ends standard support for Aurora PostgreSQL 14 on 2027-02-28. RDS Extended Support may keep it running for a fee through 2030-02-28. Upgrade to Aurora PostgreSQL 16 or later before then.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=14|\u003c15",
-    "deadline": "2027-02-28",
-    "replacement": "Aurora PostgreSQL 16 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-elasticache-redis.end-of-support-4",
-    "title": "ElastiCache for Redis OSS 4 is past end of standard support",
-    "summary": "AWS ended standard support for ElastiCache for Redis OSS 4 on 2026-01-31. RDS Extended Support may keep it running for a fee through 2029-01-31. Upgrade to Valkey or Redis OSS 7.1 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-elasticache/redis",
-    "vers": "vers:intdot/>=4|\u003c5",
-    "deadline": "2026-01-31",
-    "replacement": "Valkey or Redis OSS 7.1 or later",
-    "sources": [
-      {
-        "title": "Engine versions and upgrading in ElastiCache",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
-      },
-      {
-        "title": "ElastiCache Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-elasticache-redis.end-of-support-5",
-    "title": "ElastiCache for Redis OSS 5 is past end of standard support",
-    "summary": "AWS ended standard support for ElastiCache for Redis OSS 5 on 2026-01-31. RDS Extended Support may keep it running for a fee through 2029-01-31. Upgrade to Valkey or Redis OSS 7.1 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-elasticache/redis",
-    "vers": "vers:intdot/>=5|\u003c6",
-    "deadline": "2026-01-31",
-    "replacement": "Valkey or Redis OSS 7.1 or later",
-    "sources": [
-      {
-        "title": "Engine versions and upgrading in ElastiCache",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
-      },
-      {
-        "title": "ElastiCache Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-elasticache-redis.scheduled-end-of-support-6",
-    "title": "ElastiCache for Redis OSS 6 reaches end of standard support on 2027-01-31",
-    "summary": "AWS ends standard support for ElastiCache for Redis OSS 6 on 2027-01-31. RDS Extended Support may keep it running for a fee through 2030-01-31. Upgrade to Valkey or Redis OSS 7.1 or later before then.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-elasticache/redis",
-    "vers": "vers:intdot/>=6|\u003c7",
-    "deadline": "2027-01-31",
-    "replacement": "Valkey or Redis OSS 7.1 or later",
-    "sources": [
-      {
-        "title": "Engine versions and upgrading in ElastiCache",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
-      },
-      {
-        "title": "ElastiCache Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-mysql.end-of-support-5.7",
-    "title": "RDS for MySQL 5.7 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for MySQL 5.7 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2029-06-30. Upgrade to MySQL 8.0 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/mysql",
-    "vers": "vers:intdot/>=5.7|\u003c5.8",
-    "deadline": "2024-02-29",
-    "replacement": "MySQL 8.0 or later",
-    "sources": [
-      {
-        "title": "MySQL on Amazon RDS versions",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html"
-      },
-      {
-        "title": "Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-mysql.end-of-support-8.0",
-    "title": "RDS for MySQL 8.0 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for MySQL 8.0 on 2026-07-31. RDS Extended Support may keep it running for a fee through 2029-07-31. Upgrade to MySQL 8.4 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/mysql",
-    "vers": "vers:intdot/>=8.0|\u003c8.1",
-    "deadline": "2026-07-31",
-    "replacement": "MySQL 8.4 or later",
-    "sources": [
-      {
-        "title": "MySQL on Amazon RDS versions",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html"
-      },
-      {
-        "title": "Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-10",
-    "title": "RDS for PostgreSQL 10 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 10 in April 2023 (AWS publishes only the month). RDS Extended Support was not offered for this version, so it receives no further RDS security or bug fixes. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=10|\u003c11",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-11",
-    "title": "RDS for PostgreSQL 11 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 11 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2027-03-31. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=11|\u003c12",
-    "deadline": "2024-02-29",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-12",
-    "title": "RDS for PostgreSQL 12 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 12 on 2025-02-28. RDS Extended Support may keep it running for a fee through 2028-02-29. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=12|\u003c13",
-    "deadline": "2025-02-28",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-13",
-    "title": "RDS for PostgreSQL 13 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 13 on 2026-02-28. RDS Extended Support may keep it running for a fee through 2029-02-28. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=13|\u003c14",
-    "deadline": "2026-02-28",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-9.6",
-    "title": "RDS for PostgreSQL 9.6 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 9.6 on 2022-04-30. RDS Extended Support was not offered for this version, so it receives no further RDS security or bug fixes. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=9.6|\u003c9.7",
-    "deadline": "2022-04-30",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.scheduled-end-of-support-14",
-    "title": "RDS for PostgreSQL 14 reaches end of standard support on 2027-02-28",
-    "summary": "AWS ends standard support for RDS for PostgreSQL 14 on 2027-02-28. RDS Extended Support may keep it running for a fee through 2030-02-28. Upgrade to PostgreSQL 16 or later before then.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=14|\u003c15",
-    "deadline": "2027-02-28",
-    "replacement": "PostgreSQL 16 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
       }
     ]
   },
@@ -8120,6 +7747,526 @@ h1 {
       {
         "title": "PHP supported versions",
         "url": "https://www.php.net/supported-versions.php"
+      }
+    ]
+  },
+  {
+    "id": "python.module.aifc.removed",
+    "title": "The aifc module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the aifc module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the soundfile package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.asynchat.removed",
+    "title": "The asynchat module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the asynchat module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "asyncio",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.asyncore.removed",
+    "title": "The asyncore module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the asyncore module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "asyncio",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.audioop.removed",
+    "title": "The audioop module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the audioop module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the audioop-lts package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.cgi.removed",
+    "title": "The cgi module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the cgi module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the multipart package or email.message",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.cgitb.removed",
+    "title": "The cgitb module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the cgitb module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "traceback",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.chunk.removed",
+    "title": "The chunk module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the chunk module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "struct",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.crypt.removed",
+    "title": "The crypt module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the crypt module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "hashlib or a password-hashing library such as argon2-cffi",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.distutils.removed",
+    "title": "The distutils module was removed in Python 3.12",
+    "summary": "Python 3.12 removed distutils (PEP 632), so importing it raises ModuleNotFoundError; use setuptools or another build backend.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "setuptools",
+    "sources": [
+      {
+        "title": "PEP 632 — Deprecate distutils module",
+        "url": "https://peps.python.org/pep-0632/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.imghdr.removed",
+    "title": "The imghdr module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the imghdr module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the filetype package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.imp.removed",
+    "title": "The imp module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the imp module, so importing it raises ModuleNotFoundError; use importlib.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "importlib",
+    "sources": [
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      },
+      {
+        "title": "Python 3.11 documentation: imp — Access the import internals",
+        "url": "https://docs.python.org/3.11/library/imp.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.lib2to3.removed",
+    "title": "The lib2to3 module was removed in Python 3.13",
+    "summary": "Python 3.13 removed lib2to3, so importing it raises ModuleNotFoundError; use a maintained parser such as libcst or tree-sitter.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "libcst or tree-sitter",
+    "sources": [
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      },
+      {
+        "title": "What's New in Python 3.9",
+        "url": "https://docs.python.org/3/whatsnew/3.9.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.mailcap.removed",
+    "title": "The mailcap module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the mailcap module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "mimetypes",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.msilib.removed",
+    "title": "The msilib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the msilib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.nis.removed",
+    "title": "The nis module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the nis module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.nntplib.removed",
+    "title": "The nntplib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the nntplib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.ossaudiodev.removed",
+    "title": "The ossaudiodev module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the ossaudiodev module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.pipes.removed",
+    "title": "The pipes module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the pipes module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "shlex.quote and subprocess",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.smtpd.removed",
+    "title": "The smtpd module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the smtpd module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "the aiosmtpd package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.sndhdr.removed",
+    "title": "The sndhdr module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the sndhdr module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the filetype package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.spwd.removed",
+    "title": "The spwd module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the spwd module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.sunau.removed",
+    "title": "The sunau module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the sunau module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the soundfile package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.telnetlib.removed",
+    "title": "The telnetlib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the telnetlib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the telnetlib3 package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.uu.removed",
+    "title": "The uu module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the uu module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "base64",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.xdrlib.removed",
+    "title": "The xdrlib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the xdrlib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "struct",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
       }
     ]
   },

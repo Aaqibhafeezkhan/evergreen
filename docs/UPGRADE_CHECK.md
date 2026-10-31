@@ -135,3 +135,39 @@ Runtime: `nodejs`. Applies when `pnpm-lock.yaml` exists with `lockfileVersion` 6
 - Levels: `blocker` for a production dependency whose range excludes the target; `warning` for a dev dependency (`dev: true` or `devOptional: true` in 6.x, or reachable only from a dev dependency in 9.x); `unknown` for an `engines.node` value that is not a valid semver range.
 - Evidence: `engines.node: <range as written>`, at the line of the `engines` key.
 - Deduplication: identical name, version, and range across peer variants keep the first line.
+
+## Poetry (`poetry.lock`)
+
+Applies when `poetry.lock` exists. Runtime: `python`.
+
+Files and fields it reads:
+
+- Every `[[package]]` entry in `poetry.lock`: `name`, `version`, `python-versions`, and `category` (Poetry 1.1) or `groups` (later Poetry versions). Both group forms are handled.
+- The project's own `[tool.poetry.dependencies]` `python` constraint in `pyproject.toml`, as a string or as a table with `version`.
+
+Version syntax it understands: PEP 440 specifiers `>=`, `<=`, `<`, `>`, `==` (including `.*`), `!=`, and `~=`, joined with commas for AND; Poetry's `^` (caret), `~` (tilde), and `||` (OR) forms; and `*`, which matches every version. Comparisons follow PEP 440 ordering, including pre-releases, post-releases, development releases, and epochs.
+
+What it reports:
+
+- `blocker` for a main-group package whose `python-versions` excludes the target release, and for a project-level `python` constraint that excludes it.
+- `warning` for a package in the `dev` or any other non-main group whose `python-versions` excludes the target.
+- `unknown` for a `python-versions` value or project constraint the matcher cannot parse.
+
+Evidence is the value as written: `python-versions: <value>` with `kind: "lockfile"` at that field's line, or `python: <value>` with `kind: "manifest"` at the `python` line in `pyproject.toml`. The subject is `<name>@<version>`, or `python` for the project constraint.
+
+Example:
+
+```text
+blocked
+poetry.lock:12  requests@2.28.0  requests@2.28.0 declares python-versions ">=3.7,<3.11", which excludes Python 3.13.  [lockfile: python-versions: >=3.7,<3.11]
+pyproject.toml:9  python  The project's [tool.poetry.dependencies] python constraint ">=3.8,<3.12" excludes Python 3.13.  [manifest: python: >=3.8,<3.12]
+```
+
+## Python standard library
+
+Applies when the repository has at least one Python source file.
+
+- **Reads:** every `.py` file the usage analysis reads (the same traversal as a scan: `.git`, virtual environments, build output, and dependency directories are skipped, as are files over 1 MB) and the module-import and symbol rules in `registry/python.json` whose package URL is `pkg:generic/python`.
+- **Version syntax:** PEP 440 ranges from the rule's `vers`, compared with the target release, as in `python@3.13`.
+- **Reports:** every `import module` and `from module import name` of a module removed by the target, and every use of a removed or deprecated function that the symbol rules describe. A `removed` rule whose range includes the target is a blocker; a `deprecated` rule whose range includes the target is a warning. Each issue is one usage location; the subject is the module or symbol and the evidence is the rule id.
+- **`unknown`:** this analyzer reports none. A rule whose range does not include the target, or a target release the PEP 440 comparison cannot read, produces no issue.

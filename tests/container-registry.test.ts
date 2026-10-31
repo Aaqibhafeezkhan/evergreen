@@ -9,13 +9,15 @@ async function rules() {
   return validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8"))).rules;
 }
 
-test("container registry has twenty-five image rules and seven host OS rules with vendor sources", async () => {
+test("container registry has twenty-five image rules, two Dockerfile rules, and seven host OS rules with vendor sources", async () => {
   const all = await rules();
   const images = all.filter((rule) => rule.purl.startsWith("pkg:docker/library/"));
-  const hosts = all.filter((rule) => rule.purl.startsWith("pkg:generic/"));
+  const dockerfile = all.filter((rule) => rule.purl === "pkg:generic/dockerfile");
+  const hosts = all.filter((rule) => rule.purl.startsWith("pkg:generic/") && rule.purl !== "pkg:generic/dockerfile");
   assert.equal(images.length, 25);
+  assert.equal(dockerfile.length, 2);
   assert.equal(hosts.length, 7);
-  assert.equal(all.length, images.length + hosts.length);
+  assert.equal(all.length, images.length + dockerfile.length + hosts.length);
   for (const rule of all) {
     assert.ok(rule.sources.every((source) => source.url.startsWith("https://")));
     assert.ok(!rule.sources.some((source) => /endoflife\.date/.test(source.url)), `${rule.id} cites an aggregator`);

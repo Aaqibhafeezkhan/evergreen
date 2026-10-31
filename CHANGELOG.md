@@ -3,6 +3,9 @@
 ## Unreleased
 
 - Add `evergreen inventory` and its host operating systems importer: read `/etc/os-release` from one host or a multi-host bundle and report end-of-life Ubuntu, Debian, RHEL, CentOS, Amazon Linux, Alpine, and SLES releases with the line each version came from. It reads only the files given and calls no cloud API. (#1879)
+- Add `evergreen drift`: report every runtime version a repository states, with its exact file and line, and exit `1` when they disagree; `--align <release>` prints a patch that never writes a file. The Go collector reads go.mod and go.work toolchains and `go` directives, `.go-version`, `.tool-versions`, Dockerfile images, `actions/setup-go` inputs, and GitLab, CircleCI, and Azure Pipelines images. (#1839)
+- Detect and rewrite deprecated Dockerfile `MAINTAINER` instructions and the legacy `ENV key value` form, with codemod refusals for values that cannot be quoted safely. (#1834)
+- Add a Terraform codemod for interpolation-only strings and the `list()` and `map()` functions removed in Terraform 0.15: two registry rules with upgrade-guide sources, exact detection that skips heredocs, type constraints, and strings with literal text, and patches that refuse multiline calls, invalid argument counts, expression map keys, block labels, and generated or `.terraform/` files. (#1835)
 - Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
 - Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)
 - Add the Composer analyzer to `upgrade-check`: it reads `require.php` constraints in `composer.lock` and `composer.json` and reports blockers, dev warnings, and unknowns with exact evidence and line numbers. (#1865)
@@ -11,6 +14,9 @@
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
+- Add a codemod that rewrites the exact Node.js API renames `os.tmpDir`, `path._makeLong`, `async_hooks.currentId`, `async_hooks.triggerId`, and `crypto.Hash`/`crypto.Hmac` called without `new`, refusing every other shape with a reason. (#1827)
+- Add a codemod that rewrites the removed `imp.reload`, `imp.new_module`, `imp.get_magic`, `imp.get_tag`, `imp.cache_from_source`, and `imp.source_from_cache` to their `importlib`, `types`, and `sys` equivalents, and drops `import imp` when no use remains. (#1830)
+- Add `evergreen forecast --svg`, with `--animate` to grow a bar from today to each event in date order and pulse the today marker twice, for a README or a slide. (#1853)
 - Add a findings treemap to the `--format html` report: directories and files are sized by severity-weighted finding count, colored by the highest severity, and link to that file's findings. (#1851)
 - Add a codemod that rewrites the Node.js `Buffer` constructor to `Buffer.from` and `Buffer.alloc`, and `SlowBuffer` to `Buffer.allocUnsafeSlow`, refusing arguments whose kind is not visible. (#1828)
 

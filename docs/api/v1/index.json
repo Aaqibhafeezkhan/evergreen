@@ -1,5 +1,5 @@
 {
-  "latestReview": "2026-10-30",
+  "latestReview": "2026-10-31",
   "products": [
     {
       "ecosystems": [
@@ -519,22 +519,6 @@
       "type": "gem"
     },
     {
-      "earliestDeadline": "2026-04-01",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-alpine",
-      "latestReview": "2026-10-30",
-      "name": "alpine",
-      "path": "products/generic-alpine.json",
-      "purl": "pkg:generic/alpine",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2025-11-26",
       "ecosystems": [
         "terraform"
@@ -549,22 +533,6 @@
       "path": "products/generic-amazon-eks.json",
       "purl": "pkg:generic/amazon-eks",
       "rules": 4,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-06-30",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-amzn",
-      "latestReview": "2026-10-30",
-      "name": "amzn",
-      "path": "products/generic-amzn.json",
-      "purl": "pkg:generic/amzn",
-      "rules": 1,
       "type": "generic"
     },
     {
@@ -805,22 +773,6 @@
       "type": "generic"
     },
     {
-      "earliestDeadline": "2024-06-30",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-centos",
-      "latestReview": "2026-10-30",
-      "name": "centos",
-      "path": "products/generic-centos.json",
-      "purl": "pkg:generic/centos",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2024-11-06",
       "ecosystems": [
         "cpp"
@@ -905,22 +857,6 @@
       "type": "generic"
     },
     {
-      "earliestDeadline": "2026-08-31",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-debian",
-      "latestReview": "2026-10-30",
-      "name": "debian",
-      "path": "products/generic-debian.json",
-      "purl": "pkg:generic/debian",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2020-05-13",
       "ecosystems": [
         "deno"
@@ -933,6 +869,21 @@
       "name": "deno",
       "path": "products/generic-deno.json",
       "purl": "pkg:generic/deno",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-dockerfile",
+      "latestReview": "2026-10-31",
+      "name": "dockerfile",
+      "path": "products/generic-dockerfile.json",
+      "purl": "pkg:generic/dockerfile",
       "rules": 2,
       "type": "generic"
     },
@@ -1965,22 +1916,6 @@
       "type": "generic"
     },
     {
-      "earliestDeadline": "2024-06-30",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-rhel",
-      "latestReview": "2026-10-30",
-      "name": "rhel",
-      "path": "products/generic-rhel.json",
-      "purl": "pkg:generic/rhel",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2015-02-23",
       "ecosystems": [
         "ruby"
@@ -2046,51 +1981,21 @@
       "type": "generic"
     },
     {
-      "earliestDeadline": "2025-12-31",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-sles",
-      "latestReview": "2026-10-30",
-      "name": "sles",
-      "path": "products/generic-sles.json",
-      "purl": "pkg:generic/sles",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2025-05-14",
       "ecosystems": [
         "terraform"
       ],
       "events": [
-        "end-of-support"
+        "deprecated",
+        "end-of-support",
+        "removed"
       ],
       "id": "generic-terraform",
-      "latestReview": "2026-10-30",
+      "latestReview": "2026-10-31",
       "name": "terraform",
       "path": "products/generic-terraform.json",
       "purl": "pkg:generic/terraform",
-      "rules": 6,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-05-31",
-      "ecosystems": [
-        "container"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-ubuntu",
-      "latestReview": "2026-10-30",
-      "name": "ubuntu",
-      "path": "products/generic-ubuntu.json",
-      "purl": "pkg:generic/ubuntu",
-      "rules": 1,
+      "rules": 8,
       "type": "generic"
     },
     {
@@ -4551,7 +4456,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 532,
+  "rules": 529,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -4580,8 +4485,8 @@
     },
     {
       "path": "types/generic.json",
-      "products": 95,
-      "rules": 302,
+      "products": 89,
+      "rules": 299,
       "type": "generic"
     },
     {

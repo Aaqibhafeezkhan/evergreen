@@ -1,0 +1,8 @@
+trigger: none
+
+jobs:
+  - job: test
+    container:
+      image: golang:1.22.10
+    steps:
+      - script: go test ./...

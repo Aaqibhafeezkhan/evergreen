@@ -68,6 +68,7 @@
     "!examples/demo",
     "!examples/gallery",
     "!examples/drift",
+    "!examples/upgrade",
     "!registry/sources.lock.json",
     "!schemas/vendor",
     "!**/*.map",

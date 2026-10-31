@@ -130,6 +130,7 @@
   "https://arminazimi.github.io/evergreen/i18n/fa/README.html",
   "https://arminazimi.github.io/evergreen/IMPORTERS.html",
   "https://arminazimi.github.io/evergreen/INSTALL.html",
+  "https://arminazimi.github.io/evergreen/INVENTORY.html",
   "https://arminazimi.github.io/evergreen/llms-full.txt",
   "https://arminazimi.github.io/evergreen/llms.txt",
   "https://arminazimi.github.io/evergreen/lookup.html",
@@ -687,6 +688,7 @@
   "https://arminazimi.github.io/evergreen/rules/terraform.gke.end-of-support-1.33.html",
   "https://arminazimi.github.io/evergreen/rules/terraform.syntax.interpolation-only.html",
   "https://arminazimi.github.io/evergreen/SHARE_REPORT.html",
+  "https://arminazimi.github.io/evergreen/SHOWCASE.html",
   "https://arminazimi.github.io/evergreen/SITE_STACK.html",
   "https://arminazimi.github.io/evergreen/sitemap.xml",
   "https://arminazimi.github.io/evergreen/STANDARDS.html",
@@ -696,5 +698,6 @@
   "https://arminazimi.github.io/evergreen/SUPPORT.html",
   "https://arminazimi.github.io/evergreen/TERMS.html",
   "https://arminazimi.github.io/evergreen/THREAT_MODEL.html",
+  "https://arminazimi.github.io/evergreen/UPGRADE_CHECK.html",
   "https://arminazimi.github.io/evergreen/VALIDATION.html"
 ]

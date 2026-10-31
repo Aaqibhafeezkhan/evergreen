@@ -57,7 +57,7 @@
     {
       "id": "check_upgrade",
       "name": "Check upgrade",
-      "description": "Say whether a repository can move to a target runtime release, using repository files only. unknown is not a statement that the upgrade is safe.",
+      "description": "Answer from repository files whether a project can move to a target runtime, with exact evidence. unknown means no evidence, not safety.",
       "tags": ["upgrade", "runtime", "readiness", "mcp"]
     },
     {

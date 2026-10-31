@@ -1,13 +1,13 @@
-import process from "node:process";
+import { stat } from "node:fs/promises";
 import { resolve } from "node:path";
+import process from "node:process";
 
 import { checkUpgrade, parseUpgradeTarget } from "./index.js";
 import type { UpgradeIssue, UpgradeReport } from "./types.js";
 
-export const UPGRADE_CHECK_USAGE = "Usage: evergreen upgrade-check --to <runtime@version> [path] [--json]";
+const USAGE = "Usage: evergreen upgrade-check --to <runtime@version> [path] [--json]";
 
-/** Printed for every `unknown` verdict so a reader never mistakes missing evidence for a safe upgrade. */
-export const UNKNOWN_VERDICT_NOTE =
+const UNKNOWN_VERDICT =
   "Evergreen found no evidence for this runtime in this repository. This is not a statement that the upgrade is safe.";
 
 /** One issue as `path:line  subject  reason  [evidence]`. */
@@ -16,46 +16,55 @@ export function renderUpgradeIssue(issue: UpgradeIssue): string {
   return `${location}  ${issue.subject}  ${issue.reason}  [${issue.evidence.kind}: ${issue.evidence.value}]`;
 }
 
-/** The verdict first, then blockers, warnings, and unknowns. */
-export function renderUpgradeText(report: UpgradeReport): string {
-  const lines = [`Verdict: ${report.verdict}`];
-  if (report.verdict === "unknown") lines.push(UNKNOWN_VERDICT_NOTE);
-  for (const [level, heading] of [["blocker", "Blockers"], ["warning", "Warnings"], ["unknown", "Unknown"]] as const) {
-    const issues = report.issues.filter((issue) => issue.level === level);
-    if (issues.length === 0) continue;
-    lines.push("", `${heading}:`, ...issues.map(renderUpgradeIssue));
-  }
+/** The verdict line first, then blockers, warnings, and unknowns. */
+export function renderUpgradeReport(report: UpgradeReport): string {
+  const counts = { blocker: 0, warning: 0, unknown: 0 };
+  for (const issue of report.issues) counts[issue.level] += 1;
+  const lines = [
+    `${report.target.runtime}@${report.target.version}: ${report.verdict} (${counts.blocker} blockers, ${counts.warning} warnings, ${counts.unknown} unknown)`,
+  ];
+  if (report.verdict === "unknown") lines.push(UNKNOWN_VERDICT);
+  for (const issue of report.issues) lines.push(renderUpgradeIssue(issue));
   return lines.join("\n");
 }
 
-function usageError(message: string): number {
-  process.stderr.write(`${message}\n${UPGRADE_CHECK_USAGE}\n`);
-  return 2;
+/** `evergreen upgrade-check --to <runtime@version> [path] [--json]`. Exit `1` when blocked, `2` for bad input. */
+export async function upgradeCheck(args: string[]): Promise<number> {
+  let json = false;
+  let targetText: string | undefined;
+  let path: string | undefined;
+  for (let index = 0; index < args.length; index += 1) {
+    const argument = args[index]!;
+    if (argument === "--json") {
+      json = true;
+      continue;
+    }
+    if (argument === "--to") {
+      const value = args[index + 1];
+      if (value === undefined || value.startsWith("-")) return usage();
+      targetText = value;
+      index += 1;
+      continue;
+    }
+    if (argument.startsWith("-")) return usage();
+    if (path !== undefined) return usage();
+    path = argument;
+  }
+  const target = targetText === undefined ? undefined : parseUpgradeTarget(targetText);
+  if (!target) return usage();
+  const root = resolve(path ?? ".");
+  try {
+    if (!(await stat(root)).isDirectory()) return usage(`${root} is not a directory.`);
+  } catch {
+    return usage(`Cannot read ${root}.`);
+  }
+  const report = await checkUpgrade(root, target);
+  process.stdout.write(`${json ? JSON.stringify(report, null, 2) : renderUpgradeReport(report)}\n`);
+  return report.verdict === "blocked" ? 1 : 0;
 }
 
-/**
- * `evergreen upgrade-check --to <runtime@version> [path] [--json]`.
- * Exits 1 when blocked, 0 for ready and unknown, and 2 for bad input.
- */
-export async function upgradeCheckCommand(args: string[]): Promise<number> {
-  const json = args.includes("--json");
-  const toIndex = args.indexOf("--to");
-  const targetText = toIndex === -1 ? undefined : args[toIndex + 1];
-  if (toIndex !== -1 && (targetText === undefined || targetText.startsWith("-"))) {
-    return usageError("--to needs a target, for example go@1.23.");
-  }
-  if (targetText === undefined) return usageError("Missing --to, for example --to go@1.23.");
-  const target = parseUpgradeTarget(targetText);
-  if (target === undefined) return usageError(`"${targetText}" is not <runtime@version>, for example go@1.23.`);
-
-  const positional = args.filter(
-    (argument, index) => argument !== "--json" && argument !== "--to" && index !== toIndex + 1,
-  );
-  const unknownOptions = positional.filter((argument) => argument.startsWith("-"));
-  if (unknownOptions.length > 0) return usageError(`Unknown option: ${unknownOptions[0]}`);
-  if (positional.length > 1) return usageError("Too many paths.");
-
-  const report = await checkUpgrade(resolve(positional[0] ?? "."), target);
-  process.stdout.write(`${json ? JSON.stringify(report, null, 2) : renderUpgradeText(report)}\n`);
-  return report.verdict === "blocked" ? 1 : 0;
+function usage(message?: string): number {
+  if (message) process.stderr.write(`${message}\n`);
+  process.stderr.write(`${USAGE}\n`);
+  return 2;
 }

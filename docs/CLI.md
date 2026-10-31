@@ -12,7 +12,7 @@ Every command runs locally. Scans read repository files and bundled lifecycle da
 | `-v`, `--version` | Print the package version and exit `0`. |
 | `--debug` | On an unexpected failure (`internal`, exit `5`), print the stack trace to stderr. |
 | `--json` | Print a machine-readable document where the command supports one. Same as `--format json` for `scan`, `check`, and `forecast`. |
-| `--format <name>` | Choose the output format. `scan` accepts all twelve formats below; `check` accepts `text` and `json`; `rollup` accepts `json` and `html`. |
+| `--format <name>` | Choose the output format. `scan` accepts all thirteen formats below; `forecast` accepts `text`, `json`, and `mermaid`; `check` accepts `text` and `json`; `rollup` accepts `json` and `html`. |
 | `--data-version <version>` | Pin the lifecycle data for this run, for example `2026.10.01` or `bundled`. Same as `EVERGREEN_DATA_VERSION`. Pinned data is read from disk; nothing is downloaded. |
 | `--no-cache` | Bypass the scan cache and re-read every file. Available on `scan`. Same as `EVERGREEN_NO_CACHE=1`. |
 
@@ -64,11 +64,14 @@ The baseline, date, and ignore options also apply to `explain`, `context`, and `
 | `slack` | Slack incoming-webhook payload. |
 | `teams` | Microsoft Teams Adaptive Card. |
 | `webhook` | Generic JSON payload with severity counts and every finding. |
+| `mermaid` | Fenced Mermaid Gantt chart of support windows, for READMEs, issues, and pull request comments. |
+
+The `mermaid` format prints a fenced `mermaid` block that GitHub renders natively. Each section is an ecosystem and each bar runs from the observation day (`--as-of`, or today) to the deadline. A subject that has already ended is a `crit` milestone at its deadline; one that ends within 30 days is a `crit` bar. A `today` milestone follows `--as-of`. The chart draws at most 40 bars; a final line counts the rest, and `--format json` still lists every finding. [Showcase](SHOWCASE.md#mermaid-support-windows) has a complete example.
 
 ### `forecast`
 
 ```bash
-evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json]
+evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]
 ```
 
 Lists what reaches end of life next, grouped by month, from the current scan.
@@ -77,7 +80,8 @@ Lists what reaches end of life next, grouped by month, from the current scan.
 | --- | --- |
 | `--months <n>` | How many months ahead to look. Whole number from `1` to `36`; default `12`. |
 | `--as-of <YYYY-MM-DD>` | Treat this date as today. |
-| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json`. |
+| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--format mermaid`. |
+| `--format mermaid` | Print a fenced Mermaid Gantt chart of the dated events, grouped by ecosystem. |
 | `--json` | Print the forecast document. |
 
 ### `status-card`
@@ -110,15 +114,15 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 evergreen upgrade-check --to <runtime@version> [path] [--json]
 ```
 
-Answers offline, from files already in the repository, whether the project can move to that runtime release. Each issue names the exact lockfile entry, manifest field, or lifecycle rule behind it. It does not install anything, run project commands, or use the network.
+Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
 
 | Flag | What it does |
 | --- | --- |
-| `--to <runtime@version>` | Target to judge, for example `go@1.23` or `nodejs@22`. Required. |
-| `[path]` | Repository path. Default `.`. |
-| `--json` | Print the `evergreen.upgrade.v1` report. |
+| `--to <runtime@version>` | Required. Target runtime and release, for example `php@8.4` or `nodejs@22`. `node`, `py`, and `golang` are accepted as runtime aliases. |
+| `[path]` | Repository root, default `.`. |
+| `--json` | Print the `evergreen.upgrade.v1` document that conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
 
-It exits `1` when a blocker exists, `0` for `ready` and `unknown`, and `2` for bad input. `unknown` means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. See [Upgrade checks](UPGRADE_CHECK.md).
+The text output starts with the verdict, then lists every blocker, warning, and unknown as `path:line  subject  reason  [evidence]`. Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. [Upgrade check](UPGRADE_CHECK.md) lists the files and fields each analyzer reads.
 
 ### `badge`
 
@@ -250,6 +254,25 @@ Summarizes the local log of dependency checks. Logging is off unless `EVERGREEN_
 | --- | --- |
 | `--file <path>` | Read another log file. Defaults to the log named by `EVERGREEN_USAGE_LOG`. |
 | `--json` | Print the summary as JSON. |
+
+## Deployed resources
+
+### `inventory`
+
+```bash
+evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
+```
+
+Reports end-of-life runtimes, images, engines, and cluster objects from the export files that cloud and cluster tools already produce, such as `kubectl get -o json` or `terraform show -json`. Evergreen never calls a provider API: you run the export command, and Evergreen reads the file. Each result names the importer, the file, and the JSON Pointer to the exact version value the claim rests on.
+
+A file no importer recognizes is listed, and the run exits `2`, after the recognized files are still reported.
+
+| Flag | What it does |
+| --- | --- |
+| `--format auto\|<importer-id>` | Read the files with one importer instead of auto-detection. Default `auto`. |
+| `--json` | Print the `evergreen.inventory.v1` report. |
+| `--fail-on <severity\|none>` | Exit `1` when an affected result is at or above the severity. Default: the config's `failOn`, else `high`. |
+| `--redact` | Replace every resource name with the first 12 hex characters of its SHA-256. |
 
 ## Integrations
 

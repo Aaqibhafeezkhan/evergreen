@@ -62,7 +62,7 @@
     },
     {
       "name": "check_upgrade",
-      "description": "Answer whether a local repository can move to a target runtime release from manifests and lockfiles only. unknown is not a statement that the upgrade is safe."
+      "description": "Answer from repository files whether a project can move to a target runtime. An unknown verdict means no evidence was found, not that the upgrade is safe."
     },
     {
       "name": "forecast_repository",

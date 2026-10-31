@@ -176,7 +176,7 @@ test("a repository without go.mod is not applicable", async () => {
 test("the CLI exits 1 for a blocker, 0 otherwise, and prints the exact evidence", async () => {
   const blocked = await cli("upgrade-check", "--to", "go@1.22", join(fixtures, "below-vendored"));
   assert.equal(blocked.code, 1);
-  assert.match(blocked.stdout, /^Verdict: blocked/);
+  assert.match(blocked.stdout, /^go@1\.22: blocked/);
   assert.match(
     blocked.stdout,
     /vendor\/modules\.txt:2 {2}example\.com\/lib@v1\.4\.0 {2}The target Go 1\.22 is below Go 1\.23, which example\.com\/lib@v1\.4\.0 declares in vendor\/modules\.txt\. {2}\[lockfile: ## explicit; go 1\.23\]/,

@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { completable, fromJsonSchema, McpServer, ResourceNotFoundError, ResourceTemplate } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -365,22 +366,26 @@ export function createEvergreenMcpServer(
     {
       title: "Check upgrade",
       description:
-        "Answer whether a local repository can move to a target runtime release, using only files already in the repository: manifests and lockfiles, no network, no commands. Pass a target such as go@1.23 or nodejs@22. Returns evergreen.upgrade.v1 with a verdict (ready, blocked, or unknown), the analyzers that ran, and each blocker, warning, or unknown with its exact evidence. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
+        "Answer from files already in the repository whether a project can move to a target runtime, without running anything or using the network. Pass target as runtime@version, for example php@8.4. Returns evergreen.upgrade.v1: the verdict, the analyzers that applied, and every blocker, warning, and unknown with its path, line, and the exact constraint it read. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
       inputSchema: z.object({
-        ...repositoryInput,
+        path: z
+          .string()
+          .min(1)
+          .default(".")
+          .describe("Local path to the repository. Defaults to the server working directory."),
         target: z
           .string()
           .min(1)
-          .describe("Target runtime and release, for example go@1.23 or nodejs@22."),
+          .describe("Runtime and release to move to, as runtime@version, for example php@8.4 or nodejs@22."),
       }),
       outputSchema: outputSchema("check_upgrade"),
       annotations: MCP_TOOL_ANNOTATIONS,
     },
-    async ({ repository_path, target }) => {
+    async ({ path, target }) => {
       try {
         const parsed = parseUpgradeTarget(target);
-        if (parsed === undefined) throw new Error(`"${target}" is not <runtime@version>, for example go@1.23.`);
-        return success(await checkUpgrade(repository_path, parsed));
+        if (!parsed) return failure(new Error(`target must be <runtime>@<version>, for example php@8.4 (got "${target}").`));
+        return success(await checkUpgrade(resolve(path), parsed));
       } catch (error) {
         return failure(error);
       }

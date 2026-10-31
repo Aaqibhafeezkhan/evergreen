@@ -1,7 +1,7 @@
 import { isInterpolated, parseImageReference } from "./parse-image.js";
 
 /**
- * Pure, bounded parser for the `FROM` and literal runtime install instructions Evergreen reads from
+ * Pure, bounded parser for the `FROM`, literal runtime install, and legacy syntax instructions Evergreen reads from
  * Dockerfile, *.Dockerfile, and Containerfile.
  *
  * Literal, well-formed image references are returned as `image` declarations. References
@@ -9,6 +9,10 @@ import { isInterpolated, parseImageReference } from "./parse-image.js";
  * detector can report them as unclassified; they are never expanded. `scratch`,
  * references to earlier stages, comments, and unsupported `RUN` commands produce nothing. The parser
  * never evaluates contents or executes tools.
+ *
+ * A `MAINTAINER` instruction and the space-separated `ENV key value` form are returned as `maintainer` and
+ * `legacy-env` declarations, including when they appear inside an `ONBUILD` trigger. The parser keeps the
+ * text as written so a fixer can decide whether it can be quoted safely.
  */
 
 export const MAXIMUM_INPUT_BYTES = 1024 * 1024;
@@ -35,7 +39,25 @@ export interface DockerfileRuntimeDeclaration {
   line: number;
 }
 
-export type DockerfileDeclaration = DockerfileImageDeclaration | DockerfileDynamicDeclaration | DockerfileRuntimeDeclaration;
+export interface DockerfileMaintainerDeclaration {
+  kind: "maintainer";
+  value: string;
+  line: number;
+}
+
+export interface DockerfileLegacyEnvDeclaration {
+  kind: "legacy-env";
+  key: string;
+  value: string;
+  line: number;
+}
+
+export type DockerfileDeclaration =
+  | DockerfileImageDeclaration
+  | DockerfileDynamicDeclaration
+  | DockerfileRuntimeDeclaration
+  | DockerfileMaintainerDeclaration
+  | DockerfileLegacyEnvDeclaration;
 
 interface LogicalLine {
   text: string;
@@ -129,7 +151,26 @@ function runtimePins(logical: LogicalLine): DockerfileRuntimeDeclaration[] {
   return declarations;
 }
 
-/** Parse `FROM` and supported `RUN` instructions without file, network, or process I/O. */
+const LEGACY_INSTRUCTION = /^(?:ONBUILD\s+)?(MAINTAINER|ENV)\s+([\s\S]+)$/i;
+
+/** The deprecated `MAINTAINER` text and the legacy `ENV key value` form, including inside an `ONBUILD` trigger. */
+function legacyInstructions(logical: LogicalLine): Array<DockerfileMaintainerDeclaration | DockerfileLegacyEnvDeclaration> {
+  const match = LEGACY_INSTRUCTION.exec(logical.text);
+  if (!match) return [];
+  const [, instruction, rest] = match;
+  if (instruction!.toUpperCase() === "MAINTAINER") {
+    const value = rest!.trim();
+    return value.length === 0 ? [] : [{ kind: "maintainer", value, line: logical.line }];
+  }
+  // Docker treats the form as legacy only when the first word is not a key=value assignment.
+  const words = rest!.trim().split(/\s+/);
+  const key = words.shift();
+  const value = words.join(" ");
+  if (key === undefined || key.includes("=") || value.length === 0) return [];
+  return [{ kind: "legacy-env", key, value, line: logical.line }];
+}
+
+/** Parse `FROM`, supported `RUN`, and deprecated syntax instructions without file, network, or process I/O. */
 export function parseDockerfile(contents: string): DockerfileDeclaration[] {
   if (Buffer.byteLength(contents, "utf8") > MAXIMUM_INPUT_BYTES) return [];
 
@@ -137,7 +178,7 @@ export function parseDockerfile(contents: string): DockerfileDeclaration[] {
   const stages = new Set<string>();
   for (const logical of logicalLines(contents)) {
     const { text, line } = logical;
-    declarations.push(...runtimePins(logical));
+    declarations.push(...runtimePins(logical), ...legacyInstructions(logical));
     const match = text.match(/^FROM\s+(.*)$/i);
     if (!match) continue;
     const words = match[1]!.split(/\s+/).filter((word) => word.length > 0);

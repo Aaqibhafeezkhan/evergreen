@@ -164,7 +164,7 @@ h1 {
       <p class="lede">
         Type a package or runtime name to find its reviewed lifecycle status.
         Results link to each rule's reference page and its authoritative sources.
-        This page embeds 667 rules and makes no network requests after it loads.
+        This page embeds 599 rules and makes no network requests after it loads.
       </p>
     </header>
     <main id="main">
@@ -180,7 +180,7 @@ h1 {
           aria-describedby="status"
         />
       </form>
-      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 667 lifecycle rules.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 599 lifecycle rules.</p>
       <div id="results" class="results" aria-live="polite"></div>
       <noscript>
         <p class="status">
@@ -538,6 +538,48 @@ h1 {
       {
         "title": "Debian Releases",
         "url": "https://www.debian.org/releases/"
+      }
+    ]
+  },
+  {
+    "id": "container.dockerfile.legacy-env-format",
+    "title": "The Dockerfile legacy \"ENV key value\" form is deprecated",
+    "summary": "Docker's LegacyKeyValueFormat build check flags the space-separated ENV form and recommends writing each assignment as key=value.",
+    "event": "deprecated",
+    "severity": "low",
+    "ecosystem": "container",
+    "purl": "pkg:generic/dockerfile",
+    "vers": "vers:semver/*",
+    "replacement": "The ENV key=value form, with the value quoted when it contains spaces",
+    "sources": [
+      {
+        "title": "Docker build check: LegacyKeyValueFormat",
+        "url": "https://docs.docker.com/reference/build-checks/legacy-key-value-format/"
+      },
+      {
+        "title": "Dockerfile reference: ENV",
+        "url": "https://docs.docker.com/reference/dockerfile/#env"
+      }
+    ]
+  },
+  {
+    "id": "container.dockerfile.maintainer",
+    "title": "The Dockerfile MAINTAINER instruction is deprecated",
+    "summary": "The Dockerfile reference marks MAINTAINER as deprecated because author metadata belongs in the org.opencontainers.image.authors label.",
+    "event": "deprecated",
+    "severity": "low",
+    "ecosystem": "container",
+    "purl": "pkg:generic/dockerfile",
+    "vers": "vers:semver/*",
+    "replacement": "A LABEL org.opencontainers.image.authors instruction carrying the same author text",
+    "sources": [
+      {
+        "title": "Dockerfile reference: MAINTAINER (deprecated)",
+        "url": "https://docs.docker.com/reference/dockerfile/#maintainer-deprecated"
+      },
+      {
+        "title": "Docker build check: MaintainerDeprecated",
+        "url": "https://docs.docker.com/reference/build-checks/maintainer-deprecated/"
       }
     ]
   },
@@ -4226,115 +4268,6 @@ h1 {
       {
         "title": "Kubernetes v1.32: Penelope (release announcement, 2024-12-11)",
         "url": "https://kubernetes.io/blog/2024/12/11/kubernetes-v1-32-release/"
-      }
-    ]
-  },
-  {
-    "id": "kubernetes.google-gke.1.29-and-older",
-    "title": "GKE 1.29 and earlier clusters are no longer supported",
-    "summary": "The GKE release schedule states that GKE 1.29 and earlier have reached end of support and are no longer supported.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "kubernetes",
-    "purl": "pkg:generic/google-gke",
-    "vers": "vers:semver/\u003c1.30.0",
-    "replacement": "GKE 1.35 or later",
-    "sources": [
-      {
-        "title": "GKE versioning and support",
-        "url": "https://cloud.google.com/kubernetes-engine/versioning"
-      },
-      {
-        "title": "GKE release schedule",
-        "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
-      }
-    ]
-  },
-  {
-    "id": "kubernetes.google-gke.1.30",
-    "title": "GKE 1.30 cluster is past end of extended support",
-    "summary": "The GKE release schedule lists GKE 1.30 with end of standard support on 2025-09-30 and end of extended support on 2026-07-30. GKE no longer provides patches for this minor version.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "kubernetes",
-    "purl": "pkg:generic/google-gke",
-    "vers": "vers:semver/>=1.30.0|\u003c1.31.0",
-    "deadline": "2026-07-30",
-    "replacement": "GKE 1.35 or later",
-    "sources": [
-      {
-        "title": "GKE versioning and support",
-        "url": "https://cloud.google.com/kubernetes-engine/versioning"
-      },
-      {
-        "title": "GKE release schedule",
-        "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
-      }
-    ]
-  },
-  {
-    "id": "kubernetes.google-gke.1.31",
-    "title": "GKE 1.31 cluster is past end of extended support",
-    "summary": "The GKE release schedule lists GKE 1.31 with end of standard support on 2026-01-16 and end of extended support on 2026-10-22. GKE no longer provides patches for this minor version.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "kubernetes",
-    "purl": "pkg:generic/google-gke",
-    "vers": "vers:semver/>=1.31.0|\u003c1.32.0",
-    "deadline": "2026-10-22",
-    "replacement": "GKE 1.35 or later",
-    "sources": [
-      {
-        "title": "GKE versioning and support",
-        "url": "https://cloud.google.com/kubernetes-engine/versioning"
-      },
-      {
-        "title": "GKE release schedule",
-        "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
-      }
-    ]
-  },
-  {
-    "id": "kubernetes.google-gke.1.32",
-    "title": "GKE 1.32 cluster is past end of standard support",
-    "summary": "The GKE release schedule lists GKE 1.32 with end of standard support on 2026-04-27 and end of extended support on 2027-02-11. A cluster outside the Extended channel no longer receives patches for this minor version.",
-    "event": "end-of-support",
-    "severity": "medium",
-    "ecosystem": "kubernetes",
-    "purl": "pkg:generic/google-gke",
-    "vers": "vers:semver/>=1.32.0|\u003c1.33.0",
-    "deadline": "2026-04-27",
-    "replacement": "GKE 1.35 or later",
-    "sources": [
-      {
-        "title": "GKE versioning and support",
-        "url": "https://cloud.google.com/kubernetes-engine/versioning"
-      },
-      {
-        "title": "GKE release schedule",
-        "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
-      }
-    ]
-  },
-  {
-    "id": "kubernetes.google-gke.1.33",
-    "title": "GKE 1.33 cluster is past end of standard support",
-    "summary": "The GKE release schedule lists GKE 1.33 with end of standard support on 2026-08-12 and end of extended support on 2027-06-12. A cluster outside the Extended channel no longer receives patches for this minor version.",
-    "event": "end-of-support",
-    "severity": "medium",
-    "ecosystem": "kubernetes",
-    "purl": "pkg:generic/google-gke",
-    "vers": "vers:semver/>=1.33.0|\u003c1.34.0",
-    "deadline": "2026-08-12",
-    "replacement": "GKE 1.35 or later",
-    "sources": [
-      {
-        "title": "GKE versioning and support",
-        "url": "https://cloud.google.com/kubernetes-engine/versioning"
-      },
-      {
-        "title": "GKE release schedule",
-        "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
       }
     ]
   },
@@ -11569,941 +11502,6 @@ h1 {
     ]
   },
   {
-    "id": "serverless.google-appengine-runtime.go111",
-    "title": "App Engine Go 1.11 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.11 (runtime ID go111) with end of support on 2024-01-30, deprecation on 2026-01-31, and decommission on 2027-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go111",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go112",
-    "title": "App Engine Go 1.12 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.12 (runtime ID go112) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go112",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go113",
-    "title": "App Engine Go 1.13 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.13 (runtime ID go113) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go113",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go114",
-    "title": "App Engine Go 1.14 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.14 (runtime ID go114) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go114",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go115",
-    "title": "App Engine Go 1.15 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.15 (runtime ID go115) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go115",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go116",
-    "title": "App Engine Go 1.16 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.16 (runtime ID go116) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go116",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go118",
-    "title": "App Engine Go 1.18 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.18 (runtime ID go118) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go118",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go119",
-    "title": "App Engine Go 1.19 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.19 (runtime ID go119) with end of support on 2024-04-30 and deprecation on 2025-04-30. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go119",
-    "vers": "vers:semver/*",
-    "deadline": "2024-04-30",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go120",
-    "title": "App Engine Go 1.20 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.20 (runtime ID go120) with end of support on 2024-11-01 and deprecation on 2025-11-01. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go120",
-    "vers": "vers:semver/*",
-    "deadline": "2024-11-01",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go121",
-    "title": "App Engine Go 1.21 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.21 (runtime ID go121) with end of support on 2026-03-03 and deprecation on 2027-03-03. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go121",
-    "vers": "vers:semver/*",
-    "deadline": "2026-03-03",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go122",
-    "title": "App Engine Go 1.22 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.22 (runtime ID go122) with end of support on 2026-07-28 and deprecation on 2027-07-28. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go122",
-    "vers": "vers:semver/*",
-    "deadline": "2026-07-28",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.go123",
-    "title": "App Engine Go 1.23 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Go 1.23 (runtime ID go123) with end of support on 2026-08-21 and deprecation on 2027-08-21. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/go123",
-    "vers": "vers:semver/*",
-    "deadline": "2026-08-21",
-    "replacement": "go124 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.java11",
-    "title": "App Engine Java 11 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Java 11 (runtime ID java11) with end of support on 2024-10-31 and deprecation on 2025-10-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/java11",
-    "vers": "vers:semver/*",
-    "deadline": "2024-10-31",
-    "replacement": "java21 or java25",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.java8",
-    "title": "App Engine Java 8 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Java 8 (runtime ID java8) with end of support on 2024-01-31, deprecation on 2026-01-31, and decommission on 2027-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/java8",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-31",
-    "replacement": "java21 or java25",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs10",
-    "title": "App Engine Node.js 10 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 10 (runtime ID nodejs10) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs10",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs12",
-    "title": "App Engine Node.js 12 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 12 (runtime ID nodejs12) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs12",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs14",
-    "title": "App Engine Node.js 14 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 14 (runtime ID nodejs14) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs14",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs16",
-    "title": "App Engine Node.js 16 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 16 (runtime ID nodejs16) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs16",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs18",
-    "title": "App Engine Node.js 18 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 18 (runtime ID nodejs18) with end of support on 2025-04-30 and deprecation on 2026-04-30. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs18",
-    "vers": "vers:semver/*",
-    "deadline": "2025-04-30",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs20",
-    "title": "App Engine Node.js 20 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 20 (runtime ID nodejs20) with end of support on 2026-04-30 and deprecation on 2027-04-30. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs20",
-    "vers": "vers:semver/*",
-    "deadline": "2026-04-30",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.nodejs8",
-    "title": "App Engine Node.js 8 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Node.js 8 (runtime ID nodejs8) with end of support on 2018-06-27 and deprecation on 2019-10-01. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/nodejs8",
-    "vers": "vers:semver/*",
-    "deadline": "2018-06-27",
-    "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.php55",
-    "title": "App Engine PHP 5.5 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists PHP 5.5 (runtime ID php55) with end of support on 2024-01-30, deprecation on 2026-01-31, and decommission on 2027-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/php55",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "php83 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.php72",
-    "title": "App Engine PHP 7.2 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists PHP 7.2 (runtime ID php72) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/php72",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "php83 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.php73",
-    "title": "App Engine PHP 7.3 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists PHP 7.3 (runtime ID php73) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/php73",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "php83 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.php74",
-    "title": "App Engine PHP 7.4 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists PHP 7.4 (runtime ID php74) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/php74",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "php83 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.php81",
-    "title": "App Engine PHP 8.1 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists PHP 8.1 (runtime ID php81) with end of support on 2025-12-31 and deprecation on 2026-12-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/php81",
-    "vers": "vers:semver/*",
-    "deadline": "2025-12-31",
-    "replacement": "php83 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.python27",
-    "title": "App Engine Python 2.7 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Python 2.7 (runtime ID python27) with end of support on 2024-01-31, deprecation on 2026-01-31, and decommission on 2027-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/python27",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-31",
-    "replacement": "python311 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.python310",
-    "title": "App Engine Python 3.10 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Python 3.10 (runtime ID python310) with end of support on 2026-10-04 and deprecation on 2027-10-01. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/python310",
-    "vers": "vers:semver/*",
-    "deadline": "2026-10-04",
-    "replacement": "python311 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.python37",
-    "title": "App Engine Python 3.7 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Python 3.7 (runtime ID python37) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/python37",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "python311 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.python38",
-    "title": "App Engine Python 3.8 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Python 3.8 (runtime ID python38) with end of support on 2024-10-14 and deprecation on 2025-10-01. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/python38",
-    "vers": "vers:semver/*",
-    "deadline": "2024-10-14",
-    "replacement": "python311 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.python39",
-    "title": "App Engine Python 3.9 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Python 3.9 (runtime ID python39) with end of support on 2025-10-05 and deprecation on 2026-10-01. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/python39",
-    "vers": "vers:semver/*",
-    "deadline": "2025-10-05",
-    "replacement": "python311 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.ruby25",
-    "title": "App Engine Ruby 2.5 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Ruby 2.5 (runtime ID ruby25) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/ruby25",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "ruby33 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.ruby26",
-    "title": "App Engine Ruby 2.6 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Ruby 2.6 (runtime ID ruby26) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/ruby26",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "ruby33 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.ruby27",
-    "title": "App Engine Ruby 2.7 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Ruby 2.7 (runtime ID ruby27) with end of support on 2024-01-30 and deprecation on 2025-01-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/ruby27",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-30",
-    "replacement": "ruby33 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.ruby30",
-    "title": "App Engine Ruby 3.0 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Ruby 3.0 (runtime ID ruby30) with end of support on 2024-03-31 and deprecation on 2025-03-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/ruby30",
-    "vers": "vers:semver/*",
-    "deadline": "2024-03-31",
-    "replacement": "ruby33 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-appengine-runtime.ruby32",
-    "title": "App Engine Ruby 3.2 runtime is past end of support",
-    "summary": "The App Engine standard environment runtime support schedule lists Ruby 3.2 (runtime ID ruby32) with end of support on 2026-03-31 and deprecation on 2027-03-31. Google no longer provides patches or support for that runtime.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-appengine-runtime/ruby32",
-    "vers": "vers:semver/*",
-    "deadline": "2026-03-31",
-    "replacement": "ruby33 or later",
-    "sources": [
-      {
-        "title": "App Engine standard environment runtime support schedule",
-        "url": "https://cloud.google.com/appengine/docs/standard/lifecycle/support-schedule"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.dotnet3",
-    "title": "Google Cloud Functions .NET Core 3 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists .NET Core 3 (runtime ID dotnet3) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/dotnet3",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "dotnet8 or dotnet10",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.dotnet6",
-    "title": "Google Cloud Functions .NET 6 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists .NET 6 (runtime ID dotnet6) as deprecated on 2024-11-12 and decommissioned on 2025-11-12. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/dotnet6",
-    "vers": "vers:semver/*",
-    "deadline": "2025-11-12",
-    "replacement": "dotnet8 or dotnet10",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go111",
-    "title": "Google Cloud Functions Go 1.11 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.11 (runtime ID go111) as deprecated on 2020-08-05 and decommissioned later. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go111",
-    "vers": "vers:semver/*",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go113",
-    "title": "Google Cloud Functions Go 1.13 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.13 (runtime ID go113) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go113",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go116",
-    "title": "Google Cloud Functions Go 1.16 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.16 (runtime ID go116) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go116",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go118",
-    "title": "Google Cloud Functions Go 1.18 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.18 (runtime ID go118) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go118",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go119",
-    "title": "Google Cloud Functions Go 1.19 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.19 (runtime ID go119) as deprecated on 2024-04-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go119",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go120",
-    "title": "Google Cloud Functions Go 1.20 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.20 (runtime ID go120) as deprecated on 2024-05-01 and decommissioned on 2025-05-01. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go120",
-    "vers": "vers:semver/*",
-    "deadline": "2025-05-01",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go121",
-    "title": "Google Cloud Functions Go 1.21 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.21 (runtime ID go121) as deprecated on 2025-09-03 and decommissioned on 2026-03-03. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go121",
-    "vers": "vers:semver/*",
-    "deadline": "2026-03-03",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go122",
-    "title": "Google Cloud Functions Go 1.22 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.22 (runtime ID go122) as deprecated on 2026-01-28 and decommissioned on 2026-07-28. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go122",
-    "vers": "vers:semver/*",
-    "deadline": "2026-07-28",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go123",
-    "title": "Google Cloud Functions Go 1.23 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.23 (runtime ID go123) as deprecated on 2026-02-21 and decommissioned on 2026-08-21. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go123",
-    "vers": "vers:semver/*",
-    "deadline": "2026-08-21",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go124",
-    "title": "Google Cloud Functions Go 1.24 runtime is deprecated",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.24 (runtime ID go124) as deprecated on 2026-09-02 and scheduled for decommission on 2027-03-02. Google no longer offers runtime support for deployments that use it.",
-    "event": "deprecated",
-    "severity": "medium",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go124",
-    "vers": "vers:semver/*",
-    "deadline": "2027-03-02",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.go125",
-    "title": "Google Cloud Functions Go 1.25 runtime is deprecated",
-    "summary": "The Cloud Run functions runtime support schedule lists Go 1.25 (runtime ID go125) as deprecated on 2026-10-01 and scheduled for decommission on 2027-04-01. Google no longer offers runtime support for deployments that use it.",
-    "event": "deprecated",
-    "severity": "medium",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/go125",
-    "vers": "vers:semver/*",
-    "deadline": "2027-04-01",
-    "replacement": "go126 or go127",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.java11",
-    "title": "Google Cloud Functions Java 11 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Java 11 (runtime ID java11) as deprecated on 2024-10-31 and decommissioned on 2025-10-31. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/java11",
-    "vers": "vers:semver/*",
-    "deadline": "2025-10-31",
-    "replacement": "java21 or java25",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs10",
-    "title": "Google Cloud Functions Node.js 10 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 10 (runtime ID nodejs10) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs10",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs12",
-    "title": "Google Cloud Functions Node.js 12 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 12 (runtime ID nodejs12) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs12",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
     "id": "serverless.google-cloud-functions.nodejs14",
     "title": "Google Cloud Functions Node.js 14 runtime is end-of-life",
     "summary": "The Google Cloud Functions runtime support schedule lists Node.js 14 (runtime ID nodejs14) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
@@ -12514,274 +11512,6 @@ h1 {
     "vers": "vers:semver/*",
     "deadline": "2025-01-30",
     "replacement": "nodejs22 or nodejs24",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs16",
-    "title": "Google Cloud Functions Node.js 16 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 16 (runtime ID nodejs16) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs16",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs18",
-    "title": "Google Cloud Functions Node.js 18 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 18 (runtime ID nodejs18) as deprecated on 2025-04-30 and decommissioned on 2025-10-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs18",
-    "vers": "vers:semver/*",
-    "deadline": "2025-10-30",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs20",
-    "title": "Google Cloud Functions Node.js 20 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 20 (runtime ID nodejs20) as deprecated on 2026-04-30 and decommissioned on 2026-10-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs20",
-    "vers": "vers:semver/*",
-    "deadline": "2026-10-30",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs6",
-    "title": "Google Cloud Functions Node.js 6 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 6 (runtime ID nodejs6) as deprecated on 2019-04-17 and decommissioned later. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs6",
-    "vers": "vers:semver/*",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.nodejs8",
-    "title": "Google Cloud Functions Node.js 8 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Node.js 8 (runtime ID nodejs8) as deprecated on 2020-06-05 and decommissioned later. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/nodejs8",
-    "vers": "vers:semver/*",
-    "replacement": "nodejs24 or nodejs26",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.php74",
-    "title": "Google Cloud Functions PHP 7.4 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists PHP 7.4 (runtime ID php74) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/php74",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "php84 or php85",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.php81",
-    "title": "Google Cloud Functions PHP 8.1 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists PHP 8.1 (runtime ID php81) as deprecated on 2025-12-31 and decommissioned on 2026-06-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/php81",
-    "vers": "vers:semver/*",
-    "deadline": "2026-06-30",
-    "replacement": "php84 or php85",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.python310",
-    "title": "Google Cloud Functions Python 3.10 runtime is deprecated",
-    "summary": "The Cloud Run functions runtime support schedule lists Python 3.10 (runtime ID python310) as deprecated on 2026-10-04 and scheduled for decommission on 2027-04-04. Google no longer offers runtime support for deployments that use it.",
-    "event": "deprecated",
-    "severity": "medium",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/python310",
-    "vers": "vers:semver/*",
-    "deadline": "2027-04-04",
-    "replacement": "python313 or python314",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.python37",
-    "title": "Google Cloud Functions Python 3.7 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Python 3.7 (runtime ID python37) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/python37",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "python313 or python314",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.python38",
-    "title": "Google Cloud Functions Python 3.8 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Python 3.8 (runtime ID python38) as deprecated on 2024-10-14 and decommissioned on 2025-10-14. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/python38",
-    "vers": "vers:semver/*",
-    "deadline": "2025-10-14",
-    "replacement": "python313 or python314",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.python39",
-    "title": "Google Cloud Functions Python 3.9 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Python 3.9 (runtime ID python39) as deprecated on 2025-10-05 and decommissioned on 2026-04-05. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/python39",
-    "vers": "vers:semver/*",
-    "deadline": "2026-04-05",
-    "replacement": "python313 or python314",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.ruby26",
-    "title": "Google Cloud Functions Ruby 2.6 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Ruby 2.6 (runtime ID ruby26) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/ruby26",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "ruby34 or ruby40",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.ruby27",
-    "title": "Google Cloud Functions Ruby 2.7 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Ruby 2.7 (runtime ID ruby27) as deprecated on 2024-01-30 and decommissioned on 2025-01-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/ruby27",
-    "vers": "vers:semver/*",
-    "deadline": "2025-01-30",
-    "replacement": "ruby34 or ruby40",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.ruby30",
-    "title": "Google Cloud Functions Ruby 3.0 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Ruby 3.0 (runtime ID ruby30) as deprecated on 2024-03-31 and decommissioned on 2025-03-31. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/ruby30",
-    "vers": "vers:semver/*",
-    "deadline": "2025-03-31",
-    "replacement": "ruby34 or ruby40",
-    "sources": [
-      {
-        "title": "Cloud Run functions runtime support",
-        "url": "https://cloud.google.com/functions/docs/runtime-support"
-      }
-    ]
-  },
-  {
-    "id": "serverless.google-cloud-functions.ruby32",
-    "title": "Google Cloud Functions Ruby 3.2 runtime is end-of-life",
-    "summary": "The Cloud Run functions runtime support schedule lists Ruby 3.2 (runtime ID ruby32) as deprecated on 2026-03-31 and decommissioned on 2026-09-30. Google no longer provides maintenance for that runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/google-cloud-functions-runtime/ruby32",
-    "vers": "vers:semver/*",
-    "deadline": "2026-09-30",
-    "replacement": "ruby34 or ruby40",
     "sources": [
       {
         "title": "Cloud Run functions runtime support",
@@ -13268,6 +11998,31 @@ h1 {
     ]
   },
   {
+    "id": "terraform.function.list-map",
+    "title": "The list() and map() functions were removed in Terraform 0.15",
+    "summary": "Terraform v0.12 replaced the list() and map() functions with first-class [ ... ] and { ... } syntax, and the v0.15 upgrade guide states that the deprecated functions were removed in v0.15. Replace list(a, b) with tolist([a, b]) and map(k, v) with tomap({ k = v }); because Terraform can usually infer the type from context, the bare [ ... ] and { ... } forms often work without the conversion. The list(string) and map(string) type constraints are different and remain valid.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "terraform",
+    "purl": "pkg:generic/terraform",
+    "vers": "vers:semver/>=0.15.0",
+    "replacement": "tolist([ ... ]) for list(), tomap({ ... }) for map()",
+    "sources": [
+      {
+        "title": "Terraform 0.15 upgrade guide: legacy configuration language features",
+        "url": "https://developer.hashicorp.com/terraform/language/v1.1.x/upgrade-guides/0-15"
+      },
+      {
+        "title": "Terraform tolist function",
+        "url": "https://developer.hashicorp.com/terraform/language/functions/tolist"
+      },
+      {
+        "title": "Terraform tomap function",
+        "url": "https://developer.hashicorp.com/terraform/language/functions/tomap"
+      }
+    ]
+  },
+  {
     "id": "terraform.gke.end-of-life-1.29-and-older",
     "title": "GKE 1.29 and earlier are no longer supported",
     "summary": "The GKE release schedule states that GKE 1.29 and earlier have reached end of support and are no longer supported.",
@@ -13373,6 +12128,31 @@ h1 {
       {
         "title": "GKE release schedule",
         "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
+      }
+    ]
+  },
+  {
+    "id": "terraform.syntax.interpolation-only",
+    "title": "Interpolation-only strings are deprecated",
+    "summary": "Terraform v0.12.14 deprecated a string whose whole value is one interpolation, such as \"${var.name}\": the same value is written as the bare expression var.name. Terraform still accepts the quoted form but recommends the bare expression for readability, and terraform fmt repairs simple examples. A string that mixes text with an interpolation, such as \"prefix-${var.name}\", is not the deprecated form and still needs its quotes.",
+    "event": "deprecated",
+    "severity": "low",
+    "ecosystem": "terraform",
+    "purl": "pkg:generic/terraform",
+    "vers": "vers:semver/>=0.12.14",
+    "replacement": "The same expression without the surrounding quotes, such as var.name",
+    "sources": [
+      {
+        "title": "hashicorp/terraform release v0.12.14",
+        "url": "https://github.com/hashicorp/terraform/releases/tag/v0.12.14"
+      },
+      {
+        "title": "Terraform 0.15 upgrade guide: legacy configuration language features",
+        "url": "https://developer.hashicorp.com/terraform/language/v1.1.x/upgrade-guides/0-15"
+      },
+      {
+        "title": "Terraform 0.12 upgrade guide: first-class expressions",
+        "url": "https://developer.hashicorp.com/terraform/language/v1.1.x/upgrade-guides/0-12"
       }
     ]
   }

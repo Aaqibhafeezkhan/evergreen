@@ -1,11 +1,27 @@
 # Codemods
 
+`evergreen fix` plans deterministic repairs for findings whose change is mechanical, and prints them as unified diffs that `git apply` accepts. It never writes a file or runs a command. A codemod applies only while the text it rewrites still matches the finding, and every finding it declines is reported as a refusal with the reason.
+
+```bash
+evergreen fix --dry-run            # print the patches
+evergreen fix --branch <name>      # apply them on a local branch and re-scan
+```
+
+## Dockerfile legacy syntax
+
+Rules `container.dockerfile.maintainer` and `container.dockerfile.legacy-env-format` are repaired by the `dockerfile-legacy` fixer.
+
+| Before | After |
+| --- | --- |
+| `MAINTAINER Evergreen Team <team@example.com>` | `LABEL org.opencontainers.image.authors="Evergreen Team <team@example.com>"` |
+| `ENV APP_HOME /opt/app` | `ENV APP_HOME="/opt/app"` |
+
+The fixer leaves an instruction alone and reports why when the value contains a double quote or a backslash, when the instruction continues on another line, when the value contains a heredoc, and when the instruction sits inside an `ONBUILD` trigger. An `ENV key=value` assignment is already in the supported form and is not reported.
+
+A worked example lives in [`examples/codemods/dockerfile-legacy`](../examples/codemods/dockerfile-legacy).
 `evergreen fix` repairs some deprecations exactly, at the lines a scan reports, and prints unified diffs that `git apply` accepts. Nothing is written unless you pass `--branch`, and no codemod uses the network or runs the scanned repository's code. A codemod rewrites a finding only when the replacement behaves identically for every input the matched shape accepts; anything else is left unchanged and listed as a refusal in `fix --json`.
-
 ## node-renames
-
 Rewrites the Node.js deprecations that are pure renames: the old name calls the same implementation. Only the member name changes; the receiver expression and the arguments are kept byte-for-byte.
-
 | Rule | Before | After |
 |---|---|---|
 | `nodejs.symbol.os.tmpdir` | `os.tmpDir()` | `os.tmpdir()` |
@@ -14,37 +30,28 @@ Rewrites the Node.js deprecations that are pure renames: the old name calls the 
 | `nodejs.symbol.async-hooks.triggerid` | `async_hooks.triggerId()` | `async_hooks.triggerAsyncId()` |
 | `nodejs.symbol.crypto.hash` | `crypto.Hash(algorithm)` called without `new` | `crypto.createHash(algorithm)` |
 | `nodejs.symbol.crypto.hmac` | `crypto.Hmac(algorithm, key)` called without `new` | `crypto.createHmac(algorithm, key)` |
-
 Each equivalence is read from the Node.js source: [`tmpDir` is `deprecate(tmpdir, …)`](https://github.com/nodejs/node/blob/v13.14.0/lib/os.js#L298), [`_makeLong` is assigned `toNamespacedPath` on both platforms](https://github.com/nodejs/node/blob/v22.23.0/lib/path.js#L1725-L1726), [`currentId` and `triggerId` are renamed to the same functions](https://github.com/nodejs/node/blob/v8.1.4/lib/async_hooks.js#L183-L193), and [`Hash`/`Hmac` called without `new` construct the same object `createHash`/`createHmac` return](https://github.com/nodejs/node/blob/v22.23.0/lib/internal/crypto/hash.js#L88-L163).
-
 Two candidates are not covered because they are not exact aliases. `os.getNetworkInterfaces()` returns the native flat array while `os.networkInterfaces()` builds the keyed object, and `module.createRequire()` validates its argument and decodes non-absolute strings as file URLs while `module.createRequireFromPath()` accepts any path.
-
 Refused, with the reason in `fix --json`:
-
 - a call through a local binding, such as a destructured or aliased import (`const { tmpDir } = require("os"); tmpDir()`);
 - an optional call (`os.tmpDir?.()` or `os?.tmpDir()`);
 - a computed member access (`os["tmpDir"]()`);
 - a constructor call such as `new crypto.Hash(...)`, which is not the call form the rename covers;
 `evergreen fix` prints deterministic patches for findings whose repair is purely syntactic. It never writes a file, never runs a command, and never uses the network; the output is a unified diff that `git apply` accepts.
-```bash
 evergreen scan .
 evergreen fix . | git apply --check
 evergreen fix . | git apply
-```
 A fixer rewrites only the exact form its rule names. A finding it cannot repair without guessing is left in place and reported as a refusal with the reason, so a patch never hides a change the tool did not understand.
 ## Terraform legacy syntax
 Two Terraform language forms have a one-to-one rewrite:
 | Finding | Rewrite |
-| --- | --- |
 | `terraform.syntax.interpolation-only` | `"${var.name}"` becomes `var.name` |
 | `terraform.function.list-map` | `list(a, b)` becomes `tolist([a, b])`; `map(k, v)` becomes `tomap({ k = v })` |
 Interpolation-only strings were deprecated in Terraform v0.12.14. Terraform still accepts them, but recommends the bare expression. The `list()` and `map()` functions were removed in Terraform v0.15, so a configuration that still calls them fails to validate on 0.15 and later.
-```bash
 evergreen scan . --only terraform
 evergreen fix . | git apply
 terraform init -backend=false && terraform validate
 terraform plan
-```
 ### What is detected
 - A quoted string whose entire value is one `${ ... }` interpolation, in a value, object key, or block label.
 - A value call to `list()` or `map()`, including one inside an interpolation expression.
@@ -71,14 +78,12 @@ Each needed import is added on the line after `import imp` when it is not alread
 import imp
 module = imp.reload(existing)
 magic = imp.get_magic()
-```
 becomes
 ```python
 import importlib
 import importlib.util
 module = importlib.reload(existing)
 magic = importlib.util.MAGIC_NUMBER
-```
 - `imp.find_module`, `imp.load_module`, `imp.load_source`, and `imp.get_suffixes`, which have no exact equivalent;
 - a keyword argument the replacement does not accept, such as `imp.reload(m, file=...)`;
 - a second positional argument to `imp.cache_from_source`, where it means `debug_override` in `imp` but `optimization` in `importlib.util`;
@@ -89,7 +94,6 @@ magic = importlib.util.MAGIC_NUMBER
 - a file that cannot be read, has syntax errors, or does not end with a newline.
 ## node-buffer
 Rewrites the deprecated Node.js `Buffer` constructor (`nodejs.symbol.buffer.constructor`, DEP0005) and `SlowBuffer` (`nodejs.symbol.slowbuffer`, DEP0030) when the argument's kind is visible in the source text.
-| Before | After |
 |---|---|
 | `new Buffer(<number literal>)` / `Buffer(<number literal>)` | `Buffer.alloc(<number>)` |
 | `new Buffer(<string or template literal>[, <string literal encoding>])` | `Buffer.from(<string>[, <encoding>])` |

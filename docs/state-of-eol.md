@@ -9,14 +9,14 @@ A citable summary of lifecycle risk in Evergreen's public benchmark corpus: ever
 ## Findings
 
 <!-- state-of-eol:start -->
-Measured on the public corpus of 457 pinned repositories (2324 expected findings). The last full corpus run was commit `c7b4e14` on 2026-10-24 (456 repositories, precision 1, recall 1). Method: [Validation](VALIDATION.md). Corpus: [`benchmarks/public-repositories.json`](../benchmarks/public-repositories.json). Regenerate with `npm run build:coverage` after `npm run record:corpus-run`.
+Measured on the public corpus of 457 pinned repositories (2331 expected findings). The last full corpus run was commit `c7b4e14` on 2026-10-24 (456 repositories, precision 1, recall 1). Method: [Validation](VALIDATION.md). Corpus: [`benchmarks/public-repositories.json`](../benchmarks/public-repositories.json). Regenerate with `npm run build:coverage` after `npm run record:corpus-run`.
 
 | Measure | Value |
 | --- | ---: |
 | Repositories | 457 |
-| Expected findings | 2324 |
-| Products with findings | 122 |
-| Release lines with findings | 173 |
+| Expected findings | 2331 |
+| Products with findings | 123 |
+| Release lines with findings | 174 |
 
 ### By product
 
@@ -67,6 +67,7 @@ Measured on the public corpus of 457 pinned repositories (2324 expected findings
 | atty | 7 | 1 | 6 |
 | docker/metadata-action | 7 | 1 | 3 |
 | docker/setup-qemu-action | 7 | 1 | 6 |
+| dockerfile | 7 | 1 | 2 |
 | mysql | 7 | 1 | 4 |
 | actions/stale | 6 | 1 | 6 |
 | astral-sh/setup-uv | 6 | 1 | 3 |
@@ -204,6 +205,7 @@ Measured on the public corpus of 457 pinned repositories (2324 expected findings
 | atty | atty is no longer maintained | [`rust.crate.atty.unmaintained`](rules/rust.crate.atty.unmaintained.html) | deprecated | 7 | 6 |
 | docker/metadata-action | Unsupported docker/metadata-action runtime | [`github-actions.metadata-action.node20`](rules/github-actions.metadata-action.node20.html) | end-of-support | 7 | 3 |
 | docker/setup-qemu-action | Unsupported docker/setup-qemu-action runtime | [`github-actions.setup-qemu-action.node20`](rules/github-actions.setup-qemu-action.node20.html) | end-of-support | 7 | 6 |
+| dockerfile | The Dockerfile legacy "ENV key value" form is deprecated | [`container.dockerfile.legacy-env-format`](rules/container.dockerfile.legacy-env-format.html) | deprecated | 7 | 2 |
 | mysql | MySQL 5.7 is end-of-life | [`database.mysql.end-of-life-5.7`](rules/database.mysql.end-of-life-5.7.html) | end-of-life | 7 | 4 |
 | ruby | Ruby 2.7 is end-of-life | [`ruby.runtime.eol-2.7`](rules/ruby.runtime.eol-2.7.html) | end-of-life | 7 | 4 |
 | actions/stale | Unsupported actions/stale runtime | [`github-actions.stale.node20`](rules/github-actions.stale.node20.html) | end-of-support | 6 | 6 |

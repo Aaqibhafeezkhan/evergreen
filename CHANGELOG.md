@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Detect and rewrite deprecated Dockerfile `MAINTAINER` instructions and the legacy `ENV key value` form, with codemod refusals for values that cannot be quoted safely. (#1834)
 - Add a Terraform codemod for interpolation-only strings and the `list()` and `map()` functions removed in Terraform 0.15: two registry rules with upgrade-guide sources, exact detection that skips heredocs, type constraints, and strings with literal text, and patches that refuse multiline calls, invalid argument counts, expression map keys, block labels, and generated or `.terraform/` files. (#1835)
 - Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
 - Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)

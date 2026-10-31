@@ -119,6 +119,13 @@ Reports every place a repository states a runtime version and whether those valu
 | `--check` | Exit `1` when any runtime drifted or has a floor conflict. |
 | `--runtime <id>` | Report one runtime only. |
 | `--align <release>` | Print a unified diff that makes the pins Evergreen understands select `release`; requires `--runtime`. Refused pins are listed on stderr, and no file is written. |
+### `upgrade-check`
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
+| `--to <runtime@version>` | Required. Target runtime and release, for example `php@8.4` or `nodejs@22`. `node`, `py`, and `golang` are accepted as runtime aliases. |
+| `[path]` | Repository root, default `.`. |
+| `--json` | Print the `evergreen.upgrade.v1` document that conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
+The text output starts with the verdict, then lists every blocker, warning, and unknown as `path:line  subject  reason  [evidence]`. Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. [Upgrade check](UPGRADE_CHECK.md) lists the files and fields each analyzer reads.
 
 ### `badge`
 

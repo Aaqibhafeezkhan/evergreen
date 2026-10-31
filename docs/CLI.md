@@ -104,6 +104,23 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
+### `inventory`
+
+```bash
+evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
+```
+
+Reads exports that cloud and cluster tools already produce and reports the lifecycle of what is running now: engines, runtimes, cluster versions, images, and operating systems, each with the exact place in the export. Evergreen never calls a cloud API: run the export command yourself and pass the file. The first importer that recognizes a file lists its items; files nothing recognizes are listed and make the run exit `2`.
+
+| Flag | What it does |
+| --- | --- |
+| `--format auto\|<importer-id>` | Use every importer (default) or only the named one, for example `aws-rds`. |
+| `--json` | Print the `evergreen.inventory.v1` report. |
+| `--fail-on <severity\|none>` | Exit `1` when an affected item reaches the severity. Defaults to the config's `failOn`, else `high`. |
+| `--redact` | Replace every resource name with the first 12 hex characters of its SHA-256 in all output. |
+
+Exit codes: `0` when every file was recognized and nothing reached the gate; `1` when an affected item reached the gate; `2` when a file was unrecognized or unreadable (the rest is still reported). See [Inventory](INVENTORY.md) for the importer list, the fields each one reads, and what it does not judge.
+
 ### `badge`
 
 ```bash

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `evergreen drift`, which reports every place a repository states a runtime version, whether those versions agree, and `--align` patches that make them select one release. (#1838)
+- Add the .NET drift collector: read `global.json`, target frameworks, Microsoft .NET base images, `actions/setup-dotnet`, and GitLab CI, CircleCI, and Azure Pipelines images, and report when the releases disagree. Multi-targeting is reported without counting its entries against each other. (#1842)
 - Add `evergreen drift`: report every runtime version a repository states, with its exact file and line, and exit `1` when they disagree; `--align <release>` prints a patch that never writes a file. The Rust collector reads toolchain channels, `.tool-versions`, Dockerfile and CI images, `dtolnay/rust-toolchain` and `actions-rs/toolchain` inputs, and `rust-version` floors. (#1843)
 - Add `evergreen drift`, which reports every place a repository states a runtime version, whether those versions agree, and `--align` patches that make them select one release. The first collector reads Python pins and floors. (#1838)
 - Add `evergreen drift`: report every runtime version a repository states, with its exact file and line, and exit `1` when they disagree; `--align <release>` prints a patch that never writes a file. The Go collector reads go.mod and go.work toolchains and `go` directives, `.go-version`, `.tool-versions`, Dockerfile images, `actions/setup-go` inputs, and GitLab, CircleCI, and Azure Pipelines images. (#1839)

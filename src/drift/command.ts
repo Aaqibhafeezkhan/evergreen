@@ -76,33 +76,43 @@ function collectorsByRuntime(runtimes: readonly RuntimeDrift[]): Map<string, Dri
 async function renderAlign(root: string, report: DriftReport, release: string): Promise<number> {
   const collectors = collectorsByRuntime(report.runtimes);
   const refused: RuntimePin[] = [];
-  let printed = 0;
+  const files = new Map<string, { source: string; lines: string[] }>();
   for (const runtime of report.runtimes) {
     const collector = collectors.get(runtime.runtime);
     for (const pin of runtime.pins) {
+      if (pin.release === release) continue;
       if (!collector?.align) {
         refused.push(pin);
         continue;
       }
-      let contents: string;
-      try {
-        contents = await readFile(resolve(root, pin.path), "utf8");
-      } catch {
-        refused.push(pin);
-        continue;
+      let file = files.get(pin.path);
+      if (!file) {
+        let contents: string;
+        try {
+          contents = await readFile(resolve(root, pin.path), "utf8");
+        } catch {
+          refused.push(pin);
+          continue;
+        }
+        const source = contents.endsWith("\n") ? contents.slice(0, -1) : contents;
+        file = { source, lines: source.split("\n") };
+        files.set(pin.path, file);
       }
-      const source = contents.endsWith("\n") ? contents.slice(0, -1) : contents;
-      const lines = source.split("\n");
-      const lineText = lines[pin.line - 1];
+      const lineText = file.lines[pin.line - 1];
       const replacement = lineText === undefined ? undefined : collector.align(pin, lineText, release);
       if (lineText === undefined || replacement === undefined || replacement === lineText) {
         refused.push(pin);
         continue;
       }
-      lines[pin.line - 1] = replacement;
-      process.stdout.write(`${renderDiff(pin.path, source, lines.join("\n"))}\n`);
-      printed += 1;
+      file.lines[pin.line - 1] = replacement;
     }
+  }
+  let printed = 0;
+  for (const [path, file] of files) {
+    const after = file.lines.join("\n");
+    if (after === file.source) continue;
+    process.stdout.write(`${renderDiff(path, file.source, after)}\n`);
+    printed += 1;
   }
   for (const pin of refused) {
     process.stderr.write(`Refused ${pin.path}:${pin.line} (${pin.source} ${pin.raw}): a floor or a value this collector will not rewrite.\n`);

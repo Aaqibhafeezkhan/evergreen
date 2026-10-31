@@ -455,7 +455,6 @@ test("every tool advertises an outputSchema, and its structured content validate
       ["check_upgrade", { path: root, target: "php@8.4" }],
       ["forecast_repository", { repository_path: root, as_of: "2026-10-29" }],
       ["plan_migrations", { repository_path: root }],
-      ["check_upgrade", { path: root, target: "dart@3.5" }],
     ];
     for (const [name, args] of calls) {
       const result = await client.request("tools/call", { name, arguments: args });

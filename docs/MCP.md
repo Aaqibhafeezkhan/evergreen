@@ -119,7 +119,6 @@ Each tool has an `outputSchema` (the published JSON Schema in [`schemas/`](https
 | `check_upgrade` | `target`, `path?` | `evergreen.upgrade.v1` (`upgrade.v1.schema.json`) | Whether the project can move to a target runtime, from lockfiles and manifests; `unknown` means no evidence was found, not that the upgrade is safe. |
 | `forecast_repository` | `repository_path?`, `months?`, `as_of?` | `evergreen.forecast.v1` (`forecast.v1.schema.json`) | What reaches a dated end of life in the next months, grouped by month, with the repository's findings each event affects. |
 | `plan_migrations` | `repository_path?` | `evergreen.plan.v1` (`plan.v1.schema.json`) | Migration plan: waves of independent tasks a coordinating agent can hand out. |
-| `check_upgrade` | `path?`, `target` | `evergreen.upgrade.v1` (`upgrade.v1.schema.json`) | Whether the resolved dependency set supports a target runtime, such as `dart@3.5`. When the verdict is `unknown`, Evergreen found no evidence for this runtime in this repository; that is not a statement that the upgrade is safe. |
 
 `repository_path` defaults to the server's current working directory. Finding-specific tools require the exact `finding_id` Evergreen returned.
 

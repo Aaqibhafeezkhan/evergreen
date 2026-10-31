@@ -12,7 +12,6 @@ import { buildPlan } from "./plan-build.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
 import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { findPackageFileSync } from "./package-files.js";
-import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { VERSION } from "./version.js";
 
 export const MCP_TOOL_NAMES = [
@@ -25,7 +24,6 @@ export const MCP_TOOL_NAMES = [
   "check_upgrade",
   "forecast_repository",
   "plan_migrations",
-  "check_upgrade",
 ] as const;
 
 const repositoryInput = {
@@ -52,7 +50,6 @@ export const MCP_OUTPUT_SCHEMA_FILES = {
   check_upgrade: "upgrade.v1.schema.json",
   forecast_repository: "forecast.v1.schema.json",
   plan_migrations: "plan.v1.schema.json",
-  check_upgrade: "upgrade.v1.schema.json",
 } as const satisfies Record<(typeof MCP_TOOL_NAMES)[number], string>;
 
 type JsonObject = Record<string, unknown>;
@@ -445,37 +442,6 @@ export function createEvergreenMcpServer(
         const result = await tools.scan(repository_path);
         server.sendResourceListChanged();
         return success(buildPlan(result));
-      } catch (error) {
-        return failure(error);
-      }
-    },
-  );
-
-  server.registerTool(
-    "check_upgrade",
-    {
-      title: "Check upgrade",
-      description:
-        "Check whether a local repository can move to a target runtime and version, for example dart@3.5, using files already in the repository. Returns evergreen.upgrade.v1: the verdict, each blocker with the exact lockfile or manifest value behind it, and the analyzers that applied. When the verdict is unknown, Evergreen found no evidence for this runtime in this repository; that is not a statement that the upgrade is safe. Nothing is fetched or executed.",
-      inputSchema: z.object({
-        path: z
-          .string()
-          .min(1)
-          .default(".")
-          .describe("Local path to the repository. Defaults to the server working directory."),
-        target: z
-          .string()
-          .min(1)
-          .describe("Runtime and version to check for, written as <runtime>@<version>, for example dart@3.5."),
-      }),
-      outputSchema: outputSchema("check_upgrade"),
-      annotations: MCP_TOOL_ANNOTATIONS,
-    },
-    async ({ path, target }) => {
-      try {
-        const parsed = parseUpgradeTarget(target);
-        if (!parsed) return failure(new Error("target must be <runtime>@<version>, for example dart@3.5."));
-        return success(await checkUpgrade(resolve(path), parsed));
       } catch (error) {
         return failure(error);
       }

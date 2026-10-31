@@ -1,5 +1,5 @@
 module example.com/drift-example
 
-go 1.21
+go 1.26
 
-toolchain go1.21.13
+toolchain go1.26.1

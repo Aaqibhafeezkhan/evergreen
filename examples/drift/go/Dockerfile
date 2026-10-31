@@ -1,2 +1,2 @@
-FROM golang:1.22-alpine AS build
+FROM golang:1.26-alpine AS build
 RUN go build ./...

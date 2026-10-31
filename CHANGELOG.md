@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add an AWS importer to `evergreen inventory` for RDS instances, Aurora clusters, and ElastiCache clusters from `aws rds describe-*` and `aws elasticache describe-cache-clusters` exports. It reads only the files given and never calls a provider API. The first importer reads `aws rds describe-db-instances`, `aws rds describe-db-clusters`, and `aws elasticache describe-cache-clusters` output for RDS, Aurora, and ElastiCache engines. (#1875)
 - Add a Docker importer to `evergreen inventory`, reporting the lifecycle of containers and images from `docker inspect` and `docker compose ps --format json`; it reads only the files given to it and never uses the network. (#1873)
 - Add `evergreen inventory` and its host operating systems importer: read `/etc/os-release` from one host or a multi-host bundle and report end-of-life Ubuntu, Debian, RHEL, CentOS, Amazon Linux, Alpine, and SLES releases with the line each version came from. It reads only the files given and calls no cloud API. (#1879)
 - Add `evergreen drift`, which reports every runtime version a repository states and whether the values agree, with `--align` patches and a `--check` gate; the first collector covers Ruby pins, floors, and the `Gemfile.lock` refusal. (#1836, #1841)

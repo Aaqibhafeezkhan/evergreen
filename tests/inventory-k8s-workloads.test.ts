@@ -11,7 +11,7 @@ import { Ajv2020 } from "ajv/dist/2020.js";
 import { parseImageReference } from "../src/detectors/container/parse-image.js";
 import { ruleVersion, splitApiVersion } from "../src/detectors/kubernetes/api-version.js";
 import { k8sWorkloadsImporter } from "../src/inventory/k8s-workloads.js";
-import { runInventory } from "../src/inventory/index.js";
+import { parseExport, runInventory } from "../src/inventory/index.js";
 import type { InventoryReport } from "../src/inventory/types.js";
 
 const execute = promisify(execFile);
@@ -171,7 +171,7 @@ test("detect rejects every other fixture under tests/fixtures/inventory", async 
   for (const entry of files) {
     const path = resolve(fixtures, entry);
     const expected = relative(fixtures, path) === "k8s-workloads/workloads.json";
-    assert.equal(k8sWorkloadsImporter.detect(await readJson(path), entry), expected, entry);
+    assert.equal(k8sWorkloadsImporter.detect(parseExport(await readFile(path, "utf8")), entry), expected, entry);
   }
 });
 

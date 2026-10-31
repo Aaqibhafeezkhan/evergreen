@@ -145,7 +145,7 @@ test("--align patches apply and remove the drift, and floors are refused", async
 
     const aligned = run("drift", temporary, "--runtime", "python", "--align", "3.12");
     assert.equal(aligned.status, 0, aligned.stderr);
-    assert.match(aligned.stderr, /Cannot align pyproject\.toml requires-python/);
+    assert.match(aligned.stderr, /Refused pyproject\.toml:\d+ \(pyproject\.toml requires-python/);
     assert.match(aligned.stdout, /^\+\+\+ b\/Dockerfile/m);
 
     const patch = join(temporary, "..", `${temporary.split("/").pop()}.patch`);

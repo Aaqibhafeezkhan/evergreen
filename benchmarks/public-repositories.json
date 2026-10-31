@@ -3471,6 +3471,15 @@
           }
         },
         {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "frontend/Dockerfile",
+          "line": 31,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 31 of frontend/Dockerfile is ENV HOST 0.0.0.0, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal address, so key=value would not change it."
+          }
+        },
+        {
           "ruleId": "github-actions.checkout.node20",
           "path": ".github/workflows/backend-docker-nightly.yml",
           "line": 16,
@@ -3650,12 +3659,66 @@
           }
         },
         {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 18,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 18 of Dockerfile is ENV DATABASE_TYPE $DATABASE_TYPE, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is one variable reference, so key=\"$DATABASE_TYPE\" keeps it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 19,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 19 of Dockerfile is ENV BASE_PATH $BASE_PATH, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is one variable reference, so key=\"$BASE_PATH\" keeps it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 21,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 21 of Dockerfile is ENV NEXT_TELEMETRY_DISABLED 1, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal 1, so key=value would not change it."
+          }
+        },
+        {
           "ruleId": "container.node.eol-21-and-older",
           "path": "Dockerfile",
           "line": 26,
           "groundTruthSource": {
             "kind": "maintainer-review",
             "note": "Reviewed at this commit: line 26 of Dockerfile is FROM node:16-alpine AS runner, an image release line the vendor has ended."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 29,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 29 of Dockerfile is ENV NODE_ENV production, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal word, so key=value would not change it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 30,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 30 of Dockerfile is ENV NEXT_TELEMETRY_DISABLED 1, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal 1, so key=value would not change it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 53,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 53 of Dockerfile is ENV PORT 3000, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal port number, so key=value would not change it."
           }
         },
         {
@@ -17639,7 +17702,80 @@
       "commit": "6deb8834472fbb69948a75d111a791a29b65a010",
       "ecosystem": "terraform",
       "selection": "blind",
-      "expected": []
+      "expected": [
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "main.tf",
+          "line": 195,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read main.tf:195 at this commit: `    \"${data.google_project.trusted_data.number}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "main.tf",
+          "line": 196,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read main.tf:196 at this commit: `    \"${data.google_project.trusted_analytics.number}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "main.tf",
+          "line": 197,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read main.tf:197 at this commit: `    \"${data.google_project.trusted_kms.number}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "outputs.tf",
+          "line": 63,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read outputs.tf:63 at this commit: `    \"${data.google_project.trusted_data.number}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "outputs.tf",
+          "line": 64,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read outputs.tf:64 at this commit: `    \"${data.google_project.trusted_analytics.number}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "outputs.tf",
+          "line": 65,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read outputs.tf:65 at this commit: `    \"${data.google_project.trusted_kms.number}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "test/setup/bq.tf",
+          "line": 81,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read test/setup/bq.tf:81 at this commit: `      table_id          = \"${local.pii_table_id}\",`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        },
+        {
+          "ruleId": "terraform.syntax.interpolation-only",
+          "path": "test/setup/bq.tf",
+          "line": 147,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Read test/setup/bq.tf:147 at this commit: `    table_id   = \"${local.pii_table_id}\"`; the whole string is one interpolation with no other text, so it is the deprecated interpolation-only form."
+          }
+        }
+      ]
     },
     {
       "repository": "lucasbento/graphql-pokemon",

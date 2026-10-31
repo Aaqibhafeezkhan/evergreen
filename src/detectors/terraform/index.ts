@@ -12,7 +12,8 @@ import { parseVersLenient, versContains } from "../../vers/index.js";
 import { parseManagedKubernetes } from "./kubernetes.js";
 import type { ManagedKubernetesProduct } from "./kubernetes.js";
 import { parseTerraformLock } from "./parse-lock.js";
-import { parseTerraformFile } from "./parse-terraform.js";
+import { parseTerraformFile, parseTerraformLegacy } from "./parse-terraform.js";
+import type { TerraformLegacyDeclaration } from "./parse-terraform.js";
 import { parseTerraformPlanJson } from "./plan.js";
 import { parseTerraformVersionFile, parseToolVersionsTerraform } from "./parse-version-files.js";
 
@@ -32,6 +33,13 @@ import { parseTerraformVersionFile, parseToolVersionsTerraform } from "./parse-v
  * (`>= 1.5`, `~> 1.9`, a range) admits versions outside any single release line, so it is only matched against
  * a rule that covers every version. A rule whose VERS is malformed never matches and does not hide a later rule.
  *
+ * It also reports two removed or deprecated language forms in `*.tf` files: an interpolation-only string such as
+ * `"${var.name}"`, and a value call to the `list()` or `map()` functions removed in Terraform 0.15. Heredocs,
+ * comments, arbitrary string contents, and the `list()` and `map()` type constructors (`type = list(string)`)
+ * are not reported. These findings use the rule ids `terraform.syntax.interpolation-only` and
+ * `terraform.function.list-map`, whatever their VERS; the codemod under `src/fix/codemods/terraform-legacy.ts`
+ * rewrites the forms that can be changed without another edit.
+ *
  * It also reads the managed Kubernetes control-plane version. On a resource it reads `kubernetes_version` for
  * `azurerm_kubernetes_cluster` and `min_master_version` for `google_container_cluster`. On a module it decides
  * the vendor from the `source` address first: `terraform-aws-modules/eks/aws` (EKS) takes `cluster_version` and
@@ -49,6 +57,8 @@ const MAXIMUM_PLAN_FILES = 50;
 const SKIPPED_DIRECTORIES = new Set([".git", ".terraform", "node_modules", "vendor", "dist", "build", "target", ".venv", "venv", "fixtures", "__fixtures__", "testdata"]);
 const VERSION_FILES = new Set([".terraform-version", ".tool-versions", ".terraform.lock.hcl"]);
 const TERRAFORM_PURL = "pkg:generic/terraform";
+const INTERPOLATION_RULE_ID = "terraform.syntax.interpolation-only";
+const LEGACY_FUNCTION_RULE_ID = "terraform.function.list-map";
 const REGISTRY_HOST = "registry.terraform.io";
 const EXACT_VERSION = /^=?\s*(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/;
 const PESSIMISTIC_PATCH = /^~>\s*(\d+)\.(\d+)\.(\d+)$/;
@@ -223,8 +233,16 @@ export class TerraformDetector implements Detector {
     const { tfFiles, planFiles } = await terraformFiles(context.root);
     if (tfFiles.length === 0 && planFiles.length === 0) return { findings: [], unclassified: [] };
 
-    const byPurl = rulesByPurl(await this.loadRules());
-    const cliRules = byPurl.get(TERRAFORM_PURL) ?? [];
+    const rules = await this.loadRules();
+    const byPurl = rulesByPurl(rules);
+    const cliRules = (byPurl.get(TERRAFORM_PURL) ?? []).filter(
+      (rule) => rule.id !== INTERPOLATION_RULE_ID && rule.id !== LEGACY_FUNCTION_RULE_ID,
+    );
+    const legacyRules = new Map(
+      rules
+        .filter((rule) => rule.id === INTERPOLATION_RULE_ID || rule.id === LEGACY_FUNCTION_RULE_ID)
+        .map((rule) => [rule.id, rule]),
+    );
     const findings: DetectorFinding[] = [];
     const unclassified: DetectorUnclassifiedReference[] = [];
     const report = (
@@ -241,6 +259,20 @@ export class TerraformDetector implements Detector {
         summary,
         severity: rule.severity,
         location: { path, ...(line !== undefined ? { line } : {}) },
+        ...(rule.replacement ? { replacement: rule.replacement } : {}),
+        ...(rule.deadline ? { deadline: rule.deadline } : {}),
+        ...(rule.migration ? { migration: rule.migration } : {}),
+        sources: rule.sources,
+      });
+    };
+    const reportLegacy = (rule: RegistryV2Rule, path: string, declaration: TerraformLegacyDeclaration, summary: string): void => {
+      findings.push({
+        id: `${rule.id}:${path}:${declaration.line}:${declaration.column}`,
+        ruleId: rule.id,
+        title: rule.title,
+        summary,
+        severity: rule.severity,
+        location: { path, line: declaration.line, column: declaration.column },
         ...(rule.replacement ? { replacement: rule.replacement } : {}),
         ...(rule.deadline ? { deadline: rule.deadline } : {}),
         ...(rule.migration ? { migration: rule.migration } : {}),
@@ -280,6 +312,29 @@ export class TerraformDetector implements Detector {
             if (!source) continue;
             const rule = ruleForDeclared(byPurl.get(providerPurl(source.namespace, source.name)) ?? [], declaration.value);
             if (rule) report(rule, path, declaration.line, `${path} requires provider ${source.namespace}/${source.name} ${declaration.value}. ${rule.summary}`);
+          }
+        }
+
+        for (const declaration of parseTerraformLegacy(contents)) {
+          if (declaration.kind === "interpolation_only") {
+            const rule = legacyRules.get(INTERPOLATION_RULE_ID);
+            if (!rule) continue;
+            reportLegacy(
+              rule,
+              path,
+              declaration,
+              `${path} uses the interpolation-only string ${declaration.value}. ${rule.summary}`,
+            );
+          } else {
+            const rule = legacyRules.get(LEGACY_FUNCTION_RULE_ID);
+            if (!rule) continue;
+            const count = declaration.arguments.length;
+            reportLegacy(
+              rule,
+              path,
+              declaration,
+              `${path} calls the ${declaration.name}() function with ${count} ${count === 1 ? "argument" : "arguments"}. ${rule.summary}`,
+            );
           }
         }
 

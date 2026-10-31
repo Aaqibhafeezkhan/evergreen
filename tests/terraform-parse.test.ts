@@ -369,3 +369,35 @@ test("returns nothing for an unterminated string or an oversized file", () => {
   const padding = "# ".padEnd(MAXIMUM_INPUT_BYTES + 1, "x");
   assert.deepEqual(parseTerraformLegacy(`${padding}\nlocals {\n  a = "\${var.x}"\n}\n`), []);
 });
+
+test("skips escapes and comments while reading call arguments", () => {
+  const contents = `locals {
+  a = list("a\\"b", "c")
+  b = list(1, /* note */ 2)
+  c = list(
+    1, # note
+    2,
+  )
+  d = "\${var.open"
+}
+`;
+  assert.deepEqual(
+    parseTerraformLegacy(contents).map((declaration) => declaration.kind === "interpolation_only"
+      ? [declaration.kind, declaration.expression, declaration.line, declaration.column]
+      : [declaration.kind, declaration.name, declaration.arguments, declaration.oneLine, declaration.line, declaration.column]),
+    [
+      ["legacy_function", "list", ['"a\\"b"', '"c"'], true, 2, 7],
+      ["legacy_function", "list", ["1", "/* note */ 2"], true, 3, 7],
+      ["legacy_function", "list", ["1", "# note\n    2"], false, 4, 7],
+    ],
+  );
+});
+
+test("ignores unterminated calls, strings, and comments instead of guessing", () => {
+  assert.deepEqual(parseTerraformLegacy('locals {\n  a = list(1, 2\n}\n'), []);
+  assert.deepEqual(parseTerraformLegacy('locals {\n  a = map("k", "v" /* note\n}\n'), []);
+  assert.deepEqual(parseTerraformLegacy("locals {\n  a = list(1, # note"), []);
+  assert.deepEqual(parseTerraformLegacy("locals {\n  a = list(1, // note"), []);
+  assert.deepEqual(parseTerraformLegacy('locals {\n  a = list("unterminated'), []);
+  assert.deepEqual(parseTerraformLegacy('locals {\n  a = list("${var.open'), []);
+});

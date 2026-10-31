@@ -239,6 +239,11 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 - [PriorityLevelConfiguration flowcontrol.apiserver.k8s.io/v1beta1 is no longer served](kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta1.removed.html) — removed, `kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta1.removed`
 - [PriorityLevelConfiguration flowcontrol.apiserver.k8s.io/v1beta2 is no longer served](kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta2.removed.html) — removed, `kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta2.removed`
 - [PriorityLevelConfiguration flowcontrol.apiserver.k8s.io/v1beta3 is no longer served](kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta3.removed.html) — removed, `kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta3.removed`
+- [GKE 1.29 and earlier clusters are no longer supported](kubernetes.google-gke.1.29-and-older.html) — end of life, `kubernetes.google-gke.1.29-and-older`
+- [GKE 1.30 cluster is past end of extended support](kubernetes.google-gke.1.30.html) — end of life, `kubernetes.google-gke.1.30`
+- [GKE 1.31 cluster is past end of extended support](kubernetes.google-gke.1.31.html) — end of life, `kubernetes.google-gke.1.31`
+- [GKE 1.32 cluster is past end of standard support](kubernetes.google-gke.1.32.html) — end of support, `kubernetes.google-gke.1.32`
+- [GKE 1.33 cluster is past end of standard support](kubernetes.google-gke.1.33.html) — end of support, `kubernetes.google-gke.1.33`
 - [Helm incubator chart repository is end of life](kubernetes.helm.repository.incubator.end-of-life.html) — end of life, `kubernetes.helm.repository.incubator.end-of-life`
 - [Helm stable chart repository is end of life](kubernetes.helm.repository.stable.end-of-life.html) — end of life, `kubernetes.helm.repository.stable.end-of-life`
 - [Ingress networking.k8s.io/v1beta1 is no longer served](kubernetes.networking-k8s-io.ingress.v1beta1.removed.html) — removed, `kubernetes.networking-k8s-io.ingress.v1beta1.removed`
@@ -639,7 +644,74 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 - [AWS Lambda Ruby 3.3 runtime reaches end of life on 2027-03-31](serverless.aws-lambda.ruby3.3.html) — scheduled end of life, `serverless.aws-lambda.ruby3.3`
 - [AWS Lambda Ruby 3.4 runtime reaches end of life on 2028-03-31](serverless.aws-lambda.ruby3.4.html) — scheduled end of life, `serverless.aws-lambda.ruby3.4`
 - [AWS Lambda Ruby 4.0 runtime reaches end of life on 2029-03-31](serverless.aws-lambda.ruby4.0.html) — scheduled end of life, `serverless.aws-lambda.ruby4.0`
+- [App Engine Go 1.11 runtime is past end of support](serverless.google-appengine-runtime.go111.html) — end of support, `serverless.google-appengine-runtime.go111`
+- [App Engine Go 1.12 runtime is past end of support](serverless.google-appengine-runtime.go112.html) — end of support, `serverless.google-appengine-runtime.go112`
+- [App Engine Go 1.13 runtime is past end of support](serverless.google-appengine-runtime.go113.html) — end of support, `serverless.google-appengine-runtime.go113`
+- [App Engine Go 1.14 runtime is past end of support](serverless.google-appengine-runtime.go114.html) — end of support, `serverless.google-appengine-runtime.go114`
+- [App Engine Go 1.15 runtime is past end of support](serverless.google-appengine-runtime.go115.html) — end of support, `serverless.google-appengine-runtime.go115`
+- [App Engine Go 1.16 runtime is past end of support](serverless.google-appengine-runtime.go116.html) — end of support, `serverless.google-appengine-runtime.go116`
+- [App Engine Go 1.18 runtime is past end of support](serverless.google-appengine-runtime.go118.html) — end of support, `serverless.google-appengine-runtime.go118`
+- [App Engine Go 1.19 runtime is past end of support](serverless.google-appengine-runtime.go119.html) — end of support, `serverless.google-appengine-runtime.go119`
+- [App Engine Go 1.20 runtime is past end of support](serverless.google-appengine-runtime.go120.html) — end of support, `serverless.google-appengine-runtime.go120`
+- [App Engine Go 1.21 runtime is past end of support](serverless.google-appengine-runtime.go121.html) — end of support, `serverless.google-appengine-runtime.go121`
+- [App Engine Go 1.22 runtime is past end of support](serverless.google-appengine-runtime.go122.html) — end of support, `serverless.google-appengine-runtime.go122`
+- [App Engine Go 1.23 runtime is past end of support](serverless.google-appengine-runtime.go123.html) — end of support, `serverless.google-appengine-runtime.go123`
+- [App Engine Java 11 runtime is past end of support](serverless.google-appengine-runtime.java11.html) — end of support, `serverless.google-appengine-runtime.java11`
+- [App Engine Java 8 runtime is past end of support](serverless.google-appengine-runtime.java8.html) — end of support, `serverless.google-appengine-runtime.java8`
+- [App Engine Node.js 10 runtime is past end of support](serverless.google-appengine-runtime.nodejs10.html) — end of support, `serverless.google-appengine-runtime.nodejs10`
+- [App Engine Node.js 12 runtime is past end of support](serverless.google-appengine-runtime.nodejs12.html) — end of support, `serverless.google-appengine-runtime.nodejs12`
+- [App Engine Node.js 14 runtime is past end of support](serverless.google-appengine-runtime.nodejs14.html) — end of support, `serverless.google-appengine-runtime.nodejs14`
+- [App Engine Node.js 16 runtime is past end of support](serverless.google-appengine-runtime.nodejs16.html) — end of support, `serverless.google-appengine-runtime.nodejs16`
+- [App Engine Node.js 18 runtime is past end of support](serverless.google-appengine-runtime.nodejs18.html) — end of support, `serverless.google-appengine-runtime.nodejs18`
+- [App Engine Node.js 20 runtime is past end of support](serverless.google-appengine-runtime.nodejs20.html) — end of support, `serverless.google-appengine-runtime.nodejs20`
+- [App Engine Node.js 8 runtime is past end of support](serverless.google-appengine-runtime.nodejs8.html) — end of support, `serverless.google-appengine-runtime.nodejs8`
+- [App Engine PHP 5.5 runtime is past end of support](serverless.google-appengine-runtime.php55.html) — end of support, `serverless.google-appengine-runtime.php55`
+- [App Engine PHP 7.2 runtime is past end of support](serverless.google-appengine-runtime.php72.html) — end of support, `serverless.google-appengine-runtime.php72`
+- [App Engine PHP 7.3 runtime is past end of support](serverless.google-appengine-runtime.php73.html) — end of support, `serverless.google-appengine-runtime.php73`
+- [App Engine PHP 7.4 runtime is past end of support](serverless.google-appengine-runtime.php74.html) — end of support, `serverless.google-appengine-runtime.php74`
+- [App Engine PHP 8.1 runtime is past end of support](serverless.google-appengine-runtime.php81.html) — end of support, `serverless.google-appengine-runtime.php81`
+- [App Engine Python 2.7 runtime is past end of support](serverless.google-appengine-runtime.python27.html) — end of support, `serverless.google-appengine-runtime.python27`
+- [App Engine Python 3.10 runtime is past end of support](serverless.google-appengine-runtime.python310.html) — end of support, `serverless.google-appengine-runtime.python310`
+- [App Engine Python 3.7 runtime is past end of support](serverless.google-appengine-runtime.python37.html) — end of support, `serverless.google-appengine-runtime.python37`
+- [App Engine Python 3.8 runtime is past end of support](serverless.google-appengine-runtime.python38.html) — end of support, `serverless.google-appengine-runtime.python38`
+- [App Engine Python 3.9 runtime is past end of support](serverless.google-appengine-runtime.python39.html) — end of support, `serverless.google-appengine-runtime.python39`
+- [App Engine Ruby 2.5 runtime is past end of support](serverless.google-appengine-runtime.ruby25.html) — end of support, `serverless.google-appengine-runtime.ruby25`
+- [App Engine Ruby 2.6 runtime is past end of support](serverless.google-appengine-runtime.ruby26.html) — end of support, `serverless.google-appengine-runtime.ruby26`
+- [App Engine Ruby 2.7 runtime is past end of support](serverless.google-appengine-runtime.ruby27.html) — end of support, `serverless.google-appengine-runtime.ruby27`
+- [App Engine Ruby 3.0 runtime is past end of support](serverless.google-appengine-runtime.ruby30.html) — end of support, `serverless.google-appengine-runtime.ruby30`
+- [App Engine Ruby 3.2 runtime is past end of support](serverless.google-appengine-runtime.ruby32.html) — end of support, `serverless.google-appengine-runtime.ruby32`
+- [Google Cloud Functions .NET Core 3 runtime is end-of-life](serverless.google-cloud-functions.dotnet3.html) — end of life, `serverless.google-cloud-functions.dotnet3`
+- [Google Cloud Functions .NET 6 runtime is end-of-life](serverless.google-cloud-functions.dotnet6.html) — end of life, `serverless.google-cloud-functions.dotnet6`
+- [Google Cloud Functions Go 1.11 runtime is end-of-life](serverless.google-cloud-functions.go111.html) — end of life, `serverless.google-cloud-functions.go111`
+- [Google Cloud Functions Go 1.13 runtime is end-of-life](serverless.google-cloud-functions.go113.html) — end of life, `serverless.google-cloud-functions.go113`
+- [Google Cloud Functions Go 1.16 runtime is end-of-life](serverless.google-cloud-functions.go116.html) — end of life, `serverless.google-cloud-functions.go116`
+- [Google Cloud Functions Go 1.18 runtime is end-of-life](serverless.google-cloud-functions.go118.html) — end of life, `serverless.google-cloud-functions.go118`
+- [Google Cloud Functions Go 1.19 runtime is end-of-life](serverless.google-cloud-functions.go119.html) — end of life, `serverless.google-cloud-functions.go119`
+- [Google Cloud Functions Go 1.20 runtime is end-of-life](serverless.google-cloud-functions.go120.html) — end of life, `serverless.google-cloud-functions.go120`
+- [Google Cloud Functions Go 1.21 runtime is end-of-life](serverless.google-cloud-functions.go121.html) — end of life, `serverless.google-cloud-functions.go121`
+- [Google Cloud Functions Go 1.22 runtime is end-of-life](serverless.google-cloud-functions.go122.html) — end of life, `serverless.google-cloud-functions.go122`
+- [Google Cloud Functions Go 1.23 runtime is end-of-life](serverless.google-cloud-functions.go123.html) — end of life, `serverless.google-cloud-functions.go123`
+- [Google Cloud Functions Go 1.24 runtime is deprecated](serverless.google-cloud-functions.go124.html) — deprecated, `serverless.google-cloud-functions.go124`
+- [Google Cloud Functions Go 1.25 runtime is deprecated](serverless.google-cloud-functions.go125.html) — deprecated, `serverless.google-cloud-functions.go125`
+- [Google Cloud Functions Java 11 runtime is end-of-life](serverless.google-cloud-functions.java11.html) — end of life, `serverless.google-cloud-functions.java11`
+- [Google Cloud Functions Node.js 10 runtime is end-of-life](serverless.google-cloud-functions.nodejs10.html) — end of life, `serverless.google-cloud-functions.nodejs10`
+- [Google Cloud Functions Node.js 12 runtime is end-of-life](serverless.google-cloud-functions.nodejs12.html) — end of life, `serverless.google-cloud-functions.nodejs12`
 - [Google Cloud Functions Node.js 14 runtime is end-of-life](serverless.google-cloud-functions.nodejs14.html) — end of life, `serverless.google-cloud-functions.nodejs14`
+- [Google Cloud Functions Node.js 16 runtime is end-of-life](serverless.google-cloud-functions.nodejs16.html) — end of life, `serverless.google-cloud-functions.nodejs16`
+- [Google Cloud Functions Node.js 18 runtime is end-of-life](serverless.google-cloud-functions.nodejs18.html) — end of life, `serverless.google-cloud-functions.nodejs18`
+- [Google Cloud Functions Node.js 20 runtime is end-of-life](serverless.google-cloud-functions.nodejs20.html) — end of life, `serverless.google-cloud-functions.nodejs20`
+- [Google Cloud Functions Node.js 6 runtime is end-of-life](serverless.google-cloud-functions.nodejs6.html) — end of life, `serverless.google-cloud-functions.nodejs6`
+- [Google Cloud Functions Node.js 8 runtime is end-of-life](serverless.google-cloud-functions.nodejs8.html) — end of life, `serverless.google-cloud-functions.nodejs8`
+- [Google Cloud Functions PHP 7.4 runtime is end-of-life](serverless.google-cloud-functions.php74.html) — end of life, `serverless.google-cloud-functions.php74`
+- [Google Cloud Functions PHP 8.1 runtime is end-of-life](serverless.google-cloud-functions.php81.html) — end of life, `serverless.google-cloud-functions.php81`
+- [Google Cloud Functions Python 3.10 runtime is deprecated](serverless.google-cloud-functions.python310.html) — deprecated, `serverless.google-cloud-functions.python310`
+- [Google Cloud Functions Python 3.7 runtime is end-of-life](serverless.google-cloud-functions.python37.html) — end of life, `serverless.google-cloud-functions.python37`
+- [Google Cloud Functions Python 3.8 runtime is end-of-life](serverless.google-cloud-functions.python38.html) — end of life, `serverless.google-cloud-functions.python38`
+- [Google Cloud Functions Python 3.9 runtime is end-of-life](serverless.google-cloud-functions.python39.html) — end of life, `serverless.google-cloud-functions.python39`
+- [Google Cloud Functions Ruby 2.6 runtime is end-of-life](serverless.google-cloud-functions.ruby26.html) — end of life, `serverless.google-cloud-functions.ruby26`
+- [Google Cloud Functions Ruby 2.7 runtime is end-of-life](serverless.google-cloud-functions.ruby27.html) — end of life, `serverless.google-cloud-functions.ruby27`
+- [Google Cloud Functions Ruby 3.0 runtime is end-of-life](serverless.google-cloud-functions.ruby30.html) — end of life, `serverless.google-cloud-functions.ruby30`
+- [Google Cloud Functions Ruby 3.2 runtime is end-of-life](serverless.google-cloud-functions.ruby32.html) — end of life, `serverless.google-cloud-functions.ruby32`
 
 ## shell
 

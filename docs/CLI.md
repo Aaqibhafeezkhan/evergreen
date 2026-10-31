@@ -108,28 +108,20 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
-### `inventory`
+### `upgrade-check`
 
 ```bash
-evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
+evergreen upgrade-check --to <runtime@version> [path] [--json]
 ```
 
-Reads export files the user already produced, such as `gcloud … --format=json` or `kubectl get -o json`, and reports end-of-life runtimes, images, and cluster versions that are running now, each with the exact JSON Pointer in the export the claim rests on. Evergreen never calls a cloud API and runs no command: it reads only the files given to it.
+Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
 
 | Flag | What it does |
 | --- | --- |
-| `--format auto\|<importer-id>` | Force one importer instead of detecting the format. `auto` is the default. |
-| `--json` | Print the `evergreen.inventory.v1` report. |
-| `--fail-on <severity\|none>` | Exit `1` when an affected resource is at or above this severity. Default: the config's `failOn`, else `high`. |
-| `--redact` | Replace each resource name with the first 12 hex characters of its SHA-256, in every output. |
-
-Exit codes: `2` when a file is unrecognized or unreadable (the other files are still reported), `1` when an affected resource reaches the gate, `0` otherwise. A resource with no matching rule is reported as `no-data`, never as safe. The importers and what each one reads are documented in [INVENTORY.md](INVENTORY.md).
-### `upgrade-check`
-evergreen upgrade-check --to <runtime@version> [path] [--json]
-Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
 | `--to <runtime@version>` | Required. Target runtime and release, for example `php@8.4` or `nodejs@22`. `node`, `py`, and `golang` are accepted as runtime aliases. |
 | `[path]` | Repository root, default `.`. |
 | `--json` | Print the `evergreen.upgrade.v1` document that conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
+
 The text output starts with the verdict, then lists every blocker, warning, and unknown as `path:line  subject  reason  [evidence]`. Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. [Upgrade check](UPGRADE_CHECK.md) lists the files and fields each analyzer reads.
 
 ### `badge`

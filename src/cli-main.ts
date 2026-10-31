@@ -43,7 +43,6 @@ import { renderVerification, verifyFix } from "./fix/verify.js";
 import { findRepositories, renderMultiScanText, scanProjects, scanRepository, applyScanSelection } from "./engine.js";
 import { renderStatusCard } from "./status-card.js";
 import { lookupProduct, renderLookupText } from "./lookup.js";
-import { inventoryCommand } from "./inventory/command.js";
 import { upgradeCheck } from "./upgrade/command.js";
 import { inventoryCommand, InventoryUsageError } from "./inventory/command.js";
 import { scanDemo } from "./demo.js";
@@ -100,7 +99,6 @@ Usage:
   evergreen lookup <product> [version] [--json]   # support status, end-of-life date, and evidence for a product
   evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]   # lifecycle of what a cloud or cluster export names; reads files only
   evergreen upgrade-check --to <runtime@version> [path] [--json]   # dependencies whose declared support excludes the target runtime
-  evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]   # lifecycle of what an export says is deployed
   evergreen badge [path] --snippet <markdown|html|rst> [--repo <owner/name>] [--branch <name>]   # print README markup for the published badge
   evergreen badge [path] --shields   # print shields.io endpoint JSON for the current scan
   evergreen diff <base>..<head> [path] [--json]   # findings a change introduced or fixed; exit 1 only when it introduced some
@@ -813,7 +811,6 @@ async function main(rawArgs: string[]): Promise<number> {
   if (command === "status-card") return statusCard(args.slice(1));
   if (command === "badge") return badge(args.slice(1));
   if (command === "lookup") return lookup(args.slice(1));
-  if (command === "inventory") return inventoryCommand(args.slice(1));
   if (command === "upgrade-check") return upgradeCheck(args.slice(1));
   if (command === "inventory") {
     try {

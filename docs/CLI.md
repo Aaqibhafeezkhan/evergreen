@@ -209,24 +209,6 @@ Writes the current findings as accepted findings, carrying the history forward f
 | --- | --- |
 | `--output <file>` | Destination file. Default `.evergreen-baseline.json`. |
 
-## Deployed inventory
-
-### `inventory`
-
-```bash
-evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
-```
-
-Reads exports that cloud, cluster, container, and host tools already produce, and reports end-of-life runtimes, engines, cluster versions, images, and operating systems that are running now. Evergreen never calls a provider: you run the export command and it reads the file. Every result names the exact place in the export the claim rests on. See [Deployed inventory](INVENTORY.md) for the export command and fields each importer reads.
-
-| Flag | What it does |
-| --- | --- |
-| `[file...]` | One or more export files. A file no importer recognizes, or one that cannot be read, is listed at the end and makes the run exit `2` after the other files are reported. |
-| `--format auto\|<importer-id>` | Choose the importer instead of auto-detection. Default `auto`. |
-| `--json` | Print an `evergreen.inventory.v1` document. |
-| `--fail-on <severity\|none>` | Exit `1` when an affected result is at or above this severity. Severities, lowest to highest: `info`, `low`, `medium`, `high`, `critical`. Default: the config's `failOn`, else `high`. |
-| `--redact` | Replace each resource name with the first 12 hex characters of its SHA-256 in every output, so a report can be shared. |
-
 ## Supply-chain checks
 
 ### `check`
@@ -281,7 +263,7 @@ Summarizes the local log of dependency checks. Logging is off unless `EVERGREEN_
 evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]
 ```
 
-Reports end-of-life runtimes, images, engines, and cluster objects from the export files that cloud and cluster tools already produce, such as `kubectl get -o json` or `terraform show -json`. Evergreen never calls a provider API: you run the export command, and Evergreen reads the file. Each result names the importer, the file, and the JSON Pointer to the exact version value the claim rests on.
+Reports end-of-life runtimes, images, engines, operating systems, and cluster objects from the export files that cloud and cluster tools already produce, such as `kubectl get -o json` or `terraform show -json`. Evergreen never calls a provider API: you run the export command, and Evergreen reads the file. Each result names the importer, the file, and the JSON Pointer to the exact version value the claim rests on.
 
 A file no importer recognizes is listed, and the run exits `2`, after the recognized files are still reported.
 

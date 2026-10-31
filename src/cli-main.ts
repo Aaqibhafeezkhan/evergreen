@@ -34,6 +34,7 @@ import { buildReceipt } from "./receipt.js";
 import { renderReceiptMarkdown } from "./receipt-markdown.js";
 import { severityValues } from "./domain.js";
 import { buildForecast, DEFAULT_FORECAST_MONTHS, MAX_FORECAST_MONTHS, renderForecastText } from "./forecast.js";
+import { renderForecastSvg } from "./forecast-svg.js";
 import { renderForecastTimeline } from "./forecast-timeline.js";
 import { buildPlan } from "./plan-build.js";
 import { renderPlanText } from "./plan-render.js";
@@ -91,7 +92,7 @@ Usage:
   evergreen scan [path] --exclude <ecosystem|rule-prefix>   # drop matching findings; repeatable
   evergreen scan [path] --no-cache   # bypass the scan cache and re-scan all files fresh
   evergreen scan <path> <path>... [--all <dir>] [--json]   # several projects, per-project and combined counts
-  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json]   # what reaches end of life next, by month
+  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json]   # what reaches end of life next, by month
   evergreen plan [path] [--json] [--wave <n>]   # migration waves from a scan; --wave prints one zero-based wave
   evergreen status-card [path] [--name <label>]   # print a static SVG summary of findings, next end of life, and data age
   evergreen lookup <product> [version] [--json]   # support status, end-of-life date, and evidence for a product
@@ -1171,13 +1172,22 @@ async function main(rawArgs: string[]): Promise<number> {
   }
   if (command === "forecast") {
     const timeline = args.includes("--timeline");
+    const svg = args.includes("--svg");
+    const animate = args.includes("--animate");
+    if (animate && !svg) return fail("usage", "--animate needs --svg.");
+    if (svg && json) return fail("usage", "Use either --svg or --json, not both.");
     if (timeline && json) return fail("usage", "Use either --timeline or --json, not both.");
+    if (svg && timeline) return fail("usage", "Use either --svg or --timeline, not both.");
     const monthsValue = optionValue("--months");
     const months = monthsValue === undefined ? DEFAULT_FORECAST_MONTHS : Number(monthsValue);
     if (!Number.isInteger(months) || months < 1 || months > MAX_FORECAST_MONTHS) {
       return fail("usage", `--months must be a whole number from 1 to ${MAX_FORECAST_MONTHS}.`);
     }
     const forecast = buildForecast(await scanRepository(pathArgument, builtInDetectors, { noCache }), await bundledRules(), asOfValue ?? new Date().toISOString().slice(0, 10), months);
+    if (svg) {
+      process.stdout.write(`${renderForecastSvg(forecast, { animate })}\n`);
+      return 0;
+    }
     if (timeline) {
       const width = Math.min(process.stdout.columns || 80, 100);
       const color = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;

@@ -520,3 +520,94 @@ test("a migration packet for a Terraform CLI finding names the file, steps, and 
   );
   assert.ok(packet.verification.some((check) => check.command === "terraform init -backend=false && terraform validate"));
 });
+
+test("reports interpolation-only strings and removed list()/map() calls with exact locations", async () => {
+  const findings = await terraformDetector.scan({
+    root: await repository({
+      "main.tf": `locals {
+  name    = "\${var.name}"
+  prefix  = "prefix-\${var.name}"
+  ports   = list(80, 443)
+  labels  = map("team", var.team)
+  types   = list(string)
+  lookup  = "\${lookup(var.m, "k")}"
+  joined  = "\${var.a}\${var.b}"
+}
+# list(1, 2) and "\${var.comment}"
+resource "aws_instance" "web" {
+  user_data = <<-EOT
+    list(1, 2) \${var.heredoc}
+  EOT
+}
+`,
+    }),
+  });
+  assert.deepEqual(
+    findings.map((finding) => [finding.ruleId, finding.location.line, finding.location.column]),
+    [
+      ["terraform.syntax.interpolation-only", 2, 13],
+      ["terraform.function.list-map", 4, 13],
+      ["terraform.function.list-map", 5, 13],
+      ["terraform.syntax.interpolation-only", 7, 13],
+    ],
+  );
+  assert.match(findings[0]!.summary, /^main\.tf uses the interpolation-only string "\$\{var\.name\}"\. /);
+  assert.match(findings[1]!.summary, /^main\.tf calls the list\(\) function with 2 arguments\. /);
+  assert.match(findings[2]!.summary, /^main\.tf calls the map\(\) function with 2 arguments\. /);
+  assert.match(findings[3]!.summary, /^main\.tf uses the interpolation-only string "\$\{lookup\(var\.m, "k"\)\}"\. /);
+});
+
+test("does not report literal text, joined interpolations, type constraints, comments, or heredocs", async () => {
+  const findings = await terraformDetector.scan({
+    root: await repository({
+      "main.tf": `locals {
+  prefix  = "prefix-\${var.x}"
+  joined  = "\${var.x}\${var.y}"
+  types   = list(string)
+  managed = map(object({ name = string }))
+  literal = "list(1, 2)"
+  heredoc = <<EOT
+\${var.x}
+list(1, 2)
+EOT
+}
+`,
+    }),
+  });
+  assert.deepEqual(findings, []);
+});
+
+test("the syntax rules are matched by id whatever their VERS and never judge required_version", async () => {
+  const detector = new TerraformDetector(async () => [
+    rule({
+      id: "terraform.syntax.interpolation-only",
+      vers: "vers:semver/>=999.0.0",
+      event: "deprecated",
+      title: "Interpolation-only strings are deprecated",
+      summary: "Use the bare expression.",
+      severity: "low",
+      replacement: "The bare expression",
+    }),
+  ]);
+  const findings = await detector.scan({
+    root: await repository({
+      "main.tf": 'terraform {\n  required_version = "0.12.14"\n}\nlocals {\n  name = "${var.name}"\n}\n',
+    }),
+  });
+  assert.deepEqual(
+    findings.map((finding) => [finding.ruleId, finding.location.line, finding.location.column]),
+    [["terraform.syntax.interpolation-only", 5, 10]],
+  );
+});
+
+test("the committed registry records the interpolation deprecation and the list()/map() removal", async () => {
+  const rules = await committedRules();
+  const interpolation = rules.find((item) => item.id === "terraform.syntax.interpolation-only");
+  const functions = rules.find((item) => item.id === "terraform.function.list-map");
+  assert.ok(interpolation);
+  assert.ok(functions);
+  assert.equal(interpolation.event, "deprecated");
+  assert.equal(functions.event, "removed");
+  assert.ok(interpolation.sources.some((source) => source.url.includes("upgrade-guides/0-15")));
+  assert.ok(functions.sources.some((source) => source.url.includes("upgrade-guides/0-15")));
+});

@@ -1,4 +1,5 @@
 import type { Finding, ScanResult } from "../domain.js";
+import { dockerfileLegacyFixer } from "./codemods/dockerfile-legacy.js";
 import { renameCodemodsFixer } from "./codemods/index.js";
 import { dockerfileBaseImageFixer } from "./dockerfile.js";
 import { githubActionsUsesFixer } from "./github-actions.js";
@@ -48,10 +49,10 @@ export interface FixPlan {
   refusals: FixRefusal[];
 }
 
-export { dockerfileBaseImageFixer, githubActionsUsesFixer, goModFixer, javaFixer, kubernetesApiVersionFixer, renameCodemodsFixer, runtimePinsFixer, pythonFixer };
+export { dockerfileBaseImageFixer, dockerfileLegacyFixer, githubActionsUsesFixer, goModFixer, javaFixer, kubernetesApiVersionFixer, renameCodemodsFixer, runtimePinsFixer, pythonFixer };
 
 /** Every fixer Evergreen ships, in the order their patches are printed. */
-export const fixers: Fixer[] = [githubActionsUsesFixer, runtimePinsFixer, pythonFixer, goModFixer, javaFixer, kubernetesApiVersionFixer, dockerfileBaseImageFixer, renameCodemodsFixer];
+export const fixers: Fixer[] = [githubActionsUsesFixer, runtimePinsFixer, pythonFixer, goModFixer, javaFixer, kubernetesApiVersionFixer, dockerfileBaseImageFixer, dockerfileLegacyFixer, renameCodemodsFixer];
 
 /**
  * Plans every fixer over a scan and returns the patches with the fixer that produced them, ordered by file, along with

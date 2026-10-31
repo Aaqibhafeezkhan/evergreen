@@ -1,5 +1,5 @@
 {
-  "latestReview": "2026-10-30",
+  "latestReview": "2026-10-31",
   "products": [
     {
       "ecosystems": [
@@ -869,6 +869,21 @@
       "name": "deno",
       "path": "products/generic-deno.json",
       "purl": "pkg:generic/deno",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-dockerfile",
+      "latestReview": "2026-10-31",
+      "name": "dockerfile",
+      "path": "products/generic-dockerfile.json",
+      "purl": "pkg:generic/dockerfile",
       "rules": 2,
       "type": "generic"
     },
@@ -4439,7 +4454,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 525,
+  "rules": 527,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -4468,8 +4483,8 @@
     },
     {
       "path": "types/generic.json",
-      "products": 88,
-      "rules": 295,
+      "products": 89,
+      "rules": 297,
       "type": "generic"
     },
     {

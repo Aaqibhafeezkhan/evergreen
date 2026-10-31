@@ -35,6 +35,8 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 - [Couchbase Server image release lines 7.2 and older are end-of-life](container.couchbase.eol-7.2-and-older.html) — end of life, `container.couchbase.eol-7.2-and-older`
 - [Apache CouchDB image release lines 3.3 and older are end-of-life](container.couchdb.eol-3.3-and-older.html) — end of life, `container.couchdb.eol-3.3-and-older`
 - [Debian image release lines 11 and older are end-of-life](container.debian.eol-11-and-older.html) — end of life, `container.debian.eol-11-and-older`
+- [The Dockerfile legacy "ENV key value" form is deprecated](container.dockerfile.legacy-env-format.html) — deprecated, `container.dockerfile.legacy-env-format`
+- [The Dockerfile MAINTAINER instruction is deprecated](container.dockerfile.maintainer.html) — deprecated, `container.dockerfile.maintainer`
 - [Drupal image release lines 10.5 and older are end-of-life](container.drupal.eol-10.5-and-older.html) — end of life, `container.drupal.eol-10.5-and-older`
 - [Go image release lines 1.25 and older are end-of-life](container.golang.eol-1.25-and-older.html) — end of life, `container.golang.eol-1.25-and-older`
 - [MariaDB image release lines 10.10 and older are end-of-life](container.mariadb.eol-10.10-and-older.html) — end of life, `container.mariadb.eol-10.10-and-older`

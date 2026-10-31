@@ -1,9 +1,10 @@
+import { dotnetCollector } from "./dotnet.js";
 import type { DriftCollector, DriftReport, RuntimeDrift, RuntimePin } from "./types.js";
 
 export type { DriftCollector, DriftReport, RuntimeDrift, RuntimePin } from "./types.js";
 
 /** Every built-in collector, one per runtime. Each task in the drift epic appends its own entry. */
-export const driftCollectors: DriftCollector[] = [];
+export const driftCollectors: DriftCollector[] = [dotnetCollector];
 
 /** Compares dotted numeric releases such as `3.9` and `3.11`; non-numeric parts compare as text. */
 export function compareReleases(a: string, b: string): number {
@@ -32,11 +33,23 @@ export async function analyzeDrift(root: string, collectors: readonly DriftColle
     if (pins.length === 0) continue;
     const pinned = pins.filter((pin) => pin.kind === "pin" && pin.release !== undefined);
     const releases = [...new Set(pinned.map((pin) => pin.release as string))].sort(compareReleases);
+    // A pin without a group is a group of its own; entries that share a group are alternatives, not drift.
+    const groups = new Map<string, Set<string>>();
+    for (const pin of pinned) {
+      const key = pin.group ?? `${pin.path}\u0000${pin.line}\u0000${pin.source}\u0000${pin.raw}`;
+      const alternatives = groups.get(key) ?? new Set<string>();
+      alternatives.add(pin.release as string);
+      groups.set(key, alternatives);
+    }
+    let common: Set<string> | undefined;
+    for (const alternatives of groups.values()) {
+      common = common === undefined ? new Set(alternatives) : new Set([...common].filter((release) => alternatives.has(release)));
+    }
     const lowest = releases[0];
     const floorConflicts = lowest === undefined
       ? []
       : pins.filter((pin) => pin.kind === "floor" && pin.release !== undefined && compareReleases(pin.release, lowest) > 0);
-    runtimes.push({ runtime: collector.runtime, pins, releases, drifted: releases.length > 1, floorConflicts });
+    runtimes.push({ runtime: collector.runtime, pins, releases, drifted: common !== undefined && common.size === 0, floorConflicts });
   }
   runtimes.sort((a, b) => a.runtime.localeCompare(b.runtime));
   return { schemaVersion: "evergreen.drift.v1", runtimes };

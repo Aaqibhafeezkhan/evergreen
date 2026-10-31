@@ -44,6 +44,7 @@
         "source": { "type": "string", "minLength": 1 },
         "raw": { "type": "string" },
         "kind": { "enum": ["pin", "floor"] },
+        "group": { "type": "string", "minLength": 1 },
         "release": { "type": "string", "minLength": 1 },
         "unresolved": { "type": "string", "minLength": 1 }
       }

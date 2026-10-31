@@ -23,6 +23,7 @@ Before adding a dependency, check it: call the `check_dependency` MCP tool or ru
 - [Capability manifest](https://arminazimi.github.io/evergreen/CAPABILITIES.html): how a tool or agent discovers what Evergreen can do, programmatically.
 - [Migration packets](https://arminazimi.github.io/evergreen/MIGRATION_PACKETS.html): the structured context Evergreen builds for one finding.
 - [Migration plans](https://arminazimi.github.io/evergreen/PLAN.html): waves of independent migration tasks, and a print-only dispatch example for parallel agent sessions.
+- [Upgrade check](https://arminazimi.github.io/evergreen/UPGRADE_CHECK.html): answer from files already in the repository whether a project can move to a target runtime, with each blocker, warning, and exact evidence.
 - [Verification receipts](https://arminazimi.github.io/evergreen/RECEIPTS.html): how to read and reproduce a before/after receipt for a change.
 - [Share a lifecycle report](https://arminazimi.github.io/evergreen/SHARE_REPORT.html): produce the forecast timeline and the HTML report, what they contain, and what is safe to send.
 - [Showcase](https://arminazimi.github.io/evergreen/SHOWCASE.html): embed the animated lifecycle forecast in a README and refresh it on a schedule.

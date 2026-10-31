@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "evergreen.rule.v1",
+  "id": "python.module.ossaudiodev.removed",
+  "ecosystem": "python",
+  "purl": "pkg:generic/python",
+  "affectedVersions": "vers:pypi/>=3.13",
+  "event": "removed",
+  "severity": "high",
+  "title": "The ossaudiodev module was removed in Python 3.13",
+  "summary": "Python 3.13 removed the ossaudiodev module (PEP 594), so importing it raises ModuleNotFoundError.",
+  "sources": [
+    {
+      "title": "PEP 594 — Removing dead batteries from the standard library",
+      "url": "https://peps.python.org/pep-0594/"
+    },
+    {
+      "title": "What's New in Python 3.13",
+      "url": "https://docs.python.org/3/whatsnew/3.13.html"
+    }
+  ],
+  "provenance": {
+    "observedAt": "2026-10-30",
+    "reviewedAt": "2026-10-30",
+    "reviewer": "arminazimi"
+  },
+  "migration": {
+    "constraints": [
+      "Keep the behavior of the code unchanged; replace the removed module with a maintained library or remove the dependency."
+    ],
+    "steps": [
+      {
+        "id": "replace-import",
+        "title": "Replace the ossaudiodev import",
+        "instructions": "Remove each reported import of ossaudiodev; it has no standard-library replacement.",
+        "targets": "usages"
+      }
+    ],
+    "verification": [
+      {
+        "command": "python -W error::DeprecationWarning -m pytest",
+        "purpose": "Run the tests with deprecation warnings treated as errors when pytest is used."
+      }
+    ]
+  }
+}

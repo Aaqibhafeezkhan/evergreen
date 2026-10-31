@@ -164,7 +164,7 @@ h1 {
       <p class="lede">
         Type a package or runtime name to find its reviewed lifecycle status.
         Results link to each rule's reference page and its authoritative sources.
-        This page embeds 529 rules and makes no network requests after it loads.
+        This page embeds 554 rules and makes no network requests after it loads.
       </p>
     </header>
     <main id="main">
@@ -180,7 +180,7 @@ h1 {
           aria-describedby="status"
         />
       </form>
-      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 529 lifecycle rules.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 554 lifecycle rules.</p>
       <div id="results" class="results" aria-live="polite"></div>
       <noscript>
         <p class="status">
@@ -7605,6 +7605,526 @@ h1 {
       {
         "title": "PHP supported versions",
         "url": "https://www.php.net/supported-versions.php"
+      }
+    ]
+  },
+  {
+    "id": "python.module.aifc.removed",
+    "title": "The aifc module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the aifc module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the soundfile package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.asynchat.removed",
+    "title": "The asynchat module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the asynchat module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "asyncio",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.asyncore.removed",
+    "title": "The asyncore module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the asyncore module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "asyncio",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.audioop.removed",
+    "title": "The audioop module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the audioop module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the audioop-lts package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.cgi.removed",
+    "title": "The cgi module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the cgi module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the multipart package or email.message",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.cgitb.removed",
+    "title": "The cgitb module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the cgitb module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "traceback",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.chunk.removed",
+    "title": "The chunk module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the chunk module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "struct",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.crypt.removed",
+    "title": "The crypt module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the crypt module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "hashlib or a password-hashing library such as argon2-cffi",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.distutils.removed",
+    "title": "The distutils module was removed in Python 3.12",
+    "summary": "Python 3.12 removed distutils (PEP 632), so importing it raises ModuleNotFoundError; use setuptools or another build backend.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "setuptools",
+    "sources": [
+      {
+        "title": "PEP 632 — Deprecate distutils module",
+        "url": "https://peps.python.org/pep-0632/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.imghdr.removed",
+    "title": "The imghdr module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the imghdr module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the filetype package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.imp.removed",
+    "title": "The imp module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the imp module, so importing it raises ModuleNotFoundError; use importlib.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "importlib",
+    "sources": [
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      },
+      {
+        "title": "Python 3.11 documentation: imp — Access the import internals",
+        "url": "https://docs.python.org/3.11/library/imp.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.lib2to3.removed",
+    "title": "The lib2to3 module was removed in Python 3.13",
+    "summary": "Python 3.13 removed lib2to3, so importing it raises ModuleNotFoundError; use a maintained parser such as libcst or tree-sitter.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "libcst or tree-sitter",
+    "sources": [
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      },
+      {
+        "title": "What's New in Python 3.9",
+        "url": "https://docs.python.org/3/whatsnew/3.9.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.mailcap.removed",
+    "title": "The mailcap module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the mailcap module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "mimetypes",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.msilib.removed",
+    "title": "The msilib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the msilib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.nis.removed",
+    "title": "The nis module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the nis module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.nntplib.removed",
+    "title": "The nntplib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the nntplib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.ossaudiodev.removed",
+    "title": "The ossaudiodev module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the ossaudiodev module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.pipes.removed",
+    "title": "The pipes module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the pipes module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "shlex.quote and subprocess",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.smtpd.removed",
+    "title": "The smtpd module was removed in Python 3.12",
+    "summary": "Python 3.12 removed the smtpd module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.12",
+    "replacement": "the aiosmtpd package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.12",
+        "url": "https://docs.python.org/3/whatsnew/3.12.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.sndhdr.removed",
+    "title": "The sndhdr module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the sndhdr module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the filetype package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.spwd.removed",
+    "title": "The spwd module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the spwd module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.sunau.removed",
+    "title": "The sunau module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the sunau module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the soundfile package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.telnetlib.removed",
+    "title": "The telnetlib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the telnetlib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "the telnetlib3 package",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.uu.removed",
+    "title": "The uu module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the uu module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "base64",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
+      }
+    ]
+  },
+  {
+    "id": "python.module.xdrlib.removed",
+    "title": "The xdrlib module was removed in Python 3.13",
+    "summary": "Python 3.13 removed the xdrlib module (PEP 594), so importing it raises ModuleNotFoundError.",
+    "event": "removed",
+    "severity": "high",
+    "ecosystem": "python",
+    "purl": "pkg:generic/python",
+    "vers": "vers:pypi/>=3.13",
+    "replacement": "struct",
+    "sources": [
+      {
+        "title": "PEP 594 — Removing dead batteries from the standard library",
+        "url": "https://peps.python.org/pep-0594/"
+      },
+      {
+        "title": "What's New in Python 3.13",
+        "url": "https://docs.python.org/3/whatsnew/3.13.html"
       }
     ]
   },

@@ -1,0 +1,53 @@
+{
+  "Functions": [
+    {
+      "FunctionName": "checkout-receipts",
+      "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:checkout-receipts",
+      "Runtime": "nodejs14.x",
+      "Role": "arn:aws:iam::123456789012:role/lambda-checkout",
+      "Handler": "index.handler",
+      "CodeSize": 6144,
+      "Description": "Renders order receipts",
+      "Timeout": 30,
+      "MemorySize": 1024,
+      "LastModified": "2025-05-06T11:30:00.000+0000",
+      "CodeSha256": "ZXhhbXBsZS1jaGVja291dA==",
+      "Version": "$LATEST",
+      "Environment": {
+        "Variables": {
+          "RECEIPTS_BUCKET": "placeholder-receipts-bucket"
+        }
+      },
+      "PackageType": "Zip",
+      "Architectures": ["arm64"]
+    },
+    {
+      "FunctionName": "thumbnail-renderer",
+      "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:thumbnail-renderer",
+      "Role": "arn:aws:iam::123456789012:role/lambda-thumbnails",
+      "CodeSize": 52428800,
+      "Timeout": 300,
+      "MemorySize": 4096,
+      "LastModified": "2026-09-30T09:00:00.000+0000",
+      "CodeSha256": "ZXhhbXBsZS10aHVtYm5haWxz",
+      "Version": "$LATEST",
+      "PackageType": "Image",
+      "Architectures": ["x86_64"]
+    },
+    {
+      "FunctionName": "health-probe",
+      "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:health-probe",
+      "Runtime": "nodejs26.x",
+      "Role": "arn:aws:iam::123456789012:role/lambda-health",
+      "Handler": "index.handler",
+      "CodeSize": 1024,
+      "Timeout": 10,
+      "MemorySize": 128,
+      "LastModified": "2026-10-20T07:45:00.000+0000",
+      "CodeSha256": "ZXhhbXBsZS1oZWFsdGg=",
+      "Version": "$LATEST",
+      "PackageType": "Zip",
+      "Architectures": ["arm64"]
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `evergreen inventory <file>...`: report end-of-life runtimes, engines, images, and operating systems from the exports cloud and cluster tools already produce, each with the JSON Pointer its claim rests on. Scans stay offline and read the files only. The AWS Lambda importer covers `aws lambda list-functions --output json`, and `registry/serverless.json` now has a sourced rule for every runtime the AWS Lambda runtimes page dates. (#1874)
 - Make bare `evergreen init` ask what to set up: it detects the repository's CI provider and agent hosts, shows the plan, and with one confirmation (or `--yes` for scripts) writes a GitHub Actions workflow, the pre-push hook, and the Evergreen agent section; GitLab repositories get the component include to add. (`#1266`)
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)

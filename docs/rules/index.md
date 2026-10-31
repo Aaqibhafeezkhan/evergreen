@@ -563,12 +563,58 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 
 ## serverless
 
+- [AWS Lambda .NET 10 runtime reaches end of life on 2028-11-14](serverless.aws-lambda.dotnet10.html) — scheduled end of life, `serverless.aws-lambda.dotnet10`
+- [AWS Lambda .NET 5 (container only) runtime is end-of-life](serverless.aws-lambda.dotnet5.0.html) — end of life, `serverless.aws-lambda.dotnet5.0`
+- [AWS Lambda .NET 6 runtime is end-of-life](serverless.aws-lambda.dotnet6.html) — end of life, `serverless.aws-lambda.dotnet6`
+- [AWS Lambda .NET 7 (container only) runtime is end-of-life](serverless.aws-lambda.dotnet7.html) — end of life, `serverless.aws-lambda.dotnet7`
+- [AWS Lambda .NET 8 runtime reaches end of life on 2026-11-10](serverless.aws-lambda.dotnet8.html) — scheduled end of life, `serverless.aws-lambda.dotnet8`
+- [AWS Lambda .NET 9 (container only) runtime reaches end of life on 2026-11-10](serverless.aws-lambda.dotnet9.html) — scheduled end of life, `serverless.aws-lambda.dotnet9`
+- [AWS Lambda .NET Core 1.0 runtime is end-of-life](serverless.aws-lambda.dotnetcore1.0.html) — end of life, `serverless.aws-lambda.dotnetcore1.0`
+- [AWS Lambda .NET Core 2.0 runtime is end-of-life](serverless.aws-lambda.dotnetcore2.0.html) — end of life, `serverless.aws-lambda.dotnetcore2.0`
+- [AWS Lambda .NET Core 2.1 runtime is end-of-life](serverless.aws-lambda.dotnetcore2.1.html) — end of life, `serverless.aws-lambda.dotnetcore2.1`
 - [AWS Lambda .NET Core 3.1 runtime is end-of-life](serverless.aws-lambda.dotnetcore3.1.html) — end of life, `serverless.aws-lambda.dotnetcore3.1`
+- [AWS Lambda Go 1.x runtime is end-of-life](serverless.aws-lambda.go1.x.html) — end of life, `serverless.aws-lambda.go1.x`
+- [AWS Lambda Java 11 (Amazon Linux 2) runtime reaches end of life on 2027-06-30](serverless.aws-lambda.java11.html) — scheduled end of life, `serverless.aws-lambda.java11`
+- [AWS Lambda Java 11 (Amazon Linux 2023) runtime reaches end of life on 2029-06-30](serverless.aws-lambda.java11.al2023.html) — scheduled end of life, `serverless.aws-lambda.java11.al2023`
+- [AWS Lambda Java 17 (Amazon Linux 2) runtime reaches end of life on 2027-06-30](serverless.aws-lambda.java17.html) — scheduled end of life, `serverless.aws-lambda.java17`
+- [AWS Lambda Java 17 (Amazon Linux 2023) runtime reaches end of life on 2029-06-30](serverless.aws-lambda.java17.al2023.html) — scheduled end of life, `serverless.aws-lambda.java17.al2023`
+- [AWS Lambda Java 21 runtime reaches end of life on 2029-06-30](serverless.aws-lambda.java21.html) — scheduled end of life, `serverless.aws-lambda.java21`
+- [AWS Lambda Java 25 runtime reaches end of life on 2029-06-30](serverless.aws-lambda.java25.html) — scheduled end of life, `serverless.aws-lambda.java25`
+- [AWS Lambda Java 8 (Amazon Linux) runtime is end-of-life](serverless.aws-lambda.java8.html) — end of life, `serverless.aws-lambda.java8`
+- [AWS Lambda Java 8 (Amazon Linux 2) runtime reaches end of life on 2027-06-30](serverless.aws-lambda.java8.al2.html) — scheduled end of life, `serverless.aws-lambda.java8.al2`
+- [AWS Lambda Java 8 (Amazon Linux 2023) runtime reaches end of life on 2029-06-30](serverless.aws-lambda.java8.al2023.html) — scheduled end of life, `serverless.aws-lambda.java8.al2023`
+- [AWS Lambda Node.js 0.10 runtime is end-of-life](serverless.aws-lambda.nodejs.html) — end of life, `serverless.aws-lambda.nodejs`
+- [AWS Lambda Node.js 10 runtime is end-of-life](serverless.aws-lambda.nodejs10.x.html) — end of life, `serverless.aws-lambda.nodejs10.x`
 - [AWS Lambda Node.js 12 runtime is end-of-life](serverless.aws-lambda.nodejs12.x.html) — end of life, `serverless.aws-lambda.nodejs12.x`
 - [AWS Lambda Node.js 14 runtime is end-of-life](serverless.aws-lambda.nodejs14.x.html) — end of life, `serverless.aws-lambda.nodejs14.x`
+- [AWS Lambda Node.js 16 runtime is end-of-life](serverless.aws-lambda.nodejs16.x.html) — end of life, `serverless.aws-lambda.nodejs16.x`
+- [AWS Lambda Node.js 18 runtime is end-of-life](serverless.aws-lambda.nodejs18.x.html) — end of life, `serverless.aws-lambda.nodejs18.x`
+- [AWS Lambda Node.js 20 runtime is end-of-life](serverless.aws-lambda.nodejs20.x.html) — end of life, `serverless.aws-lambda.nodejs20.x`
+- [AWS Lambda Node.js 22 runtime reaches end of life on 2027-04-30](serverless.aws-lambda.nodejs22.x.html) — scheduled end of life, `serverless.aws-lambda.nodejs22.x`
+- [AWS Lambda Node.js 24 runtime reaches end of life on 2028-04-30](serverless.aws-lambda.nodejs24.x.html) — scheduled end of life, `serverless.aws-lambda.nodejs24.x`
+- [AWS Lambda Node.js 4.3 runtime is end-of-life](serverless.aws-lambda.nodejs4.3.html) — end of life, `serverless.aws-lambda.nodejs4.3`
+- [AWS Lambda Node.js 4.3 edge runtime is end-of-life](serverless.aws-lambda.nodejs4.3-edge.html) — end of life, `serverless.aws-lambda.nodejs4.3-edge`
+- [AWS Lambda Node.js 6.10 runtime is end-of-life](serverless.aws-lambda.nodejs6.10.html) — end of life, `serverless.aws-lambda.nodejs6.10`
+- [AWS Lambda Node.js 8.10 runtime is end-of-life](serverless.aws-lambda.nodejs8.10.html) — end of life, `serverless.aws-lambda.nodejs8.10`
+- [AWS Lambda OS-only runtime provided runtime is end-of-life](serverless.aws-lambda.provided.html) — end of life, `serverless.aws-lambda.provided`
+- [AWS Lambda OS-only runtime provided.al2 runtime is end-of-life](serverless.aws-lambda.provided.al2.html) — end of life, `serverless.aws-lambda.provided.al2`
+- [AWS Lambda OS-only runtime provided.al2023 runtime reaches end of life on 2029-06-30](serverless.aws-lambda.provided.al2023.html) — scheduled end of life, `serverless.aws-lambda.provided.al2023`
+- [AWS Lambda Python 2.7 runtime is end-of-life](serverless.aws-lambda.python2.7.html) — end of life, `serverless.aws-lambda.python2.7`
+- [AWS Lambda Python 3.10 runtime reaches end of life on 2026-10-31](serverless.aws-lambda.python3.10.html) — scheduled end of life, `serverless.aws-lambda.python3.10`
+- [AWS Lambda Python 3.11 runtime reaches end of life on 2027-06-30](serverless.aws-lambda.python3.11.html) — scheduled end of life, `serverless.aws-lambda.python3.11`
+- [AWS Lambda Python 3.12 runtime reaches end of life on 2028-10-31](serverless.aws-lambda.python3.12.html) — scheduled end of life, `serverless.aws-lambda.python3.12`
+- [AWS Lambda Python 3.13 runtime reaches end of life on 2029-06-30](serverless.aws-lambda.python3.13.html) — scheduled end of life, `serverless.aws-lambda.python3.13`
+- [AWS Lambda Python 3.14 runtime reaches end of life on 2029-06-30](serverless.aws-lambda.python3.14.html) — scheduled end of life, `serverless.aws-lambda.python3.14`
+- [AWS Lambda Python 3.6 runtime is end-of-life](serverless.aws-lambda.python3.6.html) — end of life, `serverless.aws-lambda.python3.6`
 - [AWS Lambda Python 3.7 runtime is end-of-life](serverless.aws-lambda.python3.7.html) — end of life, `serverless.aws-lambda.python3.7`
 - [AWS Lambda Python 3.8 runtime is end-of-life](serverless.aws-lambda.python3.8.html) — end of life, `serverless.aws-lambda.python3.8`
+- [AWS Lambda Python 3.9 runtime is end-of-life](serverless.aws-lambda.python3.9.html) — end of life, `serverless.aws-lambda.python3.9`
+- [AWS Lambda Ruby 2.5 runtime is end-of-life](serverless.aws-lambda.ruby2.5.html) — end of life, `serverless.aws-lambda.ruby2.5`
 - [AWS Lambda Ruby 2.7 runtime is end-of-life](serverless.aws-lambda.ruby2.7.html) — end of life, `serverless.aws-lambda.ruby2.7`
+- [AWS Lambda Ruby 3.2 runtime is end-of-life](serverless.aws-lambda.ruby3.2.html) — end of life, `serverless.aws-lambda.ruby3.2`
+- [AWS Lambda Ruby 3.3 runtime reaches end of life on 2027-03-31](serverless.aws-lambda.ruby3.3.html) — scheduled end of life, `serverless.aws-lambda.ruby3.3`
+- [AWS Lambda Ruby 3.4 runtime reaches end of life on 2028-03-31](serverless.aws-lambda.ruby3.4.html) — scheduled end of life, `serverless.aws-lambda.ruby3.4`
+- [AWS Lambda Ruby 4.0 runtime reaches end of life on 2029-03-31](serverless.aws-lambda.ruby4.0.html) — scheduled end of life, `serverless.aws-lambda.ruby4.0`
 - [Google Cloud Functions Node.js 14 runtime is end-of-life](serverless.google-cloud-functions.nodejs14.html) — end of life, `serverless.google-cloud-functions.nodejs14`
 
 ## shell

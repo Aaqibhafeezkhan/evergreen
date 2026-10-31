@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { after, test } from "node:test";
@@ -127,6 +127,18 @@ test("the text report groups findings and keeps no-data items in their own secti
   assert.match(text, /No data \(Evergreen has no rule for these; that does not mean they are safe\)/);
   assert.match(text, /unknown/);
   assert.match(text, /\/objects\/1\/version/);
+});
+
+test("inventory code never imports a socket, HTTP, or child-process module, and never calls fetch", async () => {
+  const directory = resolve("src/inventory");
+  for (const name of await readdir(directory)) {
+    if (!name.endsWith(".ts")) continue;
+    const text = await readFile(join(directory, name), "utf8");
+    for (const module of ["node:child_process", "node:http", "node:https", "node:net"]) {
+      assert.ok(!text.includes(`"${module}"`), `${name} imports ${module}`);
+    }
+    assert.ok(!/\bfetch\s*\(/.test(text), `${name} calls fetch`);
+  }
 });
 
 test("a report validates against schemas/inventory.v1.schema.json", async () => {

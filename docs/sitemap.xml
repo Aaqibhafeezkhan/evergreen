@@ -101,6 +101,23 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/dart.sdk.end-of-support-3.12.html</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/dart.sdk.end-of-support-3.8.html</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/dart.sdk.end-of-support-3.9.html</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-mysql.end-of-support-5.6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-mysql.end-of-support-5.7.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.end-of-support-11.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.end-of-support-12.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.end-of-support-13.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.scheduled-end-of-support-14.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-elasticache-redis.end-of-support-4.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-elasticache-redis.end-of-support-5.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-elasticache-redis.scheduled-end-of-support-6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-mysql.end-of-support-5.7.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-mysql.end-of-support-8.0.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-10.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-11.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-12.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-13.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-9.6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.scheduled-end-of-support-14.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/database.azure-mysql.standard-support-ended-5.7.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/database.azure-postgresql.standard-support-ended-11-to-13.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/database.google-cloud-sql-mysql.extended-support-5.6-to-5.7.html</loc><lastmod>2026-10-26</lastmod></url>

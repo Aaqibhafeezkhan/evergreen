@@ -73,6 +73,23 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 
 ## database
 
+- [Aurora MySQL version 1 is past end of standard support](database.aws-aurora-mysql.end-of-support-5.6.html) — end of support, `database.aws-aurora-mysql.end-of-support-5.6`
+- [Aurora MySQL version 2 is past end of standard support](database.aws-aurora-mysql.end-of-support-5.7.html) — end of support, `database.aws-aurora-mysql.end-of-support-5.7`
+- [Aurora PostgreSQL 11 is past end of standard support](database.aws-aurora-postgresql.end-of-support-11.html) — end of support, `database.aws-aurora-postgresql.end-of-support-11`
+- [Aurora PostgreSQL 12 is past end of standard support](database.aws-aurora-postgresql.end-of-support-12.html) — end of support, `database.aws-aurora-postgresql.end-of-support-12`
+- [Aurora PostgreSQL 13 is past end of standard support](database.aws-aurora-postgresql.end-of-support-13.html) — end of support, `database.aws-aurora-postgresql.end-of-support-13`
+- [Aurora PostgreSQL 14 reaches end of standard support on 2027-02-28](database.aws-aurora-postgresql.scheduled-end-of-support-14.html) — scheduled end of life, `database.aws-aurora-postgresql.scheduled-end-of-support-14`
+- [ElastiCache for Redis OSS 4 is past end of standard support](database.aws-elasticache-redis.end-of-support-4.html) — end of support, `database.aws-elasticache-redis.end-of-support-4`
+- [ElastiCache for Redis OSS 5 is past end of standard support](database.aws-elasticache-redis.end-of-support-5.html) — end of support, `database.aws-elasticache-redis.end-of-support-5`
+- [ElastiCache for Redis OSS 6 reaches end of standard support on 2027-01-31](database.aws-elasticache-redis.scheduled-end-of-support-6.html) — scheduled end of life, `database.aws-elasticache-redis.scheduled-end-of-support-6`
+- [RDS for MySQL 5.7 is past end of standard support](database.aws-rds-mysql.end-of-support-5.7.html) — end of support, `database.aws-rds-mysql.end-of-support-5.7`
+- [RDS for MySQL 8.0 is past end of standard support](database.aws-rds-mysql.end-of-support-8.0.html) — end of support, `database.aws-rds-mysql.end-of-support-8.0`
+- [RDS for PostgreSQL 10 is past end of standard support](database.aws-rds-postgres.end-of-support-10.html) — end of support, `database.aws-rds-postgres.end-of-support-10`
+- [RDS for PostgreSQL 11 is past end of standard support](database.aws-rds-postgres.end-of-support-11.html) — end of support, `database.aws-rds-postgres.end-of-support-11`
+- [RDS for PostgreSQL 12 is past end of standard support](database.aws-rds-postgres.end-of-support-12.html) — end of support, `database.aws-rds-postgres.end-of-support-12`
+- [RDS for PostgreSQL 13 is past end of standard support](database.aws-rds-postgres.end-of-support-13.html) — end of support, `database.aws-rds-postgres.end-of-support-13`
+- [RDS for PostgreSQL 9.6 is past end of standard support](database.aws-rds-postgres.end-of-support-9.6.html) — end of support, `database.aws-rds-postgres.end-of-support-9.6`
+- [RDS for PostgreSQL 14 reaches end of standard support on 2027-02-28](database.aws-rds-postgres.scheduled-end-of-support-14.html) — scheduled end of life, `database.aws-rds-postgres.scheduled-end-of-support-14`
 - [Azure Database for MySQL 5.7 is past standard support](database.azure-mysql.standard-support-ended-5.7.html) — end of support, `database.azure-mysql.standard-support-ended-5.7`
 - [Azure Database for PostgreSQL 11, 12, and 13 are past standard support](database.azure-postgresql.standard-support-ended-11-to-13.html) — end of support, `database.azure-postgresql.standard-support-ended-11-to-13`
 - [Cloud SQL for MySQL 5.6 and 5.7 are in extended support](database.google-cloud-sql-mysql.extended-support-5.6-to-5.7.html) — end of support, `database.google-cloud-sql-mysql.extended-support-5.6-to-5.7`

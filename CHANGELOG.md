@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Add `evergreen inventory <file>...` to report the lifecycle of what is deployed from exports that cloud and cluster tools already produce. It reads only the files given and never calls a provider API. (#1875)
+- Add `evergreen inventory <file>...` to report the lifecycle of what is deployed from exports that cloud and cluster tools already produce. It reads only the files given and never calls a provider API. The first importer reads `aws rds describe-db-instances`, `aws rds describe-db-clusters`, and `aws elasticache describe-cache-clusters` output for RDS, Aurora, and ElastiCache engines. (#1875)
 - Make bare `evergreen init` ask what to set up: it detects the repository's CI provider and agent hosts, shows the plan, and with one confirmation (or `--yes` for scripts) writes a GitHub Actions workflow, the pre-push hook, and the Evergreen agent section; GitLab repositories get the component include to add. (`#1266`)
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)

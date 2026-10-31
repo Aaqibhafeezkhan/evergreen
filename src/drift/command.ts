@@ -54,6 +54,12 @@ function refusal(pin: RuntimePin): string {
   return pin.source === "Gemfile.lock RUBY VERSION" ? "regenerate the lockfile" : "no automatic replacement";
 }
 
+/** A trailing newline is not a line of its own; leaving it in adds a context line that `git apply` rejects. */
+function withoutFinalNewline(text: string): string {
+  if (text.endsWith("\r\n")) return text.slice(0, -2);
+  return text.endsWith("\n") ? text.slice(0, -1) : text;
+}
+
 async function renderAlignment(report: DriftReport, collectors: readonly DriftCollector[], root: string, release: string): Promise<number> {
   const byRuntime = new Map(collectors.map((collector) => [collector.runtime, collector]));
   const files = new Map<string, string | undefined>();
@@ -90,8 +96,11 @@ async function renderAlignment(report: DriftReport, collectors: readonly DriftCo
         process.stderr.write(`refused ${pin.path}:${pin.line} (${pin.source}): ${refusal(pin)}\n`);
         continue;
       }
+      if (replacement === lineText) continue;
       lines[pin.line - 1] = replacement;
-      process.stdout.write(`${renderDiff(pin.path, contents, lines.join(eol))}\n`);
+      const after = lines.join(eol);
+      files.set(pin.path, after);
+      process.stdout.write(`${renderDiff(pin.path, withoutFinalNewline(contents), withoutFinalNewline(after))}\n`);
     }
   }
   return 0;

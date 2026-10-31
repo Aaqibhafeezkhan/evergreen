@@ -19,3 +19,22 @@ Each runtime block lists every value with its `path:line`, the file or field it 
 ## Adding a collector
 
 One collector per runtime lives in `src/drift/<runtime>.ts`, reuses the parsers the detectors already have, and is registered once in `driftCollectors` in `src/drift/index.ts`. Each section below names the sources it reads, its release granularity, what it refuses to resolve, and which file it can align.
+
+## Ruby
+
+Reads, at any depth:
+
+- `.ruby-version`, including the rbenv `ruby-3.3.1` and `3.3.1p123` forms.
+- `.tool-versions` `ruby` lines, including several fallback versions.
+- `Gemfile`: an exact `ruby "3.3.0"` is a pin; a literal requirement such as `ruby ">= 3.1.0"` or `ruby "~> 3.2"` is a floor.
+- `Gemfile.lock` `RUBY VERSION`.
+- `*.gemspec`: a literal `required_ruby_version`, such as `">= 3.1.0"` or `"~> 3.2"`, as a floor.
+- `Dockerfile*` and `Containerfile*`: `FROM ruby:<tag>` and a literal `RUN asdf install ruby <version>`.
+- `.github/workflows/*.yml`: the `ruby-version` input of `ruby/setup-ruby`.
+- `.gitlab-ci.yml` `image:` values and `.circleci/config.yml` `docker:` images for the official `ruby` and `cimg/ruby` images.
+
+Release granularity is `major.minor` (`3.3`).
+
+Unresolved values are reported with the reason and excluded from the drift comparison: `system`, `latest`, an image without a tag, a moving image tag, a `${{ matrix.* }}` expression, and a requirement that states no minimum.
+
+`align <release>` rewrites `.ruby-version`, a single-value `.tool-versions` ruby line, an exact `Gemfile` `ruby` directive, a `ruby/setup-ruby` `ruby-version` input, and the tag of a Dockerfile, GitLab CI, or CircleCI image. It refuses floors, ranges, image digests, and multi-value lines. `Gemfile.lock` is reported and refused with "regenerate the lockfile": Bundler owns that file.

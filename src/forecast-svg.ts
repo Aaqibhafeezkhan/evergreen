@@ -4,6 +4,8 @@ import type { Severity } from "./domain.js";
 export interface ForecastSvgOptions {
   /** Total width in pixels. Defaults to 720. */
   width?: number;
+  /** Grow the bars in date order and pulse the today marker with CSS. Defaults to false. */
+  animate?: boolean;
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -55,9 +57,13 @@ function describe(event: ForecastEvent): string {
  * A self-contained SVG timeline of the forecast: one marker per event, larger when the event affects the scanned
  * repository. No script, no fonts, and no external references, so it renders under `default-src 'none'` and reads in
  * light and dark through CSS custom properties.
+ *
+ * With `animate`, each event gets a bar from today to its date that grows in date order, and the today marker
+ * pulses twice. Both use CSS keyframes only; `prefers-reduced-motion` shows the final frame immediately.
  */
 export function renderForecastSvg(forecast: Forecast, options: ForecastSvgOptions = {}): string {
   const width = Number.isFinite(options.width) ? Math.max(320, Math.round(options.width!)) : 720;
+  const animate = options.animate === true;
   const inner = width - LEFT - RIGHT;
   const start = dayNumber(forecast.today);
   const span = dayNumber(forecast.until) - start;
@@ -74,6 +80,29 @@ export function renderForecastSvg(forecast: Forecast, options: ForecastSvgOption
     const affecting = event.findings.length > 0;
     return `<circle class="forecast-event ${event.severity}${affecting ? " affecting" : ""}" cx="${xFor(event.date).toFixed(1)}" cy="${laneY(event.severity)}" r="${affecting ? 7 : 4}"><title>${escape(describe(event))}</title></circle>`;
   });
+  const stagger = events.length > 1 ? Math.min(90, Math.floor(5000 / (events.length - 1))) : 0;
+  const bars = animate
+    ? events.map((event, index) => {
+        const barWidth = xFor(event.date) - LEFT;
+        if (barWidth < 2) return "";
+        const affecting = event.findings.length > 0;
+        const barHeight = affecting ? 5 : 3;
+        return `<rect class="forecast-bar ${event.severity}${affecting ? " affecting" : ""}" x="${LEFT}" y="${(laneY(event.severity) - barHeight / 2).toFixed(1)}" width="${barWidth.toFixed(1)}" height="${barHeight}" rx="${barHeight / 2}" style="animation-delay:${index * stagger}ms"/>`;
+      })
+    : [];
+  const today = animate
+    ? `<g class="forecast-today"><line x1="${LEFT}" y1="${LANE_TOP - 12}" x2="${LEFT}" y2="${AXIS_Y}"/><text x="${LEFT + 4}" y="${LANE_TOP - 6}">today</text></g>`
+    : "";
+  const animationStyles = animate
+    ? [
+        ".evergreen-forecast .forecast-bar{opacity:.35;transform-box:fill-box;transform-origin:left center;animation:forecast-grow .5s cubic-bezier(.2,.8,.2,1) both}",
+        ".evergreen-forecast .forecast-today{animation:forecast-pulse 1.2s ease-in-out 2}",
+        ".evergreen-forecast .forecast-today line{stroke:var(--muted);stroke-dasharray:2 3}.evergreen-forecast .forecast-today text{fill:var(--muted);font-size:9px}",
+        "@keyframes forecast-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}",
+        "@keyframes forecast-pulse{0%,100%{opacity:1}50%{opacity:.2}}",
+        "@media (prefers-reduced-motion:reduce){.evergreen-forecast .forecast-bar,.evergreen-forecast .forecast-today{animation:none}}",
+      ]
+    : [];
   const keys = monthKeys(forecast.today, forecast.until);
   const labelEvery = Math.max(1, Math.ceil(keys.length / Math.max(1, Math.floor(inner / 64))));
   const ticks = keys.map((month, index) => {
@@ -99,6 +128,7 @@ export function renderForecastSvg(forecast: Forecast, options: ForecastSvgOption
     ".evergreen-forecast .forecast-event{stroke:var(--bg);stroke-width:1.5}",
     ".evergreen-forecast .critical,.evergreen-forecast .high{fill:var(--critical)}",
     ".evergreen-forecast .medium{fill:var(--medium)}.evergreen-forecast .low{fill:var(--low)}.evergreen-forecast .info{fill:var(--info)}",
+    ...animationStyles,
     "</style>",
     '<rect class="forecast-background" width="100%" height="100%"/>',
     `<text x="${PAD}" y="30" font-size="15" font-weight="700">End-of-life forecast</text>`,
@@ -106,6 +136,8 @@ export function renderForecastSvg(forecast: Forecast, options: ForecastSvgOption
     ...severityOrder.map((severity, index) => `<text class="forecast-muted" x="8" y="${LANE_TOP + index * LANE_HEIGHT + 4}" font-size="9">${severity}</text>`),
     `<line class="forecast-line" x1="${LEFT}" y1="${AXIS_Y}" x2="${width - RIGHT}" y2="${AXIS_Y}"/>`,
     ...ticks,
+    ...bars,
+    today,
     ...markers,
     "</svg>",
   ].join("");

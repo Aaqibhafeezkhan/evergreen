@@ -291,10 +291,13 @@ Each tool has an `outputSchema` (the published JSON Schema in [`schemas/`](https
 | `create_migration_context` | `finding_id`, `repository_path?` | `evergreen.context.v1` (`context.v1.schema.json`) | Validated, rule-specific migration packet. |
 | `verify_migration` | `finding_id`, `repository_path?` | `evergreen.verification.v1` (`verification.v1.schema.json`) | Re-scan and check a finding observed earlier in the session. |
 | `check_dependency` | `purl`, `version?` | `evergreen.check.v1` (`check.v1.schema.json`) | Check one package before adding it; reads no repository. |
+| `check_upgrade` | `target`, `path?` | `evergreen.upgrade.v1` (`upgrade.v1.schema.json`) | Whether the project can move to a target runtime, from lockfiles and manifests; `unknown` means no evidence was found, not that the upgrade is safe. |
 | `forecast_repository` | `repository_path?`, `months?`, `as_of?` | `evergreen.forecast.v1` (`forecast.v1.schema.json`) | What reaches a dated end of life in the next months, grouped by month, with the repository's findings each event affects. |
 | `plan_migrations` | `repository_path?` | `evergreen.plan.v1` (`plan.v1.schema.json`) | Migration plan: waves of independent tasks a coordinating agent can hand out. |
 
 `repository_path` defaults to the server's current working directory. Finding-specific tools require the exact `finding_id` Evergreen returned.
+
+`check_upgrade` takes `target` as `runtime@version`, for example `php@8.4`, and reads only files already in the repository. It never installs a runtime, runs Composer, or uses the network. When no analyzer finds evidence for that runtime, the verdict is `unknown` and the tool says so; that is not a statement that the upgrade is safe.
 
 ### Planning ahead with the forecast
 
@@ -2715,9 +2718,12 @@ Open `report.html` in a browser, attach it to an issue, or paste it into chat. T
 
 - The repository path Evergreen scanned and when the scan ran.
 - A severity summary and every finding: title, severity, exact file path and line, rule id, replacement, and migration notes.
+- A treemap that sizes each directory and file by its severity-weighted findings (critical 8, high 4, medium 2, low 1, info 0.5) and colors it by its highest severity; each rectangle links to that file's findings below and shows its path and counts on hover or focus.
 - Authoritative source links for each finding (for example the Node.js release schedule or a GitHub changelog entry).
 - A "Next 12 months" forecast chart of dated end-of-life events in that window.
 - The full scan document in a `<script type="application/json" id="evergreen-report">` block for anyone who wants the machine-readable form.
+
+![Evergreen HTML report treemap sizing directories and files by severity-weighted finding count and coloring each rectangle by its highest severity](assets/screenshots/treemap.webp)
 
 On `examples/demo`, the report lists findings such as "Unsupported actions/checkout runtime" at `.github/workflows/ci.yml:9` and "request is deprecated" at `package.json`, each with its source URLs.
 
@@ -2726,6 +2732,112 @@ On `examples/demo`, the report lists findings such as "Unsupported actions/check
 The HTML file (and the timeline text) can include repository-relative paths, finding titles, short excerpts Evergreen already printed, and public evidence URLs. It does not include credentials, environment variables, or file contents beyond those finding fields. Evergreen does not open a network connection for `scan` or `forecast`, does not call home, and does not upload the report anywhere — sharing is only whatever you do with the file or the terminal output after the command finishes.
 
 For the broader privacy contract, see [Privacy](PRIVACY.md).
+
+---
+
+Source: https://arminazimi.github.io/evergreen/SHOWCASE.html
+
+# Showcase
+
+Short, copy-pasteable ways to show what Evergreen found. Every command runs locally against files on disk; nothing is uploaded and no scan uses the network. The examples use the deliberately outdated project at `examples/demo` in this repository.
+
+## Mermaid support windows
+
+```bash
+npx evergreen-deprecation scan --format mermaid --as-of 2026-10-30 examples/demo
+```
+
+Prints a fenced `mermaid` block containing a Gantt chart: one section per ecosystem and one bar per subject from the day the scan observed it to its deadline. A subject that has already ended is a `crit` milestone at its deadline; one that ends within 30 days is a `crit` bar. A `today` milestone follows `--as-of`. Paste the whole block into a README, an issue, or a pull request comment and GitHub renders the chart without an image file.
+
+```mermaid
+gantt
+    title Evergreen support windows
+    dateFormat YYYY-MM-DD
+    axisFormat %Y-%m
+    todayMarker off
+
+    section github-actions
+    Unsupported actions/checkout runtime :crit, milestone, bar0, 2026-09-23, 0d
+
+    section nodejs
+    Node.js 19 is end-of-life :crit, milestone, bar1, 2023-06-01, 0d
+    Node.js 18 is end-of-life :crit, milestone, bar2, 2025-04-30, 0d
+    Node.js 20 is end-of-life :crit, milestone, bar3, 2026-04-30, 0d
+
+    section npm
+    request is deprecated :crit, milestone, bar4, 2020-02-11, 0d
+
+    section today
+    today 2026-10-30 : milestone, marker, 2026-10-30, 0d
+```
+
+`--as-of <YYYY-MM-DD>` moves the bars and the `today` milestone together, so the same date always prints the same chart. The chart draws at most 40 bars and ends with a line such as `and 3 more`; `--format json` still lists every finding. Use it when a pull request or a README should show when support for what the repository uses runs out.
+
+The same chart is available for the look-ahead window:
+
+```bash
+npx evergreen-deprecation forecast --format mermaid --as-of 2026-10-30 examples/demo
+```
+
+`forecast --format mermaid` draws one bar per dated event in the forecast window, grouped by ecosystem, instead of only the findings in this repository.
+
+The GitHub Action's pull request comment is raw Markdown, so a Mermaid block renders there too. The built-in comment does not include the chart or accept a comment template yet, so paste the command's output into a comment, or add a workflow step that writes it.
+
+## Animated forecast for a README
+
+`evergreen forecast --svg --animate` draws the coming months as a self-contained SVG: one bar from today to each dated lifecycle event, in date order, and a today marker that pulses twice. Bars follow the severity lanes, the file reads in light and dark through `prefers-color-scheme`, and `prefers-reduced-motion: reduce` shows the final frame immediately. The SVG contains no script, no `<foreignObject>`, and no external references.
+
+```bash
+npx evergreen-deprecation forecast . --months 12 --svg --animate > docs/forecast.svg
+```
+
+Commit `docs/forecast.svg`, then embed it in the README:
+
+```markdown
+![Lifecycle forecast](docs/forecast.svg)
+```
+
+Use HTML when the image needs a width or a longer description:
+
+```html
+<img src="docs/forecast.svg" width="720" alt="Lifecycle forecast: dated end-of-life events in the next twelve months">
+```
+
+Without `--animate`, the command prints the marker-only timeline that the HTML report embeds, with no animation block. `--as-of <YYYY-MM-DD>` fixes the window when you need the file to stay byte-identical, for example in a test or a release note.
+
+### Refresh it on a schedule
+
+A scheduled GitHub Actions workflow can regenerate the file and commit it when the forecast changes. The scan is local, so the job only needs a checkout, Node.js 22, and `contents: write` to push the refreshed file.
+
+```yaml
+name: Refresh lifecycle forecast
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npx --yes evergreen-deprecation@0.8.0 forecast . --svg --animate > docs/forecast.svg
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/forecast.svg
+          git diff --cached --quiet || git commit -m "docs: refresh the lifecycle forecast"
+          git push
+```
+
+Pin the Evergreen release you use instead of always taking the latest. If the default branch is protected, open a pull request from the workflow instead of pushing to it. GitHub caches README images, so a refreshed file can take a few minutes to appear; the commit is the refresh.
 
 ---
 
@@ -4648,14 +4760,14 @@ A citable summary of lifecycle risk in Evergreen's public benchmark corpus: ever
 ## Findings
 
 <!-- state-of-eol:start -->
-Measured on the public corpus of 457 pinned repositories (2316 expected findings). The last full corpus run was commit `c7b4e14` on 2026-10-24 (456 repositories, precision 1, recall 1). Method: [Validation](VALIDATION.md). Corpus: [`benchmarks/public-repositories.json`](../benchmarks/public-repositories.json). Regenerate with `npm run build:coverage` after `npm run record:corpus-run`.
+Measured on the public corpus of 457 pinned repositories (2324 expected findings). The last full corpus run was commit `c7b4e14` on 2026-10-24 (456 repositories, precision 1, recall 1). Method: [Validation](VALIDATION.md). Corpus: [`benchmarks/public-repositories.json`](../benchmarks/public-repositories.json). Regenerate with `npm run build:coverage` after `npm run record:corpus-run`.
 
 | Measure | Value |
 | --- | ---: |
 | Repositories | 457 |
-| Expected findings | 2316 |
+| Expected findings | 2324 |
 | Products with findings | 122 |
-| Release lines with findings | 172 |
+| Release lines with findings | 173 |
 
 ### By product
 
@@ -4686,6 +4798,7 @@ Measured on the public corpus of 457 pinned repositories (2316 expected findings
 | actions/create-github-app-token | 15 | 1 | 2 |
 | docker/build-push-action | 15 | 1 | 8 |
 | kubernetes/extensions/Deployment | 15 | 1 | 4 |
+| terraform | 15 | 3 | 6 |
 | @angular/core | 13 | 2 | 2 |
 | actions/github-script | 13 | 1 | 8 |
 | azure-pipelines/ubuntu-image | 13 | 2 | 7 |
@@ -4706,7 +4819,6 @@ Measured on the public corpus of 457 pinned repositories (2316 expected findings
 | docker/metadata-action | 7 | 1 | 3 |
 | docker/setup-qemu-action | 7 | 1 | 6 |
 | mysql | 7 | 1 | 4 |
-| terraform | 7 | 2 | 5 |
 | actions/stale | 6 | 1 | 6 |
 | astral-sh/setup-uv | 6 | 1 | 3 |
 | ios | 6 | 1 | 2 |
@@ -4839,6 +4951,7 @@ Measured on the public corpus of 457 pinned repositories (2316 expected findings
 | kubernetes/apps/Deployment | Deployment apps/v1beta1 is no longer served | [`kubernetes.apps.deployment.v1beta1.removed`](rules/kubernetes.apps.deployment.v1beta1.removed.html) | removed | 8 | 2 |
 | library/golang | Go image release lines 1.25 and older are end-of-life | [`container.golang.eol-1.25-and-older`](rules/container.golang.eol-1.25-and-older.html) | end-of-life | 8 | 7 |
 | node-sass | Node Sass is end-of-life | [`npm.package.node-sass.eol`](rules/npm.package.node-sass.eol.html) | end-of-life | 8 | 8 |
+| terraform | Interpolation-only strings are deprecated | [`terraform.syntax.interpolation-only`](rules/terraform.syntax.interpolation-only.html) | deprecated | 8 | 1 |
 | atty | atty is no longer maintained | [`rust.crate.atty.unmaintained`](rules/rust.crate.atty.unmaintained.html) | deprecated | 7 | 6 |
 | docker/metadata-action | Unsupported docker/metadata-action runtime | [`github-actions.metadata-action.node20`](rules/github-actions.metadata-action.node20.html) | end-of-support | 7 | 3 |
 | docker/setup-qemu-action | Unsupported docker/setup-qemu-action runtime | [`github-actions.setup-qemu-action.node20`](rules/github-actions.setup-qemu-action.node20.html) | end-of-support | 7 | 6 |

@@ -159,6 +159,22 @@ Scans both refs and reports the findings the change introduced and the ones it f
 | `[path]` | Repository path. Default `.`. |
 | `--json` | Print the structured diff. |
 
+### `drift`
+
+```bash
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
+```
+
+Reports every place a repository states a runtime version, with its exact file and line, the release it resolves to offline, and whether the versions agree. It reads files only: nothing is executed, no network is used, and no file is written. See [Runtime drift](DRIFT.md) for the sources each runtime reads.
+
+| Flag | What it does |
+| --- | --- |
+| `[path]` | Repository path. Default `.`. |
+| `--json` | Print the drift report, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when any runtime's pins disagree or a floor is above the lowest pinned release. |
+| `--runtime <id>` | Limit the report to one runtime, such as `go`. |
+| `--align <release>` | Print a unified diff that makes every understood pin select `<release>`. Requires `--runtime`; values it will not rewrite are listed on stderr. |
+
 ### `rollup`
 
 ```bash

@@ -23,6 +23,7 @@ export const COMMANDS: CommandSpec[] = [
   { name: "inventory", flags: ["--format", "--json", "--fail-on", "--redact"], example: "evergreen inventory lambda.json" },
   { name: "badge", flags: ["--snippet", "--repo", "--branch", "--shields"], example: "evergreen badge . --snippet markdown" },
   { name: "diff", flags: ["--json", "--data-version"], example: "evergreen diff main..HEAD" },
+  { name: "drift", flags: ["--json", "--check", "--runtime", "--align"], example: "evergreen drift . --check" },
   { name: "receipt", flags: ["--before", "--format", "--fail-on-introduced", "--json"], example: "evergreen receipt . --before before.json" },
   { name: "rollup", flags: ["--owners", "--json", "--html", "--format"], example: "evergreen rollup reports/*.json --owners owners.json --html" },
   { name: "renovate-preset", flags: ["--data-version"], example: "evergreen renovate-preset ." },

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
 - Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)
 - Add the Composer analyzer to `upgrade-check`: it reads `require.php` constraints in `composer.lock` and `composer.json` and reports blockers, dev warnings, and unknowns with exact evidence and line numbers. (#1865)
 - Add `evergreen inventory <file>...`, which reports the lifecycle of what the cloud and cluster tools' exports say is deployed, reading only the files given and never calling a provider API. The first importer reads `kubectl get deploy,sts,ds,cronjob,job,pod -A -o json` output and reports end-of-life images and removed API versions at the exact pointer each claim rests on. (#1871)

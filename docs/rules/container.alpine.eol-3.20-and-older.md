@@ -74,7 +74,7 @@ The [`container`](../detectors/container.md) detector. See [Detectors](../DETECT
 - [Debian image release lines 11 and older are end-of-life](container.debian.eol-11-and-older.html)
 - [Drupal image release lines 10.5 and older are end-of-life](container.drupal.eol-10.5-and-older.html)
 - [Go image release lines 1.25 and older are end-of-life](container.golang.eol-1.25-and-older.html)
-- [MariaDB image release lines 10.10 and older are end-of-life](container.mariadb.eol-10.10-and-older.html)
+- [Alpine Linux 3.20 and older are end-of-life](container.host-alpine.eol-3.20-and-older.html)
 
 
 ## Data

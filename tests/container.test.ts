@@ -188,14 +188,27 @@ test("test fixture directories are not scanned", async () => {
 import { scanRepository } from "../src/engine.js";
 import { createMigrationPacket, validateMigrationPacket } from "../src/migration-packet.js";
 
-test("every curated container rule has migration guidance with real verification commands", async () => {
+test("every curated container image rule has migration guidance with real verification commands", async () => {
   const registry = validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8")));
-  for (const rule of registry.rules) {
+  for (const rule of registry.rules.filter((item) => item.purl.startsWith("pkg:docker/library/"))) {
     assert.ok(rule.migration, rule.id);
     assert.ok(rule.migration.constraints.length >= 1, rule.id);
     assert.ok(rule.migration.steps.length >= 1, rule.id);
     assert.ok(rule.migration.verification.length >= 1, rule.id);
     for (const check of rule.migration.verification) assert.match(check.command, /^docker /, rule.id);
+  }
+});
+
+test("every host operating system rule has migration guidance with distribution commands", async () => {
+  const registry = validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8")));
+  const hosts = registry.rules.filter((item) => item.purl.startsWith("pkg:generic/"));
+  assert.equal(hosts.length, 7);
+  for (const rule of hosts) {
+    assert.ok(rule.migration, rule.id);
+    assert.ok(rule.migration.constraints.length >= 1, rule.id);
+    assert.ok(rule.migration.steps.length >= 1, rule.id);
+    assert.ok(rule.migration.verification.length >= 1, rule.id);
+    for (const check of rule.migration.verification) assert.match(check.command, /^(?:cat |lsb_release |apt-get |dnf |apk |zypper )/, rule.id);
   }
 });
 

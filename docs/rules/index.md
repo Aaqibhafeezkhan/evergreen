@@ -37,6 +37,13 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 - [Debian image release lines 11 and older are end-of-life](container.debian.eol-11-and-older.html) — end of life, `container.debian.eol-11-and-older`
 - [Drupal image release lines 10.5 and older are end-of-life](container.drupal.eol-10.5-and-older.html) — end of life, `container.drupal.eol-10.5-and-older`
 - [Go image release lines 1.25 and older are end-of-life](container.golang.eol-1.25-and-older.html) — end of life, `container.golang.eol-1.25-and-older`
+- [Alpine Linux 3.20 and older are end-of-life](container.host-alpine.eol-3.20-and-older.html) — end of life, `container.host-alpine.eol-3.20-and-older`
+- [Amazon Linux 2 and the 2018.03 AMI are past end of support](container.host-amazon-linux.eol-2-and-older.html) — end of life, `container.host-amazon-linux.eol-2-and-older`
+- [CentOS Linux 8 and older are end-of-life](container.host-centos.eol-8-and-older.html) — end of life, `container.host-centos.eol-8-and-older`
+- [Debian 11 and older are end-of-life](container.host-debian.eol-11-and-older.html) — end of life, `container.host-debian.eol-11-and-older`
+- [Red Hat Enterprise Linux 7 and older are past maintenance support](container.host-rhel.eol-7-and-older.html) — end of life, `container.host-rhel.eol-7-and-older`
+- [SUSE Linux Enterprise Server 15 SP6 and older are past general support](container.host-sles.eol-15-sp6-and-older.html) — end of life, `container.host-sles.eol-15-sp6-and-older`
+- [Ubuntu releases before 22.04 LTS are past standard support](container.host-ubuntu.eol-22.04-and-older.html) — end of life, `container.host-ubuntu.eol-22.04-and-older`
 - [MariaDB image release lines 10.10 and older are end-of-life](container.mariadb.eol-10.10-and-older.html) — end of life, `container.mariadb.eol-10.10-and-older`
 - [MySQL image release lines 8.0 and older are past end-of-life](container.mysql.eol-8.0-and-older.html) — end of life, `container.mysql.eol-8.0-and-older`
 - [Node.js image release lines 21 and older are end-of-life](container.node.eol-21-and-older.html) — end of life, `container.node.eol-21-and-older`

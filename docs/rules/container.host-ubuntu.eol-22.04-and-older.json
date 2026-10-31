@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evergreen.rule.v1",
+  "id": "container.host-ubuntu.eol-22.04-and-older",
+  "ecosystem": "container",
+  "purl": "pkg:generic/ubuntu",
+  "affectedVersions": "vers:semver/<22.0.0",
+  "event": "end-of-life",
+  "severity": "high",
+  "title": "Ubuntu releases before 22.04 LTS are past standard support",
+  "summary": "Ubuntu 20.04 LTS, the newest release this range covers, stopped receiving standard security updates on 2025-05-31; interim releases in the range ended earlier. Extended Security Maintenance is a separate paid subscription.",
+  "replacement": "An Ubuntu release in standard support, such as 24.04 LTS",
+  "deadline": "2025-05-31",
+  "sources": [
+    {
+      "title": "Ubuntu release cycle",
+      "url": "https://ubuntu.com/about/release-cycle"
+    }
+  ],
+  "provenance": {
+    "observedAt": "2026-10-30",
+    "reviewedAt": "2026-10-30",
+    "reviewer": "arminazimi"
+  },
+  "migration": {
+    "constraints": [
+      "Upgrade one release at a time, or rebuild the host on the target LTS and redeploy the workload.",
+      "Extended Security Maintenance is a separate paid subscription; do not count it as standard support."
+    ],
+    "steps": [
+      {
+        "id": "upgrade-host",
+        "title": "Upgrade the Ubuntu host",
+        "instructions": "Move the host to a supported Ubuntu LTS, confirm pinned packages and services, then drain and return it to service.",
+        "targets": "all"
+      }
+    ],
+    "verification": [
+      {
+        "command": "lsb_release -a",
+        "purpose": "Confirm the host reports the target Ubuntu release."
+      },
+      {
+        "command": "apt-get -s upgrade",
+        "purpose": "Check that package upgrades resolve on the target release."
+      }
+    ]
+  }
+}

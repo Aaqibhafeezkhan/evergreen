@@ -164,7 +164,7 @@ h1 {
       <p class="lede">
         Type a package or runtime name to find its reviewed lifecycle status.
         Results link to each rule's reference page and its authoritative sources.
-        This page embeds 542 rules and makes no network requests after it loads.
+        This page embeds 532 rules and makes no network requests after it loads.
       </p>
     </header>
     <main id="main">
@@ -180,7 +180,7 @@ h1 {
           aria-describedby="status"
         />
       </form>
-      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 542 lifecycle rules.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 532 lifecycle rules.</p>
       <div id="results" class="results" aria-live="polite"></div>
       <noscript>
         <p class="status">
@@ -574,6 +574,148 @@ h1 {
       {
         "title": "Go release policy (vendor)",
         "url": "https://go.dev/doc/devel/release#policy"
+      }
+    ]
+  },
+  {
+    "id": "container.host-alpine.eol-3.20-and-older",
+    "title": "Alpine Linux 3.20 and older are end-of-life",
+    "summary": "Alpine Linux 3.20, the newest release this range covers, stopped receiving security updates on 2026-04-01; older release branches ended earlier. Each branch is supported for about two years.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/alpine",
+    "vers": "vers:semver/\u003c3.21.0",
+    "deadline": "2026-04-01",
+    "replacement": "Alpine Linux 3.21 or later",
+    "sources": [
+      {
+        "title": "Alpine Linux releases",
+        "url": "https://alpinelinux.org/releases/"
+      }
+    ]
+  },
+  {
+    "id": "container.host-amazon-linux.eol-2-and-older",
+    "title": "Amazon Linux 2 and the 2018.03 AMI are past end of support",
+    "summary": "Amazon Linux 2 reached the end of standard support on 2026-06-30, and Amazon Linux AMI 2018.03 ended support on 2023-12-31. Amazon Linux 2023 is supported until 2029-06-30.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/amzn",
+    "vers": "vers:semver/\u003c2023.0.0",
+    "deadline": "2026-06-30",
+    "replacement": "Amazon Linux 2023",
+    "sources": [
+      {
+        "title": "Amazon Linux 2 release notes",
+        "url": "https://docs.aws.amazon.com/AL2/latest/relnotes/relnotes-al2.html"
+      },
+      {
+        "title": "Amazon Linux 2023 release cadence",
+        "url": "https://docs.aws.amazon.com/linux/al2023/ug/release-cadence.html"
+      }
+    ]
+  },
+  {
+    "id": "container.host-centos.eol-8-and-older",
+    "title": "CentOS Linux 8 and older are end-of-life",
+    "summary": "CentOS Linux 8 reached end of life on 2021-12-31 and CentOS Linux 7 on 2024-06-30, so neither receives fixes. CentOS Stream 9 and 10 follow a different lifecycle and are not covered by this rule.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/centos",
+    "vers": "vers:semver/\u003c9.0.0",
+    "deadline": "2024-06-30",
+    "replacement": "CentOS Stream 9 or 10, or a distribution with a published lifecycle",
+    "sources": [
+      {
+        "title": "CentOS Linux",
+        "url": "https://www.centos.org/centos-linux/"
+      }
+    ]
+  },
+  {
+    "id": "container.host-debian.eol-11-and-older",
+    "title": "Debian 11 and older are end-of-life",
+    "summary": "Debian 11 reached the end of long-term support on 2026-08-31, and older releases ended earlier. These releases no longer receive security updates from the Debian project.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/debian",
+    "vers": "vers:semver/\u003c12.0.0",
+    "deadline": "2026-08-31",
+    "replacement": "Debian 12 or 13",
+    "sources": [
+      {
+        "title": "Debian releases",
+        "url": "https://www.debian.org/releases/"
+      },
+      {
+        "title": "Debian Long Term Support",
+        "url": "https://wiki.debian.org/LTS"
+      }
+    ]
+  },
+  {
+    "id": "container.host-rhel.eol-7-and-older",
+    "title": "Red Hat Enterprise Linux 7 and older are past maintenance support",
+    "summary": "RHEL 7 reached the end of its maintenance support phase on 2024-06-30, and older releases ended earlier. The Extended Life Cycle Support add-on is a separate paid subscription.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/rhel",
+    "vers": "vers:semver/\u003c8.0.0",
+    "deadline": "2024-06-30",
+    "replacement": "RHEL 8, 9, or 10",
+    "sources": [
+      {
+        "title": "Red Hat Enterprise Linux 7 end of maintenance",
+        "url": "https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/rhel-7-end-of-maintenance"
+      },
+      {
+        "title": "Red Hat product life cycles",
+        "url": "https://access.redhat.com/product-life-cycles"
+      }
+    ]
+  },
+  {
+    "id": "container.host-sles.eol-15-sp6-and-older",
+    "title": "SUSE Linux Enterprise Server 15 SP6 and older are past general support",
+    "summary": "General support ended for SLES 15 SP6 on 2025-12-31, SP5 on 2024-12-31, and SP4 on 2023-12-31, and for SP3 and older earlier. Long Term Service Pack Support is a separate paid add-on; SLES 15 SP7 and SLES 16 remain in general support.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/sles",
+    "vers": "vers:semver/\u003c15.7.0",
+    "deadline": "2025-12-31",
+    "replacement": "SLES 15 SP7 or SLES 16",
+    "sources": [
+      {
+        "title": "SUSE product support lifecycle",
+        "url": "https://www.suse.com/lifecycle/"
+      },
+      {
+        "title": "SLES 15 SP6 lifecycle and support",
+        "url": "https://documentation.suse.com/sles/15-SP6/html/SLES-all/cha-upgrade-background.html"
+      }
+    ]
+  },
+  {
+    "id": "container.host-ubuntu.eol-22.04-and-older",
+    "title": "Ubuntu releases before 22.04 LTS are past standard support",
+    "summary": "Ubuntu 20.04 LTS, the newest release this range covers, stopped receiving standard security updates on 2025-05-31; interim releases in the range ended earlier. Extended Security Maintenance is a separate paid subscription.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/ubuntu",
+    "vers": "vers:semver/\u003c22.0.0",
+    "deadline": "2025-05-31",
+    "replacement": "An Ubuntu release in standard support, such as 24.04 LTS",
+    "sources": [
+      {
+        "title": "Ubuntu release cycle",
+        "url": "https://ubuntu.com/about/release-cycle"
       }
     ]
   },
@@ -1125,379 +1267,6 @@ h1 {
       {
         "title": "Dart changelog",
         "url": "https://dart.dev/changelog"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-mysql.end-of-support-5.6",
-    "title": "Aurora MySQL version 1 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora MySQL version 1 (MySQL 5.6 compatible) on 2023-02-28. RDS Extended Support was not offered for this version, so it receives no further Aurora security or bug fixes. Upgrade to Aurora MySQL version 3 (MySQL 8.0 compatible) or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/mysql",
-    "vers": "vers:intdot/>=5.6|\u003c5.7",
-    "deadline": "2023-02-28",
-    "replacement": "Aurora MySQL version 3 (MySQL 8.0 compatible) or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon Aurora MySQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-mysql.end-of-support-5.7",
-    "title": "Aurora MySQL version 2 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora MySQL version 2 (MySQL 5.7 compatible) on 2024-10-31. RDS Extended Support may keep it running for a fee through 2029-06-30. Upgrade to Aurora MySQL version 3 (MySQL 8.0 compatible) or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/mysql",
-    "vers": "vers:intdot/>=5.7|\u003c5.8",
-    "deadline": "2024-10-31",
-    "replacement": "Aurora MySQL version 3 (MySQL 8.0 compatible) or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon Aurora MySQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.end-of-support-11",
-    "title": "Aurora PostgreSQL 11 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora PostgreSQL 11 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2027-03-31. Upgrade to Aurora PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=11|\u003c12",
-    "deadline": "2024-02-29",
-    "replacement": "Aurora PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.end-of-support-12",
-    "title": "Aurora PostgreSQL 12 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora PostgreSQL 12 on 2025-02-28. RDS Extended Support may keep it running for a fee through 2028-02-29. Upgrade to Aurora PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=12|\u003c13",
-    "deadline": "2025-02-28",
-    "replacement": "Aurora PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.end-of-support-13",
-    "title": "Aurora PostgreSQL 13 is past end of standard support",
-    "summary": "AWS ended standard support for Aurora PostgreSQL 13 on 2026-02-28. RDS Extended Support may keep it running for a fee through 2029-02-28. Upgrade to Aurora PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=13|\u003c14",
-    "deadline": "2026-02-28",
-    "replacement": "Aurora PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-aurora-postgresql.scheduled-end-of-support-14",
-    "title": "Aurora PostgreSQL 14 reaches end of standard support on 2027-02-28",
-    "summary": "AWS ends standard support for Aurora PostgreSQL 14 on 2027-02-28. RDS Extended Support may keep it running for a fee through 2030-02-28. Upgrade to Aurora PostgreSQL 16 or later before then.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-aurora/postgresql",
-    "vers": "vers:intdot/>=14|\u003c15",
-    "deadline": "2027-02-28",
-    "replacement": "Aurora PostgreSQL 16 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Aurora PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-elasticache-redis.end-of-support-4",
-    "title": "ElastiCache for Redis OSS 4 is past end of standard support",
-    "summary": "AWS ended standard support for ElastiCache for Redis OSS 4 on 2026-01-31. RDS Extended Support may keep it running for a fee through 2029-01-31. Upgrade to Valkey or Redis OSS 7.1 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-elasticache/redis",
-    "vers": "vers:intdot/>=4|\u003c5",
-    "deadline": "2026-01-31",
-    "replacement": "Valkey or Redis OSS 7.1 or later",
-    "sources": [
-      {
-        "title": "Engine versions and upgrading in ElastiCache",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
-      },
-      {
-        "title": "ElastiCache Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-elasticache-redis.end-of-support-5",
-    "title": "ElastiCache for Redis OSS 5 is past end of standard support",
-    "summary": "AWS ended standard support for ElastiCache for Redis OSS 5 on 2026-01-31. RDS Extended Support may keep it running for a fee through 2029-01-31. Upgrade to Valkey or Redis OSS 7.1 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-elasticache/redis",
-    "vers": "vers:intdot/>=5|\u003c6",
-    "deadline": "2026-01-31",
-    "replacement": "Valkey or Redis OSS 7.1 or later",
-    "sources": [
-      {
-        "title": "Engine versions and upgrading in ElastiCache",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
-      },
-      {
-        "title": "ElastiCache Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-elasticache-redis.scheduled-end-of-support-6",
-    "title": "ElastiCache for Redis OSS 6 reaches end of standard support on 2027-01-31",
-    "summary": "AWS ends standard support for ElastiCache for Redis OSS 6 on 2027-01-31. RDS Extended Support may keep it running for a fee through 2030-01-31. Upgrade to Valkey or Redis OSS 7.1 or later before then.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-elasticache/redis",
-    "vers": "vers:intdot/>=6|\u003c7",
-    "deadline": "2027-01-31",
-    "replacement": "Valkey or Redis OSS 7.1 or later",
-    "sources": [
-      {
-        "title": "Engine versions and upgrading in ElastiCache",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
-      },
-      {
-        "title": "ElastiCache Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-mysql.end-of-support-5.7",
-    "title": "RDS for MySQL 5.7 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for MySQL 5.7 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2029-06-30. Upgrade to MySQL 8.0 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/mysql",
-    "vers": "vers:intdot/>=5.7|\u003c5.8",
-    "deadline": "2024-02-29",
-    "replacement": "MySQL 8.0 or later",
-    "sources": [
-      {
-        "title": "MySQL on Amazon RDS versions",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html"
-      },
-      {
-        "title": "Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-mysql.end-of-support-8.0",
-    "title": "RDS for MySQL 8.0 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for MySQL 8.0 on 2026-07-31. RDS Extended Support may keep it running for a fee through 2029-07-31. Upgrade to MySQL 8.4 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/mysql",
-    "vers": "vers:intdot/>=8.0|\u003c8.1",
-    "deadline": "2026-07-31",
-    "replacement": "MySQL 8.4 or later",
-    "sources": [
-      {
-        "title": "MySQL on Amazon RDS versions",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html"
-      },
-      {
-        "title": "Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-10",
-    "title": "RDS for PostgreSQL 10 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 10 in April 2023 (AWS publishes only the month). RDS Extended Support was not offered for this version, so it receives no further RDS security or bug fixes. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=10|\u003c11",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-11",
-    "title": "RDS for PostgreSQL 11 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 11 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2027-03-31. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=11|\u003c12",
-    "deadline": "2024-02-29",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-12",
-    "title": "RDS for PostgreSQL 12 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 12 on 2025-02-28. RDS Extended Support may keep it running for a fee through 2028-02-29. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=12|\u003c13",
-    "deadline": "2025-02-28",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-13",
-    "title": "RDS for PostgreSQL 13 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 13 on 2026-02-28. RDS Extended Support may keep it running for a fee through 2029-02-28. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=13|\u003c14",
-    "deadline": "2026-02-28",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.end-of-support-9.6",
-    "title": "RDS for PostgreSQL 9.6 is past end of standard support",
-    "summary": "AWS ended standard support for RDS for PostgreSQL 9.6 on 2022-04-30. RDS Extended Support was not offered for this version, so it receives no further RDS security or bug fixes. Upgrade to PostgreSQL 15 or later.",
-    "event": "end-of-support",
-    "severity": "high",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=9.6|\u003c9.7",
-    "deadline": "2022-04-30",
-    "replacement": "PostgreSQL 15 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
-      }
-    ]
-  },
-  {
-    "id": "database.aws-rds-postgres.scheduled-end-of-support-14",
-    "title": "RDS for PostgreSQL 14 reaches end of standard support on 2027-02-28",
-    "summary": "AWS ends standard support for RDS for PostgreSQL 14 on 2027-02-28. RDS Extended Support may keep it running for a fee through 2030-02-28. Upgrade to PostgreSQL 16 or later before then.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "database",
-    "purl": "pkg:generic/aws-rds/postgres",
-    "vers": "vers:intdot/>=14|\u003c15",
-    "deadline": "2027-02-28",
-    "replacement": "PostgreSQL 16 or later",
-    "sources": [
-      {
-        "title": "Release calendars for Amazon RDS for PostgreSQL",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
-      },
-      {
-        "title": "Using Amazon RDS Extended Support",
-        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
       }
     ]
   },

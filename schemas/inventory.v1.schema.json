@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/arminazimi/evergreen/schemas/inventory.v1.schema.json",
-  "title": "Evergreen inventory report v1",
-  "description": "The lifecycle result for every object named in exported cloud or cluster state. Evergreen reads only the files given; it never calls the provider's API.",
+  "title": "Evergreen inventory v1",
+  "description": "The lifecycle of what an export file says is deployed, with the exact place in the file each claim rests on.",
   "type": "object",
   "required": ["schemaVersion", "results", "unrecognized"],
   "additionalProperties": false,
@@ -20,11 +20,19 @@
             "required": ["importer", "file", "pointer", "resource", "purl"],
             "additionalProperties": false,
             "properties": {
-              "importer": { "type": "string", "minLength": 1, "description": "The importer that recognized the export." },
-              "file": { "type": "string", "minLength": 1, "description": "The export file as given on the command line." },
-              "pointer": { "type": "string", "minLength": 1, "description": "RFC 6901 JSON Pointer to the version value; for a text export, line:<n>." },
-              "resource": { "type": "string", "minLength": 1, "description": "The resource's own name. Never an account id, ARN, endpoint, or secret." },
-              "purl": { "type": "string", "pattern": "^pkg:", "description": "Version-less Package URL the lifecycle rules are written against." },
+              "importer": { "type": "string", "minLength": 1 },
+              "file": { "type": "string", "minLength": 1 },
+              "pointer": {
+                "type": "string",
+                "pattern": "^(?:/(?:[^~/]|~[01])*)+$|^line:[1-9][0-9]*$",
+                "description": "RFC 6901 JSON Pointer to the version value, or line:<n> for a text export."
+              },
+              "resource": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The resource's own name. Never an account id, ARN, secret, or address."
+              },
+              "purl": { "type": "string", "pattern": "^pkg:" },
               "version": { "type": "string", "minLength": 1 }
             }
           },
@@ -34,8 +42,7 @@
     },
     "unrecognized": {
       "type": "array",
-      "description": "Files no importer recognized, as given.",
-      "items": { "type": "string" }
+      "items": { "type": "string", "minLength": 1 }
     }
   }
 }

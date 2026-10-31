@@ -1,6 +1,22 @@
 {
   "products": [
     {
+      "earliestDeadline": "2026-04-01",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-alpine",
+      "latestReview": "2026-10-30",
+      "name": "alpine",
+      "path": "products/generic-alpine.json",
+      "purl": "pkg:generic/alpine",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2025-11-26",
       "ecosystems": [
         "terraform"
@@ -18,6 +34,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2026-06-30",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-amzn",
+      "latestReview": "2026-10-30",
+      "name": "amzn",
+      "path": "products/generic-amzn.json",
+      "purl": "pkg:generic/amzn",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2026-08-31",
       "ecosystems": [
         "android"
@@ -32,59 +64,6 @@
       "path": "products/generic-android-targetsdk.json",
       "purl": "pkg:generic/android/targetSdk",
       "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2023-02-28",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-aws-aurora-mysql",
-      "latestReview": "2026-10-30",
-      "name": "mysql",
-      "namespace": "aws-aurora",
-      "path": "products/generic-aws-aurora-mysql.json",
-      "purl": "pkg:generic/aws-aurora/mysql",
-      "rules": 2,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-02-29",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support",
-        "scheduled-end-of-life"
-      ],
-      "id": "generic-aws-aurora-postgresql",
-      "latestReview": "2026-10-30",
-      "name": "postgresql",
-      "namespace": "aws-aurora",
-      "path": "products/generic-aws-aurora-postgresql.json",
-      "purl": "pkg:generic/aws-aurora/postgresql",
-      "rules": 4,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-01-31",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support",
-        "scheduled-end-of-life"
-      ],
-      "id": "generic-aws-elasticache-redis",
-      "latestReview": "2026-10-30",
-      "name": "redis",
-      "namespace": "aws-elasticache",
-      "path": "products/generic-aws-elasticache-redis.json",
-      "purl": "pkg:generic/aws-elasticache/redis",
-      "rules": 3,
       "type": "generic"
     },
     {
@@ -187,41 +166,6 @@
       "path": "products/generic-aws-lambda-runtime-ruby2-7.json",
       "purl": "pkg:generic/aws-lambda-runtime/ruby2.7",
       "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-02-29",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-aws-rds-mysql",
-      "latestReview": "2026-10-30",
-      "name": "mysql",
-      "namespace": "aws-rds",
-      "path": "products/generic-aws-rds-mysql.json",
-      "purl": "pkg:generic/aws-rds/mysql",
-      "rules": 2,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2022-04-30",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support",
-        "scheduled-end-of-life"
-      ],
-      "id": "generic-aws-rds-postgres",
-      "latestReview": "2026-10-30",
-      "name": "postgres",
-      "namespace": "aws-rds",
-      "path": "products/generic-aws-rds-postgres.json",
-      "purl": "pkg:generic/aws-rds/postgres",
-      "rules": 6,
       "type": "generic"
     },
     {
@@ -343,6 +287,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-06-30",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-centos",
+      "latestReview": "2026-10-30",
+      "name": "centos",
+      "path": "products/generic-centos.json",
+      "purl": "pkg:generic/centos",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2024-11-06",
       "ecosystems": [
         "cpp"
@@ -424,6 +384,22 @@
       "path": "products/generic-dart.json",
       "purl": "pkg:generic/dart",
       "rules": 5,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-08-31",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-debian",
+      "latestReview": "2026-10-30",
+      "name": "debian",
+      "path": "products/generic-debian.json",
+      "purl": "pkg:generic/debian",
+      "rules": 1,
       "type": "generic"
     },
     {
@@ -1471,6 +1447,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-06-30",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-rhel",
+      "latestReview": "2026-10-30",
+      "name": "rhel",
+      "path": "products/generic-rhel.json",
+      "purl": "pkg:generic/rhel",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2015-02-23",
       "ecosystems": [
         "ruby"
@@ -1536,6 +1528,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2025-12-31",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-sles",
+      "latestReview": "2026-10-30",
+      "name": "sles",
+      "path": "products/generic-sles.json",
+      "purl": "pkg:generic/sles",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2025-05-14",
       "ecosystems": [
         "terraform"
@@ -1549,6 +1557,22 @@
       "path": "products/generic-terraform.json",
       "purl": "pkg:generic/terraform",
       "rules": 6,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-05-31",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-ubuntu",
+      "latestReview": "2026-10-30",
+      "name": "ubuntu",
+      "path": "products/generic-ubuntu.json",
+      "purl": "pkg:generic/ubuntu",
+      "rules": 1,
       "type": "generic"
     },
     {
@@ -1568,7 +1592,7 @@
       "type": "generic"
     }
   ],
-  "rules": 312,
+  "rules": 302,
   "schemaVersion": "evergreen.api-type.v1",
   "type": "generic"
 }

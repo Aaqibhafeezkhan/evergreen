@@ -12,7 +12,7 @@ Every command runs locally. Scans read repository files and bundled lifecycle da
 | `-v`, `--version` | Print the package version and exit `0`. |
 | `--debug` | On an unexpected failure (`internal`, exit `5`), print the stack trace to stderr. |
 | `--json` | Print a machine-readable document where the command supports one. Same as `--format json` for `scan`, `check`, and `forecast`. |
-| `--format <name>` | Choose the output format. `scan` accepts all twelve formats below; `check` accepts `text` and `json`; `rollup` accepts `json` and `html`. |
+| `--format <name>` | Choose the output format. `scan` accepts all thirteen formats below; `forecast` accepts `text`, `json`, and `mermaid`; `check` accepts `text` and `json`; `rollup` accepts `json` and `html`. |
 | `--data-version <version>` | Pin the lifecycle data for this run, for example `2026.10.01` or `bundled`. Same as `EVERGREEN_DATA_VERSION`. Pinned data is read from disk; nothing is downloaded. |
 | `--no-cache` | Bypass the scan cache and re-read every file. Available on `scan`. Same as `EVERGREEN_NO_CACHE=1`. |
 
@@ -64,11 +64,15 @@ The baseline, date, and ignore options also apply to `explain`, `context`, and `
 | `slack` | Slack incoming-webhook payload. |
 | `teams` | Microsoft Teams Adaptive Card. |
 | `webhook` | Generic JSON payload with severity counts and every finding. |
+| `mermaid` | Fenced Mermaid Gantt chart of support windows, for READMEs, issues, and pull request comments. |
+
+The `mermaid` format prints a fenced `mermaid` block that GitHub renders natively. Each section is an ecosystem and each bar runs from the observation day (`--as-of`, or today) to the deadline. A subject that has already ended is a `crit` milestone at its deadline; one that ends within 30 days is a `crit` bar. A `today` milestone follows `--as-of`. The chart draws at most 40 bars; a final line counts the rest, and `--format json` still lists every finding. [Showcase](SHOWCASE.md#mermaid-support-windows) has a complete example.
 
 ### `forecast`
 
 ```bash
 evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json]
+evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]
 ```
 
 Lists what reaches end of life next, grouped by month, from the current scan.
@@ -80,6 +84,8 @@ Lists what reaches end of life next, grouped by month, from the current scan.
 | `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--svg`. |
 | `--svg` | Print a self-contained SVG timeline for a README or a slide. Cannot be combined with `--timeline` or `--json`. |
 | `--animate` | With `--svg`, grow a bar from today to each event in date order and pulse the today marker twice with CSS. `prefers-reduced-motion: reduce` shows the final frame immediately. |
+| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--format mermaid`. |
+| `--format mermaid` | Print a fenced Mermaid Gantt chart of the dated events, grouped by ecosystem. |
 | `--json` | Print the forecast document. |
 
 The SVG has no script and no external references, so it is safe to commit and embed as an image. [Showcase](SHOWCASE.md) covers embedding it in a README and refreshing it on a schedule.

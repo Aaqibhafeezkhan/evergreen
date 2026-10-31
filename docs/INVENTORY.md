@@ -269,3 +269,43 @@ Nothing else is copied: not `FunctionArn`, `Role`, environment variables, tags, 
 - Runtimes AWS has not dated — today `nodejs26.x` and `python3.15`, which the page lists as public preview and not scheduled — are reported as `no-data`, which is not a statement that they are safe.
 - Function versions, aliases, `$LATEST`, code, layers, architecture, and memory: none of them changes the runtime lifecycle answer.
 - Functions that a different export would show: this importer reads only the file you pass, and only the functions in it.
+
+## Google Cloud
+
+```bash
+gcloud functions list --format=json > functions.json
+gcloud app versions list --format=json > app-engine-versions.json
+gcloud container clusters list --format=json > gke-clusters.json
+gcloud run services list --format=json > cloud-run-services.json
+evergreen inventory functions.json app-engine-versions.json gke-clusters.json cloud-run-services.json
+```
+
+**Fields read**
+
+| Export | Fields | PURL |
+| --- | --- | --- |
+| `gcloud functions list --format=json` | `name`, `runtime` (1st gen) or `buildConfig.runtime` (2nd gen) | `pkg:generic/google-cloud-functions-runtime/<runtime>` |
+| `gcloud app versions list --format=json` | `name`, `runtime` | `pkg:generic/google-appengine-runtime/<runtime>` |
+| `gcloud container clusters list --format=json` | `name`, `currentMasterVersion`, `currentNodeVersion` | `pkg:generic/google-gke` |
+| `gcloud run services list --format=json` | `metadata.name`, `spec.template.spec.containers[].image` | `pkg:docker/library/<image>` |
+
+`name` supplies the resource: the last path segment, never the project id or number. A Cloud Functions or App Engine runtime item reports the runtime as part of PURL, so the pointer marks the exact field the runtime was read from. A GKE cluster produces one item for the control-plane version and, when it differs, one for the node version; `releaseChannel` does not change the verdict, because the rules state both the end of standard support and the end of extended support.
+
+Cloud Run has no managed language runtime. The importer reads only container images and only those that name a public Docker Hub base image (`node:20`, `python:3.12-slim`, or `library/node:20`): an image with a registry host or a namespace (`gcr.io/…`, `us-docker.pkg.dev/…`, `bitnami/node`) is skipped, as is an image with no tag, a digest-only reference, or a tag that does not start with a digit. A short image name maps to `pkg:docker/library/<name>` with the tag as the version.
+
+**Rules matched**
+
+- `registry/serverless.json`: Google Cloud Functions and App Engine runtime rules, sourced to Google's runtime support schedules.
+- `registry/kubernetes.json`: GKE minor-version rules, sourced to the GKE release schedule.
+- `registry/container.json`: base-image rules for Cloud Run images.
+
+**What is not judged**
+
+- Runtime *generations* and stack images (`google-22`, `google-24-full`); only the runtime ID is checked.
+- Operating-system packages inside a function or container image.
+- Image digests, private images, and image names that are not public base images.
+- Anything not written literally in the export: a reference, a variable, or a value the export does not include is not resolved.
+
+**Fixtures**
+
+`tests/fixtures/inventory/gcp/` holds one sanitized sample per document type, and `examples/inventory/` holds two runnable samples. Each follows the JSON the commands above print, reduced to the fields this importer reads, with every project id, number, service account, URL, IP address, and environment value replaced by a placeholder. No `gcloud` CLI version is recorded because the contributor who added this importer had no Google Cloud project to capture exports from; the shapes follow the documented JSON output of the commands above rather than a recorded response.

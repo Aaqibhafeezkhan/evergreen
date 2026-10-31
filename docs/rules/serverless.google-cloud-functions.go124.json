@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "evergreen.rule.v1",
+  "id": "serverless.google-cloud-functions.go124",
+  "ecosystem": "serverless",
+  "purl": "pkg:generic/google-cloud-functions-runtime/go124",
+  "affectedVersions": "vers:semver/*",
+  "event": "deprecated",
+  "severity": "medium",
+  "title": "Google Cloud Functions Go 1.24 runtime is deprecated",
+  "summary": "The Cloud Run functions runtime support schedule lists Go 1.24 (runtime ID go124) as deprecated on 2026-09-02 and scheduled for decommission on 2027-03-02. Google no longer offers runtime support for deployments that use it.",
+  "replacement": "go126 or go127",
+  "deadline": "2027-03-02",
+  "sources": [
+    {
+      "title": "Cloud Run functions runtime support",
+      "url": "https://cloud.google.com/functions/docs/runtime-support",
+      "accessedAt": "2026-10-30"
+    }
+  ],
+  "provenance": {
+    "observedAt": "2026-10-30",
+    "reviewedAt": "2026-10-30",
+    "reviewer": "arminazimi"
+  },
+  "migration": {
+    "constraints": [
+      "Keep every Terraform google_cloudfunctions*_function runtime on one Google Cloud Functions runtime ID that Google still supports.",
+      "Raising the managed runtime can require language and dependency changes; confirm handlers run on the replacement before deploying."
+    ],
+    "steps": [
+      {
+        "id": "raise-gcloud-functions-runtime",
+        "title": "Raise the Google Cloud Functions runtime",
+        "instructions": "Change the reported runtime to a supported Google Cloud Functions runtime ID (see the replacement).",
+        "targets": "declaration"
+      },
+      {
+        "id": "align-gcloud-functions-runtime-surfaces",
+        "title": "Align other runtime surfaces",
+        "instructions": "Update every other Terraform google_cloudfunctions*_function runtime and deploy configuration that still pins the old runtime ID.",
+        "targets": "all"
+      }
+    ],
+    "verification": [
+      {
+        "command": "terraform init -backend=false && terraform validate",
+        "purpose": "Initialize without touching remote state and check that the configuration is valid."
+      },
+      {
+        "command": "terraform plan",
+        "purpose": "Review the plan and confirm the runtime change is the intended one."
+      }
+    ]
+  }
+}

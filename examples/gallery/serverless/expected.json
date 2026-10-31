@@ -45,6 +45,11 @@
       "ruleId": "serverless.google-cloud-functions.nodejs14",
       "path": "main.tf",
       "severity": "high"
+    },
+    {
+      "ruleId": "serverless.google-cloud-functions.python38",
+      "path": "main.tf",
+      "severity": "high"
     }
   ]
 }

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "evergreen.rule.v1",
+  "id": "kubernetes.google-gke.1.31",
+  "ecosystem": "kubernetes",
+  "purl": "pkg:generic/google-gke",
+  "affectedVersions": "vers:semver/>=1.31.0|<1.32.0",
+  "event": "end-of-life",
+  "severity": "high",
+  "title": "GKE 1.31 cluster is past end of extended support",
+  "summary": "The GKE release schedule lists GKE 1.31 with end of standard support on 2026-01-16 and end of extended support on 2026-10-22. GKE no longer provides patches for this minor version.",
+  "replacement": "GKE 1.35 or later",
+  "deadline": "2026-10-22",
+  "sources": [
+    {
+      "title": "GKE versioning and support",
+      "url": "https://cloud.google.com/kubernetes-engine/versioning"
+    },
+    {
+      "title": "GKE release schedule",
+      "url": "https://cloud.google.com/kubernetes-engine/docs/release-schedule"
+    }
+  ],
+  "provenance": {
+    "observedAt": "2026-10-30",
+    "reviewedAt": "2026-10-30",
+    "reviewer": "arminazimi"
+  },
+  "migration": {
+    "constraints": [
+      "GKE upgrades one minor version at a time and may auto-upgrade a cluster whose version reaches end of support.",
+      "Only a cluster in the Extended channel keeps receiving security patches past the end of standard support.",
+      "Node pools and the control plane must be on compatible versions, so raise both in the same change."
+    ],
+    "steps": [
+      {
+        "id": "raise-cluster-version",
+        "title": "Raise the control-plane version",
+        "instructions": "Raise the cluster's Kubernetes version to a supported release, or let its release channel do it.",
+        "targets": "declaration"
+      },
+      {
+        "id": "raise-node-pools",
+        "title": "Raise the node pools",
+        "instructions": "Raise every node pool to a compatible version, or let the release channel manage it.",
+        "targets": "all"
+      },
+      {
+        "id": "review-removed-apis",
+        "title": "Remove APIs the new version deleted",
+        "instructions": "Read the Kubernetes deprecation guide for every minor version crossed and replace removed API versions before applying.",
+        "targets": "all"
+      }
+    ],
+    "verification": [
+      {
+        "command": "kubectl version",
+        "purpose": "Confirm the API server and kubectl agree on the new version."
+      },
+      {
+        "command": "kubectl get nodes -o wide",
+        "purpose": "Confirm every node runs a compatible version."
+      }
+    ]
+  }
+}

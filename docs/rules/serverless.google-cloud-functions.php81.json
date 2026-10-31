@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "evergreen.rule.v1",
+  "id": "serverless.google-cloud-functions.php81",
+  "ecosystem": "serverless",
+  "purl": "pkg:generic/google-cloud-functions-runtime/php81",
+  "affectedVersions": "vers:semver/*",
+  "event": "end-of-life",
+  "severity": "high",
+  "title": "Google Cloud Functions PHP 8.1 runtime is end-of-life",
+  "summary": "The Cloud Run functions runtime support schedule lists PHP 8.1 (runtime ID php81) as deprecated on 2025-12-31 and decommissioned on 2026-06-30. Google no longer provides maintenance for that runtime.",
+  "replacement": "php84 or php85",
+  "deadline": "2026-06-30",
+  "sources": [
+    {
+      "title": "Cloud Run functions runtime support",
+      "url": "https://cloud.google.com/functions/docs/runtime-support",
+      "accessedAt": "2026-10-30"
+    }
+  ],
+  "provenance": {
+    "observedAt": "2026-10-30",
+    "reviewedAt": "2026-10-30",
+    "reviewer": "arminazimi"
+  },
+  "migration": {
+    "constraints": [
+      "Keep every Terraform google_cloudfunctions*_function runtime on one Google Cloud Functions runtime ID that Google still supports.",
+      "Raising the managed runtime can require language and dependency changes; confirm handlers run on the replacement before deploying."
+    ],
+    "steps": [
+      {
+        "id": "raise-gcloud-functions-runtime",
+        "title": "Raise the Google Cloud Functions runtime",
+        "instructions": "Change the reported runtime to a supported Google Cloud Functions runtime ID (see the replacement).",
+        "targets": "declaration"
+      },
+      {
+        "id": "align-gcloud-functions-runtime-surfaces",
+        "title": "Align other runtime surfaces",
+        "instructions": "Update every other Terraform google_cloudfunctions*_function runtime and deploy configuration that still pins the old runtime ID.",
+        "targets": "all"
+      }
+    ],
+    "verification": [
+      {
+        "command": "terraform init -backend=false && terraform validate",
+        "purpose": "Initialize without touching remote state and check that the configuration is valid."
+      },
+      {
+        "command": "terraform plan",
+        "purpose": "Review the plan and confirm the runtime change is the intended one."
+      }
+    ]
+  }
+}

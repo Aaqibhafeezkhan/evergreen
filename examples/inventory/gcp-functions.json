@@ -1,0 +1,21 @@
+[
+  {
+    "name": "projects/my-project/locations/us-central1/functions/order-webhook",
+    "environment": "GEN_2",
+    "buildConfig": {
+      "runtime": "nodejs16",
+      "entryPoint": "handleOrder"
+    },
+    "serviceConfig": {
+      "serviceAccountEmail": "orders@my-project.iam.gserviceaccount.com",
+      "uri": "https://order-webhook-abc12-uc.a.run.app"
+    },
+    "state": "ACTIVE"
+  },
+  {
+    "name": "projects/my-project/locations/us-central1/functions/nightly-cleanup",
+    "runtime": "python312",
+    "entryPoint": "cleanup",
+    "status": "ACTIVE"
+  }
+]

@@ -6,6 +6,7 @@
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
+- Add a codemod that rewrites the exact Node.js API renames `os.tmpDir`, `path._makeLong`, `async_hooks.currentId`, `async_hooks.triggerId`, and `crypto.Hash`/`crypto.Hmac` called without `new`, refusing every other shape with a reason. (#1827)
 
 ## 0.7.1 - 2026-10-27
 

@@ -15,6 +15,8 @@ import type { UpgradeAnalyzer, UpgradeIssue } from "../src/upgrade/types.js";
 
 const execute = promisify(execFile);
 const cli = resolve("dist/src/cli.js");
+const blockedFixture = resolve("tests/fixtures/upgrade/poetry-lock/blocked");
+const readyFixture = resolve("tests/fixtures/upgrade/poetry-lock/ready");
 
 const target = { runtime: "python", version: "3.13" } as const;
 
@@ -172,6 +174,31 @@ test("the CLI and the MCP tool return the same schema-valid report", async () =>
   }
 });
 
+test("the CLI and the MCP tool agree on a blocked repository", async () => {
+  const cliResult = await run("upgrade-check", "--to", "python@3.13", blockedFixture, "--json");
+  assert.equal(cliResult.code, 1, cliResult.stderr);
+  const cliReport = JSON.parse(cliResult.stdout) as Record<string, unknown>;
+
+  const client = await connectMcp();
+  let mcpReport: unknown;
+  try {
+    const result = await client.request("tools/call", {
+      name: "check_upgrade",
+      arguments: { path: blockedFixture, target: "python@3.13" },
+    });
+    mcpReport = result.structuredContent;
+  } finally {
+    await client.close();
+  }
+
+  assert.deepEqual(mcpReport, cliReport);
+  assert.equal(cliReport.verdict, "blocked");
+
+  const schema = JSON.parse(await readFile(resolve("schemas/upgrade.v1.schema.json"), "utf8")) as object;
+  const validate = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
+  assert.equal(validate(cliReport), true, JSON.stringify(validate.errors));
+});
+
 test("the unknown verdict always prints its caveat, and bad input exits 2", async () => {
   const empty = await mkdtemp(resolve(tmpdir(), "evergreen-upgrade-"));
   try {
@@ -182,7 +209,10 @@ test("the unknown verdict always prints its caveat, and bad input exits 2", asyn
   } finally {
     await rm(empty, { recursive: true, force: true });
   }
+  assert.equal((await run("upgrade-check", "--to", "python@3.13", blockedFixture)).code, 1);
+  assert.equal((await run("upgrade-check", "--to", "python@3.13", readyFixture)).code, 0);
   assert.equal((await run("upgrade-check")).code, 2);
   assert.equal((await run("upgrade-check", "--to", "python")).code, 2);
+  assert.equal((await run("upgrade-check", "--to", "python@not-a-version")).code, 2);
   assert.equal((await run("upgrade-check", "--to", "python@3.13", resolve("tests/fixtures/upgrade/poetry-lock/missing"))).code, 2);
 });

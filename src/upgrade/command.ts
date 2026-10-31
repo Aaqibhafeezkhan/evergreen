@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import process from "node:process";
 
 import { checkUpgrade, parseUpgradeTarget } from "./index.js";
+import { parseVersion } from "./pep440.js";
 import type { UpgradeReport } from "./types.js";
 
 export const UPGRADE_USAGE = "Usage: evergreen upgrade-check --to <runtime@version> [path] [--json]";
@@ -51,7 +52,7 @@ export async function upgradeCheckCommand(args: string[]): Promise<number> {
   if (positional.length > 1) return fail(UPGRADE_USAGE);
 
   const target = parseUpgradeTarget(targetText);
-  if (!target) {
+  if (!target || parseVersion(target.version) === undefined) {
     return fail(`Invalid target: ${targetText}. Use <runtime>@<version>, for example python@3.13.`);
   }
 

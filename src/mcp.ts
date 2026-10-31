@@ -6,6 +6,7 @@ import * as z from "zod/v4";
 import { EvergreenAgentTools } from "./agent-tools.js";
 import { bundledRules, checkDependency } from "./check-dependency.js";
 import { buildForecast, DEFAULT_FORECAST_MONTHS, MAX_FORECAST_MONTHS } from "./forecast.js";
+import { parseVersion } from "./upgrade/pep440.js";
 import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-prompt.js";
 import { buildPlan } from "./plan-build.js";
@@ -439,7 +440,7 @@ export function createEvergreenMcpServer(
     async ({ path, target }) => {
       try {
         const parsed = parseUpgradeTarget(target);
-        if (!parsed) {
+        if (!parsed || parseVersion(parsed.version) === undefined) {
           throw new Error(`Invalid target "${target}". Use <runtime>@<version>, for example python@3.13.`);
         }
         return success(await checkUpgrade(path, parsed));

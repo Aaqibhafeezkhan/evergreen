@@ -1,0 +1,17 @@
+[[package]]
+name = "black"
+version = "23.1.0"
+description = "The uncompromising code formatter."
+optional = false
+python-versions = ">=3.7,<3.11"
+files = []
+groups = ["dev"]
+
+[[package]]
+name = "isort"
+version = "5.12.0"
+description = "A Python utility to sort imports."
+optional = false
+python-versions = ">=3.7,<3.11"
+files = []
+category = "dev"

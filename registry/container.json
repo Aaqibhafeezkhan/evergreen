@@ -1460,6 +1460,358 @@
           }
         ]
       }
+    },
+    {
+      "id": "container.host-ubuntu.eol-22.04-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/ubuntu",
+      "vers": "vers:semver/<22.0.0",
+      "event": "end-of-life",
+      "title": "Ubuntu releases before 22.04 LTS are past standard support",
+      "summary": "Ubuntu 20.04 LTS, the newest release this range covers, stopped receiving standard security updates on 2025-05-31; interim releases in the range ended earlier. Extended Security Maintenance is a separate paid subscription.",
+      "severity": "high",
+      "replacement": "An Ubuntu release in standard support, such as 24.04 LTS",
+      "deadline": "2025-05-31",
+      "sources": [
+        {
+          "title": "Ubuntu release cycle",
+          "url": "https://ubuntu.com/about/release-cycle"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "Upgrade one release at a time, or rebuild the host on the target LTS and redeploy the workload.",
+          "Extended Security Maintenance is a separate paid subscription; do not count it as standard support."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Upgrade the Ubuntu host",
+            "instructions": "Move the host to a supported Ubuntu LTS, confirm pinned packages and services, then drain and return it to service.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "lsb_release -a",
+            "purpose": "Confirm the host reports the target Ubuntu release."
+          },
+          {
+            "command": "apt-get -s upgrade",
+            "purpose": "Check that package upgrades resolve on the target release."
+          }
+        ]
+      }
+    },
+    {
+      "id": "container.host-debian.eol-11-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/debian",
+      "vers": "vers:semver/<12.0.0",
+      "event": "end-of-life",
+      "title": "Debian 11 and older are end-of-life",
+      "summary": "Debian 11 reached the end of long-term support on 2026-08-31, and older releases ended earlier. These releases no longer receive security updates from the Debian project.",
+      "severity": "high",
+      "replacement": "Debian 12 or 13",
+      "deadline": "2026-08-31",
+      "sources": [
+        {
+          "title": "Debian releases",
+          "url": "https://www.debian.org/releases/"
+        },
+        {
+          "title": "Debian Long Term Support",
+          "url": "https://wiki.debian.org/LTS"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "Follow the Debian release notes across every intermediate release; do not skip a major release.",
+          "Confirm third-party repositories and held packages support the target release before upgrading."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Upgrade the Debian host",
+            "instructions": "Move the host to a supported Debian release with the documented upgrade procedure, or rebuild it and redeploy the workload.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "cat /etc/debian_version",
+            "purpose": "Confirm the host reports the target Debian release."
+          },
+          {
+            "command": "apt-get -s upgrade",
+            "purpose": "Check that package upgrades resolve on the target release."
+          }
+        ]
+      }
+    },
+    {
+      "id": "container.host-rhel.eol-7-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/rhel",
+      "vers": "vers:semver/<8.0.0",
+      "event": "end-of-life",
+      "title": "Red Hat Enterprise Linux 7 and older are past maintenance support",
+      "summary": "RHEL 7 reached the end of its maintenance support phase on 2024-06-30, and older releases ended earlier. The Extended Life Cycle Support add-on is a separate paid subscription.",
+      "severity": "high",
+      "replacement": "RHEL 8, 9, or 10",
+      "deadline": "2024-06-30",
+      "sources": [
+        {
+          "title": "Red Hat Enterprise Linux 7 end of maintenance",
+          "url": "https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/rhel-7-end-of-maintenance"
+        },
+        {
+          "title": "Red Hat product life cycles",
+          "url": "https://access.redhat.com/product-life-cycles"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "Use Leapp or the supported in-place upgrade path, or rebuild the host on the target major release.",
+          "Extended Life Cycle Support is a separate paid subscription; do not count it as standard maintenance."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Upgrade the RHEL host",
+            "instructions": "Move the host to a supported RHEL major release, confirm subscriptions and third-party packages, then drain and return it to service.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "cat /etc/redhat-release",
+            "purpose": "Confirm the host reports the target RHEL release."
+          },
+          {
+            "command": "dnf check-update",
+            "purpose": "Check that package updates resolve on the target release."
+          }
+        ]
+      }
+    },
+    {
+      "id": "container.host-centos.eol-8-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/centos",
+      "vers": "vers:semver/<9.0.0",
+      "event": "end-of-life",
+      "title": "CentOS Linux 8 and older are end-of-life",
+      "summary": "CentOS Linux 8 reached end of life on 2021-12-31 and CentOS Linux 7 on 2024-06-30, so neither receives fixes. CentOS Stream 9 and 10 follow a different lifecycle and are not covered by this rule.",
+      "severity": "high",
+      "replacement": "CentOS Stream 9 or 10, or a distribution with a published lifecycle",
+      "deadline": "2024-06-30",
+      "sources": [
+        {
+          "title": "CentOS Linux",
+          "url": "https://www.centos.org/centos-linux/"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "CentOS Linux has no upgrade path to CentOS Stream; plan a rebuild or a migration to another distribution.",
+          "Confirm application packages and repositories exist for the target platform before rebuilding."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Replace the CentOS host",
+            "instructions": "Rebuild the host on CentOS Stream or a distribution with a published lifecycle, then redeploy the workload.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "cat /etc/centos-release",
+            "purpose": "Confirm the host reports the target CentOS release."
+          },
+          {
+            "command": "dnf check-update",
+            "purpose": "Check that package updates resolve on the target release."
+          }
+        ]
+      }
+    },
+    {
+      "id": "container.host-amazon-linux.eol-2-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/amzn",
+      "vers": "vers:semver/<2023.0.0",
+      "event": "end-of-life",
+      "title": "Amazon Linux 2 and the 2018.03 AMI are past end of support",
+      "summary": "Amazon Linux 2 reached the end of standard support on 2026-06-30, and Amazon Linux AMI 2018.03 ended support on 2023-12-31. Amazon Linux 2023 is supported until 2029-06-30.",
+      "severity": "high",
+      "replacement": "Amazon Linux 2023",
+      "deadline": "2026-06-30",
+      "sources": [
+        {
+          "title": "Amazon Linux 2 release notes",
+          "url": "https://docs.aws.amazon.com/AL2/latest/relnotes/relnotes-al2.html"
+        },
+        {
+          "title": "Amazon Linux 2023 release cadence",
+          "url": "https://docs.aws.amazon.com/linux/al2023/ug/release-cadence.html"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "Amazon Linux 2023 is a separate major release: rebuild the host rather than upgrading in place.",
+          "Confirm installed packages and agents are available for Amazon Linux 2023 before switching."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Replace the Amazon Linux host",
+            "instructions": "Launch a replacement host on Amazon Linux 2023 from the same configuration, then move traffic to it.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "cat /etc/system-release",
+            "purpose": "Confirm the host reports Amazon Linux 2023."
+          },
+          {
+            "command": "dnf check-update",
+            "purpose": "Check that package updates resolve on the new host."
+          }
+        ]
+      }
+    },
+    {
+      "id": "container.host-alpine.eol-3.20-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/alpine",
+      "vers": "vers:semver/<3.21.0",
+      "event": "end-of-life",
+      "title": "Alpine Linux 3.20 and older are end-of-life",
+      "summary": "Alpine Linux 3.20, the newest release this range covers, stopped receiving security updates on 2026-04-01; older release branches ended earlier. Each branch is supported for about two years.",
+      "severity": "high",
+      "replacement": "Alpine Linux 3.21 or later",
+      "deadline": "2026-04-01",
+      "sources": [
+        {
+          "title": "Alpine Linux releases",
+          "url": "https://alpinelinux.org/releases/"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "Upgrade one Alpine branch at a time and reinstall packages from the target repositories.",
+          "Confirm services and pinned packages have builds for the target branch."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Upgrade the Alpine host",
+            "instructions": "Move the host to a supported Alpine branch with the documented upgrade procedure, or rebuild it and redeploy the workload.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "cat /etc/alpine-release",
+            "purpose": "Confirm the host reports the target Alpine branch."
+          },
+          {
+            "command": "apk update",
+            "purpose": "Check that the target repositories are reachable and current."
+          }
+        ]
+      }
+    },
+    {
+      "id": "container.host-sles.eol-15-sp6-and-older",
+      "ecosystem": "container",
+      "purl": "pkg:generic/sles",
+      "vers": "vers:semver/<15.7.0",
+      "event": "end-of-life",
+      "title": "SUSE Linux Enterprise Server 15 SP6 and older are past general support",
+      "summary": "General support ended for SLES 15 SP6 on 2025-12-31, SP5 on 2024-12-31, and SP4 on 2023-12-31, and for SP3 and older earlier. Long Term Service Pack Support is a separate paid add-on; SLES 15 SP7 and SLES 16 remain in general support.",
+      "severity": "high",
+      "replacement": "SLES 15 SP7 or SLES 16",
+      "deadline": "2025-12-31",
+      "sources": [
+        {
+          "title": "SUSE product support lifecycle",
+          "url": "https://www.suse.com/lifecycle/"
+        },
+        {
+          "title": "SLES 15 SP6 lifecycle and support",
+          "url": "https://documentation.suse.com/sles/15-SP6/html/SLES-all/cha-upgrade-background.html"
+        }
+      ],
+      "provenance": {
+        "observedAt": "2026-10-30",
+        "reviewedAt": "2026-10-30",
+        "reviewer": "arminazimi",
+        "importer": "endoflife-date"
+      },
+      "migration": {
+        "constraints": [
+          "Use the supported service-pack migration path, or rebuild the host on the target service pack.",
+          "Long Term Service Pack Support is a separate paid add-on; do not count it as general support."
+        ],
+        "steps": [
+          {
+            "id": "upgrade-host",
+            "title": "Upgrade the SLES host",
+            "instructions": "Move the host to a supported SLES service pack, confirm subscriptions and third-party packages, then return it to service.",
+            "targets": "all"
+          }
+        ],
+        "verification": [
+          {
+            "command": "cat /etc/os-release",
+            "purpose": "Confirm the host reports the target SLES service pack."
+          },
+          {
+            "command": "zypper refresh",
+            "purpose": "Check that the target repositories are configured and reachable."
+          }
+        ]
+      }
     }
   ]
 }

@@ -76,6 +76,13 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.dockerfile.maintainer.html</loc><lastmod>2026-10-31</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.drupal.eol-10.5-and-older.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.golang.eol-1.25-and-older.html</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-alpine.eol-3.20-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-amazon-linux.eol-2-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-centos.eol-8-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-debian.eol-11-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-rhel.eol-7-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-sles.eol-15-sp6-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-ubuntu.eol-22.04-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.mariadb.eol-10.10-and-older.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.mysql.eol-8.0-and-older.html</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.node.eol-21-and-older.html</loc><lastmod>2026-10-16</lastmod></url>

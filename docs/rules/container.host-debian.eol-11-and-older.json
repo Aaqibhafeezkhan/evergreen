@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "evergreen.rule.v1",
+  "id": "container.host-debian.eol-11-and-older",
+  "ecosystem": "container",
+  "purl": "pkg:generic/debian",
+  "affectedVersions": "vers:semver/<12.0.0",
+  "event": "end-of-life",
+  "severity": "high",
+  "title": "Debian 11 and older are end-of-life",
+  "summary": "Debian 11 reached the end of long-term support on 2026-08-31, and older releases ended earlier. These releases no longer receive security updates from the Debian project.",
+  "replacement": "Debian 12 or 13",
+  "deadline": "2026-08-31",
+  "sources": [
+    {
+      "title": "Debian releases",
+      "url": "https://www.debian.org/releases/"
+    },
+    {
+      "title": "Debian Long Term Support",
+      "url": "https://wiki.debian.org/LTS"
+    }
+  ],
+  "provenance": {
+    "observedAt": "2026-10-30",
+    "reviewedAt": "2026-10-30",
+    "reviewer": "arminazimi"
+  },
+  "migration": {
+    "constraints": [
+      "Follow the Debian release notes across every intermediate release; do not skip a major release.",
+      "Confirm third-party repositories and held packages support the target release before upgrading."
+    ],
+    "steps": [
+      {
+        "id": "upgrade-host",
+        "title": "Upgrade the Debian host",
+        "instructions": "Move the host to a supported Debian release with the documented upgrade procedure, or rebuild it and redeploy the workload.",
+        "targets": "all"
+      }
+    ],
+    "verification": [
+      {
+        "command": "cat /etc/debian_version",
+        "purpose": "Confirm the host reports the target Debian release."
+      },
+      {
+        "command": "apt-get -s upgrade",
+        "purpose": "Check that package upgrades resolve on the target release."
+      }
+    ]
+  }
+}

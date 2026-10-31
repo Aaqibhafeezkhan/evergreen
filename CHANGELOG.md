@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `evergreen inventory` and its host operating systems importer: read `/etc/os-release` from one host or a multi-host bundle and report end-of-life Ubuntu, Debian, RHEL, CentOS, Amazon Linux, Alpine, and SLES releases with the line each version came from. It reads only the files given and calls no cloud API. (#1879)
 - Add `evergreen drift`, which reports every runtime version a repository states and whether the values agree, with `--align` patches and a `--check` gate; the first collector covers Ruby pins, floors, and the `Gemfile.lock` refusal. (#1836, #1841)
 - Add `evergreen drift`, which reports every runtime version a repository states and whether the values agree, and `--align`, which prints a patch without writing it. This release includes the Java collector. (#1840)
 - Add `evergreen drift`, which reports every place a repository states a runtime version, whether those versions agree, and `--align` patches that make them select one release. (#1838)

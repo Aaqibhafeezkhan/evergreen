@@ -1,0 +1,6 @@
+PRETTY_NAME="Debian GNU/Linux trixie/sid"
+NAME="Debian GNU/Linux"
+VERSION_CODENAME=trixie
+ID=debian
+HOME_URL="https://www.debian.org/"
+VERSION_ID="testing"

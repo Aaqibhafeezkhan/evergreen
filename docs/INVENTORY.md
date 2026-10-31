@@ -57,3 +57,215 @@ An image tag is used as the version only when it is a plain release number: `nod
 - Objects and fields beyond the ones listed above.
 
 The fixtures under `tests/fixtures/inventory/k8s-workloads/` reproduce the documented output shape of `kubectl get … -o json` (kubectl 1.31), with every identifier replaced by a placeholder. They were assembled from the command's output shape, not captured from a live cluster.
+
+## Host operating systems
+
+The `os-release` importer reads an `/etc/os-release` file from one host, or a bundle collected from several hosts, and reports the distribution release against its lifecycle rules.
+
+### Export
+
+One host:
+
+```bash
+ssh web-1 'cat /etc/os-release' > web-1.os-release
+evergreen inventory web-1.os-release
+```
+
+Several hosts, in one file. Each block starts with `### host: <name>`; that name becomes the result's `resource`:
+
+```bash
+while read -r host; do
+  printf '### host: %s\n' "$host"
+  ssh "$host" 'cat /etc/os-release'
+done < hosts.txt > os-release.bundle
+evergreen inventory os-release.bundle
+```
+
+Evergreen runs neither loop; you run it, and Evergreen reads the result.
+
+### Fields read
+
+| Field | Use |
+| --- | --- |
+| `ID` | Names the distribution, and so the `pkg:generic/<distro>` rule set. |
+| `VERSION_ID` | The release line the rules judge. The result's `pointer` is the `line:<n>` of this line in the file. |
+| `ID_LIKE` | Read as the declared family. It is never used to apply a parent distribution's dates, because a derivative keeps its own release schedule. |
+
+A block without both `ID` and a numeric `VERSION_ID` is skipped: a codename or a rolling tag such as `testing` does not name a release line the rules can judge. A single file with no host header uses its file name as the resource. Quoted values, such as `VERSION_ID="20.04"` and `ID='ubuntu'`, are read the same as unquoted ones.
+
+### Rules matched
+
+| Distribution (`ID`) | PURL | Release lines reported | Rule |
+| --- | --- | --- | --- |
+| `ubuntu` | `pkg:generic/ubuntu` | before 22.04 | `container.host-ubuntu.eol-22.04-and-older` |
+| `debian` | `pkg:generic/debian` | before 12 | `container.host-debian.eol-11-and-older` |
+| `rhel` | `pkg:generic/rhel` | 7 and older | `container.host-rhel.eol-7-and-older` |
+| `centos` | `pkg:generic/centos` | 8 and older | `container.host-centos.eol-8-and-older` |
+| `amzn` | `pkg:generic/amzn` | 2 and the 2018.03 AMI | `container.host-amazon-linux.eol-2-and-older` |
+| `alpine` | `pkg:generic/alpine` | before 3.21 | `container.host-alpine.eol-3.20-and-older` |
+| `sles` | `pkg:generic/sles` | 15 SP6 and older | `container.host-sles.eol-15-sp6-and-older` |
+
+Every rule cites the distribution's own lifecycle page, not an aggregator. The rules live in `registry/container.json` next to the image rules, but use `pkg:generic/<distro>` PURLs and distribution sources: an image rule describes what a Docker tag ships, which is not the same question as what a host runs.
+
+### What is not judged
+
+- A file without `VERSION_ID` is skipped: a codename alone does not identify the release line for every distribution.
+- A derivative reported under its own `ID` is checked only if that `ID` has a rule. `ID_LIKE` does not borrow the parent's dates. It is reported as `no-data`, not as safe.
+- Paid add-on support is not treated as standard support. RHEL 7 Extended Life Cycle Support and SUSE Long Term Service Pack Support extend security fixes for a fee; the rules report that general support ended and name the add-on in the summary.
+- A host with no readable `/etc/os-release` is not reported. Evergreen does not guess a distribution from other files.
+
+### Fixtures
+
+The fixtures under `tests/fixtures/inventory/os-release/` are the output of `cat /etc/os-release` on each distribution, with every identifier replaced by a placeholder. There is no CLI version to record: `cat` is part of the coreutils of each distribution.
+
+## Docker containers and images
+
+Produce the exports with the Docker CLI. Both forms are supported:
+
+```bash
+# running and stopped containers, including labels and state
+docker inspect $(docker ps -aq) > docker-inspect.json
+
+# a Compose project: a JSON array, or one JSON object per line
+docker compose ps --format json > docker-compose-ps.json
+```
+
+The fixtures under [`tests/fixtures/inventory/docker/`](../tests/fixtures/inventory/docker/) follow the output of Docker CLI 29.6.2 (`docker inspect`) and Docker Compose v2 (`docker compose ps --format json`), with ids, names, and image tags replaced. The example [`examples/inventory/docker-inspect.json`](../examples/inventory/docker-inspect.json) is the same shape.
+
+### What is read
+
+| Format | Fields | Pointer |
+| --- | --- | --- |
+| `docker inspect` | `Name`, `Config.Image` | `/i/Name`, `/i/Config/Image` |
+| `docker inspect` | `Config.Labels["org.opencontainers.image.base.name"]` | `/i/Config/Labels/org.opencontainers.image.base.name` |
+| `docker inspect` | `Config.Labels["org.opencontainers.image.version"]` | `/i/Config/Labels/org.opencontainers.image.version` |
+| `docker compose ps` | `Service`, `Image` | `/i/Service`, `/i/Image` |
+
+`i` is the entry's index in the JSON array, or the zero-based line for line-delimited Compose output. Nothing else is read: `Env`, `Mounts`, `NetworkSettings`, `Ports`, and `Labels` beyond the two OCI labels above never appear in the report.
+
+`resource` is the container name without the leading `/`, or the Compose service name. The image reference is parsed with the same parser the container detector uses ([`src/detectors/container/parse-image.ts`](../src/detectors/container/parse-image.ts)); interpolated values (`${IMAGE}`) and invalid references are skipped, never guessed.
+
+### Rules matched
+
+Images map to Docker PURLs, `pkg:docker/<repository>`, and are checked against [`registry/container.json`](../registry/container.json). For example, `node:18-alpine` becomes `pkg:docker/library/node` at version `18-alpine`, and `redis:6.0` becomes `pkg:docker/library/redis` at `6.0`. A tag that names a release line is the version; a floating tag such as `latest` or a digest-only reference has no version, so a range rule reports `version-dependent` instead of guessing.
+
+Images from a registry other than Docker Hub keep the registry as the PURL namespace, for example `pkg:docker/ghcr.io/acme/app`. No Docker Hub rule matches those PURLs, so they are reported as `no-data`.
+
+The two OCI labels add items when present: `org.opencontainers.image.base.name` is the base image, and `org.opencontainers.image.version` is the image's own version. Both are checked against the same rules, with the container name as their resource.
+
+### Image ids
+
+When `Config.Image` is a bare image id (`sha256:…`), Evergreen does not resolve it to an image. The container is reported with the PURL `pkg:docker/image-id` and the id as its version, which yields `no-data`: there is no lifecycle rule for an unresolved id. Run `docker inspect --format '{{.Config.Image}}' <container>` with a name instead when you need the image.
+
+### What is not judged
+
+- The operating system and runtimes *inside* an image: export or unpack the root filesystem and run `evergreen scan` on it.
+- Images on registries other than Docker Hub, and Microsoft .NET images on `mcr.microsoft.com`: no rule is applied.
+- Environment variables, mounts, published ports, and network settings: never read or reported.
+- Whether a container is running: stopped containers are reported the same way.
+
+## Report shape
+
+The JSON report is `evergreen.inventory.v1`, validated by [`schemas/inventory.v1.schema.json`](../schemas/inventory.v1.schema.json). `results` holds one entry per item and check; `unrecognized` lists the files no importer recognized. Items are sorted by file and pointer, so the same exports produce the same report.
+
+A Package URL with no rule is reported as `no-data`; when a PURL has rules but none covers the version, the item is `not-affected`. Neither status is a statement that the version is safe. A rule for an announced date that has not happened yet is a `scheduled-end-of-life` finding at low severity, so it does not fail a `high` gate.
+
+## Importers
+
+| Importer | Reads | Export command |
+| --- | --- | --- |
+| `aws-rds` | AWS RDS instances, Aurora clusters, and ElastiCache cache clusters | `aws rds describe-db-instances`, `aws rds describe-db-clusters`, `aws elasticache describe-cache-clusters` |
+
+## AWS RDS, Aurora, and ElastiCache
+
+### Produce the export
+
+Use the AWS CLI with JSON output and pass the file to `evergreen inventory`:
+
+```bash
+aws rds describe-db-instances --output json > rds-instances.json
+aws rds describe-db-clusters --output json > rds-clusters.json
+aws elasticache describe-cache-clusters --output json > cache-clusters.json
+
+evergreen inventory rds-instances.json rds-clusters.json cache-clusters.json
+```
+
+The fixtures under `tests/fixtures/inventory/aws-rds/` are sanitized samples of these three documents: every account id, ARN, endpoint, and subnet id is a placeholder, and only the fields below are kept. They were assembled from the published output shape of `aws-cli` during review rather than captured from a live account.
+
+### Fields read
+
+| Document | Array | Engine field | Version field | Resource field |
+| --- | --- | --- | --- | --- |
+| `describe-db-instances` | `DBInstances` | `Engine` | `EngineVersion` | `DBInstanceIdentifier` |
+| `describe-db-clusters` | `DBClusters` | `Engine` | `EngineVersion` | `DBClusterIdentifier` |
+| `describe-cache-clusters` | `CacheClusters` | `Engine` | `EngineVersion` | `CacheClusterId` |
+
+Everything else in the document is ignored: ARNs, endpoints, reader endpoints, hosted zone ids, subnet groups, VPC ids, security groups, tags, and parameter groups. An entry without a string `Engine`, `EngineVersion`, and resource field is skipped, never guessed.
+
+### Engines and PURLs
+
+| AWS engine | Provider PURL | Upstream PURL |
+| --- | --- | --- |
+| `postgres` | `pkg:generic/aws-rds/postgres` | `pkg:generic/postgresql` |
+| `mysql` | `pkg:generic/aws-rds/mysql` | `pkg:generic/mysql` |
+| `aurora-postgresql` | `pkg:generic/aws-aurora/postgresql` | `pkg:generic/postgresql` |
+| `aurora-mysql`, `aurora` | `pkg:generic/aws-aurora/mysql` | none (see below) |
+| `redis` | `pkg:generic/aws-elasticache/redis` | `pkg:generic/redis` |
+
+Each recognized object produces two items when the version is also an upstream version, so the report shows both the provider's schedule and the upstream engine's schedule. AWS standard support and extended support dates differ from upstream end of life, and the rules are kept separate for that reason.
+
+Aurora MySQL is the exception: its `EngineVersion` embeds the Aurora version, as in `8.0.mysql_aurora.3.10.0`, which is not an upstream MySQL release. Only the Aurora item is emitted rather than comparing that string to upstream MySQL rules.
+
+Unknown engines are skipped: `mariadb`, `sqlserver-*`, `oracle-*`, `db2-*`, `memcached`, and `valkey` have no reviewed rule in this importer yet, so they produce no item and no claim.
+
+### Rules matched
+
+The rules live in [`registry/database.json`](../registry/database.json) under the provider PURLs, with the AWS release calendar as their source. "End of standard support" is recorded with the registry's `end-of-support` event; an announced date that is still in the future is recorded as `scheduled-end-of-life` at low severity until it passes. The summary of each rule says whether RDS Extended Support or ElastiCache Extended Support may keep the version running for a fee.
+
+| Service | Versions with a rule (as of 2026-10-30) |
+| --- | --- |
+| RDS for PostgreSQL | 9.6, 10, 11, 12, 13 (ended); 14 (scheduled 2027-02-28) |
+| RDS for MySQL | 5.7, 8.0 (ended) |
+| Aurora PostgreSQL | 11, 12, 13 (ended); 14 (scheduled 2027-02-28) |
+| Aurora MySQL | 1 (5.6), 2 (5.7) (ended) |
+| ElastiCache Redis OSS | 4, 5 (ended 2026-01-31); 6 (scheduled 2027-01-31) |
+
+A version outside these ranges is not reported as supported. When the provider PURL has rules for other versions, the item is `not-affected`: the check message says that rules exist and none covers this version. When the PURL has no rules at all, it is `no-data`. Neither status is a statement that the version is safe. This includes RDS for PostgreSQL 15 and later, RDS for MySQL 8.4 and later, Aurora PostgreSQL 15 and later, Aurora MySQL 3 and 8.4, and Redis OSS 7.x. Their announced end-of-standard-support dates are more than twelve months past the review date, so no rule is recorded yet under decision [0010](decisions/0010-scheduled-end-of-life.md); a later review adds them when the dates come within the window.
+
+### What is not judged
+
+The importer does not judge instance classes, storage, IOPS, parameter groups, patch levels within a supported minor version, certificate authorities, Multi-AZ or read-replica topology, backup retention, encryption, or licensing. It does not judge MariaDB, SQL Server, Oracle, Db2, Memcached, or Valkey. It does not verify that an export is complete or current. It does not read an AWS account, role, or region, and it cannot see an object that the export omits.
+
+## Export files
+
+Each section below documents one importer: the exact command that produces the export, the fields Evergreen reads, the lifecycle rules it matches, and what it does not judge. Fixtures live under `tests/fixtures/inventory/`, with every identifier replaced by a placeholder; the command and CLI version that produced them are recorded in the section.
+
+## AWS Lambda
+
+```bash
+aws lambda list-functions --output json > lambda.json
+evergreen inventory lambda.json
+```
+
+`list-functions` paginates. With pagination on, the CLI prints one JSON page after another; `evergreen` accepts the single page a one-page account prints as well as the array of pages a scripted caller collects. The fixtures under `tests/fixtures/inventory/aws-lambda/` reproduce the documented output of `aws lambda list-functions --output json` from AWS CLI v2, with every identifier replaced by a placeholder; they were not captured against a live account, so no CLI version is recorded.
+
+**Fields read**
+
+| Field | Use |
+| --- | --- |
+| `Functions[].FunctionName` | `resource` and nothing more. |
+| `Functions[].Runtime` | `version`, and the runtime identifier in `pkg:generic/aws-lambda-runtime/<Runtime>`. |
+| `Functions[].PackageType` | `Image` means the function runs a container image, which has no managed runtime, so it is skipped. |
+
+Nothing else is copied: not `FunctionArn`, `Role`, environment variables, tags, account id, code, or architecture.
+
+**Rules matched**
+
+`registry/serverless.json`, the `pkg:generic/aws-lambda-runtime/<identifier>` PURLs. Every runtime the [AWS Lambda runtimes page](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) gives a deprecation date for has a rule: a runtime the page lists under Deprecated runtimes is `end-of-life` at `high`, and a runtime the page lists as supported with a projected deprecation date is `scheduled-end-of-life` at `low` with that date as its deadline. The same rules back the Serverless detector, so one lifecycle fact reaches a declaration and a live function alike.
+
+**Not judged**
+
+- Container-image functions (`PackageType: "Image"`): their runtime lives in the image, not in the function's configuration. Rebuild the image from a newer base image instead.
+- Runtimes AWS has not dated — today `nodejs26.x` and `python3.15`, which the page lists as public preview and not scheduled — are reported as `no-data`, which is not a statement that they are safe.
+- Function versions, aliases, `$LATEST`, code, layers, architecture, and memory: none of them changes the runtime lifecycle answer.
+- Functions that a different export would show: this importer reads only the file you pass, and only the functions in it.

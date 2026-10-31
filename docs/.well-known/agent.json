@@ -57,7 +57,7 @@
     {
       "id": "check_upgrade",
       "name": "Check upgrade",
-      "description": "Answer offline whether this repository can move to a target runtime release, with evidence and lines from its lockfiles and manifests.",
+      "description": "Answer from repository files whether a project can move to a target runtime, with exact evidence. unknown means no evidence, not safety.",
       "tags": ["upgrade", "runtime", "readiness", "mcp"]
     },
     {

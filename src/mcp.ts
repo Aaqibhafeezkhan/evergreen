@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { completable, fromJsonSchema, McpServer, ResourceNotFoundError, ResourceTemplate } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -9,8 +10,8 @@ import { buildForecast, DEFAULT_FORECAST_MONTHS, MAX_FORECAST_MONTHS } from "./f
 import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-prompt.js";
 import { buildPlan } from "./plan-build.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
-import { findPackageFileSync } from "./package-files.js";
 import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
+import { findPackageFileSync } from "./package-files.js";
 import { VERSION } from "./version.js";
 
 export const MCP_TOOL_NAMES = [
@@ -365,7 +366,7 @@ export function createEvergreenMcpServer(
     {
       title: "Check upgrade",
       description:
-        "Answer offline whether this repository can move to a target runtime release, reading lockfiles and manifests already in the repository. Pass a target such as nodejs@22 or python@3.13. Returns evergreen.upgrade.v1: a verdict (ready, blocked, or unknown) and every issue with its exact evidence, path, and line. An unknown verdict means Evergreen found no evidence for this runtime in this repository. This is not a statement that the upgrade is safe.",
+        "Answer from files already in the repository whether a project can move to a target runtime, without running anything or using the network. Pass target as runtime@version, for example php@8.4. Returns evergreen.upgrade.v1: the verdict, the analyzers that applied, and every blocker, warning, and unknown with its path, line, and the exact constraint it read. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
       inputSchema: z.object({
         path: z
           .string()
@@ -375,7 +376,7 @@ export function createEvergreenMcpServer(
         target: z
           .string()
           .min(1)
-          .describe("Runtime and release to move to, such as nodejs@22 or python@3.13."),
+          .describe("Runtime and release to move to, as runtime@version, for example php@8.4 or nodejs@22."),
       }),
       outputSchema: outputSchema("check_upgrade"),
       annotations: MCP_TOOL_ANNOTATIONS,
@@ -383,8 +384,8 @@ export function createEvergreenMcpServer(
     async ({ path, target }) => {
       try {
         const parsed = parseUpgradeTarget(target);
-        if (parsed === undefined) throw new Error("target must name a runtime and a release, for example nodejs@22.");
-        return success(await checkUpgrade(path, parsed));
+        if (!parsed) return failure(new Error(`target must be <runtime>@<version>, for example php@8.4 (got "${target}").`));
+        return success(await checkUpgrade(resolve(path), parsed));
       } catch (error) {
         return failure(error);
       }

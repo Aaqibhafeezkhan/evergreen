@@ -1,0 +1,6 @@
+name: ready
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.19.0"
+dependencies:
+  http: ^1.2.0

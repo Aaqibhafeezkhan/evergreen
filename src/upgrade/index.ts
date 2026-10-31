@@ -1,10 +1,13 @@
-import type { UpgradeAnalyzer, UpgradeIssue, UpgradeReport, UpgradeTarget } from "./types.js";
+import { composerLockAnalyzer } from "./composer-lock.js";
+import { goModulesAnalyzer } from "./go-modules.js";
+import { dartSdkAnalyzer } from "./dart-sdk.js";
 import { pnpmLockAnalyzer } from "./pnpm-lock.js";
+import type { UpgradeAnalyzer, UpgradeIssue, UpgradeReport, UpgradeTarget } from "./types.js";
 
 export type { UpgradeAnalyzer, UpgradeIssue, UpgradeReport, UpgradeTarget } from "./types.js";
 
 /** Every built-in analyzer. Each task in the upgrade epic appends its own entry. */
-export const upgradeAnalyzers: UpgradeAnalyzer[] = [pnpmLockAnalyzer];
+export const upgradeAnalyzers: UpgradeAnalyzer[] = [composerLockAnalyzer, goModulesAnalyzer, dartSdkAnalyzer, pnpmLockAnalyzer];
 
 const levelOrder = { blocker: 0, warning: 1, unknown: 2 } as const;
 

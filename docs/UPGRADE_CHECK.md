@@ -1,37 +1,131 @@
-# Upgrade readiness
+# Upgrade check
 
-`evergreen upgrade-check --to <runtime@version>` answers one question offline: can this repository move to that runtime release? It reads files already in the repository (lockfiles and manifests), never the network, and never runs the project's code or commands. Every issue names the analyzer, the exact evidence as written, the file, and the line.
+`evergreen upgrade-check --to <runtime@version> [path] [--json]` answers, offline and from files already in the repository, whether a project can move to a target runtime. It lists each blocker, warning, and unknown with the exact lockfile or manifest entry behind it. Agents get the same answer through the `check_upgrade` MCP tool.
 
 ```bash
-evergreen upgrade-check --to nodejs@22
-evergreen upgrade-check --to python@3.13 path/to/repository --json
+evergreen upgrade-check --to php@8.4 .
+evergreen upgrade-check --to nodejs@22 . --json
 ```
 
-The command exits `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. The same answer is available to agents through the `check_upgrade` MCP tool.
+The text output starts with the verdict, then one line per issue:
 
-| Verdict | Meaning |
-| --- | --- |
-| `ready` | Every analyzer that applies ran and reported no blocker. Warnings and unknowns may still be present. |
-| `blocked` | At least one analyzer reported a blocker. |
-| `unknown` | No analyzer could read evidence for this runtime in this repository. The command prints: "Evergreen found no evidence for this runtime in this repository. This is not a statement that the upgrade is safe." |
+```text
+php@8.4: blocked (1 blockers, 0 warnings, 0 unknown)
+composer.lock:9  acme/http-client@2.1.0  acme/http-client@2.1.0 requires php ^7.4, which excludes PHP 8.4.  [lockfile: require.php: ^7.4]
+```
+
+The JSON output is an `evergreen.upgrade.v1` document that conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). Exit codes: `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, `2` for bad input.
+
+An analyzer only runs when the repository has the files it reads. Each issue names its analyzer, its level (`blocker`, `warning`, or `unknown`), the affected subject, the path and line, and the evidence value exactly as written.
+
+- `blocker`: the project will not install or run on the target.
+- `warning`: it works but is deprecated on the target.
+- `unknown`: the evidence needed to judge it is missing.
 
 ## What it cannot know
 
-- Native addons built at install time, and optional dependencies that are only resolved by a package manager at install time.
-- Packages that declare no support range. Missing evidence is reported as `unknown` or not reported; it is never treated as support.
-- Code paths that are not visible in the repository, such as a runtime upgraded in a deployment system that keeps its configuration elsewhere.
-- The latest patch release of a runtime line. Lockfiles record ranges, not the release a machine will install.
-- Whether a new version of a dependency fixes the problem. The check reports what the repository declares today.
+- **Native extensions and build-time requirements.** A package may fail to build on the target for reasons its metadata does not state.
+- **Packages without declared support ranges.** If a package never declares which runtime it supports, the analyzer reports `unknown` or nothing, never `ready` by assumption.
+- **Code paths outside the source.** Dynamic loading, `eval`, generated code, and behavior that only appears at runtime are not visible here.
+- **Your CI images and operating system.** The runtime inside a container image or on a runner is not part of this check.
+- **Unresolved dependencies.** When a lockfile does not record a support range for a package, no analyzer can judge that package.
+- **Anything at install time.** Evergreen never runs a package manager, Compiler, or test suite, and no scan uses the network.
 
-## Analyzers
+An `unknown` verdict means Evergreen found no evidence for that runtime in this repository. It is not a statement that the upgrade is safe.
 
-Each analyzer reads only the files listed, applies only to its runtime, and carries the exact value it read. A section that says "not available yet" describes work planned in the upgrade epic; it does not run in this release.
+## Composer
 
-### npm lockfile
+The Composer analyzer (`composer-lock`) runs for `php` targets when `composer.lock` exists.
 
-Not available yet in this release.
+**Files and fields**
 
-### pnpm lockfile
+- `composer.lock` `packages[*].require.php` — a `blocker`.
+- `composer.lock` `packages-dev[*].require.php` — a `warning`.
+- `composer.lock` top-level `platform.php` — a `blocker`. This is the platform requirement the lockfile was resolved against.
+- `composer.lock` top-level `platform-overrides.php` — a `blocker`.
+- `composer.json` `require.php` — a `blocker`, with evidence kind `manifest`.
+
+Each issue carries the constraint exactly as written (for example `^7.4` or `>=8.1 <8.5`) and the line of the field it came from. Package subjects are `<name>@<version>`; platform subjects are `platform.php` and `platform-overrides.php`; the project's own constraint uses the subject `composer.json`.
+
+**Version syntax**
+
+The matcher understands Composer's constraint syntax:
+
+- caret ranges: `^1.2.3`, `^0.3`, `^0.0.3`
+- tilde ranges: `~1.2`, `~8.4.0`
+- comparisons: `>=`, `>`, `<=`, `<`, `!=`, `<>`, `==`, `=`
+- wildcards: `*`, `1.*`, `1.0.x`
+- hyphen ranges: `1.0 - 2.0`
+- OR: `||` and `|`
+- AND: space- or comma-joined terms, such as `>=8.1 <8.5` or `>=8.1, <8.5`
+- pre-release suffixes: `8.4.0RC1`, `8.4.0-beta1`
+
+A target written as a release line (`8.4`) is tested as both `8.4.0` and `8.4.99`, so an upper bound written as `<8.5` is not mistaken for a blocker. A target written with three or more parts (`8.4.0`) is tested as written.
+
+**What it reports as `unknown`**
+
+- A `require.php` value that is not a constraint this matcher understands, such as a truncated OR (`^8.4 ||`) or a value containing an unevaluated `${...}` expression.
+
+A missing `require.php`, a `*` constraint, or a constraint that includes the target produces no issue. Composer itself is never run, and the lockfile is parsed as untrusted JSON.
+
+## Go modules and vendored requirements
+
+Analyzer id `go-modules`; runtime `go`. It applies when the repository root has a `go.mod`.
+
+**Files and fields it reads**
+
+- `go.mod`: the `go` directive and its line.
+- `go.work`: the `go` directive and its line, when the workspace file is in the repository root.
+- `vendor/modules.txt`: every `# <module> <version>` header and the `## explicit; go <version>` (or `## go <version>`) annotation that follows it. Package lines are ignored.
+- The bundled `registry/go.json` rules for `pkg:generic/golang`.
+
+**Version syntax it understands**
+
+Release numbers as Go writes them: `1.23`, `1.23.0`, and a leading `go` (`go1.23.0`) are accepted and compared part by part. A target that is not a release number, such as `nightly`, is reported as `unknown`; it is never compared.
+
+**What it reports**
+
+- `blocker`, `manifest`: the target is below the `go` directive of `go.mod` or `go.work`. Since Go 1.21 the `go` line is a required minimum, not advice: a Go toolchain refuses a module that declares a newer Go version. The evidence is the directive value as written, at its line.
+- `blocker`, `lockfile`: the target is below the `go` version `go mod vendor` recorded for a dependency in `vendor/modules.txt`. The subject is `<module>@<version>` and the evidence is the annotation line exactly as written.
+- `warning`, `rule`: the target itself matches a bundled lifecycle rule for Go, so it is deprecated or end-of-support. The evidence is the rule id.
+- `unknown`: `vendor/modules.txt` is absent, or records no `go` version. Dependencies' Go requirements are not in the repository without vendoring, so Evergreen reports `unknown` for them instead of assuming they are compatible. It does not run `go mod tidy` or any Go command to find out.
+
+**Sources**
+
+- [Go Modules Reference: `go` directive](https://go.dev/ref/mod#go-mod-file-go): the `go` line is a minimum required Go version since Go 1.21, and must be greater than or equal to the `go` line of every dependency.
+- [Go Modules Reference: `go.work` files](https://go.dev/ref/mod#go-work-file-go): the workspace `go` directive names the toolchain version the workspace is written for.
+- [Go Modules Reference: vendoring](https://go.dev/ref/mod#vendoring): `go mod vendor` writes `vendor/modules.txt` and records the `go` version from each dependency's `go.mod` since Go 1.17.
+- [Go toolchains](https://go.dev/doc/toolchain): how the `go` directive selects a toolchain.
+
+## Dart and Flutter
+
+Applies when `pubspec.lock` exists. Runtimes: `dart` and `flutter`.
+
+| File | Field | What it means |
+| --- | --- | --- |
+| `pubspec.lock` | `sdks.dart` | The Dart SDK bound shared by every resolved package: the intersection of their individual bounds. |
+| `pubspec.lock` | `sdks.flutter` | The Flutter SDK bound shared by every resolved package. |
+| `pubspec.yaml` | `environment.sdk` | The Dart SDK bound the project itself declares. |
+| `pubspec.yaml` | `environment.flutter` | The Flutter SDK bound the project itself declares. |
+
+A `dart@x` target is checked against the Dart bounds and a `flutter@x` target against the Flutter bounds; the other runtime's bounds are not consulted. A target outside a `pubspec.lock` bound is a `blocker` with subject `resolved package set` and `kind: "lockfile"`: the resolved set would not install. A target outside a `pubspec.yaml` bound is a `blocker` with subject `environment.sdk` or `environment.flutter` and `kind: "manifest"`. When neither file records a bound for the target runtime, one `unknown` issue is reported; it names the absent `sdks` key as evidence.
+
+A target with fewer than three components is checked as `x.0.0` or `x.y.0`, so `dart@3.5` is checked as `3.5.0`.
+
+Version syntax: a constraint is `any` or one or more space-joined terms, each `^`, `>=`, `<=`, `>`, `<`, or a bare version followed by `x.y.z` and an optional pre-release or build suffix. Caret follows pub's rules: `^1.2.3` means `>=1.2.3 <2.0.0`, `^0.2.3` means `>=0.2.3 <0.3.0`, and `^0.0.3` means `>=0.0.3 <0.0.4`. A bound the parser cannot read (a template, `||` range, or missing components) is treated as missing evidence, so the answer is `unknown` rather than `ready`.
+
+The parsers are the ones the Dart detector uses: `src/detectors/dart/parse-pubspec-lock.ts` and `parse-pubspec.ts`.
+
+```bash
+evergreen upgrade-check --to dart@3.5 examples/upgrade/dart-sdk
+```
+
+```text
+blocked: dart@3.5 (1 blocker, 0 warnings, 0 unknown)
+pubspec.lock:12  resolved package set  The resolved package set requires Dart >=3.6.0 <4.0.0, which excludes 3.5.0.  [lockfile >=3.6.0 <4.0.0]
+```
+
+## pnpm lockfile
 
 Runtime: `nodejs`. Applies when `pnpm-lock.yaml` exists with `lockfileVersion` 6.x or 9.x.
 
@@ -41,35 +135,3 @@ Runtime: `nodejs`. Applies when `pnpm-lock.yaml` exists with `lockfileVersion` 6
 - Levels: `blocker` for a production dependency whose range excludes the target; `warning` for a dev dependency (`dev: true` or `devOptional: true` in 6.x, or reachable only from a dev dependency in 9.x); `unknown` for an `engines.node` value that is not a valid semver range.
 - Evidence: `engines.node: <range as written>`, at the line of the `engines` key.
 - Deduplication: identical name, version, and range across peer variants keep the first line.
-
-### Node.js APIs removed in the target
-
-Not available yet in this release.
-
-### Poetry
-
-Not available yet in this release.
-
-### uv and PDM
-
-Not available yet in this release.
-
-### Python standard library
-
-Not available yet in this release.
-
-### Composer
-
-Not available yet in this release.
-
-### Dart and Flutter
-
-Not available yet in this release.
-
-### Go modules
-
-Not available yet in this release.
-
-### Target runtime lifecycle
-
-Not available yet in this release.

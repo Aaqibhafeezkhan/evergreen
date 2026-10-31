@@ -120,6 +120,159 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2028-11-14",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet10",
+      "latestReview": "2026-10-30",
+      "name": "dotnet10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-05-10",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet5-0",
+      "latestReview": "2026-10-30",
+      "name": "dotnet5.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet5-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet5.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-12-20",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet6",
+      "latestReview": "2026-10-30",
+      "name": "dotnet6",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet6.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet6",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-05-14",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet7",
+      "latestReview": "2026-10-30",
+      "name": "dotnet7",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet7.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet7",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-11-10",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet8",
+      "latestReview": "2026-10-30",
+      "name": "dotnet8",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet8.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-11-10",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet9",
+      "latestReview": "2026-10-30",
+      "name": "dotnet9",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet9.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet9",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2019-06-27",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnetcore1-0",
+      "latestReview": "2026-10-30",
+      "name": "dotnetcore1.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnetcore1-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnetcore1.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2019-05-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnetcore2-0",
+      "latestReview": "2026-10-30",
+      "name": "dotnetcore2.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnetcore2-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnetcore2.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-01-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnetcore2-1",
+      "latestReview": "2026-10-30",
+      "name": "dotnetcore2.1",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnetcore2-1.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnetcore2.1",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2023-04-03",
       "ecosystems": [
         "serverless"
@@ -133,6 +286,210 @@
       "namespace": "aws-lambda-runtime",
       "path": "products/generic-aws-lambda-runtime-dotnetcore3-1.json",
       "purl": "pkg:generic/aws-lambda-runtime/dotnetcore3.1",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-08",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-go1-x",
+      "latestReview": "2026-10-30",
+      "name": "go1.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-go1-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/go1.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java11",
+      "latestReview": "2026-10-30",
+      "name": "java11",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java11.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java11",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java11-al2023",
+      "latestReview": "2026-10-30",
+      "name": "java11.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java11-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java11.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java17",
+      "latestReview": "2026-10-30",
+      "name": "java17",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java17.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java17",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java17-al2023",
+      "latestReview": "2026-10-30",
+      "name": "java17.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java17-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java17.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java21",
+      "latestReview": "2026-10-30",
+      "name": "java21",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java21.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java21",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java25",
+      "latestReview": "2026-10-30",
+      "name": "java25",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java25.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java25",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-08",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java8",
+      "latestReview": "2026-10-30",
+      "name": "java8",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java8.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java8-al2",
+      "latestReview": "2026-10-30",
+      "name": "java8.al2",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java8-al2.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java8.al2",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java8-al2023",
+      "latestReview": "2026-10-30",
+      "name": "java8.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java8-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java8.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2016-08-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs",
+      "latestReview": "2026-10-30",
+      "name": "nodejs",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2021-07-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs10-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs10.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs10-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs10.x",
       "rules": 1,
       "type": "generic"
     },
@@ -171,6 +528,329 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-06-12",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs16-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs16.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs16-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs16.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-09-01",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs18-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs18.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs18-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs18.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs20-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs20.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs20-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs20.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs22-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs22.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs22-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs22.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs24-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs24.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs24-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs24.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2020-03-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs4-3",
+      "latestReview": "2026-10-30",
+      "name": "nodejs4.3",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs4-3.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs4.3",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2020-03-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs4-3-edge",
+      "latestReview": "2026-10-30",
+      "name": "nodejs4.3-edge",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs4-3-edge.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs4.3-edge",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2019-08-12",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs6-10",
+      "latestReview": "2026-10-30",
+      "name": "nodejs6.10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs6-10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs6.10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2020-03-06",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs8-10",
+      "latestReview": "2026-10-30",
+      "name": "nodejs8.10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs8-10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs8.10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-08",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-provided",
+      "latestReview": "2026-10-30",
+      "name": "provided",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-provided.json",
+      "purl": "pkg:generic/aws-lambda-runtime/provided",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-07-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-provided-al2",
+      "latestReview": "2026-10-30",
+      "name": "provided.al2",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-provided-al2.json",
+      "purl": "pkg:generic/aws-lambda-runtime/provided.al2",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-provided-al2023",
+      "latestReview": "2026-10-30",
+      "name": "provided.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-provided-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/provided.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2021-07-15",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python2-7",
+      "latestReview": "2026-10-30",
+      "name": "python2.7",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python2-7.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python2.7",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-10-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-10",
+      "latestReview": "2026-10-30",
+      "name": "python3.10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-11",
+      "latestReview": "2026-10-30",
+      "name": "python3.11",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-11.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.11",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-10-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-12",
+      "latestReview": "2026-10-30",
+      "name": "python3.12",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-12.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.12",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-13",
+      "latestReview": "2026-10-30",
+      "name": "python3.13",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-13.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.13",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-14",
+      "latestReview": "2026-10-30",
+      "name": "python3.14",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-14.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.14",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-07-18",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-6",
+      "latestReview": "2026-10-30",
+      "name": "python3.6",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-6.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.6",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2023-12-04",
       "ecosystems": [
         "serverless"
@@ -205,6 +885,40 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2025-12-15",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-9",
+      "latestReview": "2026-10-30",
+      "name": "python3.9",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-9.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.9",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2021-07-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby2-5",
+      "latestReview": "2026-10-30",
+      "name": "ruby2.5",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby2-5.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby2.5",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2023-12-07",
       "ecosystems": [
         "serverless"
@@ -218,6 +932,74 @@
       "namespace": "aws-lambda-runtime",
       "path": "products/generic-aws-lambda-runtime-ruby2-7.json",
       "purl": "pkg:generic/aws-lambda-runtime/ruby2.7",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby3-2",
+      "latestReview": "2026-10-30",
+      "name": "ruby3.2",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby3-2.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby3.2",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby3-3",
+      "latestReview": "2026-10-30",
+      "name": "ruby3.3",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby3-3.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby3.3",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby3-4",
+      "latestReview": "2026-10-30",
+      "name": "ruby3.4",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby3-4.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby3.4",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby4-0",
+      "latestReview": "2026-10-30",
+      "name": "ruby4.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby4-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby4.0",
       "rules": 1,
       "type": "generic"
     },
@@ -1697,7 +2479,7 @@
       "type": "generic"
     }
   ],
-  "rules": 323,
+  "rules": 369,
   "schemaVersion": "evergreen.api-type.v1",
   "type": "generic"
 }

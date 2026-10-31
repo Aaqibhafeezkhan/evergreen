@@ -5,6 +5,8 @@ docs:
         url: /DEMO.html
       - title: "CLI reference"
         url: /CLI.html
+      - title: "Runtime drift"
+        url: /DRIFT.html
       - title: "v0.1 validation results"
         url: /VALIDATION.html
       - title: "Environment doctor and compatibility matrix"

@@ -94,8 +94,7 @@ Usage:
   evergreen scan [path] --exclude <ecosystem|rule-prefix>   # drop matching findings; repeatable
   evergreen scan [path] --no-cache   # bypass the scan cache and re-scan all files fresh
   evergreen scan <path> <path>... [--all <dir>] [--json]   # several projects, per-project and combined counts
-  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json]   # what reaches end of life next, by month
-  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]   # what reaches end of life next, by month
+  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json | --format mermaid]   # what reaches end of life next, by month
   evergreen plan [path] [--json] [--wave <n>]   # migration waves from a scan; --wave prints one zero-based wave
   evergreen status-card [path] [--name <label>]   # print a static SVG summary of findings, next end of life, and data age
   evergreen lookup <product> [version] [--json]   # support status, end-of-life date, and evidence for a product
@@ -1204,6 +1203,8 @@ async function main(rawArgs: string[]): Promise<number> {
     const forecast = buildForecast(await scanRepository(pathArgument, builtInDetectors, { noCache }), await bundledRules(), asOfValue ?? new Date().toISOString().slice(0, 10), months);
     if (svg) {
       process.stdout.write(`${renderForecastSvg(forecast, { animate })}\n`);
+      return 0;
+    }
     if (format === "mermaid") {
       process.stdout.write(`${renderForecastMermaid(forecast)}\n`);
       return 0;

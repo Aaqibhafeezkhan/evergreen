@@ -1,28 +1,28 @@
 {
   "changes": [
     {
-      "ecosystem": "container",
-      "event": "deprecated",
+      "ecosystem": "terraform",
+      "event": "removed",
       "observedAt": "2026-10-31",
-      "path": "products/generic-dockerfile.json",
-      "productId": "generic-dockerfile",
-      "purl": "pkg:generic/dockerfile",
+      "path": "products/generic-terraform.json",
+      "productId": "generic-terraform",
+      "purl": "pkg:generic/terraform",
       "reviewedAt": "2026-10-31",
-      "ruleId": "container.dockerfile.legacy-env-format",
-      "severity": "low",
-      "title": "The Dockerfile legacy \"ENV key value\" form is deprecated"
+      "ruleId": "terraform.function.list-map",
+      "severity": "high",
+      "title": "The list() and map() functions were removed in Terraform 0.15"
     },
     {
-      "ecosystem": "container",
+      "ecosystem": "terraform",
       "event": "deprecated",
       "observedAt": "2026-10-31",
-      "path": "products/generic-dockerfile.json",
-      "productId": "generic-dockerfile",
-      "purl": "pkg:generic/dockerfile",
+      "path": "products/generic-terraform.json",
+      "productId": "generic-terraform",
+      "purl": "pkg:generic/terraform",
       "reviewedAt": "2026-10-31",
-      "ruleId": "container.dockerfile.maintainer",
+      "ruleId": "terraform.syntax.interpolation-only",
       "severity": "low",
-      "title": "The Dockerfile MAINTAINER instruction is deprecated"
+      "title": "Interpolation-only strings are deprecated"
     },
     {
       "deadline": "2027-04-01",

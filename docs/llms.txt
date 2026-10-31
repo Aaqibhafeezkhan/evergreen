@@ -25,6 +25,7 @@ Before adding a dependency, check it: call the `check_dependency` MCP tool or ru
 - [Upgrade check](https://arminazimi.github.io/evergreen/UPGRADE_CHECK.html): answer from files already in the repository whether a project can move to a target runtime, with each blocker, warning, and exact evidence.
 - [Verification receipts](https://arminazimi.github.io/evergreen/RECEIPTS.html): how to read and reproduce a before/after receipt for a change.
 - [Share a lifecycle report](https://arminazimi.github.io/evergreen/SHARE_REPORT.html): produce the forecast timeline and the HTML report, what they contain, and what is safe to send.
+- [Showcase](https://arminazimi.github.io/evergreen/SHOWCASE.html): embed the animated lifecycle forecast in a README and refresh it on a schedule.
 - [Environment doctor and compatibility](https://arminazimi.github.io/evergreen/COMPATIBILITY.html): supported ecosystems, hosts, and maturity.
 - [Evergreen compared with other tools](https://arminazimi.github.io/evergreen/compare/index.html): what Evergreen answers versus Renovate, Dependabot, and endoflife.date, and where each is stronger.
 - [Agent Skill](https://arminazimi.github.io/evergreen/AGENT_SKILLS.html): the portable skill for coding agents and how its triggering is evaluated.

@@ -1,5 +1,5 @@
 {
-  "latestReview": "2026-10-30",
+  "latestReview": "2026-10-31",
   "products": [
     {
       "ecosystems": [
@@ -1877,11 +1877,11 @@
         "removed"
       ],
       "id": "generic-python",
-      "latestReview": "2026-10-30",
+      "latestReview": "2026-10-21",
       "name": "python",
       "path": "products/generic-python.json",
       "purl": "pkg:generic/python",
-      "rules": 69,
+      "rules": 44,
       "type": "generic"
     },
     {
@@ -1971,14 +1971,16 @@
         "terraform"
       ],
       "events": [
-        "end-of-support"
+        "deprecated",
+        "end-of-support",
+        "removed"
       ],
       "id": "generic-terraform",
-      "latestReview": "2026-10-30",
+      "latestReview": "2026-10-31",
       "name": "terraform",
       "path": "products/generic-terraform.json",
       "purl": "pkg:generic/terraform",
-      "rules": 6,
+      "rules": 8,
       "type": "generic"
     },
     {
@@ -4439,7 +4441,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 550,
+  "rules": 527,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -4469,7 +4471,7 @@
     {
       "path": "types/generic.json",
       "products": 88,
-      "rules": 320,
+      "rules": 297,
       "type": "generic"
     },
     {

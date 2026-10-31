@@ -27,7 +27,7 @@
             "description": "Distinct releases among `pin` values, sorted ascending, such as `[\"1.21\", \"1.22\"]`.",
             "items": { "type": "string", "minLength": 1 }
           },
-          "drifted": { "type": "boolean", "description": "True when `pin` values select more than one release." },
+          "drifted": { "type": "boolean", "description": "True when no release is selected by every group of alternatives." },
           "floorConflicts": {
             "type": "array",
             "description": "Floors above the lowest pinned release, which that pinned environment cannot satisfy.",
@@ -48,6 +48,7 @@
         "source": { "type": "string", "minLength": 1, "description": "The file or field the value comes from, such as `.go-version` or `Dockerfile FROM`." },
         "raw": { "type": "string", "description": "The value as written." },
         "kind": { "enum": ["pin", "floor"], "description": "`pin` selects the version that builds or runs; `floor` is a minimum the project supports." },
+        "group": { "type": "string", "minLength": 1, "description": "Pins that share a group are alternatives, such as the entries of one multi-target list; they are reported but not compared with each other." },
         "release": { "type": "string", "minLength": 1, "description": "The release line the value resolves to offline; absent when it cannot be resolved." },
         "unresolved": { "type": "string", "minLength": 1, "description": "Why `release` is absent, in one sentence." }
       }

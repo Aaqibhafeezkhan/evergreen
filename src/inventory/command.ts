@@ -1,165 +1,181 @@
 import { createHash } from "node:crypto";
-import { access, constants, stat } from "node:fs/promises";
+import { constants } from "node:fs";
+import { access, stat } from "node:fs/promises";
 
 import { ConfigError, loadConfig } from "../config.js";
-import { severityValues, type Severity } from "../domain.js";
+import { severityValues } from "../domain.js";
+import type { Severity } from "../domain.js";
 import { inventoryImporters, runInventory } from "./index.js";
 import type { InventoryReport, InventoryResult } from "./types.js";
 
-export const INVENTORY_USAGE = "Usage: evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]";
+export const INVENTORY_USAGE =
+  "Usage: evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]";
 
-const EXIT_UNRECOGNIZED = 2;
-const EXIT_POLICY = 1;
+export class InventoryUsageError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InventoryUsageError";
+  }
+}
 
-/** The first 12 hex characters of the resource's SHA-256, for `--redact`. */
+/** The first 12 hex characters of the resource's SHA-256, used by `--redact`. */
 export function redactResource(resource: string): string {
   return createHash("sha256").update(resource).digest("hex").slice(0, 12);
 }
 
-const severityRank = (severity: Severity): number => severityValues.indexOf(severity);
-
-function shownResource(result: InventoryResult, redact: boolean): string {
-  return redact ? redactResource(result.item.resource) : result.item.resource;
+/** A copy of the report with every resource name redacted. */
+export function redactReport(report: InventoryReport): InventoryReport {
+  return {
+    ...report,
+    results: report.results.map((result) => ({
+      ...result,
+      item: { ...result.item, resource: redactResource(result.item.resource) },
+    })),
+  };
 }
 
-function ruleColumn(result: InventoryResult): string {
-  return result.check.findings.map((finding) => finding.ruleId).join(", ") || "-";
+const DIM = "\u001b[2m";
+const RESET = "\u001b[0m";
+
+function row(result: InventoryResult, withRules: boolean): string {
+  const { item, check } = result;
+  const version = item.version ?? "-";
+  if (!withRules) return `  ${item.resource}  ${version}  ${item.pointer}`;
+  const rules = check.findings.map((finding) => finding.ruleId).join(",");
+  return `  ${item.resource}  ${version}  ${check.status}  ${rules}  ${item.pointer}`;
 }
 
-function rows(results: readonly InventoryResult[], redact: boolean): string[] {
-  const cells = results.map((result) => [
-    shownResource(result, redact),
-    result.item.version ?? "-",
-    result.check.status,
-    ruleColumn(result),
-    result.item.pointer,
-  ]);
-  const widths = [0, 1, 2, 3].map((column) => Math.max(...cells.map((cell) => cell[column]!.length)));
-  return cells.map((cell) => `  ${cell.map((value, column) => (column === cell.length - 1 ? value : value.padEnd(widths[column]!))).join("  ")}`.trimEnd());
-}
-
-function byFile(results: readonly InventoryResult[], redact: boolean): string[] {
-  const lines: string[] = [];
-  const files = [...new Set(results.map((result) => result.item.file))];
-  for (const file of files) {
-    lines.push(file);
-    lines.push(...rows(results.filter((result) => result.item.file === file), redact));
-  }
-  return lines;
-}
-
-/** Text output: affected results first, grouped by file; the rest in their own sections; unrecognized files last. */
-export function renderInventoryText(report: InventoryReport, options: { redact?: boolean } = {}): string {
-  const redact = options.redact ?? false;
+/**
+ * Text output: affected results first, grouped by file; then the results that were checked and are not
+ * affected; then `no-data` results dimmed; then the files no importer recognized.
+ */
+export function renderInventoryText(report: InventoryReport, options: { color?: boolean } = {}): string {
+  const color = options.color ?? (Boolean(process.stdout.isTTY) && !process.env.NO_COLOR);
+  const dim = (text: string): string => (color ? `${DIM}${text}${RESET}` : text);
   const affected = report.results.filter((result) => result.check.status === "affected");
-  const rest = report.results.filter((result) => result.check.status !== "affected" && result.check.status !== "no-data");
+  const checked = report.results.filter((result) => result.check.status === "version-dependent" || result.check.status === "not-affected");
   const noData = report.results.filter((result) => result.check.status === "no-data");
-
   const lines: string[] = [];
-  lines.push(affected.length === 0 ? "No affected resources." : "Affected", ...(affected.length === 0 ? [] : byFile(affected, redact)));
-  if (rest.length > 0) lines.push("", "Not affected", ...byFile(rest, redact));
-  if (noData.length > 0) lines.push("", "No data (not judged)", ...byFile(noData, redact));
-  if (report.unrecognized.length > 0) lines.push("", "Unrecognized files", ...report.unrecognized.map((file) => `  ${file}`));
-  return lines.join("\n");
+
+  if (affected.length === 0) {
+    lines.push("No affected items in the files read.");
+  } else {
+    let file = "";
+    for (const result of affected) {
+      if (result.item.file !== file) {
+        file = result.item.file;
+        lines.push(file);
+      }
+      lines.push(row(result, true));
+    }
+  }
+  if (checked.length > 0) {
+    lines.push("", dim("Checked, not affected"));
+    for (const result of checked) lines.push(row(result, true));
+  }
+  if (noData.length > 0) {
+    lines.push("", dim("No lifecycle data (not a statement that it is safe)"));
+    for (const result of noData) lines.push(row(result, false));
+  }
+  if (report.unrecognized.length > 0) {
+    lines.push("", dim("Unrecognized files"));
+    for (const file of report.unrecognized) lines.push(`  ${file}`);
+  }
+  return `${lines.join("\n")}\n`;
 }
 
-/** The configured gate, so `inventory` honors `.evergreen.json` like every other command. */
-async function configuredGate(): Promise<Severity | "none" | undefined> {
-  return (await loadConfig(process.cwd()))?.failOn;
+interface InventoryOptions {
+  files: string[];
+  format: string;
+  json: boolean;
+  redact: boolean;
+  failOn?: string;
 }
 
-/** `evergreen inventory`: reads the export files given and reports the resources the lifecycle rules cover. */
-export async function inventoryCommand(args: readonly string[]): Promise<number> {
+function parseArguments(args: string[]): InventoryOptions {
   const files: string[] = [];
-  let format: string | undefined;
-  let gate: string | undefined;
+  let format = "auto";
   let json = false;
   let redact = false;
-
+  let failOn: string | undefined;
   for (let index = 0; index < args.length; index += 1) {
     const argument = args[index]!;
     if (argument === "--json") {
       json = true;
-      continue;
-    }
-    if (argument === "--redact") {
+    } else if (argument === "--redact") {
       redact = true;
-      continue;
-    }
-    if (argument === "--format" || argument === "--fail-on") {
+    } else if (argument === "--format" || argument === "--fail-on") {
       const value = args[index + 1];
-      if (value === undefined || value.startsWith("-")) {
-        process.stderr.write(`${argument} needs a value.\n${INVENTORY_USAGE}\n`);
-        return EXIT_UNRECOGNIZED;
-      }
+      if (value === undefined || value.startsWith("-")) throw new InventoryUsageError(INVENTORY_USAGE);
       if (argument === "--format") format = value;
-      else gate = value;
+      else failOn = value;
       index += 1;
-      continue;
-    }
-    if (argument.startsWith("-")) {
-      process.stderr.write(`Unknown option: ${argument}\n${INVENTORY_USAGE}\n`);
-      return EXIT_UNRECOGNIZED;
-    }
-    files.push(argument);
-  }
-
-  if (files.length === 0) {
-    process.stderr.write(`Give at least one export file.\n${INVENTORY_USAGE}\n`);
-    return EXIT_UNRECOGNIZED;
-  }
-  if (format !== undefined && format !== "auto" && !inventoryImporters.some((importer) => importer.id === format)) {
-    process.stderr.write(`Unknown importer for --format: ${format} (expected auto or ${inventoryImporters.map((importer) => importer.id).join(", ") || "no importer is built in"}).\n`);
-    return EXIT_UNRECOGNIZED;
-  }
-  if (gate !== undefined && gate !== "none" && !severityValues.includes(gate as Severity)) {
-    process.stderr.write(`Unknown severity for --fail-on: ${gate} (expected none, ${severityValues.join(", ")}).\n`);
-    return EXIT_UNRECOGNIZED;
-  }
-
-  let effectiveGate: Severity | "none";
-  try {
-    effectiveGate = (gate as Severity | "none" | undefined) ?? (await configuredGate()) ?? "high";
-  } catch (error) {
-    if (error instanceof ConfigError) {
-      process.stderr.write(`${error.message}\n`);
-      return EXIT_UNRECOGNIZED;
-    }
-    throw error;
-  }
-
-  const readable: string[] = [];
-  const unreadable: string[] = [];
-  for (const file of files) {
-    try {
-      if (!(await stat(file)).isFile()) {
-        unreadable.push(file);
-        continue;
-      }
-      await access(file, constants.R_OK);
-      readable.push(file);
-    } catch {
-      unreadable.push(file);
+    } else if (argument.startsWith("-")) {
+      throw new InventoryUsageError(INVENTORY_USAGE);
+    } else {
+      files.push(argument);
     }
   }
-
-  const report = await runInventory(readable, inventoryImporters, format === undefined || format === "auto" ? undefined : format);
-  if (unreadable.length > 0) report.unrecognized.push(...unreadable);
-
-  process.stdout.write(`${json ? JSON.stringify(redact ? redactReport(report) : report, null, 2) : renderInventoryText(report, { redact })}\n`);
-
-  if (report.unrecognized.length > 0) return EXIT_UNRECOGNIZED;
-  if (effectiveGate === "none") return 0;
-  const blocking = report.results.some(
-    (result) => result.check.status === "affected" && result.check.severity !== undefined && severityRank(result.check.severity) >= severityRank(effectiveGate as Severity),
-  );
-  return blocking ? EXIT_POLICY : 0;
+  if (files.length === 0) throw new InventoryUsageError(INVENTORY_USAGE);
+  return { files, format, json, redact, ...(failOn === undefined ? {} : { failOn }) };
 }
 
-/** The report with every resource replaced by its redacted form. */
-function redactReport(report: InventoryReport): InventoryReport {
-  return {
-    ...report,
-    results: report.results.map((result) => ({ ...result, item: { ...result.item, resource: redactResource(result.item.resource) } })),
-  };
+function gateOf(option: string | undefined, configured: Severity | "none" | undefined): Severity | "none" {
+  const gate = option ?? configured ?? "high";
+  if (gate !== "none" && !severityValues.includes(gate as Severity)) {
+    throw new InventoryUsageError(`Unknown severity for --fail-on: ${gate} (expected none, ${severityValues.join(", ")}).`);
+  }
+  return gate as Severity | "none";
+}
+
+function reachesGate(results: readonly InventoryResult[], gate: Severity | "none"): boolean {
+  if (gate === "none") return false;
+  const threshold = severityValues.indexOf(gate);
+  return results.some(
+    (result) =>
+      result.check.status === "affected" &&
+      result.check.severity !== undefined &&
+      severityValues.indexOf(result.check.severity) >= threshold,
+  );
+}
+
+async function readableFile(file: string): Promise<boolean> {
+  try {
+    await access(file, constants.R_OK);
+    return (await stat(file)).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/** `evergreen inventory`: reports the lifecycle of what an export says is deployed. Reads only the named files. */
+export async function inventoryCommand(args: string[]): Promise<number> {
+  const options = parseArguments(args);
+  let configured: Severity | "none" | undefined;
+  try {
+    configured = (await loadConfig())?.failOn;
+  } catch (error) {
+    if (error instanceof ConfigError) throw new InventoryUsageError(error.message);
+    throw error;
+  }
+  const gate = gateOf(options.failOn, configured);
+  const importers = inventoryImporters;
+  if (options.format !== "auto" && !importers.some((importer) => importer.id === options.format)) {
+    const ids = importers.map((importer) => importer.id);
+    throw new InventoryUsageError(`Unknown importer for --format: ${options.format}. Use auto${ids.length > 0 ? ` or one of: ${ids.join(", ")}` : ""}.`);
+  }
+
+  const open: string[] = [];
+  const unreadable: string[] = [];
+  for (const file of options.files) {
+    (await readableFile(file) ? open : unreadable).push(file);
+  }
+
+  const report = await runInventory(open, importers, options.format === "auto" ? undefined : options.format);
+  const shown = options.redact ? redactReport(report) : report;
+  process.stdout.write(options.json ? `${JSON.stringify(shown, null, 2)}\n` : renderInventoryText(shown));
+  for (const file of unreadable) process.stderr.write(`${file} could not be read.\n`);
+
+  if (unreadable.length > 0 || report.unrecognized.length > 0) return 2;
+  return reachesGate(report.results, gate) ? 1 : 0;
 }

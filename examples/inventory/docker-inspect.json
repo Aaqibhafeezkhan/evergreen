@@ -1,0 +1,31 @@
+[
+  {
+    "Id": "1111111111111111111111111111111111111111111111111111111111111111",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/web",
+    "Config": {
+      "Image": "node:18-alpine",
+      "Labels": {
+        "org.opencontainers.image.base.name": "docker.io/library/node:18",
+        "org.opencontainers.image.version": "18.20.4"
+      }
+    },
+    "State": {
+      "Status": "running",
+      "Running": true
+    }
+  },
+  {
+    "Id": "2222222222222222222222222222222222222222222222222222222222222222",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/cache",
+    "Config": {
+      "Image": "redis:6.0",
+      "Labels": {}
+    },
+    "State": {
+      "Status": "running",
+      "Running": true
+    }
+  }
+]

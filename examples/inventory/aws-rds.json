@@ -1,0 +1,26 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "example-orders-postgres",
+      "DBInstanceClass": "db.r6g.large",
+      "Engine": "postgres",
+      "EngineVersion": "12.22",
+      "DBInstanceStatus": "available",
+      "Endpoint": {
+        "Address": "example-orders-postgres.example.invalid",
+        "Port": 5432
+      }
+    },
+    {
+      "DBInstanceIdentifier": "example-billing-mysql",
+      "DBInstanceClass": "db.r6g.large",
+      "Engine": "mysql",
+      "EngineVersion": "8.0.35",
+      "DBInstanceStatus": "available",
+      "Endpoint": {
+        "Address": "example-billing-mysql.example.invalid",
+        "Port": 3306
+      }
+    }
+  ]
+}

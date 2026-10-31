@@ -164,7 +164,7 @@ h1 {
       <p class="lede">
         Type a package or runtime name to find its reviewed lifecycle status.
         Results link to each rule's reference page and its authoritative sources.
-        This page embeds 571 rules and makes no network requests after it loads.
+        This page embeds 549 rules and makes no network requests after it loads.
       </p>
     </header>
     <main id="main">
@@ -180,7 +180,7 @@ h1 {
           aria-describedby="status"
         />
       </form>
-      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 571 lifecycle rules.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 549 lifecycle rules.</p>
       <div id="results" class="results" aria-live="polite"></div>
       <noscript>
         <p class="status">
@@ -574,6 +574,148 @@ h1 {
       {
         "title": "Go release policy (vendor)",
         "url": "https://go.dev/doc/devel/release#policy"
+      }
+    ]
+  },
+  {
+    "id": "container.host-alpine.eol-3.20-and-older",
+    "title": "Alpine Linux 3.20 and older are end-of-life",
+    "summary": "Alpine Linux 3.20, the newest release this range covers, stopped receiving security updates on 2026-04-01; older release branches ended earlier. Each branch is supported for about two years.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/alpine",
+    "vers": "vers:semver/\u003c3.21.0",
+    "deadline": "2026-04-01",
+    "replacement": "Alpine Linux 3.21 or later",
+    "sources": [
+      {
+        "title": "Alpine Linux releases",
+        "url": "https://alpinelinux.org/releases/"
+      }
+    ]
+  },
+  {
+    "id": "container.host-amazon-linux.eol-2-and-older",
+    "title": "Amazon Linux 2 and the 2018.03 AMI are past end of support",
+    "summary": "Amazon Linux 2 reached the end of standard support on 2026-06-30, and Amazon Linux AMI 2018.03 ended support on 2023-12-31. Amazon Linux 2023 is supported until 2029-06-30.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/amzn",
+    "vers": "vers:semver/\u003c2023.0.0",
+    "deadline": "2026-06-30",
+    "replacement": "Amazon Linux 2023",
+    "sources": [
+      {
+        "title": "Amazon Linux 2 release notes",
+        "url": "https://docs.aws.amazon.com/AL2/latest/relnotes/relnotes-al2.html"
+      },
+      {
+        "title": "Amazon Linux 2023 release cadence",
+        "url": "https://docs.aws.amazon.com/linux/al2023/ug/release-cadence.html"
+      }
+    ]
+  },
+  {
+    "id": "container.host-centos.eol-8-and-older",
+    "title": "CentOS Linux 8 and older are end-of-life",
+    "summary": "CentOS Linux 8 reached end of life on 2021-12-31 and CentOS Linux 7 on 2024-06-30, so neither receives fixes. CentOS Stream 9 and 10 follow a different lifecycle and are not covered by this rule.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/centos",
+    "vers": "vers:semver/\u003c9.0.0",
+    "deadline": "2024-06-30",
+    "replacement": "CentOS Stream 9 or 10, or a distribution with a published lifecycle",
+    "sources": [
+      {
+        "title": "CentOS Linux",
+        "url": "https://www.centos.org/centos-linux/"
+      }
+    ]
+  },
+  {
+    "id": "container.host-debian.eol-11-and-older",
+    "title": "Debian 11 and older are end-of-life",
+    "summary": "Debian 11 reached the end of long-term support on 2026-08-31, and older releases ended earlier. These releases no longer receive security updates from the Debian project.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/debian",
+    "vers": "vers:semver/\u003c12.0.0",
+    "deadline": "2026-08-31",
+    "replacement": "Debian 12 or 13",
+    "sources": [
+      {
+        "title": "Debian releases",
+        "url": "https://www.debian.org/releases/"
+      },
+      {
+        "title": "Debian Long Term Support",
+        "url": "https://wiki.debian.org/LTS"
+      }
+    ]
+  },
+  {
+    "id": "container.host-rhel.eol-7-and-older",
+    "title": "Red Hat Enterprise Linux 7 and older are past maintenance support",
+    "summary": "RHEL 7 reached the end of its maintenance support phase on 2024-06-30, and older releases ended earlier. The Extended Life Cycle Support add-on is a separate paid subscription.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/rhel",
+    "vers": "vers:semver/\u003c8.0.0",
+    "deadline": "2024-06-30",
+    "replacement": "RHEL 8, 9, or 10",
+    "sources": [
+      {
+        "title": "Red Hat Enterprise Linux 7 end of maintenance",
+        "url": "https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/rhel-7-end-of-maintenance"
+      },
+      {
+        "title": "Red Hat product life cycles",
+        "url": "https://access.redhat.com/product-life-cycles"
+      }
+    ]
+  },
+  {
+    "id": "container.host-sles.eol-15-sp6-and-older",
+    "title": "SUSE Linux Enterprise Server 15 SP6 and older are past general support",
+    "summary": "General support ended for SLES 15 SP6 on 2025-12-31, SP5 on 2024-12-31, and SP4 on 2023-12-31, and for SP3 and older earlier. Long Term Service Pack Support is a separate paid add-on; SLES 15 SP7 and SLES 16 remain in general support.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/sles",
+    "vers": "vers:semver/\u003c15.7.0",
+    "deadline": "2025-12-31",
+    "replacement": "SLES 15 SP7 or SLES 16",
+    "sources": [
+      {
+        "title": "SUSE product support lifecycle",
+        "url": "https://www.suse.com/lifecycle/"
+      },
+      {
+        "title": "SLES 15 SP6 lifecycle and support",
+        "url": "https://documentation.suse.com/sles/15-SP6/html/SLES-all/cha-upgrade-background.html"
+      }
+    ]
+  },
+  {
+    "id": "container.host-ubuntu.eol-22.04-and-older",
+    "title": "Ubuntu releases before 22.04 LTS are past standard support",
+    "summary": "Ubuntu 20.04 LTS, the newest release this range covers, stopped receiving standard security updates on 2025-05-31; interim releases in the range ended earlier. Extended Security Maintenance is a separate paid subscription.",
+    "event": "end-of-life",
+    "severity": "high",
+    "ecosystem": "container",
+    "purl": "pkg:generic/ubuntu",
+    "vers": "vers:semver/\u003c22.0.0",
+    "deadline": "2025-05-31",
+    "replacement": "An Ubuntu release in standard support, such as 24.04 LTS",
+    "sources": [
+      {
+        "title": "Ubuntu release cycle",
+        "url": "https://ubuntu.com/about/release-cycle"
       }
     ]
   },
@@ -1125,6 +1267,379 @@ h1 {
       {
         "title": "Dart changelog",
         "url": "https://dart.dev/changelog"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-aurora-mysql.end-of-support-5.6",
+    "title": "Aurora MySQL version 1 is past end of standard support",
+    "summary": "AWS ended standard support for Aurora MySQL version 1 (MySQL 5.6 compatible) on 2023-02-28. RDS Extended Support was not offered for this version, so it receives no further Aurora security or bug fixes. Upgrade to Aurora MySQL version 3 (MySQL 8.0 compatible) or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-aurora/mysql",
+    "vers": "vers:intdot/>=5.6|\u003c5.7",
+    "deadline": "2023-02-28",
+    "replacement": "Aurora MySQL version 3 (MySQL 8.0 compatible) or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon Aurora MySQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-aurora-mysql.end-of-support-5.7",
+    "title": "Aurora MySQL version 2 is past end of standard support",
+    "summary": "AWS ended standard support for Aurora MySQL version 2 (MySQL 5.7 compatible) on 2024-10-31. RDS Extended Support may keep it running for a fee through 2029-06-30. Upgrade to Aurora MySQL version 3 (MySQL 8.0 compatible) or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-aurora/mysql",
+    "vers": "vers:intdot/>=5.7|\u003c5.8",
+    "deadline": "2024-10-31",
+    "replacement": "Aurora MySQL version 3 (MySQL 8.0 compatible) or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon Aurora MySQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-aurora-postgresql.end-of-support-11",
+    "title": "Aurora PostgreSQL 11 is past end of standard support",
+    "summary": "AWS ended standard support for Aurora PostgreSQL 11 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2027-03-31. Upgrade to Aurora PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-aurora/postgresql",
+    "vers": "vers:intdot/>=11|\u003c12",
+    "deadline": "2024-02-29",
+    "replacement": "Aurora PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Aurora PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-aurora-postgresql.end-of-support-12",
+    "title": "Aurora PostgreSQL 12 is past end of standard support",
+    "summary": "AWS ended standard support for Aurora PostgreSQL 12 on 2025-02-28. RDS Extended Support may keep it running for a fee through 2028-02-29. Upgrade to Aurora PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-aurora/postgresql",
+    "vers": "vers:intdot/>=12|\u003c13",
+    "deadline": "2025-02-28",
+    "replacement": "Aurora PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Aurora PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-aurora-postgresql.end-of-support-13",
+    "title": "Aurora PostgreSQL 13 is past end of standard support",
+    "summary": "AWS ended standard support for Aurora PostgreSQL 13 on 2026-02-28. RDS Extended Support may keep it running for a fee through 2029-02-28. Upgrade to Aurora PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-aurora/postgresql",
+    "vers": "vers:intdot/>=13|\u003c14",
+    "deadline": "2026-02-28",
+    "replacement": "Aurora PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Aurora PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-aurora-postgresql.scheduled-end-of-support-14",
+    "title": "Aurora PostgreSQL 14 reaches end of standard support on 2027-02-28",
+    "summary": "AWS ends standard support for Aurora PostgreSQL 14 on 2027-02-28. RDS Extended Support may keep it running for a fee through 2030-02-28. Upgrade to Aurora PostgreSQL 16 or later before then.",
+    "event": "scheduled-end-of-life",
+    "severity": "low",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-aurora/postgresql",
+    "vers": "vers:intdot/>=14|\u003c15",
+    "deadline": "2027-02-28",
+    "replacement": "Aurora PostgreSQL 16 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Aurora PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support with Amazon Aurora",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-elasticache-redis.end-of-support-4",
+    "title": "ElastiCache for Redis OSS 4 is past end of standard support",
+    "summary": "AWS ended standard support for ElastiCache for Redis OSS 4 on 2026-01-31. RDS Extended Support may keep it running for a fee through 2029-01-31. Upgrade to Valkey or Redis OSS 7.1 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-elasticache/redis",
+    "vers": "vers:intdot/>=4|\u003c5",
+    "deadline": "2026-01-31",
+    "replacement": "Valkey or Redis OSS 7.1 or later",
+    "sources": [
+      {
+        "title": "Engine versions and upgrading in ElastiCache",
+        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
+      },
+      {
+        "title": "ElastiCache Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-elasticache-redis.end-of-support-5",
+    "title": "ElastiCache for Redis OSS 5 is past end of standard support",
+    "summary": "AWS ended standard support for ElastiCache for Redis OSS 5 on 2026-01-31. RDS Extended Support may keep it running for a fee through 2029-01-31. Upgrade to Valkey or Redis OSS 7.1 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-elasticache/redis",
+    "vers": "vers:intdot/>=5|\u003c6",
+    "deadline": "2026-01-31",
+    "replacement": "Valkey or Redis OSS 7.1 or later",
+    "sources": [
+      {
+        "title": "Engine versions and upgrading in ElastiCache",
+        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
+      },
+      {
+        "title": "ElastiCache Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-elasticache-redis.scheduled-end-of-support-6",
+    "title": "ElastiCache for Redis OSS 6 reaches end of standard support on 2027-01-31",
+    "summary": "AWS ends standard support for ElastiCache for Redis OSS 6 on 2027-01-31. RDS Extended Support may keep it running for a fee through 2030-01-31. Upgrade to Valkey or Redis OSS 7.1 or later before then.",
+    "event": "scheduled-end-of-life",
+    "severity": "low",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-elasticache/redis",
+    "vers": "vers:intdot/>=6|\u003c7",
+    "deadline": "2027-01-31",
+    "replacement": "Valkey or Redis OSS 7.1 or later",
+    "sources": [
+      {
+        "title": "Engine versions and upgrading in ElastiCache",
+        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html"
+      },
+      {
+        "title": "ElastiCache Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-mysql.end-of-support-5.7",
+    "title": "RDS for MySQL 5.7 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for MySQL 5.7 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2029-06-30. Upgrade to MySQL 8.0 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/mysql",
+    "vers": "vers:intdot/>=5.7|\u003c5.8",
+    "deadline": "2024-02-29",
+    "replacement": "MySQL 8.0 or later",
+    "sources": [
+      {
+        "title": "MySQL on Amazon RDS versions",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html"
+      },
+      {
+        "title": "Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-mysql.end-of-support-8.0",
+    "title": "RDS for MySQL 8.0 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for MySQL 8.0 on 2026-07-31. RDS Extended Support may keep it running for a fee through 2029-07-31. Upgrade to MySQL 8.4 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/mysql",
+    "vers": "vers:intdot/>=8.0|\u003c8.1",
+    "deadline": "2026-07-31",
+    "replacement": "MySQL 8.4 or later",
+    "sources": [
+      {
+        "title": "MySQL on Amazon RDS versions",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html"
+      },
+      {
+        "title": "Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-postgres.end-of-support-10",
+    "title": "RDS for PostgreSQL 10 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for PostgreSQL 10 in April 2023 (AWS publishes only the month). RDS Extended Support was not offered for this version, so it receives no further RDS security or bug fixes. Upgrade to PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/postgres",
+    "vers": "vers:intdot/>=10|\u003c11",
+    "replacement": "PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon RDS for PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-postgres.end-of-support-11",
+    "title": "RDS for PostgreSQL 11 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for PostgreSQL 11 on 2024-02-29. RDS Extended Support may keep it running for a fee through 2027-03-31. Upgrade to PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/postgres",
+    "vers": "vers:intdot/>=11|\u003c12",
+    "deadline": "2024-02-29",
+    "replacement": "PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon RDS for PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-postgres.end-of-support-12",
+    "title": "RDS for PostgreSQL 12 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for PostgreSQL 12 on 2025-02-28. RDS Extended Support may keep it running for a fee through 2028-02-29. Upgrade to PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/postgres",
+    "vers": "vers:intdot/>=12|\u003c13",
+    "deadline": "2025-02-28",
+    "replacement": "PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon RDS for PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-postgres.end-of-support-13",
+    "title": "RDS for PostgreSQL 13 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for PostgreSQL 13 on 2026-02-28. RDS Extended Support may keep it running for a fee through 2029-02-28. Upgrade to PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/postgres",
+    "vers": "vers:intdot/>=13|\u003c14",
+    "deadline": "2026-02-28",
+    "replacement": "PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon RDS for PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-postgres.end-of-support-9.6",
+    "title": "RDS for PostgreSQL 9.6 is past end of standard support",
+    "summary": "AWS ended standard support for RDS for PostgreSQL 9.6 on 2022-04-30. RDS Extended Support was not offered for this version, so it receives no further RDS security or bug fixes. Upgrade to PostgreSQL 15 or later.",
+    "event": "end-of-support",
+    "severity": "high",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/postgres",
+    "vers": "vers:intdot/>=9.6|\u003c9.7",
+    "deadline": "2022-04-30",
+    "replacement": "PostgreSQL 15 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon RDS for PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
+      }
+    ]
+  },
+  {
+    "id": "database.aws-rds-postgres.scheduled-end-of-support-14",
+    "title": "RDS for PostgreSQL 14 reaches end of standard support on 2027-02-28",
+    "summary": "AWS ends standard support for RDS for PostgreSQL 14 on 2027-02-28. RDS Extended Support may keep it running for a fee through 2030-02-28. Upgrade to PostgreSQL 16 or later before then.",
+    "event": "scheduled-end-of-life",
+    "severity": "low",
+    "ecosystem": "database",
+    "purl": "pkg:generic/aws-rds/postgres",
+    "vers": "vers:intdot/>=14|\u003c15",
+    "deadline": "2027-02-28",
+    "replacement": "PostgreSQL 16 or later",
+    "sources": [
+      {
+        "title": "Release calendars for Amazon RDS for PostgreSQL",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html"
+      },
+      {
+        "title": "Using Amazon RDS Extended Support",
+        "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html"
       }
     ]
   },
@@ -10013,167 +10528,6 @@ h1 {
     ]
   },
   {
-    "id": "serverless.aws-lambda.dotnet10",
-    "title": "AWS Lambda .NET 10 runtime reaches end of life on 2028-11-14",
-    "summary": "The AWS Lambda runtimes table lists dotnet10 as supported with a projected deprecation date of 2028-11-14. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnet10",
-    "vers": "vers:semver/*",
-    "deadline": "2028-11-14",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnet5.0",
-    "title": "AWS Lambda .NET 5 (container only) runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists dotnet5.0 under Deprecated runtimes with deprecation date 2022-05-10. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnet5.0",
-    "vers": "vers:semver/*",
-    "deadline": "2022-05-10",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnet6",
-    "title": "AWS Lambda .NET 6 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists dotnet6 under Deprecated runtimes with deprecation date 2024-12-20. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnet6",
-    "vers": "vers:semver/*",
-    "deadline": "2024-12-20",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnet7",
-    "title": "AWS Lambda .NET 7 (container only) runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists dotnet7 under Deprecated runtimes with deprecation date 2024-05-14. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnet7",
-    "vers": "vers:semver/*",
-    "deadline": "2024-05-14",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnet8",
-    "title": "AWS Lambda .NET 8 runtime reaches end of life on 2026-11-10",
-    "summary": "The AWS Lambda runtimes table lists dotnet8 as supported with a projected deprecation date of 2026-11-10. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnet8",
-    "vers": "vers:semver/*",
-    "deadline": "2026-11-10",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnet9",
-    "title": "AWS Lambda .NET 9 (container only) runtime reaches end of life on 2026-11-10",
-    "summary": "The AWS Lambda runtimes table lists dotnet9 as supported with a projected deprecation date of 2026-11-10. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnet9",
-    "vers": "vers:semver/*",
-    "deadline": "2026-11-10",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnetcore1.0",
-    "title": "AWS Lambda .NET Core 1.0 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists dotnetcore1.0 under Deprecated runtimes with deprecation date 2019-06-27. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnetcore1.0",
-    "vers": "vers:semver/*",
-    "deadline": "2019-06-27",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnetcore2.0",
-    "title": "AWS Lambda .NET Core 2.0 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists dotnetcore2.0 under Deprecated runtimes with deprecation date 2019-05-30. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnetcore2.0",
-    "vers": "vers:semver/*",
-    "deadline": "2019-05-30",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.dotnetcore2.1",
-    "title": "AWS Lambda .NET Core 2.1 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists dotnetcore2.1 under Deprecated runtimes with deprecation date 2022-01-05. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/dotnetcore2.1",
-    "vers": "vers:semver/*",
-    "deadline": "2022-01-05",
-    "replacement": "dotnet10",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
     "id": "serverless.aws-lambda.dotnetcore3.1",
     "title": "AWS Lambda .NET Core 3.1 runtime is end-of-life",
     "summary": "The AWS Lambda runtimes table lists dotnetcore3.1 under Deprecated runtimes with deprecation date 2023-04-03. AWS no longer applies security or other updates to that managed runtime.",
@@ -10184,221 +10538,6 @@ h1 {
     "vers": "vers:semver/*",
     "deadline": "2023-04-03",
     "replacement": "dotnet8",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.go1.x",
-    "title": "AWS Lambda Go 1.x runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists go1.x under Deprecated runtimes with deprecation date 2024-01-08. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/go1.x",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-08",
-    "replacement": "provided.al2023",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java11",
-    "title": "AWS Lambda Java 11 (Amazon Linux 2) runtime reaches end of life on 2027-06-30",
-    "summary": "The AWS Lambda runtimes table lists java11 as supported with a projected deprecation date of 2027-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java11",
-    "vers": "vers:semver/*",
-    "deadline": "2027-06-30",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java11.al2023",
-    "title": "AWS Lambda Java 11 (Amazon Linux 2023) runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists java11.al2023 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java11.al2023",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java17",
-    "title": "AWS Lambda Java 17 (Amazon Linux 2) runtime reaches end of life on 2027-06-30",
-    "summary": "The AWS Lambda runtimes table lists java17 as supported with a projected deprecation date of 2027-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java17",
-    "vers": "vers:semver/*",
-    "deadline": "2027-06-30",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java17.al2023",
-    "title": "AWS Lambda Java 17 (Amazon Linux 2023) runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists java17.al2023 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java17.al2023",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java21",
-    "title": "AWS Lambda Java 21 runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists java21 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java21",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "replacement": "java25",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java25",
-    "title": "AWS Lambda Java 25 runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists java25 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java25",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java8",
-    "title": "AWS Lambda Java 8 (Amazon Linux) runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists java8 under Deprecated runtimes with deprecation date 2024-01-08. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java8",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-08",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java8.al2",
-    "title": "AWS Lambda Java 8 (Amazon Linux 2) runtime reaches end of life on 2027-06-30",
-    "summary": "The AWS Lambda runtimes table lists java8.al2 as supported with a projected deprecation date of 2027-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java8.al2",
-    "vers": "vers:semver/*",
-    "deadline": "2027-06-30",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.java8.al2023",
-    "title": "AWS Lambda Java 8 (Amazon Linux 2023) runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists java8.al2023 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/java8.al2023",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "replacement": "java25 or java21",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs",
-    "title": "AWS Lambda Node.js 0.10 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs under Deprecated runtimes with deprecation date 2016-08-30. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs",
-    "vers": "vers:semver/*",
-    "deadline": "2016-08-30",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs10.x",
-    "title": "AWS Lambda Node.js 10 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs10.x under Deprecated runtimes with deprecation date 2021-07-30. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs10.x",
-    "vers": "vers:semver/*",
-    "deadline": "2021-07-30",
-    "replacement": "nodejs24.x or nodejs22.x",
     "sources": [
       {
         "title": "AWS Lambda runtimes",
@@ -10443,347 +10582,6 @@ h1 {
     ]
   },
   {
-    "id": "serverless.aws-lambda.nodejs16.x",
-    "title": "AWS Lambda Node.js 16 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs16.x under Deprecated runtimes with deprecation date 2024-06-12. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs16.x",
-    "vers": "vers:semver/*",
-    "deadline": "2024-06-12",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs18.x",
-    "title": "AWS Lambda Node.js 18 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs18.x under Deprecated runtimes with deprecation date 2025-09-01. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs18.x",
-    "vers": "vers:semver/*",
-    "deadline": "2025-09-01",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs20.x",
-    "title": "AWS Lambda Node.js 20 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs20.x under Deprecated runtimes with deprecation date 2026-04-30. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs20.x",
-    "vers": "vers:semver/*",
-    "deadline": "2026-04-30",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs22.x",
-    "title": "AWS Lambda Node.js 22 runtime reaches end of life on 2027-04-30",
-    "summary": "The AWS Lambda runtimes table lists nodejs22.x as supported with a projected deprecation date of 2027-04-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs22.x",
-    "vers": "vers:semver/*",
-    "deadline": "2027-04-30",
-    "replacement": "nodejs24.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs24.x",
-    "title": "AWS Lambda Node.js 24 runtime reaches end of life on 2028-04-30",
-    "summary": "The AWS Lambda runtimes table lists nodejs24.x as supported with a projected deprecation date of 2028-04-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs24.x",
-    "vers": "vers:semver/*",
-    "deadline": "2028-04-30",
-    "replacement": "nodejs26.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs4.3",
-    "title": "AWS Lambda Node.js 4.3 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs4.3 under Deprecated runtimes with deprecation date 2020-03-05. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs4.3",
-    "vers": "vers:semver/*",
-    "deadline": "2020-03-05",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs4.3-edge",
-    "title": "AWS Lambda Node.js 4.3 edge runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs4.3-edge under Deprecated runtimes with deprecation date 2020-03-05. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs4.3-edge",
-    "vers": "vers:semver/*",
-    "deadline": "2020-03-05",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs6.10",
-    "title": "AWS Lambda Node.js 6.10 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs6.10 under Deprecated runtimes with deprecation date 2019-08-12. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs6.10",
-    "vers": "vers:semver/*",
-    "deadline": "2019-08-12",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.nodejs8.10",
-    "title": "AWS Lambda Node.js 8.10 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists nodejs8.10 under Deprecated runtimes with deprecation date 2020-03-06. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/nodejs8.10",
-    "vers": "vers:semver/*",
-    "deadline": "2020-03-06",
-    "replacement": "nodejs24.x or nodejs22.x",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.provided",
-    "title": "AWS Lambda OS-only runtime provided runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists provided under Deprecated runtimes with deprecation date 2024-01-08. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/provided",
-    "vers": "vers:semver/*",
-    "deadline": "2024-01-08",
-    "replacement": "provided.al2023",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.provided.al2",
-    "title": "AWS Lambda OS-only runtime provided.al2 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists provided.al2 under Deprecated runtimes with deprecation date 2026-07-31. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/provided.al2",
-    "vers": "vers:semver/*",
-    "deadline": "2026-07-31",
-    "replacement": "provided.al2023",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.provided.al2023",
-    "title": "AWS Lambda OS-only runtime provided.al2023 runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists provided.al2023 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/provided.al2023",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python2.7",
-    "title": "AWS Lambda Python 2.7 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists python2.7 under Deprecated runtimes with deprecation date 2021-07-15. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python2.7",
-    "vers": "vers:semver/*",
-    "deadline": "2021-07-15",
-    "replacement": "python3.14 or python3.13",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python3.10",
-    "title": "AWS Lambda Python 3.10 runtime reaches end of life on 2026-10-31",
-    "summary": "The AWS Lambda runtimes table lists python3.10 as supported with a projected deprecation date of 2026-10-31. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.10",
-    "vers": "vers:semver/*",
-    "deadline": "2026-10-31",
-    "replacement": "python3.14 or python3.13",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python3.11",
-    "title": "AWS Lambda Python 3.11 runtime reaches end of life on 2027-06-30",
-    "summary": "The AWS Lambda runtimes table lists python3.11 as supported with a projected deprecation date of 2027-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.11",
-    "vers": "vers:semver/*",
-    "deadline": "2027-06-30",
-    "replacement": "python3.14 or python3.13",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python3.12",
-    "title": "AWS Lambda Python 3.12 runtime reaches end of life on 2028-10-31",
-    "summary": "The AWS Lambda runtimes table lists python3.12 as supported with a projected deprecation date of 2028-10-31. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.12",
-    "vers": "vers:semver/*",
-    "deadline": "2028-10-31",
-    "replacement": "python3.14 or python3.13",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python3.13",
-    "title": "AWS Lambda Python 3.13 runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists python3.13 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.13",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "replacement": "python3.14",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python3.14",
-    "title": "AWS Lambda Python 3.14 runtime reaches end of life on 2029-06-30",
-    "summary": "The AWS Lambda runtimes table lists python3.14 as supported with a projected deprecation date of 2029-06-30. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.14",
-    "vers": "vers:semver/*",
-    "deadline": "2029-06-30",
-    "replacement": "python3.15",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.python3.6",
-    "title": "AWS Lambda Python 3.6 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists python3.6 under Deprecated runtimes with deprecation date 2022-07-18. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.6",
-    "vers": "vers:semver/*",
-    "deadline": "2022-07-18",
-    "replacement": "python3.14 or python3.13",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
     "id": "serverless.aws-lambda.python3.7",
     "title": "AWS Lambda Python 3.7 runtime is end-of-life",
     "summary": "The AWS Lambda runtimes table lists python3.7 under Deprecated runtimes with deprecation date 2023-12-04. AWS no longer applies security or other updates to that managed runtime.",
@@ -10820,42 +10618,6 @@ h1 {
     ]
   },
   {
-    "id": "serverless.aws-lambda.python3.9",
-    "title": "AWS Lambda Python 3.9 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists python3.9 under Deprecated runtimes with deprecation date 2025-12-15. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/python3.9",
-    "vers": "vers:semver/*",
-    "deadline": "2025-12-15",
-    "replacement": "python3.14 or python3.13",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.ruby2.5",
-    "title": "AWS Lambda Ruby 2.5 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists ruby2.5 under Deprecated runtimes with deprecation date 2021-07-30. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/ruby2.5",
-    "vers": "vers:semver/*",
-    "deadline": "2021-07-30",
-    "replacement": "ruby4.0 or ruby3.4",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
     "id": "serverless.aws-lambda.ruby2.7",
     "title": "AWS Lambda Ruby 2.7 runtime is end-of-life",
     "summary": "The AWS Lambda runtimes table lists ruby2.7 under Deprecated runtimes with deprecation date 2023-12-07. AWS no longer applies security or other updates to that managed runtime.",
@@ -10866,77 +10628,6 @@ h1 {
     "vers": "vers:semver/*",
     "deadline": "2023-12-07",
     "replacement": "ruby3.4 or ruby3.3",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.ruby3.2",
-    "title": "AWS Lambda Ruby 3.2 runtime is end-of-life",
-    "summary": "The AWS Lambda runtimes table lists ruby3.2 under Deprecated runtimes with deprecation date 2026-03-31. AWS no longer applies security or other updates to that managed runtime.",
-    "event": "end-of-life",
-    "severity": "high",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/ruby3.2",
-    "vers": "vers:semver/*",
-    "deadline": "2026-03-31",
-    "replacement": "ruby4.0 or ruby3.4",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.ruby3.3",
-    "title": "AWS Lambda Ruby 3.3 runtime reaches end of life on 2027-03-31",
-    "summary": "The AWS Lambda runtimes table lists ruby3.3 as supported with a projected deprecation date of 2027-03-31. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/ruby3.3",
-    "vers": "vers:semver/*",
-    "deadline": "2027-03-31",
-    "replacement": "ruby4.0 or ruby3.4",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.ruby3.4",
-    "title": "AWS Lambda Ruby 3.4 runtime reaches end of life on 2028-03-31",
-    "summary": "The AWS Lambda runtimes table lists ruby3.4 as supported with a projected deprecation date of 2028-03-31. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/ruby3.4",
-    "vers": "vers:semver/*",
-    "deadline": "2028-03-31",
-    "replacement": "ruby4.0",
-    "sources": [
-      {
-        "title": "AWS Lambda runtimes",
-        "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-      }
-    ]
-  },
-  {
-    "id": "serverless.aws-lambda.ruby4.0",
-    "title": "AWS Lambda Ruby 4.0 runtime reaches end of life on 2029-03-31",
-    "summary": "The AWS Lambda runtimes table lists ruby4.0 as supported with a projected deprecation date of 2029-03-31. After that date AWS no longer applies security or other updates to that managed runtime.",
-    "event": "scheduled-end-of-life",
-    "severity": "low",
-    "ecosystem": "serverless",
-    "purl": "pkg:generic/aws-lambda-runtime/ruby4.0",
-    "vers": "vers:semver/*",
-    "deadline": "2029-03-31",
     "sources": [
       {
         "title": "AWS Lambda runtimes",

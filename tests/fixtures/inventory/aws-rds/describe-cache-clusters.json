@@ -1,0 +1,49 @@
+{
+  "CacheClusters": [
+    {
+      "CacheClusterId": "sessions-redis6",
+      "CacheNodeType": "cache.r6g.large",
+      "Engine": "redis",
+      "EngineVersion": "6.2",
+      "CacheClusterStatus": "available",
+      "NumCacheNodes": 1,
+      "PreferredAvailabilityZone": "us-east-1a",
+      "CacheSubnetGroupName": "default",
+      "ConfigurationEndpoint": {
+        "Address": "sessions-redis6.abc123xyz.0001.use1.cache.amazonaws.com",
+        "Port": 6379
+      },
+      "ARN": "arn:aws:elasticache:us-east-1:123456789012:cluster:sessions-redis6"
+    },
+    {
+      "CacheClusterId": "feature-flags-redis7",
+      "CacheNodeType": "cache.r6g.large",
+      "Engine": "redis",
+      "EngineVersion": "7.1.0",
+      "CacheClusterStatus": "available",
+      "NumCacheNodes": 1,
+      "PreferredAvailabilityZone": "us-east-1b",
+      "CacheSubnetGroupName": "default",
+      "ConfigurationEndpoint": {
+        "Address": "feature-flags-redis7.abc123xyz.0001.use1.cache.amazonaws.com",
+        "Port": 6379
+      },
+      "ARN": "arn:aws:elasticache:us-east-1:123456789012:cluster:feature-flags-redis7"
+    },
+    {
+      "CacheClusterId": "page-cache-memcached",
+      "CacheNodeType": "cache.r6g.large",
+      "Engine": "memcached",
+      "EngineVersion": "1.6.22",
+      "CacheClusterStatus": "available",
+      "NumCacheNodes": 2,
+      "PreferredAvailabilityZone": "us-east-1c",
+      "CacheSubnetGroupName": "default",
+      "ConfigurationEndpoint": {
+        "Address": "page-cache-memcached.abc123xyz.cfg.use1.cache.amazonaws.com",
+        "Port": 11211
+      },
+      "ARN": "arn:aws:elasticache:us-east-1:123456789012:cluster:page-cache-memcached"
+    }
+  ]
+}

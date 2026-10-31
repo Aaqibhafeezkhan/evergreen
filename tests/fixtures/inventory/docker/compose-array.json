@@ -1,0 +1,20 @@
+[
+  {
+    "Command": "\"docker-entrypoint.sh node server.js\"",
+    "ID": "aaa111",
+    "Name": "shop-api-1",
+    "Image": "node:18-alpine",
+    "Service": "api",
+    "State": "running",
+    "Status": "Up 2 hours"
+  },
+  {
+    "Command": "\"postgres\"",
+    "ID": "ccc333",
+    "Name": "shop-db-1",
+    "Image": "postgres:13.4",
+    "Service": "db",
+    "State": "running",
+    "Status": "Up 2 hours"
+  }
+]

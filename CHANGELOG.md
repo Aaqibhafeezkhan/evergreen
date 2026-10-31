@@ -3,10 +3,16 @@
 ## Unreleased
 
 - Add `evergreen inventory` and its host operating systems importer: read `/etc/os-release` from one host or a multi-host bundle and report end-of-life Ubuntu, Debian, RHEL, CentOS, Amazon Linux, Alpine, and SLES releases with the line each version came from. It reads only the files given and calls no cloud API. (#1879)
+- Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
+- Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)
+- Add the Composer analyzer to `upgrade-check`: it reads `require.php` constraints in `composer.lock` and `composer.json` and reports blockers, dev warnings, and unknowns with exact evidence and line numbers. (#1865)
+- Add `evergreen inventory <file>...`, which reports the lifecycle of what the cloud and cluster tools' exports say is deployed, reading only the files given and never calling a provider API. The first importer reads `kubectl get deploy,sts,ds,cronjob,job,pod -A -o json` output and reports end-of-life images and removed API versions at the exact pointer each claim rests on. (#1871)
 - Make bare `evergreen init` ask what to set up: it detects the repository's CI provider and agent hosts, shows the plan, and with one confirmation (or `--yes` for scripts) writes a GitHub Actions workflow, the pre-push hook, and the Evergreen agent section; GitLab repositories get the component include to add. (`#1266`)
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
+- Add a findings treemap to the `--format html` report: directories and files are sized by severity-weighted finding count, colored by the highest severity, and link to that file's findings. (#1851)
+- Add a codemod that rewrites the Node.js `Buffer` constructor to `Buffer.from` and `Buffer.alloc`, and `SlowBuffer` to `Buffer.allocUnsafeSlow`, refusing arguments whose kind is not visible. (#1828)
 
 ## 0.7.1 - 2026-10-27
 

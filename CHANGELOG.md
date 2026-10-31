@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Add `evergreen inventory` for the lifecycle of deployed resources read from export files, starting with Docker containers and images from `docker inspect` and `docker compose ps --format json`; it reads only the files given to it and never uses the network. (#1873)
+- Add a Docker importer to `evergreen inventory`, reporting the lifecycle of containers and images from `docker inspect` and `docker compose ps --format json`; it reads only the files given to it and never uses the network. (#1873)
 - Add `evergreen inventory` and its host operating systems importer: read `/etc/os-release` from one host or a multi-host bundle and report end-of-life Ubuntu, Debian, RHEL, CentOS, Amazon Linux, Alpine, and SLES releases with the line each version came from. It reads only the files given and calls no cloud API. (#1879)
 - Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
 - Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)

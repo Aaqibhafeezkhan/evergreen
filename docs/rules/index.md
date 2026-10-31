@@ -451,6 +451,31 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 
 ## python
 
+- [The aifc module was removed in Python 3.13](python.module.aifc.removed.html) — removed, `python.module.aifc.removed`
+- [The asynchat module was removed in Python 3.12](python.module.asynchat.removed.html) — removed, `python.module.asynchat.removed`
+- [The asyncore module was removed in Python 3.12](python.module.asyncore.removed.html) — removed, `python.module.asyncore.removed`
+- [The audioop module was removed in Python 3.13](python.module.audioop.removed.html) — removed, `python.module.audioop.removed`
+- [The cgi module was removed in Python 3.13](python.module.cgi.removed.html) — removed, `python.module.cgi.removed`
+- [The cgitb module was removed in Python 3.13](python.module.cgitb.removed.html) — removed, `python.module.cgitb.removed`
+- [The chunk module was removed in Python 3.13](python.module.chunk.removed.html) — removed, `python.module.chunk.removed`
+- [The crypt module was removed in Python 3.13](python.module.crypt.removed.html) — removed, `python.module.crypt.removed`
+- [The distutils module was removed in Python 3.12](python.module.distutils.removed.html) — removed, `python.module.distutils.removed`
+- [The imghdr module was removed in Python 3.13](python.module.imghdr.removed.html) — removed, `python.module.imghdr.removed`
+- [The imp module was removed in Python 3.12](python.module.imp.removed.html) — removed, `python.module.imp.removed`
+- [The lib2to3 module was removed in Python 3.13](python.module.lib2to3.removed.html) — removed, `python.module.lib2to3.removed`
+- [The mailcap module was removed in Python 3.13](python.module.mailcap.removed.html) — removed, `python.module.mailcap.removed`
+- [The msilib module was removed in Python 3.13](python.module.msilib.removed.html) — removed, `python.module.msilib.removed`
+- [The nis module was removed in Python 3.13](python.module.nis.removed.html) — removed, `python.module.nis.removed`
+- [The nntplib module was removed in Python 3.13](python.module.nntplib.removed.html) — removed, `python.module.nntplib.removed`
+- [The ossaudiodev module was removed in Python 3.13](python.module.ossaudiodev.removed.html) — removed, `python.module.ossaudiodev.removed`
+- [The pipes module was removed in Python 3.13](python.module.pipes.removed.html) — removed, `python.module.pipes.removed`
+- [The smtpd module was removed in Python 3.12](python.module.smtpd.removed.html) — removed, `python.module.smtpd.removed`
+- [The sndhdr module was removed in Python 3.13](python.module.sndhdr.removed.html) — removed, `python.module.sndhdr.removed`
+- [The spwd module was removed in Python 3.13](python.module.spwd.removed.html) — removed, `python.module.spwd.removed`
+- [The sunau module was removed in Python 3.13](python.module.sunau.removed.html) — removed, `python.module.sunau.removed`
+- [The telnetlib module was removed in Python 3.13](python.module.telnetlib.removed.html) — removed, `python.module.telnetlib.removed`
+- [The uu module was removed in Python 3.13](python.module.uu.removed.html) — removed, `python.module.uu.removed`
+- [The xdrlib module was removed in Python 3.13](python.module.xdrlib.removed.html) — removed, `python.module.xdrlib.removed`
 - [agentops-toolkit was renamed and is no longer maintained](python.package.agentops-toolkit.eol.html) — end of life, `python.package.agentops-toolkit.eol`
 - [aiohttp-valera-validator was renamed and is no longer maintained](python.package.aiohttp-valera-validator.eol.html) — end of life, `python.package.aiohttp-valera-validator.eol`
 - [api-shield is deprecated](python.package.api-shield.deprecated.html) — deprecated, `python.package.api-shield.deprecated`

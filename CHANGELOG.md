@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a Terraform codemod for interpolation-only strings and the `list()` and `map()` functions removed in Terraform 0.15: two registry rules with upgrade-guide sources, exact detection that skips heredocs, type constraints, and strings with literal text, and patches that refuse multiline calls, invalid argument counts, expression map keys, block labels, and generated or `.terraform/` files. (#1835)
 - Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
 - Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)
 - Add the Composer analyzer to `upgrade-check`: it reads `require.php` constraints in `composer.lock` and `composer.json` and reports blockers, dev warnings, and unknowns with exact evidence and line numbers. (#1865)
@@ -14,6 +15,7 @@
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
+- Add `evergreen forecast --svg`, with `--animate` to grow a bar from today to each event in date order and pulse the today marker twice, for a README or a slide. (#1853)
 - Add a findings treemap to the `--format html` report: directories and files are sized by severity-weighted finding count, colored by the highest severity, and link to that file's findings. (#1851)
 - Add a codemod that rewrites the Node.js `Buffer` constructor to `Buffer.from` and `Buffer.alloc`, and `SlowBuffer` to `Buffer.allocUnsafeSlow`, refusing arguments whose kind is not visible. (#1828)
 

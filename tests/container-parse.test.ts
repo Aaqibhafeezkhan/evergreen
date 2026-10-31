@@ -63,6 +63,30 @@ test("handles CRLF, lowercase instructions, and continuations with 1-based lines
   ]);
 });
 
+test("reports MAINTAINER and the legacy ENV form with exact lines and values", () => {
+  const contents = [
+    "FROM node:24",
+    "MAINTAINER Evergreen Team <team@example.com>",
+    "ENV NODE_ENV production",
+    "ENV APP_HOME=/opt/app",
+    "ENV MULTI  one   two",
+    "onbuild env LEGACY value",
+    "ENV KEY value \\",
+    "  continued",
+    "",
+  ].join("\n");
+  assert.deepEqual(
+    parseDockerfile(contents).filter((declaration) => declaration.kind === "maintainer" || declaration.kind === "legacy-env"),
+    [
+      { kind: "maintainer", value: "Evergreen Team <team@example.com>", line: 2 },
+      { kind: "legacy-env", key: "NODE_ENV", value: "production", line: 3 },
+      { kind: "legacy-env", key: "MULTI", value: "one two", line: 5 },
+      { kind: "legacy-env", key: "LEGACY", value: "value", line: 6 },
+      { kind: "legacy-env", key: "KEY", value: "value continued", line: 7 },
+    ],
+  );
+});
+
 test("parses image references into registry, repository, tag, and digest", () => {
   const digest = `sha256:${"a".repeat(64)}`;
   assert.deepEqual(parseImageReference("node"), { registry: "docker.io", repository: "library/node" });

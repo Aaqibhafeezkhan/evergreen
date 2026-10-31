@@ -160,8 +160,8 @@ test("--align patches apply, remove the drift, and refuse multi-targeting and pr
 
     const aligned = run("drift", temporary, "--runtime", "dotnet", "--align", "8.0");
     assert.equal(aligned.status, 0, aligned.stderr);
-    assert.match(aligned.stderr, /Cannot align TargetFrameworks at Directory\.Build\.props/);
-    assert.match(aligned.stderr, /Cannot align TargetFramework at Property\/Property\.csproj/);
+    assert.match(aligned.stderr, /Refused Directory\.Build\.props:\d+ \(TargetFrameworks/);
+    assert.match(aligned.stderr, /Refused Property\/Property\.csproj:\d+ \(TargetFramework/);
     assert.match(aligned.stdout, /^\+\+\+ b\/global\.json/m);
     assert.match(aligned.stdout, /^\+\+\+ b\/Dockerfile/m);
     assert.match(aligned.stdout, /^\+\+\+ b\/\.github\/workflows\/ci\.yml/m);

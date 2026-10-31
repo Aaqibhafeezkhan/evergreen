@@ -1,9 +1,23 @@
 import assert from "node:assert/strict";
-import { test } from "node:test";
+import { execFile } from "node:child_process";
+import { createHash } from "node:crypto";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { promisify } from "node:util";
+import { after, test } from "node:test";
 
 import type { Severity } from "../src/domain.js";
 import type { Forecast, ForecastEvent } from "../src/forecast.js";
 import { renderForecastSvg } from "../src/forecast-svg.js";
+
+const execute = promisify(execFile);
+const cli = resolve("dist/src/cli.js");
+const roots: string[] = [];
+
+after(async () => {
+  await Promise.all(roots.map((root) => rm(root, { recursive: true, force: true })));
+});
 
 const event = (date: string, title: string, severity: Severity, findings = 0): ForecastEvent => ({
   date,
@@ -81,3 +95,55 @@ test("the width option sets the viewport and clamps to a readable minimum", () =
   assert.match(renderForecastSvg(forecast, { width: 480 }), /width="480" height="220" viewBox="0 0 480 220"/);
   assert.match(renderForecastSvg(forecast, { width: 100 }), /width="320" height="220" viewBox="0 0 320 220"/);
 });
+
+test("without animate the SVG keeps the bytes it had before animation existed", () => {
+  const forecast = forecastOf([event("2027-01-15", "Node.js 18 end of life", "high", 2)]);
+  const output = renderForecastSvg(forecast);
+  assert.equal(createHash("sha256").update(output).digest("hex"), "b8c5ad6ab773e6f4013ee2469b57c089ce2c1b340be938f5f57e612ecb8c10e8");
+  assert.equal(output, renderForecastSvg(forecast, { animate: false }));
+  assert.doesNotMatch(output, /@keyframes|forecast-bar|forecast-today|prefers-reduced-motion/);
+});
+
+test("animate adds a bar per event in date order and a today marker that pulses twice", () => {
+  const forecast = forecastOf([
+    event("2026-11-20", "Runtime reaches end of life", "critical", 3),
+    event("2027-03-01", "Package is deprecated", "medium"),
+    event("2027-08-10", "API is retired", "low", 1),
+  ]);
+  const output = renderForecastSvg(forecast, { animate: true });
+  assert.equal(output, renderForecastSvg(forecast, { animate: true }));
+  assert.equal(output.match(/class="forecast-bar /g)?.length, 3);
+  assert.match(output, /class="forecast-bar critical affecting" x="64" y="81\.5" width="[^"]+" height="5" rx="2\.5" style="animation-delay:0ms"/);
+  assert.match(output, /class="forecast-bar medium" x="64" y="[^"]+" width="[^"]+" height="3" rx="1\.5" style="animation-delay:90ms"/);
+  assert.match(output, /class="forecast-today"><line x1="64"[^>]*\/><text[^>]*>today<\/text>/);
+  assert.match(output, /animation:forecast-pulse 1\.2s ease-in-out 2/);
+  assert.match(output, /@media \(prefers-reduced-motion:reduce\)\{\.evergreen-forecast \.forecast-bar,\.evergreen-forecast \.forecast-today\{animation:none\}\}/);
+  assert.doesNotMatch(output, /<script|<foreignObject|\bhref=|\bsrc=|url\(|<image|onload=/i);
+});
+
+test("the animation sequence stays under six seconds even with a long forecast", () => {
+  const many = forecastOf(Array.from({ length: 100 }, (_, index) => event("2027-01-15", `Event ${index}`, "low")));
+  const delays = [...renderForecastSvg(many, { animate: true }).matchAll(/animation-delay:(\d+)ms/g)].map((match) => Number(match[1]));
+  assert.equal(delays.length, 100);
+  assert.ok(Math.max(...delays) + 500 <= 6000, `the last bar starts at ${Math.max(...delays)}ms`);
+});
+
+test("the CLI prints the SVG with --svg, animates it only with --animate, and rejects conflicting output modes", async () => {
+  const root = await mkdtemp(join(tmpdir(), "evergreen-forecast-svg-"));
+  roots.push(root);
+  await writeFile(join(root, "package.json"), JSON.stringify({ engines: { node: "22" } }));
+  const run = async (flags: string[]) => (await execute(process.execPath, [cli, "forecast", root, "--as-of", "2026-10-25", ...flags])).stdout;
+  const rejects = async (flags: string[], message: RegExp) => {
+    await assert.rejects(execute(process.execPath, [cli, "forecast", root, ...flags]), (error: { code?: number; stderr?: string }) => error.code === 2 && message.test(error.stderr ?? ""));
+  };
+
+  const staticSvg = await run(["--svg"]);
+  assert.match(staticSvg, /^<svg [^>]*role="img"/);
+  assert.doesNotMatch(staticSvg, /@keyframes|forecast-bar|forecast-today/);
+  assert.match(await run(["--svg", "--animate"]), /@keyframes forecast-grow/);
+
+  await rejects(["--animate"], /--animate needs --svg/);
+  await rejects(["--svg", "--json"], /either --svg or --json/);
+  await rejects(["--svg", "--timeline"], /either --svg or --timeline/);
+});
+

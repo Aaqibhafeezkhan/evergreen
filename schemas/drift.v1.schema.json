@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/arminazimi/evergreen/schemas/drift.v1.schema.json",
-  "title": "Evergreen drift v1",
+  "title": "Evergreen drift report v1",
+  "description": "Every runtime version a repository states, with its exact file and line, the release it resolves to offline, and whether the pins agree. Reading a repository only; no network access and no written file.",
   "type": "object",
   "required": ["schemaVersion", "runtimes"],
   "additionalProperties": false,
@@ -9,44 +10,47 @@
     "schemaVersion": { "const": "evergreen.drift.v1" },
     "runtimes": {
       "type": "array",
-      "items": { "$ref": "#/$defs/runtime" }
+      "description": "One entry per runtime with at least one pin, ordered by runtime id.",
+      "items": {
+        "type": "object",
+        "required": ["runtime", "pins", "releases", "drifted", "floorConflicts"],
+        "additionalProperties": false,
+        "properties": {
+          "runtime": { "type": "string", "minLength": 1, "description": "Runtime id, such as `go`." },
+          "pins": {
+            "type": "array",
+            "description": "Every value found, ordered by path, line, and source, including values that do not resolve.",
+            "items": { "$ref": "#/$defs/pin" }
+          },
+          "releases": {
+            "type": "array",
+            "description": "Distinct releases among `pin` values, sorted ascending, such as `[\"1.21\", \"1.22\"]`.",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "drifted": { "type": "boolean", "description": "True when no release is selected by every group of alternatives." },
+          "floorConflicts": {
+            "type": "array",
+            "description": "Floors above the lowest pinned release, which that pinned environment cannot satisfy.",
+            "items": { "$ref": "#/$defs/pin" }
+          }
+        }
+      }
     }
   },
   "$defs": {
-    "runtime": {
-      "type": "object",
-      "required": ["runtime", "pins", "releases", "drifted", "floorConflicts"],
-      "additionalProperties": false,
-      "properties": {
-        "runtime": { "type": "string", "minLength": 1 },
-        "pins": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/pin" }
-        },
-        "releases": {
-          "type": "array",
-          "items": { "type": "string", "minLength": 1 }
-        },
-        "drifted": { "type": "boolean" },
-        "floorConflicts": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/pin" }
-        }
-      }
-    },
     "pin": {
       "type": "object",
       "required": ["path", "line", "source", "raw", "kind"],
       "additionalProperties": false,
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
-        "line": { "type": "integer", "minimum": 1 },
-        "source": { "type": "string", "minLength": 1 },
-        "raw": { "type": "string" },
-        "kind": { "enum": ["pin", "floor"] },
-        "group": { "type": "string", "minLength": 1 },
-        "release": { "type": "string", "minLength": 1 },
-        "unresolved": { "type": "string", "minLength": 1 }
+        "path": { "type": "string", "minLength": 1, "description": "Repository-relative path with forward slashes." },
+        "line": { "type": "integer", "minimum": 1, "description": "1-based line of the value." },
+        "source": { "type": "string", "minLength": 1, "description": "The file or field the value comes from, such as `.go-version` or `Dockerfile FROM`." },
+        "raw": { "type": "string", "description": "The value as written." },
+        "kind": { "enum": ["pin", "floor"], "description": "`pin` selects the version that builds or runs; `floor` is a minimum the project supports." },
+        "group": { "type": "string", "minLength": 1, "description": "Pins that share a group are alternatives, such as the entries of one multi-target list; they are reported but not compared with each other." },
+        "release": { "type": "string", "minLength": 1, "description": "The release line the value resolves to offline; absent when it cannot be resolved." },
+        "unresolved": { "type": "string", "minLength": 1, "description": "Why `release` is absent, in one sentence." }
       }
     }
   }

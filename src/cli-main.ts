@@ -44,6 +44,7 @@ import { renderVerification, verifyFix } from "./fix/verify.js";
 import { findRepositories, renderMultiScanText, scanProjects, scanRepository, applyScanSelection } from "./engine.js";
 import { renderStatusCard } from "./status-card.js";
 import { lookupProduct, renderLookupText } from "./lookup.js";
+import { driftCommand } from "./drift/command.js";
 import { upgradeCheck } from "./upgrade/command.js";
 import { inventoryCommand, InventoryUsageError } from "./inventory/command.js";
 import { scanDemo } from "./demo.js";
@@ -99,11 +100,13 @@ Usage:
   evergreen plan [path] [--json] [--wave <n>]   # migration waves from a scan; --wave prints one zero-based wave
   evergreen status-card [path] [--name <label>]   # print a static SVG summary of findings, next end of life, and data age
   evergreen lookup <product> [version] [--json]   # support status, end-of-life date, and evidence for a product
+  evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]   # report runtime versions that disagree, per runtime; never writes a file
   evergreen upgrade-check --to <runtime@version> [path] [--json]   # dependencies whose declared support excludes the target runtime
   evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]   # lifecycle of what an export says is deployed
   evergreen badge [path] --snippet <markdown|html|rst> [--repo <owner/name>] [--branch <name>]   # print README markup for the published badge
   evergreen badge [path] --shields   # print shields.io endpoint JSON for the current scan
   evergreen diff <base>..<head> [path] [--json]   # findings a change introduced or fixed; exit 1 only when it introduced some
+  evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]   # report every runtime version a repository states and whether they agree
   evergreen receipt [path] --before <scan.json> [--format markdown|json] [--fail-on-introduced]   # what a change resolved, left, or introduced; never runs a command
   evergreen scan [path] --by-owner [--json]   # group findings by CODEOWNERS owner; files with no owner are listed as unowned
   evergreen rollup <report.json>... [--owners <file>] [--json | --html]   # merge saved scan reports by product and owner; reads files only
@@ -790,7 +793,7 @@ async function main(rawArgs: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "sbom" && command !== "export" && command !== "scan" && command !== "check" && command !== "guard" && command !== "data" && command !== "new-detector" && command !== "new-rule" && command !== "rules" && command !== "init" && command !== "setup" && command !== "usage" && command !== "mcp" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "forecast" && command !== "plan" && command !== "diff" && command !== "rollup" && command !== "renovate-preset" && command !== "dependabot-config" && command !== "fix" && command !== "doctor" && command !== "report-issue" && command !== "capabilities" && command !== "watch" && command !== "completions" && command !== "status-card" && command !== "lookup" && command !== "inventory" && command !== "badge" && command !== "receipt" && command !== "upgrade-check") {
+  if (command !== "sbom" && command !== "export" && command !== "scan" && command !== "check" && command !== "guard" && command !== "data" && command !== "new-detector" && command !== "new-rule" && command !== "rules" && command !== "init" && command !== "setup" && command !== "usage" && command !== "mcp" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "forecast" && command !== "plan" && command !== "diff" && command !== "rollup" && command !== "renovate-preset" && command !== "dependabot-config" && command !== "fix" && command !== "doctor" && command !== "report-issue" && command !== "capabilities" && command !== "watch" && command !== "completions" && command !== "status-card" && command !== "lookup" && command !== "inventory" && command !== "badge" && command !== "receipt" && command !== "upgrade-check" && command !== "drift") {
     return fail("usage", `Unknown command: ${command ?? ""}`, `\n${HELP}`);
   }
 
@@ -813,6 +816,7 @@ async function main(rawArgs: string[]): Promise<number> {
   if (command === "status-card") return statusCard(args.slice(1));
   if (command === "badge") return badge(args.slice(1));
   if (command === "lookup") return lookup(args.slice(1));
+  if (command === "drift") return driftCommand(args.slice(1));
   if (command === "upgrade-check") return upgradeCheck(args.slice(1));
   if (command === "inventory") {
     try {

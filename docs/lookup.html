@@ -164,7 +164,7 @@ h1 {
       <p class="lede">
         Type a package or runtime name to find its reviewed lifecycle status.
         Results link to each rule's reference page and its authoritative sources.
-        This page embeds 527 rules and makes no network requests after it loads.
+        This page embeds 529 rules and makes no network requests after it loads.
       </p>
     </header>
     <main id="main">
@@ -180,7 +180,7 @@ h1 {
           aria-describedby="status"
         />
       </form>
-      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 527 lifecycle rules.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Type a name to search 529 lifecycle rules.</p>
       <div id="results" class="results" aria-live="polite"></div>
       <noscript>
         <p class="status">
@@ -538,6 +538,48 @@ h1 {
       {
         "title": "Debian Releases",
         "url": "https://www.debian.org/releases/"
+      }
+    ]
+  },
+  {
+    "id": "container.dockerfile.legacy-env-format",
+    "title": "The Dockerfile legacy \"ENV key value\" form is deprecated",
+    "summary": "Docker's LegacyKeyValueFormat build check flags the space-separated ENV form and recommends writing each assignment as key=value.",
+    "event": "deprecated",
+    "severity": "low",
+    "ecosystem": "container",
+    "purl": "pkg:generic/dockerfile",
+    "vers": "vers:semver/*",
+    "replacement": "The ENV key=value form, with the value quoted when it contains spaces",
+    "sources": [
+      {
+        "title": "Docker build check: LegacyKeyValueFormat",
+        "url": "https://docs.docker.com/reference/build-checks/legacy-key-value-format/"
+      },
+      {
+        "title": "Dockerfile reference: ENV",
+        "url": "https://docs.docker.com/reference/dockerfile/#env"
+      }
+    ]
+  },
+  {
+    "id": "container.dockerfile.maintainer",
+    "title": "The Dockerfile MAINTAINER instruction is deprecated",
+    "summary": "The Dockerfile reference marks MAINTAINER as deprecated because author metadata belongs in the org.opencontainers.image.authors label.",
+    "event": "deprecated",
+    "severity": "low",
+    "ecosystem": "container",
+    "purl": "pkg:generic/dockerfile",
+    "vers": "vers:semver/*",
+    "replacement": "A LABEL org.opencontainers.image.authors instruction carrying the same author text",
+    "sources": [
+      {
+        "title": "Dockerfile reference: MAINTAINER (deprecated)",
+        "url": "https://docs.docker.com/reference/dockerfile/#maintainer-deprecated"
+      },
+      {
+        "title": "Docker build check: MaintainerDeprecated",
+        "url": "https://docs.docker.com/reference/build-checks/maintainer-deprecated/"
       }
     ]
   },

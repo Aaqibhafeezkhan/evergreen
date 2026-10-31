@@ -9,11 +9,11 @@ async function rules() {
   return validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8"))).rules;
 }
 
-test("container registry has twenty-five valid rules with vendor sources", async () => {
+test("container registry has twenty-seven valid rules with vendor sources", async () => {
   const all = await rules();
-  assert.equal(all.length, 25);
+  assert.equal(all.length, 27);
   for (const rule of all) {
-    assert.match(rule.purl, /^pkg:docker\/library\//);
+    assert.match(rule.purl, /^pkg:(?:docker\/library\/.+|generic\/dockerfile)$/);
     assert.ok(rule.sources.every((source) => source.url.startsWith("https://")));
     assert.ok(!rule.sources.some((source) => /endoflife\.date/.test(source.url)), `${rule.id} cites an aggregator`);
   }

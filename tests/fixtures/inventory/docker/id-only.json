@@ -1,0 +1,15 @@
+[
+  {
+    "Id": "5555555555555555555555555555555555555555555555555555555555555555",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/pinned",
+    "Config": {
+      "Image": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "Labels": {}
+    },
+    "State": {
+      "Status": "exited",
+      "Running": false
+    }
+  }
+]

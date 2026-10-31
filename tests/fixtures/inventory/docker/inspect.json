@@ -1,0 +1,84 @@
+[
+  {
+    "Id": "1111111111111111111111111111111111111111111111111111111111111111",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/web",
+    "Config": {
+      "Image": "node:18-alpine",
+      "Labels": {},
+      "Env": [
+        "PATH=/usr/local/bin:/usr/bin",
+        "API_TOKEN=supersecret-should-not-appear"
+      ]
+    },
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Pid": 1234
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/srv/private-should-not-appear",
+        "Destination": "/data"
+      }
+    ],
+    "NetworkSettings": {
+      "IPAddress": "10.0.0.5"
+    }
+  },
+  {
+    "Id": "2222222222222222222222222222222222222222222222222222222222222222",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/cache",
+    "Config": {
+      "Image": "redis:6.0",
+      "Labels": {},
+      "Env": [
+        "REDIS_PASSWORD=another-secret-should-not-appear"
+      ]
+    },
+    "State": {
+      "Status": "running",
+      "Running": true
+    },
+    "NetworkSettings": {
+      "IPAddress": "10.0.0.6"
+    }
+  },
+  {
+    "Id": "3333333333333333333333333333333333333333333333333333333333333333",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/app",
+    "Config": {
+      "Image": "ghcr.io/acme/app:1.0.0",
+      "Labels": {}
+    },
+    "State": {
+      "Status": "running",
+      "Running": true
+    }
+  },
+  {
+    "Id": "4444444444444444444444444444444444444444444444444444444444444444",
+    "Created": "2026-10-28T10:00:00.000000000Z",
+    "Name": "/labeled",
+    "Config": {
+      "Image": "acme/worker:latest",
+      "Labels": {
+        "org.opencontainers.image.base.name": "docker.io/library/node:20",
+        "org.opencontainers.image.version": "20.11.1"
+      },
+      "Env": [
+        "SECRET_TOKEN=yet-another-secret-should-not-appear"
+      ]
+    },
+    "State": {
+      "Status": "running",
+      "Running": true
+    },
+    "NetworkSettings": {
+      "IPAddress": "10.0.0.7"
+    }
+  }
+]

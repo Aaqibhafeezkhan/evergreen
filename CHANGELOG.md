@@ -18,6 +18,7 @@
 - Add the Go analyzer to `upgrade-check`: it reads `go.mod`, `go.work`, and `vendor/modules.txt` for module and vendored Go version requirements. (#1867)
 - Judge Dart and Flutter targets against the `sdks` bounds in `pubspec.lock` and the `environment` bounds in `pubspec.yaml`, using pub's caret semantics for `0.x` releases. (#1866)
 - Add the pnpm lockfile analyzer to `upgrade-check`: it reads `engines.node` from pnpm lockfile versions 6.x and 9.x, resolving the dev flag from importers and snapshots in 9.x, and reports blockers, dev warnings, and invalid ranges at their exact line. (#1860)
+- Add a Poetry `poetry.lock` analyzer to `upgrade-check`: it judges every package's `python-versions`, and the project's `[tool.poetry.dependencies] python` constraint, against the target release. (#1862)
 - Make bare `evergreen init` ask what to set up: it detects the repository's CI provider and agent hosts, shows the plan, and with one confirmation (or `--yes` for scripts) writes a GitHub Actions workflow, the pre-push hook, and the Evergreen agent section; GitLab repositories get the component include to add. (`#1266`)
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)

@@ -147,7 +147,7 @@ test("the CLI exits 0 when the target is ready and 1 when it is blocked", () => 
 
   const ready = upgrade("--to", "dart@3.5", fixture("ready"));
   assert.equal(ready.status, 0, ready.stderr);
-  assert.match(ready.stdout, /^ready: dart@3\.5/);
+  assert.match(ready.stdout, /^dart@3\.5: ready/);
 
   const blocked = upgrade("--to", "dart@3.5", fixture("lock-blocked"), "--json");
   assert.equal(blocked.status, 1);

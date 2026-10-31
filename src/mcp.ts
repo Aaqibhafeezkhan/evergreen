@@ -10,6 +10,7 @@ import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-promp
 import { buildPlan } from "./plan-build.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
 import { findPackageFileSync } from "./package-files.js";
+import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { VERSION } from "./version.js";
 
 export const MCP_TOOL_NAMES = [
@@ -19,6 +20,7 @@ export const MCP_TOOL_NAMES = [
   "create_migration_context",
   "verify_migration",
   "check_dependency",
+  "check_upgrade",
   "forecast_repository",
   "plan_migrations",
 ] as const;
@@ -44,6 +46,7 @@ export const MCP_OUTPUT_SCHEMA_FILES = {
   create_migration_context: "context.v1.schema.json",
   verify_migration: "verification.v1.schema.json",
   check_dependency: "check.v1.schema.json",
+  check_upgrade: "upgrade.v1.schema.json",
   forecast_repository: "forecast.v1.schema.json",
   plan_migrations: "plan.v1.schema.json",
 } as const satisfies Record<(typeof MCP_TOOL_NAMES)[number], string>;
@@ -351,6 +354,37 @@ export function createEvergreenMcpServer(
     async ({ purl, version }) => {
       try {
         return success(await checkDependency({ purl, ...(version ? { version } : {}) }));
+      } catch (error) {
+        return failure(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "check_upgrade",
+    {
+      title: "Check upgrade",
+      description:
+        "Answer offline whether this repository can move to a target runtime release, reading lockfiles and manifests already in the repository. Pass a target such as nodejs@22 or python@3.13. Returns evergreen.upgrade.v1: a verdict (ready, blocked, or unknown) and every issue with its exact evidence, path, and line. An unknown verdict means Evergreen found no evidence for this runtime in this repository. This is not a statement that the upgrade is safe.",
+      inputSchema: z.object({
+        path: z
+          .string()
+          .min(1)
+          .default(".")
+          .describe("Local path to the repository. Defaults to the server working directory."),
+        target: z
+          .string()
+          .min(1)
+          .describe("Runtime and release to move to, such as nodejs@22 or python@3.13."),
+      }),
+      outputSchema: outputSchema("check_upgrade"),
+      annotations: MCP_TOOL_ANNOTATIONS,
+    },
+    async ({ path, target }) => {
+      try {
+        const parsed = parseUpgradeTarget(target);
+        if (parsed === undefined) throw new Error("target must name a runtime and a release, for example nodejs@22.");
+        return success(await checkUpgrade(path, parsed));
       } catch (error) {
         return failure(error);
       }

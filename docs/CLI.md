@@ -235,6 +235,24 @@ Summarizes the local log of dependency checks. Logging is off unless `EVERGREEN_
 | `--file <path>` | Read another log file. Defaults to the log named by `EVERGREEN_USAGE_LOG`. |
 | `--json` | Print the summary as JSON. |
 
+## Upgrade readiness
+
+### `upgrade-check`
+
+```bash
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+```
+
+Answers offline whether the repository can move to a runtime release, reading lockfiles and manifests already present. Every issue names the exact evidence, file, and line; nothing is downloaded, installed, or executed. See [Upgrade readiness](UPGRADE_CHECK.md).
+
+| Flag | What it does |
+| --- | --- |
+| `--to <runtime@version>` | Required. Target such as `nodejs@22`, `python@3.13`, `php@8.4`, `go@1.23`, or `dart@3.5`. `node`, `py`, and `golang` are aliases. |
+| `[path]` | Repository to read, default `.`. |
+| `--json` | Print the `evergreen.upgrade.v1` report, which conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
+
+The verdict is `blocked`, `ready`, or `unknown`. The command exits `1` when blocked, `0` for ready and unknown, and `2` for bad input. An `unknown` verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.
+
 ## Integrations
 
 ### `mcp`

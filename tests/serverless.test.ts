@@ -75,6 +75,7 @@ test("serverless passes detector conformance on every fixture", async () => {
           expected(byId("serverless.aws-lambda.python3.8"), "template.yaml", 15),
           expected(byId("serverless.aws-lambda.dotnetcore3.1"), "template.yaml", 21),
           expected(byId("serverless.aws-lambda.nodejs12.x"), "template.yaml", 27),
+          expected(byId("serverless.aws-lambda.nodejs16.x"), "template.yml", 6),
           expected(byId("serverless.aws-lambda.ruby2.7"), "template.yml", 12),
         ],
       },
@@ -110,6 +111,7 @@ test("matches AWS and Google identifiers by Package URL and ignores Azure versio
       ["serverless.aws-lambda.python3.8", "template.yaml", 15],
       ["serverless.aws-lambda.dotnetcore3.1", "template.yaml", 21],
       ["serverless.aws-lambda.nodejs12.x", "template.yaml", 27],
+      ["serverless.aws-lambda.nodejs16.x", "template.yml", 6],
       ["serverless.aws-lambda.ruby2.7", "template.yml", 12],
     ],
   );

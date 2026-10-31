@@ -519,6 +519,22 @@
       "type": "gem"
     },
     {
+      "earliestDeadline": "2026-04-01",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-alpine",
+      "latestReview": "2026-10-30",
+      "name": "alpine",
+      "path": "products/generic-alpine.json",
+      "purl": "pkg:generic/alpine",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2025-11-26",
       "ecosystems": [
         "terraform"
@@ -533,6 +549,22 @@
       "path": "products/generic-amazon-eks.json",
       "purl": "pkg:generic/amazon-eks",
       "rules": 4,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-06-30",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-amzn",
+      "latestReview": "2026-10-30",
+      "name": "amzn",
+      "path": "products/generic-amzn.json",
+      "purl": "pkg:generic/amzn",
+      "rules": 1,
       "type": "generic"
     },
     {
@@ -553,6 +585,212 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2023-02-28",
+      "ecosystems": [
+        "database"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-aws-aurora-mysql",
+      "latestReview": "2026-10-30",
+      "name": "mysql",
+      "namespace": "aws-aurora",
+      "path": "products/generic-aws-aurora-mysql.json",
+      "purl": "pkg:generic/aws-aurora/mysql",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-02-29",
+      "ecosystems": [
+        "database"
+      ],
+      "events": [
+        "end-of-support",
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-aurora-postgresql",
+      "latestReview": "2026-10-30",
+      "name": "postgresql",
+      "namespace": "aws-aurora",
+      "path": "products/generic-aws-aurora-postgresql.json",
+      "purl": "pkg:generic/aws-aurora/postgresql",
+      "rules": 4,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-01-31",
+      "ecosystems": [
+        "database"
+      ],
+      "events": [
+        "end-of-support",
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-elasticache-redis",
+      "latestReview": "2026-10-30",
+      "name": "redis",
+      "namespace": "aws-elasticache",
+      "path": "products/generic-aws-elasticache-redis.json",
+      "purl": "pkg:generic/aws-elasticache/redis",
+      "rules": 3,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-11-14",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet10",
+      "latestReview": "2026-10-30",
+      "name": "dotnet10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-05-10",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet5-0",
+      "latestReview": "2026-10-30",
+      "name": "dotnet5.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet5-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet5.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-12-20",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet6",
+      "latestReview": "2026-10-30",
+      "name": "dotnet6",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet6.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet6",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-05-14",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet7",
+      "latestReview": "2026-10-30",
+      "name": "dotnet7",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet7.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet7",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-11-10",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet8",
+      "latestReview": "2026-10-30",
+      "name": "dotnet8",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet8.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-11-10",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnet9",
+      "latestReview": "2026-10-30",
+      "name": "dotnet9",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnet9.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnet9",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2019-06-27",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnetcore1-0",
+      "latestReview": "2026-10-30",
+      "name": "dotnetcore1.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnetcore1-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnetcore1.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2019-05-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnetcore2-0",
+      "latestReview": "2026-10-30",
+      "name": "dotnetcore2.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnetcore2-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnetcore2.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-01-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-dotnetcore2-1",
+      "latestReview": "2026-10-30",
+      "name": "dotnetcore2.1",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-dotnetcore2-1.json",
+      "purl": "pkg:generic/aws-lambda-runtime/dotnetcore2.1",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2023-04-03",
       "ecosystems": [
         "serverless"
@@ -566,6 +804,210 @@
       "namespace": "aws-lambda-runtime",
       "path": "products/generic-aws-lambda-runtime-dotnetcore3-1.json",
       "purl": "pkg:generic/aws-lambda-runtime/dotnetcore3.1",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-08",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-go1-x",
+      "latestReview": "2026-10-30",
+      "name": "go1.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-go1-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/go1.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java11",
+      "latestReview": "2026-10-30",
+      "name": "java11",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java11.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java11",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java11-al2023",
+      "latestReview": "2026-10-30",
+      "name": "java11.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java11-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java11.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java17",
+      "latestReview": "2026-10-30",
+      "name": "java17",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java17.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java17",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java17-al2023",
+      "latestReview": "2026-10-30",
+      "name": "java17.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java17-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java17.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java21",
+      "latestReview": "2026-10-30",
+      "name": "java21",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java21.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java21",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java25",
+      "latestReview": "2026-10-30",
+      "name": "java25",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java25.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java25",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-08",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java8",
+      "latestReview": "2026-10-30",
+      "name": "java8",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java8.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java8-al2",
+      "latestReview": "2026-10-30",
+      "name": "java8.al2",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java8-al2.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java8.al2",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-java8-al2023",
+      "latestReview": "2026-10-30",
+      "name": "java8.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-java8-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/java8.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2016-08-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs",
+      "latestReview": "2026-10-30",
+      "name": "nodejs",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2021-07-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs10-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs10.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs10-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs10.x",
       "rules": 1,
       "type": "generic"
     },
@@ -604,6 +1046,329 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-06-12",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs16-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs16.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs16-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs16.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-09-01",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs18-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs18.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs18-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs18.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs20-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs20.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs20-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs20.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs22-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs22.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs22-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs22.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs24-x",
+      "latestReview": "2026-10-30",
+      "name": "nodejs24.x",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs24-x.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs24.x",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2020-03-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs4-3",
+      "latestReview": "2026-10-30",
+      "name": "nodejs4.3",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs4-3.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs4.3",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2020-03-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs4-3-edge",
+      "latestReview": "2026-10-30",
+      "name": "nodejs4.3-edge",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs4-3-edge.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs4.3-edge",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2019-08-12",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs6-10",
+      "latestReview": "2026-10-30",
+      "name": "nodejs6.10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs6-10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs6.10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2020-03-06",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-nodejs8-10",
+      "latestReview": "2026-10-30",
+      "name": "nodejs8.10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-nodejs8-10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/nodejs8.10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-08",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-provided",
+      "latestReview": "2026-10-30",
+      "name": "provided",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-provided.json",
+      "purl": "pkg:generic/aws-lambda-runtime/provided",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-07-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-provided-al2",
+      "latestReview": "2026-10-30",
+      "name": "provided.al2",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-provided-al2.json",
+      "purl": "pkg:generic/aws-lambda-runtime/provided.al2",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-provided-al2023",
+      "latestReview": "2026-10-30",
+      "name": "provided.al2023",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-provided-al2023.json",
+      "purl": "pkg:generic/aws-lambda-runtime/provided.al2023",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2021-07-15",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python2-7",
+      "latestReview": "2026-10-30",
+      "name": "python2.7",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python2-7.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python2.7",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-10-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-10",
+      "latestReview": "2026-10-30",
+      "name": "python3.10",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-10.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-11",
+      "latestReview": "2026-10-30",
+      "name": "python3.11",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-11.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.11",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-10-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-12",
+      "latestReview": "2026-10-30",
+      "name": "python3.12",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-12.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.12",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-13",
+      "latestReview": "2026-10-30",
+      "name": "python3.13",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-13.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.13",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-14",
+      "latestReview": "2026-10-30",
+      "name": "python3.14",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-14.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.14",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-07-18",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-6",
+      "latestReview": "2026-10-30",
+      "name": "python3.6",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-6.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.6",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2023-12-04",
       "ecosystems": [
         "serverless"
@@ -638,6 +1403,40 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2025-12-15",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-python3-9",
+      "latestReview": "2026-10-30",
+      "name": "python3.9",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-python3-9.json",
+      "purl": "pkg:generic/aws-lambda-runtime/python3.9",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2021-07-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby2-5",
+      "latestReview": "2026-10-30",
+      "name": "ruby2.5",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby2-5.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby2.5",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2023-12-07",
       "ecosystems": [
         "serverless"
@@ -652,6 +1451,109 @@
       "path": "products/generic-aws-lambda-runtime-ruby2-7.json",
       "purl": "pkg:generic/aws-lambda-runtime/ruby2.7",
       "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby3-2",
+      "latestReview": "2026-10-30",
+      "name": "ruby3.2",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby3-2.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby3.2",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby3-3",
+      "latestReview": "2026-10-30",
+      "name": "ruby3.3",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby3-3.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby3.3",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2028-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby3-4",
+      "latestReview": "2026-10-30",
+      "name": "ruby3.4",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby3-4.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby3.4",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2029-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-lambda-runtime-ruby4-0",
+      "latestReview": "2026-10-30",
+      "name": "ruby4.0",
+      "namespace": "aws-lambda-runtime",
+      "path": "products/generic-aws-lambda-runtime-ruby4-0.json",
+      "purl": "pkg:generic/aws-lambda-runtime/ruby4.0",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-02-29",
+      "ecosystems": [
+        "database"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-aws-rds-mysql",
+      "latestReview": "2026-10-30",
+      "name": "mysql",
+      "namespace": "aws-rds",
+      "path": "products/generic-aws-rds-mysql.json",
+      "purl": "pkg:generic/aws-rds/mysql",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2022-04-30",
+      "ecosystems": [
+        "database"
+      ],
+      "events": [
+        "end-of-support",
+        "scheduled-end-of-life"
+      ],
+      "id": "generic-aws-rds-postgres",
+      "latestReview": "2026-10-30",
+      "name": "postgres",
+      "namespace": "aws-rds",
+      "path": "products/generic-aws-rds-postgres.json",
+      "purl": "pkg:generic/aws-rds/postgres",
+      "rules": 6,
       "type": "generic"
     },
     {
@@ -773,6 +1675,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-06-30",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-centos",
+      "latestReview": "2026-10-30",
+      "name": "centos",
+      "path": "products/generic-centos.json",
+      "purl": "pkg:generic/centos",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2024-11-06",
       "ecosystems": [
         "cpp"
@@ -857,6 +1775,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2026-08-31",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-debian",
+      "latestReview": "2026-10-30",
+      "name": "debian",
+      "path": "products/generic-debian.json",
+      "purl": "pkg:generic/debian",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2020-05-13",
       "ecosystems": [
         "deno"
@@ -938,889 +1872,6 @@
       "type": "generic"
     },
     {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go111",
-      "latestReview": "2026-10-30",
-      "name": "go111",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go111.json",
-      "purl": "pkg:generic/google-appengine-runtime/go111",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go112",
-      "latestReview": "2026-10-30",
-      "name": "go112",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go112.json",
-      "purl": "pkg:generic/google-appengine-runtime/go112",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go113",
-      "latestReview": "2026-10-30",
-      "name": "go113",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go113.json",
-      "purl": "pkg:generic/google-appengine-runtime/go113",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go114",
-      "latestReview": "2026-10-30",
-      "name": "go114",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go114.json",
-      "purl": "pkg:generic/google-appengine-runtime/go114",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go115",
-      "latestReview": "2026-10-30",
-      "name": "go115",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go115.json",
-      "purl": "pkg:generic/google-appengine-runtime/go115",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go116",
-      "latestReview": "2026-10-30",
-      "name": "go116",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go116.json",
-      "purl": "pkg:generic/google-appengine-runtime/go116",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go118",
-      "latestReview": "2026-10-30",
-      "name": "go118",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go118.json",
-      "purl": "pkg:generic/google-appengine-runtime/go118",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-04-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go119",
-      "latestReview": "2026-10-30",
-      "name": "go119",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go119.json",
-      "purl": "pkg:generic/google-appengine-runtime/go119",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-11-01",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go120",
-      "latestReview": "2026-10-30",
-      "name": "go120",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go120.json",
-      "purl": "pkg:generic/google-appengine-runtime/go120",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-03-03",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go121",
-      "latestReview": "2026-10-30",
-      "name": "go121",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go121.json",
-      "purl": "pkg:generic/google-appengine-runtime/go121",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-07-28",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go122",
-      "latestReview": "2026-10-30",
-      "name": "go122",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go122.json",
-      "purl": "pkg:generic/google-appengine-runtime/go122",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-08-21",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-go123",
-      "latestReview": "2026-10-30",
-      "name": "go123",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-go123.json",
-      "purl": "pkg:generic/google-appengine-runtime/go123",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-10-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-java11",
-      "latestReview": "2026-10-30",
-      "name": "java11",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-java11.json",
-      "purl": "pkg:generic/google-appengine-runtime/java11",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-java8",
-      "latestReview": "2026-10-30",
-      "name": "java8",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-java8.json",
-      "purl": "pkg:generic/google-appengine-runtime/java8",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs10",
-      "latestReview": "2026-10-30",
-      "name": "nodejs10",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs10.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs10",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs12",
-      "latestReview": "2026-10-30",
-      "name": "nodejs12",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs12.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs12",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs14",
-      "latestReview": "2026-10-30",
-      "name": "nodejs14",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs14.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs14",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs16",
-      "latestReview": "2026-10-30",
-      "name": "nodejs16",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs16.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs16",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-04-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs18",
-      "latestReview": "2026-10-30",
-      "name": "nodejs18",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs18.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs18",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-04-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs20",
-      "latestReview": "2026-10-30",
-      "name": "nodejs20",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs20.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs20",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2018-06-27",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-nodejs8",
-      "latestReview": "2026-10-30",
-      "name": "nodejs8",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-nodejs8.json",
-      "purl": "pkg:generic/google-appengine-runtime/nodejs8",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-php55",
-      "latestReview": "2026-10-30",
-      "name": "php55",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-php55.json",
-      "purl": "pkg:generic/google-appengine-runtime/php55",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-php72",
-      "latestReview": "2026-10-30",
-      "name": "php72",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-php72.json",
-      "purl": "pkg:generic/google-appengine-runtime/php72",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-php73",
-      "latestReview": "2026-10-30",
-      "name": "php73",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-php73.json",
-      "purl": "pkg:generic/google-appengine-runtime/php73",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-php74",
-      "latestReview": "2026-10-30",
-      "name": "php74",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-php74.json",
-      "purl": "pkg:generic/google-appengine-runtime/php74",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-12-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-php81",
-      "latestReview": "2026-10-30",
-      "name": "php81",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-php81.json",
-      "purl": "pkg:generic/google-appengine-runtime/php81",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-python27",
-      "latestReview": "2026-10-30",
-      "name": "python27",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-python27.json",
-      "purl": "pkg:generic/google-appengine-runtime/python27",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-10-04",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-python310",
-      "latestReview": "2026-10-30",
-      "name": "python310",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-python310.json",
-      "purl": "pkg:generic/google-appengine-runtime/python310",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-python37",
-      "latestReview": "2026-10-30",
-      "name": "python37",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-python37.json",
-      "purl": "pkg:generic/google-appengine-runtime/python37",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-10-14",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-python38",
-      "latestReview": "2026-10-30",
-      "name": "python38",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-python38.json",
-      "purl": "pkg:generic/google-appengine-runtime/python38",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-10-05",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-python39",
-      "latestReview": "2026-10-30",
-      "name": "python39",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-python39.json",
-      "purl": "pkg:generic/google-appengine-runtime/python39",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-ruby25",
-      "latestReview": "2026-10-30",
-      "name": "ruby25",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-ruby25.json",
-      "purl": "pkg:generic/google-appengine-runtime/ruby25",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-ruby26",
-      "latestReview": "2026-10-30",
-      "name": "ruby26",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-ruby26.json",
-      "purl": "pkg:generic/google-appengine-runtime/ruby26",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-ruby27",
-      "latestReview": "2026-10-30",
-      "name": "ruby27",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-ruby27.json",
-      "purl": "pkg:generic/google-appengine-runtime/ruby27",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-03-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-ruby30",
-      "latestReview": "2026-10-30",
-      "name": "ruby30",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-ruby30.json",
-      "purl": "pkg:generic/google-appengine-runtime/ruby30",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-03-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-google-appengine-runtime-ruby32",
-      "latestReview": "2026-10-30",
-      "name": "ruby32",
-      "namespace": "google-appengine-runtime",
-      "path": "products/generic-google-appengine-runtime-ruby32.json",
-      "purl": "pkg:generic/google-appengine-runtime/ruby32",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-dotnet3",
-      "latestReview": "2026-10-30",
-      "name": "dotnet3",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-dotnet3.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/dotnet3",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-11-12",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-dotnet6",
-      "latestReview": "2026-10-30",
-      "name": "dotnet6",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-dotnet6.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/dotnet6",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go111",
-      "latestReview": "2026-10-30",
-      "name": "go111",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go111.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go111",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go113",
-      "latestReview": "2026-10-30",
-      "name": "go113",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go113.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go113",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go116",
-      "latestReview": "2026-10-30",
-      "name": "go116",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go116.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go116",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go118",
-      "latestReview": "2026-10-30",
-      "name": "go118",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go118.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go118",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go119",
-      "latestReview": "2026-10-30",
-      "name": "go119",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go119.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go119",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-05-01",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go120",
-      "latestReview": "2026-10-30",
-      "name": "go120",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go120.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go120",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-03-03",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go121",
-      "latestReview": "2026-10-30",
-      "name": "go121",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go121.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go121",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-07-28",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go122",
-      "latestReview": "2026-10-30",
-      "name": "go122",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go122.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go122",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-08-21",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go123",
-      "latestReview": "2026-10-30",
-      "name": "go123",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go123.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go123",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2027-03-02",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "deprecated"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go124",
-      "latestReview": "2026-10-30",
-      "name": "go124",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go124.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go124",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2027-04-01",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "deprecated"
-      ],
-      "id": "generic-google-cloud-functions-runtime-go125",
-      "latestReview": "2026-10-30",
-      "name": "go125",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-go125.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/go125",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-10-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-java11",
-      "latestReview": "2026-10-30",
-      "name": "java11",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-java11.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/java11",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs10",
-      "latestReview": "2026-10-30",
-      "name": "nodejs10",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs10.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs10",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs12",
-      "latestReview": "2026-10-30",
-      "name": "nodejs12",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs12.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs12",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2025-01-30",
       "ecosystems": [
         "serverless"
@@ -1834,259 +1885,6 @@
       "namespace": "google-cloud-functions-runtime",
       "path": "products/generic-google-cloud-functions-runtime-nodejs14.json",
       "purl": "pkg:generic/google-cloud-functions-runtime/nodejs14",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs16",
-      "latestReview": "2026-10-30",
-      "name": "nodejs16",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs16.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs16",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-10-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs18",
-      "latestReview": "2026-10-30",
-      "name": "nodejs18",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs18.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs18",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-10-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs20",
-      "latestReview": "2026-10-30",
-      "name": "nodejs20",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs20.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs20",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs6",
-      "latestReview": "2026-10-30",
-      "name": "nodejs6",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs6.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs6",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-nodejs8",
-      "latestReview": "2026-10-30",
-      "name": "nodejs8",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-nodejs8.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs8",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-php74",
-      "latestReview": "2026-10-30",
-      "name": "php74",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-php74.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/php74",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-06-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-php81",
-      "latestReview": "2026-10-30",
-      "name": "php81",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-php81.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/php81",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2027-04-04",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "deprecated"
-      ],
-      "id": "generic-google-cloud-functions-runtime-python310",
-      "latestReview": "2026-10-30",
-      "name": "python310",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-python310.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/python310",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-python37",
-      "latestReview": "2026-10-30",
-      "name": "python37",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-python37.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/python37",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-10-14",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-python38",
-      "latestReview": "2026-10-30",
-      "name": "python38",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-python38.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/python38",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-04-05",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-python39",
-      "latestReview": "2026-10-30",
-      "name": "python39",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-python39.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/python39",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-ruby26",
-      "latestReview": "2026-10-30",
-      "name": "ruby26",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-ruby26.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/ruby26",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-01-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-ruby27",
-      "latestReview": "2026-10-30",
-      "name": "ruby27",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-ruby27.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/ruby27",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2025-03-31",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-ruby30",
-      "latestReview": "2026-10-30",
-      "name": "ruby30",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-ruby30.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/ruby30",
-      "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-09-30",
-      "ecosystems": [
-        "serverless"
-      ],
-      "events": [
-        "end-of-life"
-      ],
-      "id": "generic-google-cloud-functions-runtime-ruby32",
-      "latestReview": "2026-10-30",
-      "name": "ruby32",
-      "namespace": "google-cloud-functions-runtime",
-      "path": "products/generic-google-cloud-functions-runtime-ruby32.json",
-      "purl": "pkg:generic/google-cloud-functions-runtime/ruby32",
       "rules": 1,
       "type": "generic"
     },
@@ -2120,23 +1918,6 @@
       "path": "products/generic-google-cloud-sql-postgresql.json",
       "purl": "pkg:generic/google-cloud-sql-postgresql",
       "rules": 2,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-04-27",
-      "ecosystems": [
-        "kubernetes"
-      ],
-      "events": [
-        "end-of-support",
-        "end-of-life"
-      ],
-      "id": "generic-google-gke",
-      "latestReview": "2026-10-30",
-      "name": "google-gke",
-      "path": "products/generic-google-gke.json",
-      "purl": "pkg:generic/google-gke",
-      "rules": 5,
       "type": "generic"
     },
     {
@@ -3054,6 +2835,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-06-30",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-rhel",
+      "latestReview": "2026-10-30",
+      "name": "rhel",
+      "path": "products/generic-rhel.json",
+      "purl": "pkg:generic/rhel",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2015-02-23",
       "ecosystems": [
         "ruby"
@@ -3119,6 +2916,22 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2025-12-31",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-sles",
+      "latestReview": "2026-10-30",
+      "name": "sles",
+      "path": "products/generic-sles.json",
+      "purl": "pkg:generic/sles",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2025-05-14",
       "ecosystems": [
         "terraform"
@@ -3132,6 +2945,22 @@
       "path": "products/generic-terraform.json",
       "purl": "pkg:generic/terraform",
       "rules": 6,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-05-31",
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-ubuntu",
+      "latestReview": "2026-10-30",
+      "name": "ubuntu",
+      "path": "products/generic-ubuntu.json",
+      "purl": "pkg:generic/ubuntu",
+      "rules": 1,
       "type": "generic"
     },
     {
@@ -5592,7 +5421,7 @@
     }
   ],
   "recent": "recent.json",
-  "rules": 597,
+  "rules": 595,
   "schemaVersion": "evergreen.api-index.v1",
   "types": [
     {
@@ -5621,8 +5450,8 @@
     },
     {
       "path": "types/generic.json",
-      "products": 156,
-      "rules": 367,
+      "products": 146,
+      "rules": 365,
       "type": "generic"
     },
     {

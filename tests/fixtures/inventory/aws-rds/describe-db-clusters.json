@@ -1,0 +1,32 @@
+{
+  "DBClusters": [
+    {
+      "DBClusterIdentifier": "prod-analytics-aurora-pg13",
+      "Engine": "aurora-postgresql",
+      "EngineMode": "provisioned",
+      "EngineVersion": "13.9",
+      "Status": "available",
+      "Port": 5432,
+      "Endpoint": "prod-analytics-aurora-pg13.cluster-abc123xyz.us-east-1.rds.amazonaws.com",
+      "ReaderEndpoint": "prod-analytics-aurora-pg13.cluster-ro-abc123xyz.us-east-1.rds.amazonaws.com",
+      "HostedZoneId": "Z2R2ITUGPM61AM",
+      "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:prod-analytics-aurora-pg13",
+      "DBSubnetGroup": "default",
+      "VpcSecurityGroups": [
+        { "VpcSecurityGroupId": "sg-0123456789abcdef0", "Status": "active" }
+      ]
+    },
+    {
+      "DBClusterIdentifier": "prod-sessions-aurora-mysql3",
+      "Engine": "aurora-mysql",
+      "EngineMode": "provisioned",
+      "EngineVersion": "8.0.mysql_aurora.3.10.0",
+      "Status": "available",
+      "Port": 3306,
+      "Endpoint": "prod-sessions-aurora-mysql3.cluster-abc123xyz.us-east-1.rds.amazonaws.com",
+      "ReaderEndpoint": "prod-sessions-aurora-mysql3.cluster-ro-abc123xyz.us-east-1.rds.amazonaws.com",
+      "HostedZoneId": "Z2R2ITUGPM61AM",
+      "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:prod-sessions-aurora-mysql3"
+    }
+  ]
+}

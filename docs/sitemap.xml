@@ -74,6 +74,13 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.debian.eol-11-and-older.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.drupal.eol-10.5-and-older.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.golang.eol-1.25-and-older.html</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-alpine.eol-3.20-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-amazon-linux.eol-2-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-centos.eol-8-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-debian.eol-11-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-rhel.eol-7-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-sles.eol-15-sp6-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/container.host-ubuntu.eol-22.04-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.mariadb.eol-10.10-and-older.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.mysql.eol-8.0-and-older.html</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/container.node.eol-21-and-older.html</loc><lastmod>2026-10-16</lastmod></url>
@@ -101,6 +108,23 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/dart.sdk.end-of-support-3.12.html</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/dart.sdk.end-of-support-3.8.html</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/dart.sdk.end-of-support-3.9.html</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-mysql.end-of-support-5.6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-mysql.end-of-support-5.7.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.end-of-support-11.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.end-of-support-12.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.end-of-support-13.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-aurora-postgresql.scheduled-end-of-support-14.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-elasticache-redis.end-of-support-4.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-elasticache-redis.end-of-support-5.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-elasticache-redis.scheduled-end-of-support-6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-mysql.end-of-support-5.7.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-mysql.end-of-support-8.0.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-10.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-11.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-12.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-13.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.end-of-support-9.6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/database.aws-rds-postgres.scheduled-end-of-support-14.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/database.azure-mysql.standard-support-ended-5.7.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/database.azure-postgresql.standard-support-ended-11-to-13.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/database.google-cloud-sql-mysql.extended-support-5.6-to-5.7.html</loc><lastmod>2026-10-26</lastmod></url>
@@ -222,11 +246,6 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta1.removed.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta2.removed.html</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.flowcontrol-apiserver-k8s-io.prioritylevelconfiguration.v1beta3.removed.html</loc><lastmod>2026-10-20</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.google-gke.1.29-and-older.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.google-gke.1.30.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.google-gke.1.31.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.google-gke.1.32.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.google-gke.1.33.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.helm.repository.incubator.end-of-life.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.helm.repository.stable.end-of-life.html</loc><lastmod>2026-10-26</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/kubernetes.networking-k8s-io.ingress.v1beta1.removed.html</loc><lastmod>2026-10-17</lastmod></url>
@@ -548,80 +567,59 @@
   <url><loc>https://arminazimi.github.io/evergreen/rules/scala.runtime.eol-2.11.html</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/scala.runtime.eos-3.0-3.2.html</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/scala.sbt.eol-0.13.html</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnet10.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnet5.0.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnet6.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnet7.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnet8.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnet9.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnetcore1.0.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnetcore2.0.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnetcore2.1.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.dotnetcore3.1.html</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.go1.x.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java11.al2023.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java11.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java17.al2023.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java17.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java21.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java25.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java8.al2.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java8.al2023.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.java8.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs10.x.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs12.x.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs14.x.html</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs16.x.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs18.x.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs20.x.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs22.x.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs24.x.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs4.3-edge.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs4.3.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs6.10.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.nodejs8.10.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.provided.al2.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.provided.al2023.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.provided.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python2.7.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.10.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.11.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.12.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.13.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.14.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.6.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.7.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.8.html</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.python3.9.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.ruby2.5.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.ruby2.7.html</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go111.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go112.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go113.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go114.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go115.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go116.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go118.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go119.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go120.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go121.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go122.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.go123.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.java11.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.java8.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs10.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs12.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs14.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs16.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs18.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs20.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.nodejs8.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.php55.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.php72.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.php73.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.php74.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.php81.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.python27.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.python310.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.python37.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.python38.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.python39.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.ruby25.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.ruby26.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.ruby27.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.ruby30.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-appengine-runtime.ruby32.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.dotnet3.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.dotnet6.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go111.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go113.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go116.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go118.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go119.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go120.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go121.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go122.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go123.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go124.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.go125.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.java11.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs10.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs12.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.ruby3.2.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.ruby3.3.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.ruby3.4.html</loc><lastmod>2026-10-30</lastmod></url>
+  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.aws-lambda.ruby4.0.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs14.html</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs16.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs18.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs20.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs6.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.nodejs8.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.php74.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.php81.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.python310.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.python37.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.python38.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.python39.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.ruby26.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.ruby27.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.ruby30.html</loc><lastmod>2026-10-30</lastmod></url>
-  <url><loc>https://arminazimi.github.io/evergreen/rules/serverless.google-cloud-functions.ruby32.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/shell.powershell.end-of-life-6.html</loc><lastmod>2026-10-22</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/shell.powershell.end-of-life-7.0.html</loc><lastmod>2026-10-22</lastmod></url>
   <url><loc>https://arminazimi.github.io/evergreen/rules/shell.powershell.end-of-life-7.1.html</loc><lastmod>2026-10-22</lastmod></url>

@@ -1,0 +1,78 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "prod-orders-pg12",
+      "DBInstanceClass": "db.r6g.large",
+      "Engine": "postgres",
+      "EngineVersion": "12.22",
+      "DBInstanceStatus": "available",
+      "MasterUsername": "admin",
+      "Endpoint": {
+        "Address": "prod-orders-pg12.abc123xyz.us-east-1.rds.amazonaws.com",
+        "Port": 5432,
+        "HostedZoneId": "Z2R2ITUGPM61AM"
+      },
+      "AllocatedStorage": 100,
+      "DBInstanceArn": "arn:aws:rds:us-east-1:123456789012:db:prod-orders-pg12",
+      "DBSubnetGroup": {
+        "DBSubnetGroupName": "default",
+        "VpcId": "vpc-0123456789abcdef0",
+        "Subnets": [
+          { "SubnetIdentifier": "subnet-0a1b2c3d4e5f67890", "SubnetAvailabilityZone": { "Name": "us-east-1a" } }
+        ]
+      }
+    },
+    {
+      "DBInstanceIdentifier": "prod-orders-pg14",
+      "DBInstanceClass": "db.r6g.large",
+      "Engine": "postgres",
+      "EngineVersion": "14.9",
+      "DBInstanceStatus": "available",
+      "Endpoint": {
+        "Address": "prod-orders-pg14.abc123xyz.us-east-1.rds.amazonaws.com",
+        "Port": 5432,
+        "HostedZoneId": "Z2R2ITUGPM61AM"
+      },
+      "DBInstanceArn": "arn:aws:rds:us-east-1:123456789012:db:prod-orders-pg14"
+    },
+    {
+      "DBInstanceIdentifier": "prod-billing-mysql80",
+      "DBInstanceClass": "db.r6g.large",
+      "Engine": "mysql",
+      "EngineVersion": "8.0.35",
+      "DBInstanceStatus": "available",
+      "Endpoint": {
+        "Address": "prod-billing-mysql80.abc123xyz.us-east-1.rds.amazonaws.com",
+        "Port": 3306,
+        "HostedZoneId": "Z2R2ITUGPM61AM"
+      },
+      "DBInstanceArn": "arn:aws:rds:us-east-1:123456789012:db:prod-billing-mysql80"
+    },
+    {
+      "DBInstanceIdentifier": "legacy-reports-mysql57",
+      "DBInstanceClass": "db.m5.large",
+      "Engine": "mysql",
+      "EngineVersion": "5.7.44",
+      "DBInstanceStatus": "available",
+      "Endpoint": {
+        "Address": "legacy-reports-mysql57.abc123xyz.us-east-1.rds.amazonaws.com",
+        "Port": 3306,
+        "HostedZoneId": "Z2R2ITUGPM61AM"
+      },
+      "DBInstanceArn": "arn:aws:rds:us-east-1:123456789012:db:legacy-reports-mysql57"
+    },
+    {
+      "DBInstanceIdentifier": "scratch-mariadb",
+      "DBInstanceClass": "db.t3.small",
+      "Engine": "mariadb",
+      "EngineVersion": "10.11.6",
+      "DBInstanceStatus": "available",
+      "Endpoint": {
+        "Address": "scratch-mariadb.abc123xyz.us-east-1.rds.amazonaws.com",
+        "Port": 3306,
+        "HostedZoneId": "Z2R2ITUGPM61AM"
+      },
+      "DBInstanceArn": "arn:aws:rds:us-east-1:123456789012:db:scratch-mariadb"
+    }
+  ]
+}

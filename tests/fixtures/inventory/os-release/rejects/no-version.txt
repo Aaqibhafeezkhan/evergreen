@@ -1,0 +1,3 @@
+NAME="Ubuntu"
+ID=ubuntu
+PRETTY_NAME="Ubuntu"

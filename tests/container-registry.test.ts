@@ -9,18 +9,22 @@ async function rules() {
   return validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8"))).rules;
 }
 
-test("container registry has twenty-five valid rules with vendor sources", async () => {
+test("container registry has twenty-five image rules and seven host OS rules with vendor sources", async () => {
   const all = await rules();
-  assert.equal(all.length, 25);
+  const images = all.filter((rule) => rule.purl.startsWith("pkg:docker/library/"));
+  const hosts = all.filter((rule) => rule.purl.startsWith("pkg:generic/"));
+  assert.equal(images.length, 25);
+  assert.equal(hosts.length, 7);
+  assert.equal(all.length, images.length + hosts.length);
   for (const rule of all) {
-    assert.match(rule.purl, /^pkg:docker\/library\//);
     assert.ok(rule.sources.every((source) => source.url.startsWith("https://")));
     assert.ok(!rule.sources.some((source) => /endoflife\.date/.test(source.url)), `${rule.id} cites an aggregator`);
   }
+  for (const rule of hosts) assert.equal(rule.ecosystem, "container");
 });
 
 test("release lines fall on the right side of each range", async () => {
-  const byPurl = new Map((await rules()).filter((rule) => rule.event !== "scheduled-end-of-life").map((rule) => [rule.purl.split("/").pop(), rule.vers]));
+  const byPurl = new Map((await rules()).filter((rule) => rule.event !== "scheduled-end-of-life" && rule.purl.startsWith("pkg:docker/library/")).map((rule) => [rule.purl.split("/").pop(), rule.vers]));
   const cases: Array<[string, string, boolean]> = [
     ["node", "18.0.0", true],
     ["node", "20.0.0", true],

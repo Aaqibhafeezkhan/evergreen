@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/arminazimi/evergreen/schemas/inventory.v1.schema.json",
   "title": "Evergreen inventory v1",
-  "description": "The lifecycle verdicts for the resources an export file names, each with the JSON Pointer to the value the claim rests on.",
+  "description": "The lifecycle of what an export file says is deployed, with the exact place in the file each claim rests on.",
   "type": "object",
   "required": ["schemaVersion", "results", "unrecognized"],
   "additionalProperties": false,
@@ -24,13 +24,13 @@
               "file": { "type": "string", "minLength": 1 },
               "pointer": {
                 "type": "string",
-                "pattern": "^(?:/|line:[1-9][0-9]*$)",
-                "description": "RFC 6901 JSON Pointer to the version value; for a text export, line:<n>."
+                "pattern": "^(?:/(?:[^~/]|~[01])*)+$|^line:[1-9][0-9]*$",
+                "description": "RFC 6901 JSON Pointer to the version value, or line:<n> for a text export."
               },
               "resource": {
                 "type": "string",
                 "minLength": 1,
-                "description": "The resource's own name. Never an account id, ARN, or secret."
+                "description": "The resource's own name. Never an account id, ARN, secret, or address."
               },
               "purl": { "type": "string", "pattern": "^pkg:" },
               "version": { "type": "string", "minLength": 1 }
@@ -42,8 +42,7 @@
     },
     "unrecognized": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
-      "description": "Files no importer recognized, as given."
+      "items": { "type": "string", "minLength": 1 }
     }
   }
 }

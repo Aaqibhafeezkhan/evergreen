@@ -5,7 +5,7 @@ import { test } from "node:test";
 
 import { awsRdsImporter } from "../src/inventory/aws-rds.js";
 import { runInventory } from "../src/inventory/index.js";
-import { redactInventoryReport } from "../src/inventory/command.js";
+import { redactReport } from "../src/inventory/command.js";
 import type { InventoryItem, InventoryReport } from "../src/inventory/types.js";
 
 const fixtures = resolve("tests/fixtures/inventory/aws-rds");
@@ -150,7 +150,7 @@ test("the report never contains account ids, ARNs, endpoints, or network identif
 
 test("--redact removes the fixture's resource names from the report", async () => {
   const report = await runInventory(files);
-  const redacted = redactInventoryReport(report);
+  const redacted = redactReport(report);
   const json = JSON.stringify(redacted);
   for (const resource of ["prod-orders-pg12", "prod-billing-mysql80", "sessions-redis6", "prod-analytics-aurora-pg13"]) {
     assert.ok(!json.includes(resource), `the redacted report contains ${resource}`);

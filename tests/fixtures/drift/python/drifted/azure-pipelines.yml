@@ -1,0 +1,10 @@
+resources:
+  containers:
+    - container: python39
+      image: python:3.9
+
+jobs:
+  - job: test
+    container: python:3.10
+    steps:
+      - script: echo test

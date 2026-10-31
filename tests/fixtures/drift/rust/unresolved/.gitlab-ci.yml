@@ -1,0 +1,4 @@
+build:
+  image: rust:1
+  script:
+    - cargo build

@@ -173,7 +173,7 @@ test("the text report names every pin and the drift", async () => {
   assert.equal(outcome.code, 0);
   assert.match(outcome.stdout, /\.java-version:1/);
   assert.match(outcome.stdout, /pom\.xml:5/);
-  assert.match(outcome.stdout, /DRIFT 17, 21/);
+  assert.match(outcome.stdout, /releases: 17, 21[\s\S]*DRIFT/);
 });
 
 test("--json validates against schemas/drift.v1.schema.json", async () => {
@@ -217,9 +217,9 @@ test("--align refuses expressions and floating values and never writes a file", 
   const aligned = await runCli(["drift", ".", "--runtime", "java", "--align", "21"], repo);
   assert.equal(aligned.code, 0);
   assert.equal(aligned.stdout, "");
-  assert.match(aligned.stderr, /refused pom\.xml:5/);
-  assert.match(aligned.stderr, /refused Dockerfile:1/);
-  assert.match(aligned.stderr, /refused build\.gradle:2/);
+  assert.match(aligned.stderr, /Refused pom\.xml:5/);
+  assert.match(aligned.stderr, /Refused Dockerfile:1/);
+  assert.match(aligned.stderr, /Refused build\.gradle:2/);
 });
 
 test("bad flags exit 2", async () => {

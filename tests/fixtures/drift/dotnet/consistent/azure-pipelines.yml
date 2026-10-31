@@ -1,0 +1,5 @@
+trigger:
+  - main
+container: mcr.microsoft.com/dotnet/sdk:8.0
+steps:
+  - script: dotnet build

@@ -14,7 +14,7 @@ const severities = "info low medium high critical none";
 export const COMMANDS: CommandSpec[] = [
   { name: "scan", flags: ["--demo", "--json", "--format", "--baseline", "--baseline-warn-days", "--on-expired", "--today", "--write-status", "--interactive", "--fail-on", "--all", "--by-owner", "--data-version", "--only", "--exclude"], example: "evergreen scan . --fail-on high" },
   { name: "baseline", flags: ["--output", "--data-version"], example: "evergreen baseline . --output evergreen-baseline.json" },
-  { name: "forecast", flags: ["--months", "--as-of", "--today", "--timeline", "--json", "--data-version"], example: "evergreen forecast . --months 6" },
+  { name: "forecast", flags: ["--months", "--as-of", "--today", "--svg", "--animate", "--timeline", "--json", "--format", "--data-version"], example: "evergreen forecast . --months 6" },
   { name: "plan", flags: ["--json", "--wave", "--data-version"], example: "evergreen plan . --json" },
   { name: "status-card", flags: ["--name"], example: "evergreen status-card . --name acme/widgets" },
   { name: "lookup", flags: ["--json"], example: "evergreen lookup node 18" },
@@ -47,7 +47,7 @@ export const COMMANDS: CommandSpec[] = [
 ];
 
 const globalFlags = ["--help", "--version"];
-const formats = "text json sarif rdjson compact html";
+const formats = "text json sarif rdjson compact html mermaid";
 
 const bash = (): string => {
   const cases = COMMANDS.map(({ name, flags }) => `    ${name}) opts="${flags.join(" ")}" ;;`).join("\n");
@@ -122,6 +122,7 @@ const fish = (): string => {
     `complete -c evergreen -n '__fish_seen_subcommand_from watch' -a 'add remove run list'`,
     `complete -c evergreen -n '__fish_seen_subcommand_from scan check' -l fail-on -x -a '${severities}'`,
     `complete -c evergreen -n '__fish_seen_subcommand_from scan' -l format -x -a '${formats}'`,
+    `complete -c evergreen -n '__fish_seen_subcommand_from forecast' -l format -x -a '${formats}'`,
     `complete -c evergreen -n '__fish_seen_subcommand_from scan' -l on-expired -x -a 'resurface fail'`,
     ...COMMANDS.flatMap(({ name, flags }) =>
       flags

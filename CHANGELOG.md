@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a Terraform codemod for interpolation-only strings and the `list()` and `map()` functions removed in Terraform 0.15: two registry rules with upgrade-guide sources, exact detection that skips heredocs, type constraints, and strings with literal text, and patches that refuse multiline calls, invalid argument counts, expression map keys, block labels, and generated or `.terraform/` files. (#1835)
+- Add `--format mermaid` to `scan` and `forecast` for a fenced Gantt chart of support windows that GitHub renders in READMEs, issues, and pull request comments. (#1856)
 - Add `evergreen upgrade-check --to <runtime@version>` and the `check_upgrade` MCP tool, which answer from lockfiles and manifests whether a project can move to a target runtime. (#1865)
 - Add the Composer analyzer to `upgrade-check`: it reads `require.php` constraints in `composer.lock` and `composer.json` and reports blockers, dev warnings, and unknowns with exact evidence and line numbers. (#1865)
 - Add `evergreen inventory <file>...`, which reports the lifecycle of what the cloud and cluster tools' exports say is deployed, reading only the files given and never calling a provider API. The first importer reads `kubectl get deploy,sts,ds,cronjob,job,pod -A -o json` output and reports end-of-life images and removed API versions at the exact pointer each claim rests on. (#1871)
@@ -10,6 +12,8 @@
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
 - Add a codemod that rewrites the removed `imp.reload`, `imp.new_module`, `imp.get_magic`, `imp.get_tag`, `imp.cache_from_source`, and `imp.source_from_cache` to their `importlib`, `types`, and `sys` equivalents, and drops `import imp` when no use remains. (#1830)
+- Add `evergreen forecast --svg`, with `--animate` to grow a bar from today to each event in date order and pulse the today marker twice, for a README or a slide. (#1853)
+- Add a findings treemap to the `--format html` report: directories and files are sized by severity-weighted finding count, colored by the highest severity, and link to that file's findings. (#1851)
 - Add a codemod that rewrites the Node.js `Buffer` constructor to `Buffer.from` and `Buffer.alloc`, and `SlowBuffer` to `Buffer.allocUnsafeSlow`, refusing arguments whose kind is not visible. (#1828)
 
 ## 0.7.1 - 2026-10-27

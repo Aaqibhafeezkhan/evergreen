@@ -603,8 +603,10 @@ Every lifecycle claim Evergreen makes comes from a reviewed rule with an authori
 - [Amazon EKS 1.31 is past end of standard support](terraform.eks.end-of-support-1.31.html) — end of support, `terraform.eks.end-of-support-1.31`
 - [Amazon EKS 1.32 is past end of standard support](terraform.eks.end-of-support-1.32.html) — end of support, `terraform.eks.end-of-support-1.32`
 - [Amazon EKS 1.33 is past end of standard support](terraform.eks.end-of-support-1.33.html) — end of support, `terraform.eks.end-of-support-1.33`
+- [The list() and map() functions were removed in Terraform 0.15](terraform.function.list-map.html) — removed, `terraform.function.list-map`
 - [GKE 1.29 and earlier are no longer supported](terraform.gke.end-of-life-1.29-and-older.html) — end of life, `terraform.gke.end-of-life-1.29-and-older`
 - [GKE 1.30 is past end of extended support](terraform.gke.end-of-life-1.30.html) — end of life, `terraform.gke.end-of-life-1.30`
 - [GKE 1.31 is past end of extended support](terraform.gke.end-of-life-1.31.html) — end of life, `terraform.gke.end-of-life-1.31`
 - [GKE 1.32 is past end of standard support](terraform.gke.end-of-support-1.32.html) — end of support, `terraform.gke.end-of-support-1.32`
 - [GKE 1.33 is past end of standard support](terraform.gke.end-of-support-1.33.html) — end of support, `terraform.gke.end-of-support-1.33`
+- [Interpolation-only strings are deprecated](terraform.syntax.interpolation-only.html) — deprecated, `terraform.syntax.interpolation-only`

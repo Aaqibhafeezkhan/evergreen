@@ -44,6 +44,7 @@ import { findRepositories, renderMultiScanText, scanProjects, scanRepository, ap
 import { renderStatusCard } from "./status-card.js";
 import { lookupProduct, renderLookupText } from "./lookup.js";
 import { upgradeCheck } from "./upgrade/command.js";
+import { inventoryCommand, InventoryUsageError } from "./inventory/command.js";
 import { scanDemo } from "./demo.js";
 import { createMigrationPacket } from "./migration-packet.js";
 import { readPinnedRuntimes } from "./runtime-pin.js";
@@ -56,7 +57,7 @@ import { buildRenovatePreset } from "./renovate-preset.js";
 import { buildDependabotConfig } from "./dependabot-config.js";
 import { diagnoseEnvironment, renderDoctorText } from "./doctor.js";
 import { createIssueReport, ReportIssueError } from "./report-issue.js";
-import { renderCheckText, renderCodeQuality, renderCompact, renderFindingText, renderHtml, renderJson, renderJunit, renderMarkdown, renderMigrationPacketText, renderRdjson, renderSarif, renderSlack, renderTeams, renderText, renderWebhook } from "./reporters.js";
+import { renderCheckText, renderCodeQuality, renderCompact, renderFindingText, renderForecastMermaid, renderHtml, renderJson, renderJunit, renderMarkdown, renderMigrationPacketText, renderRdjson, renderSarif, renderScanMermaid, renderSlack, renderTeams, renderText, renderWebhook } from "./reporters.js";
 import { STATUS_FILE_NAME, writeStatusFile } from "./status-file.js";
 import { browseFindings, canBrowse } from "./tui.js";
 import { VERSION } from "./version.js";
@@ -79,8 +80,8 @@ import { applyIgnore, ConfigError, loadConfig } from "./config.js";
 const HELP = `Evergreen — local-first deprecation intelligence
 
 Usage:
-  evergreen scan [path] [--no-cache] [--json | --format <text|json|markdown|junit|sarif|rdjson|codequality|compact|html|slack|teams|webhook>]
-  evergreen scan --demo [--json | --format <text|json|markdown|junit|sarif|rdjson|codequality|compact|html|slack|teams|webhook>]   # scan an in-memory demo project that always has findings
+  evergreen scan [path] [--no-cache] [--json | --format <text|json|markdown|junit|sarif|rdjson|codequality|compact|html|slack|teams|webhook|mermaid>]
+  evergreen scan --demo [--json | --format <text|json|markdown|junit|sarif|rdjson|codequality|compact|html|slack|teams|webhook|mermaid>]   # scan an in-memory demo project that always has findings
   evergreen scan [path] --baseline <file> [--baseline <file>...] [--baseline-warn-days <n>] [--on-expired resurface|fail] [--today <YYYY-MM-DD>] [--json]
   evergreen scan [path] --as-of <YYYY-MM-DD> [--json]   # scan as the world will look on a date; --today is an alias
   evergreen scan [path] --min-support-days <n>   # warn on lines whose support ends within n days
@@ -92,11 +93,12 @@ Usage:
   evergreen scan [path] --exclude <ecosystem|rule-prefix>   # drop matching findings; repeatable
   evergreen scan [path] --no-cache   # bypass the scan cache and re-scan all files fresh
   evergreen scan <path> <path>... [--all <dir>] [--json]   # several projects, per-project and combined counts
-  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json]   # what reaches end of life next, by month
+  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]   # what reaches end of life next, by month
   evergreen plan [path] [--json] [--wave <n>]   # migration waves from a scan; --wave prints one zero-based wave
   evergreen status-card [path] [--name <label>]   # print a static SVG summary of findings, next end of life, and data age
   evergreen lookup <product> [version] [--json]   # support status, end-of-life date, and evidence for a product
-  evergreen upgrade-check --to <runtime@version> [path] [--json]   # whether the project can move to a target runtime, from files already in the repository
+  evergreen upgrade-check --to <runtime@version> [path] [--json]   # dependencies whose declared support excludes the target runtime
+  evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]   # lifecycle of what an export says is deployed
   evergreen badge [path] --snippet <markdown|html|rst> [--repo <owner/name>] [--branch <name>]   # print README markup for the published badge
   evergreen badge [path] --shields   # print shields.io endpoint JSON for the current scan
   evergreen diff <base>..<head> [path] [--json]   # findings a change introduced or fixed; exit 1 only when it introduced some
@@ -786,7 +788,7 @@ async function main(rawArgs: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "sbom" && command !== "export" && command !== "scan" && command !== "check" && command !== "guard" && command !== "data" && command !== "new-detector" && command !== "new-rule" && command !== "rules" && command !== "init" && command !== "setup" && command !== "usage" && command !== "mcp" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "forecast" && command !== "plan" && command !== "diff" && command !== "rollup" && command !== "renovate-preset" && command !== "dependabot-config" && command !== "fix" && command !== "doctor" && command !== "report-issue" && command !== "capabilities" && command !== "watch" && command !== "completions" && command !== "status-card" && command !== "lookup" && command !== "badge" && command !== "receipt" && command !== "upgrade-check") {
+  if (command !== "sbom" && command !== "export" && command !== "scan" && command !== "check" && command !== "guard" && command !== "data" && command !== "new-detector" && command !== "new-rule" && command !== "rules" && command !== "init" && command !== "setup" && command !== "usage" && command !== "mcp" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "forecast" && command !== "plan" && command !== "diff" && command !== "rollup" && command !== "renovate-preset" && command !== "dependabot-config" && command !== "fix" && command !== "doctor" && command !== "report-issue" && command !== "capabilities" && command !== "watch" && command !== "completions" && command !== "status-card" && command !== "lookup" && command !== "inventory" && command !== "badge" && command !== "receipt" && command !== "upgrade-check") {
     return fail("usage", `Unknown command: ${command ?? ""}`, `\n${HELP}`);
   }
 
@@ -810,6 +812,14 @@ async function main(rawArgs: string[]): Promise<number> {
   if (command === "badge") return badge(args.slice(1));
   if (command === "lookup") return lookup(args.slice(1));
   if (command === "upgrade-check") return upgradeCheck(args.slice(1));
+  if (command === "inventory") {
+    try {
+      return await inventoryCommand(args.slice(1));
+    } catch (error) {
+      if (error instanceof InventoryUsageError) return fail("usage", error.message);
+      throw error;
+    }
+  }
 
   const optionValue = (name: string): string | undefined => {
     const index = args.indexOf(name);
@@ -956,8 +966,8 @@ async function main(rawArgs: string[]): Promise<number> {
     process.stdout.write(`${JSON.stringify(catalog, null, 2)}\n`);
     return 0;
   }
-  if (formatIndex !== -1 && format !== "text" && format !== "json" && format !== "markdown" && format !== "junit" && format !== "sarif" && format !== "rdjson" && format !== "codequality" && format !== "compact" && format !== "html" && format !== "slack" && format !== "teams" && format !== "webhook") {
-    return fail("usage", `Unknown format: ${format ?? ""} (expected text, json, markdown, junit, sarif, rdjson, codequality, compact, html, slack, teams, or webhook).`);
+  if (formatIndex !== -1 && format !== "text" && format !== "json" && format !== "markdown" && format !== "junit" && format !== "sarif" && format !== "rdjson" && format !== "codequality" && format !== "compact" && format !== "html" && format !== "slack" && format !== "teams" && format !== "webhook" && format !== "mermaid") {
+    return fail("usage", `Unknown format: ${format ?? ""} (expected text, json, markdown, junit, sarif, rdjson, codequality, compact, html, slack, teams, webhook, or mermaid).`);
   }
   if (command === "check" && format !== undefined && format !== "json" && format !== "text") {
     return fail("usage", "check supports --json and --format text|json only.");
@@ -967,6 +977,9 @@ async function main(rawArgs: string[]): Promise<number> {
   }
   if ((format === "markdown" || format === "junit" || format === "sarif" || format === "rdjson" || format === "codequality" || format === "compact" || (format === "html" && command !== "rollup") || format === "slack" || format === "teams" || format === "webhook") && command !== "scan" && command !== "receipt") {
     return fail("usage", `--format ${format} is only available for the scan command.`);
+  }
+  if (format === "mermaid" && command !== "scan" && command !== "forecast") {
+    return fail("usage", "--format mermaid is only available for the scan and forecast commands.");
   }
   if (demo && command !== "scan") {
     return fail("usage", "--demo is only available for the scan command.");
@@ -1175,12 +1188,17 @@ async function main(rawArgs: string[]): Promise<number> {
   if (command === "forecast") {
     const timeline = args.includes("--timeline");
     if (timeline && json) return fail("usage", "Use either --timeline or --json, not both.");
+    if (timeline && format === "mermaid") return fail("usage", "Use either --timeline or --format mermaid, not both.");
     const monthsValue = optionValue("--months");
     const months = monthsValue === undefined ? DEFAULT_FORECAST_MONTHS : Number(monthsValue);
     if (!Number.isInteger(months) || months < 1 || months > MAX_FORECAST_MONTHS) {
       return fail("usage", `--months must be a whole number from 1 to ${MAX_FORECAST_MONTHS}.`);
     }
     const forecast = buildForecast(await scanRepository(pathArgument, builtInDetectors, { noCache }), await bundledRules(), asOfValue ?? new Date().toISOString().slice(0, 10), months);
+    if (format === "mermaid") {
+      process.stdout.write(`${renderForecastMermaid(forecast)}\n`);
+      return 0;
+    }
     if (timeline) {
       const width = Math.min(process.stdout.columns || 80, 100);
       const color = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
@@ -1339,7 +1357,7 @@ async function main(rawArgs: string[]): Promise<number> {
     const forecast = format === "html" && command === "scan"
       ? buildForecast(result, await bundledRules(), asOfValue ?? new Date().toISOString().slice(0, 10))
       : undefined;
-    const output = format === "sarif" ? renderSarif(result) : format === "rdjson" ? renderRdjson(result) : format === "codequality" ? renderCodeQuality(result) : format === "compact" ? renderCompact(result) : format === "html" ? renderHtml(result, { forecast }) : format === "markdown" ? renderMarkdown(result) : format === "junit" ? renderJunit(result) : format === "slack" ? renderSlack(result) : format === "teams" ? renderTeams(result) : format === "webhook" ? renderWebhook(result) : json ? renderJson(result) : renderText(result, { firstRun: command === "scan" && !(await hasPersonalConfig()) });
+    const output = format === "sarif" ? renderSarif(result) : format === "rdjson" ? renderRdjson(result) : format === "codequality" ? renderCodeQuality(result) : format === "compact" ? renderCompact(result) : format === "html" ? renderHtml(result, { forecast }) : format === "markdown" ? renderMarkdown(result) : format === "junit" ? renderJunit(result) : format === "slack" ? renderSlack(result) : format === "teams" ? renderTeams(result) : format === "webhook" ? renderWebhook(result) : format === "mermaid" ? renderScanMermaid(result, asOfValue ?? new Date().toISOString().slice(0, 10)) : json ? renderJson(result) : renderText(result, { firstRun: command === "scan" && !(await hasPersonalConfig()) });
     process.stdout.write(`${output}\n`);
     if (args.includes("--write-status")) {
       const statusRoot = resolve(pathArgument);

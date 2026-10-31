@@ -366,7 +366,7 @@ export function createEvergreenMcpServer(
     {
       title: "Check upgrade",
       description:
-        "Answer from files already in the repository whether a project can move to a target runtime, without running anything or using the network. Pass target as runtime@version, for example python@3.13. Returns evergreen.upgrade.v1: the verdict, the analyzers that applied, and every blocker, warning, and unknown with its path, line, and the exact evidence it read. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
+        "Answer from files already in the repository whether a project can move to a target runtime, without running anything or using the network. Pass target as runtime@version, for example php@8.4. Returns evergreen.upgrade.v1: the verdict, the analyzers that applied, and every blocker, warning, and unknown with its path, line, and the exact constraint it read. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
       inputSchema: z.object({
         path: z
           .string()
@@ -376,7 +376,7 @@ export function createEvergreenMcpServer(
         target: z
           .string()
           .min(1)
-          .describe("Runtime and release to move to, as runtime@version, for example python@3.13 or nodejs@22."),
+          .describe("Runtime and release to move to, as runtime@version, for example php@8.4 or nodejs@22."),
       }),
       outputSchema: outputSchema("check_upgrade"),
       annotations: MCP_TOOL_ANNOTATIONS,
@@ -384,7 +384,7 @@ export function createEvergreenMcpServer(
     async ({ path, target }) => {
       try {
         const parsed = parseUpgradeTarget(target);
-        if (!parsed) return failure(new Error(`target must be <runtime>@<version>, for example python@3.13 (got "${target}").`));
+        if (!parsed) return failure(new Error(`target must be <runtime>@<version>, for example php@8.4 (got "${target}").`));
         return success(await checkUpgrade(resolve(path), parsed));
       } catch (error) {
         return failure(error);

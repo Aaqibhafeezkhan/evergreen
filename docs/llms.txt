@@ -9,6 +9,7 @@ Before adding a dependency, check it: call the `check_dependency` MCP tool or ru
 - [Quickstart](https://arminazimi.github.io/evergreen/QUICKSTART.html): five copy-paste steps from the first local scan to a baseline gate in CI.
 - [90-second demo](https://arminazimi.github.io/evergreen/DEMO.html): scan, explain, build migration context, and verify on a small repository.
 - [Local MCP server](https://arminazimi.github.io/evergreen/MCP.html): the tools, resources, prompt, and output schemas an agent can use, including `check_dependency`.
+- [Upgrade readiness](https://arminazimi.github.io/evergreen/UPGRADE_CHECK.html): whether a repository can move to a target runtime, answered offline from its lockfiles and manifests with exact evidence.
 - [MCP discovery](https://arminazimi.github.io/evergreen/.well-known/mcp.json): stdio server metadata, npm package, and tool list for agents that probe `/.well-known/mcp.json`.
 - [Agent card](https://arminazimi.github.io/evergreen/.well-known/agent.json): A2A agent card describing Evergreen's local MCP skills for agents that probe `/.well-known/agent.json`.
 - [Playbook: agent-driven migrations](https://arminazimi.github.io/evergreen/playbooks/agent.html): let a coding agent migrate one finding while Evergreen supplies the facts and the proof.

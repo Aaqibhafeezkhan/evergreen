@@ -1,0 +1,3 @@
+java {
+    sourceCompatibility = JavaVersion.toVersion(libs.versions.java.get())
+}

@@ -74,7 +74,7 @@ async function rules() {
 
 test("the serverless registry holds the curated AWS and Google Cloud rules, each citing its vendor table", async () => {
   const all = await rules();
-  assert.equal(all.length, 74);
+  assert.equal(all.length, 120);
   const aws = all.filter((rule) => rule.id.startsWith("serverless.aws-lambda."));
   assert.deepEqual(
     aws.map((rule) => rule.id).sort(),

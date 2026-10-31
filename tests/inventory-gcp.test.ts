@@ -195,5 +195,5 @@ test("--format gcp still detects the format, and an unknown importer exits 2", a
   assert.ok((JSON.parse(forced.stdout) as { results: unknown[] }).results.length > 0);
   const bad = await runCli("inventory", file, "--format", "nope");
   assert.equal(bad.code, 2);
-  assert.match(bad.stderr, /Unknown importer "nope"/);
+  assert.match(bad.stderr, /Unknown importer for --format: nope/);
 });

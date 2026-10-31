@@ -1,6 +1,30 @@
 {
   "changes": [
     {
+      "ecosystem": "container",
+      "event": "deprecated",
+      "observedAt": "2026-10-31",
+      "path": "products/generic-dockerfile.json",
+      "productId": "generic-dockerfile",
+      "purl": "pkg:generic/dockerfile",
+      "reviewedAt": "2026-10-31",
+      "ruleId": "container.dockerfile.legacy-env-format",
+      "severity": "low",
+      "title": "The Dockerfile legacy \"ENV key value\" form is deprecated"
+    },
+    {
+      "ecosystem": "container",
+      "event": "deprecated",
+      "observedAt": "2026-10-31",
+      "path": "products/generic-dockerfile.json",
+      "productId": "generic-dockerfile",
+      "purl": "pkg:generic/dockerfile",
+      "reviewedAt": "2026-10-31",
+      "ruleId": "container.dockerfile.maintainer",
+      "severity": "low",
+      "title": "The Dockerfile MAINTAINER instruction is deprecated"
+    },
+    {
       "ecosystem": "terraform",
       "event": "removed",
       "observedAt": "2026-10-31",
@@ -1246,30 +1270,6 @@
       "ruleId": "nodejs.symbol.crypto.hash",
       "severity": "medium",
       "title": "The crypto.Hash constructor is deprecated"
-    },
-    {
-      "ecosystem": "nodejs",
-      "event": "deprecated",
-      "observedAt": "2026-10-21",
-      "path": "products/generic-nodejs.json",
-      "productId": "generic-nodejs",
-      "purl": "pkg:generic/nodejs",
-      "reviewedAt": "2026-10-21",
-      "ruleId": "nodejs.symbol.crypto.hmac",
-      "severity": "medium",
-      "title": "The crypto.Hmac constructor is deprecated"
-    },
-    {
-      "ecosystem": "nodejs",
-      "event": "deprecated",
-      "observedAt": "2026-10-21",
-      "path": "products/generic-nodejs.json",
-      "productId": "generic-nodejs",
-      "purl": "pkg:generic/nodejs",
-      "reviewedAt": "2026-10-21",
-      "ruleId": "nodejs.symbol.crypto.prng",
-      "severity": "low",
-      "title": "Crypto.prng, crypto.pseudoRandomBytes and crypto.rng are deprecated"
     }
   ],
   "schemaVersion": "evergreen.api-recent.v1"

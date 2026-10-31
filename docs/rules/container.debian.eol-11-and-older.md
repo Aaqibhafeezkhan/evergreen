@@ -70,8 +70,8 @@ The [`container`](../detectors/container.md) detector. See [Detectors](../DETECT
 - [ClickHouse image release lines 26.2 and older are end-of-life](container.clickhouse.eol-26.2-and-older.html)
 - [Couchbase Server image release lines 7.2 and older are end-of-life](container.couchbase.eol-7.2-and-older.html)
 - [Apache CouchDB image release lines 3.3 and older are end-of-life](container.couchdb.eol-3.3-and-older.html)
-- [Drupal image release lines 10.5 and older are end-of-life](container.drupal.eol-10.5-and-older.html)
-- [Go image release lines 1.25 and older are end-of-life](container.golang.eol-1.25-and-older.html)
+- [The Dockerfile legacy "ENV key value" form is deprecated](container.dockerfile.legacy-env-format.html)
+- [The Dockerfile MAINTAINER instruction is deprecated](container.dockerfile.maintainer.html)
 
 
 ## Data

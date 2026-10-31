@@ -43,7 +43,6 @@ import { renderVerification, verifyFix } from "./fix/verify.js";
 import { findRepositories, renderMultiScanText, scanProjects, scanRepository, applyScanSelection } from "./engine.js";
 import { renderStatusCard } from "./status-card.js";
 import { lookupProduct, renderLookupText } from "./lookup.js";
-import { inventoryCommand } from "./inventory/command.js";
 import { upgradeCheck } from "./upgrade/command.js";
 import { inventoryCommand, InventoryUsageError } from "./inventory/command.js";
 import { scanDemo } from "./demo.js";
@@ -98,7 +97,6 @@ Usage:
   evergreen plan [path] [--json] [--wave <n>]   # migration waves from a scan; --wave prints one zero-based wave
   evergreen status-card [path] [--name <label>]   # print a static SVG summary of findings, next end of life, and data age
   evergreen lookup <product> [version] [--json]   # support status, end-of-life date, and evidence for a product
-  evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]   # lifecycle of what is deployed, from exported cloud and cluster state
   evergreen inventory <file>... [--format auto|<importer-id>] [--json] [--fail-on <severity|none>] [--redact]   # lifecycle of what a cloud or cluster export names; reads files only
   evergreen upgrade-check --to <runtime@version> [path] [--json]   # dependencies whose declared support excludes the target runtime
   evergreen badge [path] --snippet <markdown|html|rst> [--repo <owner/name>] [--branch <name>]   # print README markup for the published badge
@@ -813,7 +811,6 @@ async function main(rawArgs: string[]): Promise<number> {
   if (command === "status-card") return statusCard(args.slice(1));
   if (command === "badge") return badge(args.slice(1));
   if (command === "lookup") return lookup(args.slice(1));
-  if (command === "inventory") return inventoryCommand(args.slice(1));
   if (command === "upgrade-check") return upgradeCheck(args.slice(1));
   if (command === "inventory") {
     try {

@@ -1,0 +1,15 @@
+### host: web-1
+NAME="Ubuntu"
+ID=ubuntu
+VERSION_ID="20.04"
+PRETTY_NAME="Ubuntu 20.04.6 LTS"
+### host: db-1
+NAME="Debian GNU/Linux"
+ID=debian
+VERSION_ID="11"
+PRETTY_NAME="Debian GNU/Linux 11 (bullseye)"
+### host: edge-1
+NAME="Alpine Linux"
+ID=alpine
+VERSION_ID=3.16.9
+PRETTY_NAME="Alpine Linux v3.16"

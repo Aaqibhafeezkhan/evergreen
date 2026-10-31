@@ -1,0 +1,2 @@
+This note mentions ID= and VERSION_ID= but is not an os-release file.
+Set ID and VERSION_ID when you publish an image.

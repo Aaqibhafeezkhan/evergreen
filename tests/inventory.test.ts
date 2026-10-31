@@ -1,106 +1,157 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { after, test } from "node:test";
+import { test } from "node:test";
+
 import { Ajv2020 } from "ajv/dist/2020.js";
 
-import { redactResource, renderInventoryText } from "../src/inventory/command.js";
+import { checkAgainst } from "../src/check-dependency.js";
+import { redactReport, redactResource, renderInventoryText } from "../src/inventory/command.js";
 import { parseExport, runInventory } from "../src/inventory/index.js";
-import type { InventoryImporter } from "../src/inventory/types.js";
+import type { InventoryImporter, InventoryItem, InventoryReport } from "../src/inventory/types.js";
 
-const temporaryRoots: string[] = [];
-
-after(async () => {
-  await Promise.all(temporaryRoots.map((root) => rm(root, { recursive: true, force: true })));
-});
-
-async function workspace(files: Record<string, string>): Promise<string> {
-  const root = await mkdtemp(join(tmpdir(), "evergreen-inventory-"));
-  temporaryRoots.push(root);
-  for (const [name, contents] of Object.entries(files)) await writeFile(join(root, name), contents);
-  return root;
+function fakeImporter(): InventoryImporter {
+  return {
+    id: "fake",
+    registries: [],
+    detect(document) {
+      return typeof document === "object" && document !== null && !Array.isArray(document) && (document as { format?: unknown }).format === "fake";
+    },
+    items(document, file) {
+      const entries = (document as { entries?: unknown }).entries;
+      if (!Array.isArray(entries)) return [];
+      const items: InventoryItem[] = [];
+      entries.forEach((entry, index) => {
+        if (typeof entry !== "object" || entry === null) return;
+        const { name, version } = entry as { name?: unknown; version?: unknown };
+        if (typeof name !== "string" || typeof version !== "string") return;
+        items.push({ importer: "fake", file, pointer: `/entries/${index}/version`, resource: name, purl: `pkg:npm/${name}`, version });
+      });
+      return items;
+    },
+  };
 }
 
-const fake: InventoryImporter = {
-  id: "fake",
-  registries: [],
-  detect: (document) =>
-    typeof document === "object" && document !== null && !Array.isArray(document) &&
-    Array.isArray((document as { items?: unknown }).items),
-  items: (document, file) =>
-    ((document as { items: string[] }).items).map((name, index) => ({
-      importer: "fake",
-      file,
-      pointer: `/items/${index}`,
-      resource: name,
-      purl: `pkg:generic/${name}`,
-    })),
-};
+async function temporaryFiles(files: Record<string, unknown>): Promise<{ directory: string; paths: string[] }> {
+  const directory = await mkdtemp(join(tmpdir(), "evergreen-inventory-"));
+  const paths: string[] = [];
+  for (const [name, value] of Object.entries(files)) {
+    const path = join(directory, name);
+    await writeFile(path, typeof value === "string" ? value : JSON.stringify(value));
+    paths.push(path);
+  }
+  return { directory, paths };
+}
 
-test("runInventory picks the first importer that detects a file and lists the rest as unrecognized", async () => {
-  const root = await workspace({
-    "a.json": JSON.stringify({ items: ["beta", "alpha"] }),
-    "b.json": JSON.stringify({ other: true }),
+test("runInventory lets the first importer that recognizes a file list its items", async (t) => {
+  const { directory, paths } = await temporaryFiles({
+    "fake.json": { format: "fake", entries: [{ name: "request", version: "2.88.2" }] },
+    "other.json": { format: "other" },
   });
-  const report = await runInventory([join(root, "a.json"), join(root, "b.json")], [fake]);
+  t.after(() => rm(directory, { recursive: true, force: true }));
+
+  const report = await runInventory(paths, [fakeImporter()]);
 
   assert.equal(report.schemaVersion, "evergreen.inventory.v1");
-  assert.deepEqual(report.results.map((result) => result.item.resource), ["beta", "alpha"]);
-  assert.deepEqual(report.results.map((result) => result.item.pointer), ["/items/0", "/items/1"]);
-  assert.ok(report.results.every((result) => result.check.status === "no-data"));
-  assert.deepEqual(report.unrecognized, [join(root, "b.json")]);
+  assert.equal(report.results.length, 1);
+  assert.equal(report.results[0]!.item.importer, "fake");
+  assert.equal(report.results[0]!.item.resource, "request");
+  assert.equal(report.results[0]!.item.pointer, "/entries/0/version");
+  assert.equal(report.results[0]!.check.status, "no-data");
+  assert.deepEqual(report.unrecognized, [paths[1]]);
 });
 
-test("--format restricts detection to one importer", async () => {
-  const root = await workspace({ "a.json": JSON.stringify({ items: ["alpha"] }) });
-  const file = join(root, "a.json");
-  assert.equal((await runInventory([file], [fake], "fake")).results.length, 1);
-  assert.deepEqual((await runInventory([file], [fake], "other")).unrecognized, [file]);
+test("runInventory with --format reads only the named importer", async (t) => {
+  const { directory, paths } = await temporaryFiles({
+    "fake.json": { format: "fake", entries: [{ name: "request", version: "2.88.2" }] },
+  });
+  t.after(() => rm(directory, { recursive: true, force: true }));
+
+  const known = await runInventory(paths, [fakeImporter()], "fake");
+  assert.equal(known.results.length, 1);
+  assert.deepEqual(known.unrecognized, []);
+
+  const unknown = await runInventory(paths, [fakeImporter()], "other");
+  assert.equal(unknown.results.length, 0);
+  assert.deepEqual(unknown.unrecognized, paths);
 });
 
-test("a non-JSON export stays text, so a text importer can read it", () => {
-  assert.equal(parseExport("NAME=debian\nVERSION_ID=11\n"), "NAME=debian\nVERSION_ID=11\n");
+test("runInventory sorts results by file and pointer", async (t) => {
+  const { directory, paths } = await temporaryFiles({
+    "b.json": { format: "fake", entries: [{ name: "second", version: "1.0.0" }, { name: "first", version: "1.0.0" }] },
+    "a.json": { format: "fake", entries: [{ name: "third", version: "1.0.0" }] },
+  });
+  t.after(() => rm(directory, { recursive: true, force: true }));
+
+  const report = await runInventory([paths[0]!, paths[1]!], [fakeImporter()]);
+
+  assert.deepEqual(
+    report.results.map((result) => `${result.item.file.split("/").pop()}:${result.item.pointer}`),
+    ["a.json:/entries/0/version", "b.json:/entries/0/version", "b.json:/entries/1/version"],
+  );
+});
+
+test("parseExport keeps a non-JSON export as text and parses JSON", () => {
   assert.deepEqual(parseExport('{"a":1}'), { a: 1 });
+  assert.equal(parseExport("name=\"Ubuntu\"\nVERSION_ID=\"22.04\"\n"), "name=\"Ubuntu\"\nVERSION_ID=\"22.04\"\n");
 });
 
-test("text output groups judged results by file, dims no-data, and lists unrecognized files", async () => {
-  const root = await workspace({ "a.json": JSON.stringify({ items: ["alpha"] }), "note.txt": "not an export\n" });
-  const report = await runInventory([join(root, "a.json"), join(root, "note.txt")], [fake]);
+test("--redact replaces a resource with the first 12 hex characters of its SHA-256", () => {
+  const resource = "shop/Deployment/web";
+  const expected = createHash("sha256").update(resource).digest("hex").slice(0, 12);
+  assert.equal(redactResource(resource), expected);
+  assert.match(redactResource(resource), /^[0-9a-f]{12}$/);
+});
+
+test("redactReport changes only resource names", () => {
+  const item: InventoryItem = { importer: "fake", file: "fake.json", pointer: "/entries/0/version", resource: "shop/Deployment/web", purl: "pkg:npm/request", version: "2.88.2" };
+  const report: InventoryReport = {
+    schemaVersion: "evergreen.inventory.v1",
+    results: [{ item, check: checkAgainst([], { purl: item.purl, ...(item.version === undefined ? {} : { version: item.version }) }) }],
+    unrecognized: [],
+  };
+  const redacted = redactReport(report);
+  assert.equal(redacted.results[0]!.item.resource, redactResource(item.resource));
+  assert.equal(redacted.results[0]!.item.file, item.file);
+  assert.equal(redacted.results[0]!.item.pointer, item.pointer);
+  assert.equal(redacted.results[0]!.check.status, "no-data");
+});
+
+test("the text output names the no-data section and does not call no-data safe", () => {
+  const item: InventoryItem = { importer: "fake", file: "fake.json", pointer: "/entries/0/version", resource: "request", purl: "pkg:npm/request", version: "2.88.2" };
+  const report: InventoryReport = {
+    schemaVersion: "evergreen.inventory.v1",
+    results: [{ item, check: checkAgainst([], { purl: item.purl, ...(item.version === undefined ? {} : { version: item.version }) }) }],
+    unrecognized: ["other.json"],
+  };
   const text = renderInventoryText(report, { color: false });
-
-  assert.match(text, new RegExp(join(root, "a.json")));
-  assert.match(text, /no-data \(no lifecycle rule matched\):/);
-  assert.match(text, /Unrecognized files:/);
-  assert.match(text, /note\.txt/);
+  assert.match(text, /No lifecycle data \(not a statement that it is safe\)/);
+  assert.match(text, /request\s+2\.88\.2\s+\/entries\/0\/version/);
+  assert.match(text, /Unrecognized files\n {2}other\.json/);
+  assert.doesNotMatch(text, /\u001b\[/);
 });
 
-test("redactResource replaces a name with 12 hex characters of its SHA-256", () => {
-  const redacted = redactResource("web");
-  assert.match(redacted, /^[0-9a-f]{12}$/);
-  assert.notEqual(redacted, "web");
-  assert.equal(redacted, redactResource("web"));
-  assert.notEqual(redacted, redactResource("cache"));
-});
-
-test("an inventory report matches inventory.v1.schema.json and rejects undeclared properties", async () => {
-  const root = await workspace({ "a.json": JSON.stringify({ items: ["alpha"] }) });
-  const report = await runInventory([join(root, "a.json")], [fake]);
-
-  const read = async (name: string) => JSON.parse(await readFile(resolve(`schemas/${name}`), "utf8")) as object;
+test("a report matches schemas/inventory.v1.schema.json and rejects undeclared properties", async () => {
   const ajv = new Ajv2020({ allErrors: true, strict: false });
-  ajv.addSchema(await read("scan.v1.schema.json"));
-  ajv.addSchema(await read("check.v1.schema.json"));
-  const validate = ajv.compile(await read("inventory.v1.schema.json"));
+  ajv.addSchema(JSON.parse(await readFile(resolve("schemas/scan.v1.schema.json"), "utf8")) as object);
+  ajv.addSchema(JSON.parse(await readFile(resolve("schemas/check.v1.schema.json"), "utf8")) as object);
+  const validate = ajv.compile(JSON.parse(await readFile(resolve("schemas/inventory.v1.schema.json"), "utf8")) as object);
+  const check = checkAgainst([], { purl: "pkg:npm/left-pad", version: "1.3.0" });
+  const report: InventoryReport = {
+    schemaVersion: "evergreen.inventory.v1",
+    results: [{ item: { importer: "fake", file: "fake.json", pointer: "/entries/0/version", resource: "left-pad", purl: "pkg:npm/left-pad", version: "1.3.0" }, check }],
+    unrecognized: ["other.json"],
+  };
 
   assert.equal(validate(report), true, JSON.stringify(validate.errors));
 
-  const mutated = JSON.parse(JSON.stringify(report)) as Record<string, unknown>;
-  mutated.undeclaredInventoryProperty = "disallowed";
-  assert.equal(validate(mutated), false);
-  assert.ok(validate.errors?.some((error) => error.keyword === "additionalProperties"));
+  const undeclared = structuredClone(report) as InventoryReport & { extra?: string };
+  undeclared.extra = "nope";
+  assert.equal(validate(undeclared), false);
 
-  const itemMutated = JSON.parse(JSON.stringify(report)) as { results: Array<{ item: Record<string, unknown> }> };
-  itemMutated.results[0]!.item.undeclaredItemProperty = "disallowed";
-  assert.equal(validate(itemMutated), false);
+  const badPointer = structuredClone(report);
+  badPointer.results[0]!.item.pointer = "entries/0";
+  assert.equal(validate(badPointer), false);
 });

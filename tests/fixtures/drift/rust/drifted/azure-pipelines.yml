@@ -1,0 +1,7 @@
+trigger: none
+
+jobs:
+  - job: build
+    container: rust:1.79.0
+    steps:
+      - script: cargo build

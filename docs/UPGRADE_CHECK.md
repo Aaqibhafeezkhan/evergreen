@@ -124,3 +124,14 @@ evergreen upgrade-check --to dart@3.5 examples/upgrade/dart-sdk
 blocked: dart@3.5 (1 blocker, 0 warnings, 0 unknown)
 pubspec.lock:12  resolved package set  The resolved package set requires Dart >=3.6.0 <4.0.0, which excludes 3.5.0.  [lockfile >=3.6.0 <4.0.0]
 ```
+
+## pnpm lockfile
+
+Runtime: `nodejs`. Applies when `pnpm-lock.yaml` exists with `lockfileVersion` 6.x or 9.x.
+
+- Files read: `pnpm-lock.yaml`. In 6.x, `packages` entries carry `engines`, `dev`, and `devOptional`. In 9.x, `engines` lives under `packages`, while the dev flag is resolved from `importers` and `snapshots`.
+- Fields read: `lockfileVersion`; for each `packages` entry, the key (`<name>@<version>`, with an optional leading `/` and an optional peer suffix) and `engines.node`; in 6.x, `dev` and `devOptional`; in 9.x, the `dependencies`, `optionalDependencies`, and `devDependencies` of every `importers` entry, and the `dependencies` and `optionalDependencies` of every `snapshots` entry.
+- Version syntax: semver ranges in `engines.node`, tested with `semver.satisfies` and `includePrerelease: false`. A bare target major such as `22` is tested as `22.0.0`; the bundled lifecycle data does not list per-minor Node.js releases.
+- Levels: `blocker` for a production dependency whose range excludes the target; `warning` for a dev dependency (`dev: true` or `devOptional: true` in 6.x, or reachable only from a dev dependency in 9.x); `unknown` for an `engines.node` value that is not a valid semver range.
+- Evidence: `engines.node: <range as written>`, at the line of the `engines` key.
+- Deduplication: identical name, version, and range across peer variants keep the first line.

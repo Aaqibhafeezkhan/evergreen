@@ -1,0 +1,7 @@
+[[package]]
+name = "legacy"
+version = "1.0.0"
+description = "A package with an unknown constraint."
+optional = false
+python-versions = "unsupported"
+files = []

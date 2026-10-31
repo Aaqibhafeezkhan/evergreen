@@ -62,14 +62,14 @@ The `python` detector. See [Detectors](../DETECTORS.md) and [Compatibility](../C
 
 ### Same ecosystem
 
-- [agentops-toolkit was renamed and is no longer maintained](python.package.agentops-toolkit.eol.html)
-- [aiohttp-valera-validator was renamed and is no longer maintained](python.package.aiohttp-valera-validator.eol.html)
-- [api-shield is deprecated](python.package.api-shield.deprecated.html)
-- [apisec-code-bolt was renamed](python.package.apisec-code-bolt.deprecated.html)
-- [asyncio-requests is retired](python.package.asyncio-requests.deprecated.html)
-- [BatchNotebook is deprecated](python.package.batchnotebook.deprecated.html)
-- [cmip_ref was renamed and is no longer maintained](python.package.cmip-ref.eol.html)
-- [datacommons is deprecated](python.package.datacommons.deprecated.html)
+- [The aifc module was removed in Python 3.13](python.module.aifc.removed.html)
+- [The asynchat module was removed in Python 3.12](python.module.asynchat.removed.html)
+- [The asyncore module was removed in Python 3.12](python.module.asyncore.removed.html)
+- [The audioop module was removed in Python 3.13](python.module.audioop.removed.html)
+- [The cgi module was removed in Python 3.13](python.module.cgi.removed.html)
+- [The cgitb module was removed in Python 3.13](python.module.cgitb.removed.html)
+- [The chunk module was removed in Python 3.13](python.module.chunk.removed.html)
+- [The crypt module was removed in Python 3.13](python.module.crypt.removed.html)
 
 
 ## Data

@@ -235,7 +235,7 @@ test("every curated container image rule has migration guidance with real verifi
 
 test("every host operating system rule has migration guidance with distribution commands", async () => {
   const registry = validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8")));
-  const hosts = registry.rules.filter((item) => item.purl.startsWith("pkg:generic/"));
+  const hosts = registry.rules.filter((item) => item.purl.startsWith("pkg:generic/") && item.purl !== "pkg:generic/dockerfile");
   assert.equal(hosts.length, 7);
   for (const rule of hosts) {
     assert.ok(rule.migration, rule.id);

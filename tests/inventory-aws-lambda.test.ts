@@ -3,7 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { test } from "node:test";
 
-import { renderInventoryText } from "../src/inventory/command.js";
+import { redactReport, renderInventoryText } from "../src/inventory/command.js";
 import { awsLambdaImporter } from "../src/inventory/aws-lambda.js";
 import { parseExport, runInventory } from "../src/inventory/index.js";
 
@@ -95,7 +95,7 @@ test("no ARN, account id, role, environment variable, or bucket from the export 
 
 test("redaction replaces every resource name in the text output", async () => {
   const report = await runInventory(await lambdaFiles());
-  const text = renderInventoryText(report, { redact: true });
+  const text = renderInventoryText(redactReport(report));
   const names = report.results.map((result) => result.item.resource);
   assert.ok(names.length > 0);
   for (const name of names) assert.ok(!text.includes(name), `redacted output still shows ${name}`);

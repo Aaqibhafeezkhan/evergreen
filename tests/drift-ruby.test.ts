@@ -109,8 +109,8 @@ test("align prints patches that git apply accepts, and a second check passes", a
 test("align reports the lockfile but never patches it", async () => {
   const aligned = run("drift", fixture("drifted"), "--runtime", "ruby", "--align", "3.4");
   assert.equal(aligned.status, 0, aligned.stderr);
-  assert.match(aligned.stderr, /Gemfile\.lock.*regenerate the lockfile/);
-  assert.match(aligned.stderr, /demo\.gemspec.*floors and ranges are not rewritten/);
+  assert.match(aligned.stderr, /Refused Gemfile\.lock:11/);
+  assert.match(aligned.stderr, /Refused demo\.gemspec:3/);
   assert.doesNotMatch(aligned.stdout, /Gemfile\.lock/);
   assert.match(aligned.stdout, /\+\+\+ b\/\.ruby-version/);
 });
@@ -125,8 +125,8 @@ test("--json output conforms to the drift schema", async () => {
 
 test("the text report names the drift and the floor conflict", async () => {
   const text = run("drift", fixture("drifted"), "--runtime", "ruby").stdout;
-  assert.match(text, /DRIFT: pins select 3\.3, 3\.4/);
-  assert.match(text, /FLOOR CONFLICT: demo\.gemspec:3 requires 3\.5/);
+  assert.match(text, /releases: 3\.3, 3\.4[\s\S]*DRIFT/);
+  assert.match(text, /floor conflict: demo\.gemspec:3/);
 });
 
 test("drift code never spawns a process or uses the network", async () => {

@@ -55,6 +55,12 @@
       "tags": ["dependency", "check", "guardrail", "mcp"]
     },
     {
+      "id": "check_upgrade",
+      "name": "Check upgrade",
+      "description": "Answer from repository files whether a project can move to a target runtime, with exact evidence. unknown means no evidence, not safety.",
+      "tags": ["upgrade", "runtime", "readiness", "mcp"]
+    },
+    {
       "id": "forecast_repository",
       "name": "Forecast repository",
       "description": "List dated end-of-life events in the next months that affect findings in this repository.",
@@ -65,12 +71,6 @@
       "name": "Plan migrations",
       "description": "Return a migration plan with waves of independent tasks a coordinating agent can hand out.",
       "tags": ["plan", "migration", "waves", "mcp"]
-    },
-    {
-      "id": "check_upgrade",
-      "name": "Check upgrade",
-      "description": "Answer offline whether a repository can move to a target runtime release, with each blocker's exact file, line, and evidence. An unknown verdict is not a statement that the upgrade is safe.",
-      "tags": ["upgrade", "runtime", "mcp"]
     }
   ]
 }

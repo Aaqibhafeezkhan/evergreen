@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { completable, fromJsonSchema, McpServer, ResourceNotFoundError, ResourceTemplate } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -6,11 +7,10 @@ import * as z from "zod/v4";
 import { EvergreenAgentTools } from "./agent-tools.js";
 import { bundledRules, checkDependency } from "./check-dependency.js";
 import { buildForecast, DEFAULT_FORECAST_MONTHS, MAX_FORECAST_MONTHS } from "./forecast.js";
-import { parseVersion } from "./upgrade/pep440.js";
-import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-prompt.js";
 import { buildPlan } from "./plan-build.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
+import { checkUpgrade, parseUpgradeTarget } from "./upgrade/index.js";
 import { findPackageFileSync } from "./package-files.js";
 import { VERSION } from "./version.js";
 
@@ -21,9 +21,9 @@ export const MCP_TOOL_NAMES = [
   "create_migration_context",
   "verify_migration",
   "check_dependency",
+  "check_upgrade",
   "forecast_repository",
   "plan_migrations",
-  "check_upgrade",
 ] as const;
 
 const repositoryInput = {
@@ -47,9 +47,9 @@ export const MCP_OUTPUT_SCHEMA_FILES = {
   create_migration_context: "context.v1.schema.json",
   verify_migration: "verification.v1.schema.json",
   check_dependency: "check.v1.schema.json",
+  check_upgrade: "upgrade.v1.schema.json",
   forecast_repository: "forecast.v1.schema.json",
   plan_migrations: "plan.v1.schema.json",
-  check_upgrade: "upgrade.v1.schema.json",
 } as const satisfies Record<(typeof MCP_TOOL_NAMES)[number], string>;
 
 type JsonObject = Record<string, unknown>;
@@ -362,6 +362,37 @@ export function createEvergreenMcpServer(
   );
 
   server.registerTool(
+    "check_upgrade",
+    {
+      title: "Check upgrade",
+      description:
+        "Answer from files already in the repository whether a project can move to a target runtime, without running anything or using the network. Pass target as runtime@version, for example php@8.4. Returns evergreen.upgrade.v1: the verdict, the analyzers that applied, and every blocker, warning, and unknown with its path, line, and the exact constraint it read. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
+      inputSchema: z.object({
+        path: z
+          .string()
+          .min(1)
+          .default(".")
+          .describe("Local path to the repository. Defaults to the server working directory."),
+        target: z
+          .string()
+          .min(1)
+          .describe("Runtime and release to move to, as runtime@version, for example php@8.4 or nodejs@22."),
+      }),
+      outputSchema: outputSchema("check_upgrade"),
+      annotations: MCP_TOOL_ANNOTATIONS,
+    },
+    async ({ path, target }) => {
+      try {
+        const parsed = parseUpgradeTarget(target);
+        if (!parsed) return failure(new Error(`target must be <runtime>@<version>, for example php@8.4 (got "${target}").`));
+        return success(await checkUpgrade(resolve(path), parsed));
+      } catch (error) {
+        return failure(error);
+      }
+    },
+  );
+
+  server.registerTool(
     "forecast_repository",
     {
       title: "Forecast repository",
@@ -411,39 +442,6 @@ export function createEvergreenMcpServer(
         const result = await tools.scan(repository_path);
         server.sendResourceListChanged();
         return success(buildPlan(result));
-      } catch (error) {
-        return failure(error);
-      }
-    },
-  );
-
-  server.registerTool(
-    "check_upgrade",
-    {
-      title: "Check upgrade",
-      description:
-        "Answer offline, from lockfiles and manifests already in the repository, whether the project can move to a target runtime release such as python@3.13. Lists each blocker, warning, and unknown issue with its exact file, line, and evidence. An unknown verdict means Evergreen found no evidence for this runtime in this repository; it is not a statement that the upgrade is safe.",
-      inputSchema: z.object({
-        path: z
-          .string()
-          .min(1)
-          .default(".")
-          .describe("Local path to the repository. Defaults to the server working directory."),
-        target: z
-          .string()
-          .min(1)
-          .describe("Runtime and release to move to, as <runtime>@<version>, for example python@3.13."),
-      }),
-      outputSchema: outputSchema("check_upgrade"),
-      annotations: MCP_TOOL_ANNOTATIONS,
-    },
-    async ({ path, target }) => {
-      try {
-        const parsed = parseUpgradeTarget(target);
-        if (!parsed || parseVersion(parsed.version) === undefined) {
-          throw new Error(`Invalid target "${target}". Use <runtime>@<version>, for example python@3.13.`);
-        }
-        return success(await checkUpgrade(path, parsed));
       } catch (error) {
         return failure(error);
       }

@@ -1,0 +1,7 @@
+lockfileVersion: '5.4'
+
+packages:
+
+  /blocked-prod@2.0.0:
+    resolution: {integrity: sha512-blocked}
+    engines: {node: '>=24'}

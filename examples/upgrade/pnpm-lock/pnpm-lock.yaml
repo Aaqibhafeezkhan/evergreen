@@ -1,0 +1,20 @@
+lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    dependencies:
+      sharp:
+        specifier: ^0.30.7
+        version: 0.30.7
+
+packages:
+
+  sharp@0.30.7:
+    resolution: {integrity: sha512-example}
+    engines:
+      node: '>=14.0.0 <17'
+
+snapshots:
+
+  sharp@0.30.7: {}

@@ -452,9 +452,9 @@ test("every tool advertises an outputSchema, and its structured content validate
       ["verify_migration", { finding_id: findingId, repository_path: root }],
       ["check_dependency", { purl: "pkg:npm/request@2.88.2" }],
       ["check_dependency", { purl: "pkg:npm/express" }],
+      ["check_upgrade", { path: root, target: "php@8.4" }],
       ["forecast_repository", { repository_path: root, as_of: "2026-10-29" }],
       ["plan_migrations", { repository_path: root }],
-      ["check_upgrade", { path: root, target: "python@3.13" }],
     ];
     for (const [name, args] of calls) {
       const result = await client.request("tools/call", { name, arguments: args });

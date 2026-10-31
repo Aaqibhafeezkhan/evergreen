@@ -3,10 +3,12 @@
 ## Unreleased
 
 - Add `evergreen drift`: report every runtime version a repository states, with its exact file and line, and exit `1` when they disagree; `--align <release>` prints a patch that never writes a file. The Rust collector reads toolchain channels, `.tool-versions`, Dockerfile and CI images, `dtolnay/rust-toolchain` and `actions-rs/toolchain` inputs, and `rust-version` floors. (#1843)
+- Add `evergreen inventory <file>...`, which reports the lifecycle of what the cloud and cluster tools' exports say is deployed, reading only the files given and never calling a provider API. The first importer reads `kubectl get deploy,sts,ds,cronjob,job,pod -A -o json` output and reports end-of-life images and removed API versions at the exact pointer each claim rests on. (#1871)
 - Make bare `evergreen init` ask what to set up: it detects the repository's CI provider and agent hosts, shows the plan, and with one confirmation (or `--yes` for scripts) writes a GitHub Actions workflow, the pre-push hook, and the Evergreen agent section; GitLab repositories get the component include to add. (`#1266`)
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
+- Add a codemod that rewrites the Node.js `Buffer` constructor to `Buffer.from` and `Buffer.alloc`, and `SlowBuffer` to `Buffer.allocUnsafeSlow`, refusing arguments whose kind is not visible. (#1828)
 
 ## 0.7.1 - 2026-10-27
 

@@ -71,6 +71,7 @@ The `mermaid` format prints a fenced `mermaid` block that GitHub renders nativel
 ### `forecast`
 
 ```bash
+evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json]
 evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]
 ```
 
@@ -80,9 +81,14 @@ Lists what reaches end of life next, grouped by month, from the current scan.
 | --- | --- |
 | `--months <n>` | How many months ahead to look. Whole number from `1` to `36`; default `12`. |
 | `--as-of <YYYY-MM-DD>` | Treat this date as today. |
+| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--svg`. |
+| `--svg` | Print a self-contained SVG timeline for a README or a slide. Cannot be combined with `--timeline` or `--json`. |
+| `--animate` | With `--svg`, grow a bar from today to each event in date order and pulse the today marker twice with CSS. `prefers-reduced-motion: reduce` shows the final frame immediately. |
 | `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--format mermaid`. |
 | `--format mermaid` | Print a fenced Mermaid Gantt chart of the dated events, grouped by ecosystem. |
 | `--json` | Print the forecast document. |
+
+The SVG has no script and no external references, so it is safe to commit and embed as an image. [Showcase](SHOWCASE.md) covers embedding it in a README and refreshing it on a schedule.
 
 ### `status-card`
 
@@ -152,6 +158,22 @@ Scans both refs and reports the findings the change introduced and the ones it f
 | --- | --- |
 | `[path]` | Repository path. Default `.`. |
 | `--json` | Print the structured diff. |
+
+### `drift`
+
+```bash
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
+```
+
+Reports every place a repository states a runtime version, with its exact file and line, the release it resolves to offline, and whether the versions agree. It reads files only: nothing is executed, no network is used, and no file is written. See [Runtime drift](DRIFT.md) for the sources each runtime reads.
+
+| Flag | What it does |
+| --- | --- |
+| `[path]` | Repository path. Default `.`. |
+| `--json` | Print the drift report, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when any runtime's pins disagree or a floor is above the lowest pinned release. |
+| `--runtime <id>` | Limit the report to one runtime, such as `go`. |
+| `--align <release>` | Print a unified diff that makes every understood pin select `<release>`. Requires `--runtime`; values it will not rewrite are listed on stderr. |
 
 ### `rollup`
 

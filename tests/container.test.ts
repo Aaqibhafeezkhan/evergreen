@@ -160,6 +160,40 @@ test("a floating tag that spans supported and unsupported versions is unclassifi
   );
 });
 
+test("reports the deprecated MAINTAINER instruction and the legacy ENV form, including inside ONBUILD", async () => {
+  const root = await repository({
+    Dockerfile: [
+      "FROM node:24",
+      "MAINTAINER Evergreen Team <team@example.com>",
+      "ENV NODE_ENV production",
+      'ENV APP_HOME="/opt/app"',
+      "ENV A=1 B=2",
+      "# MAINTAINER commented out",
+      "ONBUILD ENV LEGACY value",
+      "",
+    ].join("\n"),
+  });
+  const analysis = await containerDetector.analyze({ root });
+  assert.deepEqual(
+    analysis.findings.map((finding) => [finding.ruleId, finding.location.line]),
+    [
+      ["container.dockerfile.maintainer", 2],
+      ["container.dockerfile.legacy-env-format", 3],
+      ["container.dockerfile.legacy-env-format", 7],
+    ],
+  );
+  const maintainer = analysis.findings[0]!;
+  assert.equal(maintainer.severity, "low");
+  assert.ok(maintainer.sources.some((source) => source.url.includes("maintainer-deprecated")));
+  assert.ok(analysis.findings[1]!.sources.some((source) => source.url.includes("legacy-key-value-format")));
+  assert.deepEqual(analysis.unclassified, []);
+});
+
+test("key=value ENV assignments are not reported as legacy syntax", async () => {
+  const root = await repository({ Dockerfile: 'FROM node:24\nENV A=1 B=2\nENV C="d e"\nENV D=\n' });
+  assert.deepEqual((await containerDetector.analyze({ root })).findings, []);
+});
+
 test("only Docker Hub official images are matched, other registries are not", async () => {
   const root = await repository({ Dockerfile: "FROM ghcr.io/acme/node:16\nFROM myorg/node:16\nFROM registry.example.com/node:16\n" });
   assert.deepEqual(await containerDetector.analyze({ root }), { findings: [], unclassified: [] });
@@ -201,7 +235,7 @@ test("every curated container image rule has migration guidance with real verifi
 
 test("every host operating system rule has migration guidance with distribution commands", async () => {
   const registry = validateRegistryV2(JSON.parse(await readFile("registry/container.json", "utf8")));
-  const hosts = registry.rules.filter((item) => item.purl.startsWith("pkg:generic/"));
+  const hosts = registry.rules.filter((item) => item.purl.startsWith("pkg:generic/") && item.purl !== "pkg:generic/dockerfile");
   assert.equal(hosts.length, 7);
   for (const rule of hosts) {
     assert.ok(rule.migration, rule.id);

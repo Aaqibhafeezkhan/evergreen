@@ -419,6 +419,21 @@
       "type": "generic"
     },
     {
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-dockerfile",
+      "latestReview": "2026-10-31",
+      "name": "dockerfile",
+      "path": "products/generic-dockerfile.json",
+      "purl": "pkg:generic/dockerfile",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2018-10-01",
       "ecosystems": [
         "dotnet"
@@ -1549,14 +1564,16 @@
         "terraform"
       ],
       "events": [
-        "end-of-support"
+        "deprecated",
+        "end-of-support",
+        "removed"
       ],
       "id": "generic-terraform",
-      "latestReview": "2026-10-30",
+      "latestReview": "2026-10-31",
       "name": "terraform",
       "path": "products/generic-terraform.json",
       "purl": "pkg:generic/terraform",
-      "rules": 6,
+      "rules": 8,
       "type": "generic"
     },
     {
@@ -1592,7 +1609,7 @@
       "type": "generic"
     }
   ],
-  "rules": 302,
+  "rules": 306,
   "schemaVersion": "evergreen.api-type.v1",
   "type": "generic"
 }

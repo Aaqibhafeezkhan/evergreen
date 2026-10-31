@@ -1,6 +1,54 @@
 {
   "changes": [
     {
+      "ecosystem": "container",
+      "event": "deprecated",
+      "observedAt": "2026-10-31",
+      "path": "products/generic-dockerfile.json",
+      "productId": "generic-dockerfile",
+      "purl": "pkg:generic/dockerfile",
+      "reviewedAt": "2026-10-31",
+      "ruleId": "container.dockerfile.legacy-env-format",
+      "severity": "low",
+      "title": "The Dockerfile legacy \"ENV key value\" form is deprecated"
+    },
+    {
+      "ecosystem": "container",
+      "event": "deprecated",
+      "observedAt": "2026-10-31",
+      "path": "products/generic-dockerfile.json",
+      "productId": "generic-dockerfile",
+      "purl": "pkg:generic/dockerfile",
+      "reviewedAt": "2026-10-31",
+      "ruleId": "container.dockerfile.maintainer",
+      "severity": "low",
+      "title": "The Dockerfile MAINTAINER instruction is deprecated"
+    },
+    {
+      "ecosystem": "terraform",
+      "event": "removed",
+      "observedAt": "2026-10-31",
+      "path": "products/generic-terraform.json",
+      "productId": "generic-terraform",
+      "purl": "pkg:generic/terraform",
+      "reviewedAt": "2026-10-31",
+      "ruleId": "terraform.function.list-map",
+      "severity": "high",
+      "title": "The list() and map() functions were removed in Terraform 0.15"
+    },
+    {
+      "ecosystem": "terraform",
+      "event": "deprecated",
+      "observedAt": "2026-10-31",
+      "path": "products/generic-terraform.json",
+      "productId": "generic-terraform",
+      "purl": "pkg:generic/terraform",
+      "reviewedAt": "2026-10-31",
+      "ruleId": "terraform.syntax.interpolation-only",
+      "severity": "low",
+      "title": "Interpolation-only strings are deprecated"
+    },
+    {
       "deadline": "2026-04-01",
       "ecosystem": "container",
       "event": "end-of-life",
@@ -1229,54 +1277,6 @@
       "ruleId": "nodejs.symbol.child-process.customfds",
       "severity": "high",
       "title": "The customFds option of child_process has been removed"
-    },
-    {
-      "ecosystem": "nodejs",
-      "event": "deprecated",
-      "observedAt": "2026-10-21",
-      "path": "products/generic-nodejs.json",
-      "productId": "generic-nodejs",
-      "purl": "pkg:generic/nodejs",
-      "reviewedAt": "2026-10-21",
-      "ruleId": "nodejs.symbol.crypto.certificate",
-      "severity": "low",
-      "title": "New crypto.Certificate() is deprecated"
-    },
-    {
-      "ecosystem": "nodejs",
-      "event": "removed",
-      "observedAt": "2026-10-21",
-      "path": "products/generic-nodejs.json",
-      "productId": "generic-nodejs",
-      "purl": "pkg:generic/nodejs",
-      "reviewedAt": "2026-10-21",
-      "ruleId": "nodejs.symbol.crypto.createcipher",
-      "severity": "high",
-      "title": "crypto.createCipher and createDecipher have been removed"
-    },
-    {
-      "ecosystem": "nodejs",
-      "event": "removed",
-      "observedAt": "2026-10-21",
-      "path": "products/generic-nodejs.json",
-      "productId": "generic-nodejs",
-      "purl": "pkg:generic/nodejs",
-      "reviewedAt": "2026-10-21",
-      "ruleId": "nodejs.symbol.crypto.createcredentials",
-      "severity": "high",
-      "title": "Crypto.createCredentials has been removed"
-    },
-    {
-      "ecosystem": "nodejs",
-      "event": "removed",
-      "observedAt": "2026-10-21",
-      "path": "products/generic-nodejs.json",
-      "productId": "generic-nodejs",
-      "purl": "pkg:generic/nodejs",
-      "reviewedAt": "2026-10-21",
-      "ruleId": "nodejs.symbol.crypto.credentials",
-      "severity": "high",
-      "title": "Crypto.Credentials has been removed"
     }
   ],
   "schemaVersion": "evergreen.api-recent.v1"

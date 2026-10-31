@@ -1,0 +1,5 @@
+name: manifest-blocked
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+dependencies:
+  http: ^1.2.0

@@ -485,33 +485,92 @@ The versioned JSON contracts live in `schemas/scan.v1.schema.json`, `schemas/dep
 
 Source: https://arminazimi.github.io/evergreen/DRIFT.html
 
-# Drift
+# Runtime drift
 
-`evergreen drift` reads every place a repository states a runtime version and reports, with exact file and line, when those values select different release lines. A repository with Python 3.10 in `.python-version`, 3.11 in its Dockerfile, and 3.12 in CI has drift: tests pass on one version while production runs another.
+`evergreen drift` finds every place a repository states a runtime version — version files, manifests, container images, and CI configuration — and reports, with exact locations, when the values disagree. A Dockerfile on Node.js 18, CI on 20, and `.nvmrc` on 22 is one line of output instead of three files to compare by hand.
 
-Scans read repository files and nothing else. No drift path uses the network, runs a command, or evaluates repository code, and `--align` prints patches instead of writing files.
+Every command in this page reads repository files only. Drift checks never run a runtime, execute a repository's tools, or use the network. `--align` prints a patch and never writes it.
 
 ```bash
-evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
+evergreen drift . --check
+evergreen drift . --runtime ruby --json
+evergreen drift . --runtime ruby --align 3.4
 ```
 
+## How to read the report
+
+Each runtime block lists every value with its `path:line`, the file or field it came from, the value as written, and the release line it resolves to. A value that cannot be resolved offline is reported too, with the reason. When the `pin` values select more than one release, the block says `DRIFT`. A `floor` is a minimum the project supports; when a floor is above the lowest pinned release, the block says `FLOOR CONFLICT`.
+
+`--check` exits `1` when any runtime drifted or has a floor conflict. `--align <release>` requires `--runtime`, prints a unified diff for the pins it can rewrite, lists refused pins on stderr, and never writes a file. It refuses floors and ranges, and each collector documents the files it can rewrite.
+
+## Adding a collector
+
+One collector per runtime lives in `src/drift/<runtime>.ts`, reuses the parsers the detectors already have, and is registered once in `driftCollectors` in `src/drift/index.ts`. Each section below names the sources it reads, its release granularity, what it refuses to resolve, and which file it can align.
+
+## Ruby
+
+Reads, at any depth:
+
+- `.ruby-version`, including the rbenv `ruby-3.3.1` and `3.3.1p123` forms.
+- `.tool-versions` `ruby` lines, including several fallback versions.
+- `Gemfile`: an exact `ruby "3.3.0"` is a pin; a literal requirement such as `ruby ">= 3.1.0"` or `ruby "~> 3.2"` is a floor.
+- `Gemfile.lock` `RUBY VERSION`.
+- `*.gemspec`: a literal `required_ruby_version`, such as `">= 3.1.0"` or `"~> 3.2"`, as a floor.
+- `Dockerfile*` and `Containerfile*`: `FROM ruby:<tag>` and a literal `RUN asdf install ruby <version>`.
+- `.github/workflows/*.yml`: the `ruby-version` input of `ruby/setup-ruby`.
+- `.gitlab-ci.yml` `image:` values and `.circleci/config.yml` `docker:` images for the official `ruby` and `cimg/ruby` images.
+
+Release granularity is `major.minor` (`3.3`).
+
+Unresolved values are reported with the reason and excluded from the drift comparison: `system`, `latest`, an image without a tag, a moving image tag, a `${{ matrix.* }}` expression, and a requirement that states no minimum.
+
+`align <release>` rewrites `.ruby-version`, a single-value `.tool-versions` ruby line, an exact `Gemfile` `ruby` directive, a `ruby/setup-ruby` `ruby-version` input, and the tag of a Dockerfile, GitLab CI, or CircleCI image. It refuses floors, ranges, image digests, and multi-value lines. `Gemfile.lock` is reported and refused with "regenerate the lockfile": Bundler owns that file.
+`evergreen drift` finds every place a repository states a runtime version and reports, per runtime, whether those values agree. A repository that runs Node 18 in its Dockerfile, Node 20 in CI, and Node 22 in `.nvmrc` has a drift, even when every test passes on the version the developer uses. The command reads repository files only: scans never use the network and never execute repository code.
+evergreen drift .                    # text report
+evergreen drift . --json             # https://github.com/arminazimi/evergreen/schemas/drift.v1.schema.json
+evergreen drift . --check            # exit 1 when a runtime drifts or has a floor conflict
+evergreen drift . --runtime java --align 21   # print a patch; never write it
+`--json` prints an `evergreen.drift.v1` document. Every pin carries its repository-relative path, the 1-based line of the value, the source it came from, the value exactly as written, and the release it resolves to offline. A value that cannot be resolved offline keeps its place in the report with an `unresolved` reason instead of a guessed release.
+`--align <release>` prints a unified diff for the pins of one runtime that can be rewritten safely, and lists the refused pins on stderr. Evergreen never writes the patch.
+## Java
+Java releases are compared at the feature-release major: `17`, `21`, `25`. A legacy `1.8` resolves to `8`; a vendor prefix (`temurin-`) or suffix (`-tem`) is ignored. The vendor never changes support status.
+| File | Fields read |
+| --- | --- |
+| `pom.xml` | `maven.compiler.release`, `maven.compiler.source`, `maven.compiler.target`, and `java.version` properties; `release`, `source`, and `target` in `maven-compiler-plugin` configuration, including `pluginManagement`. |
+| `build.gradle`, `build.gradle.kts` | `java.toolchain.languageVersion` (`.set(...)` or `=`), `jvmToolchain(N)`, `sourceCompatibility`, and `targetCompatibility`, as literal values only. |
+| `.java-version` | The first non-comment line. |
+| `.sdkmanrc` | The `java=` entry. |
+| `.tool-versions` | The first version of the `java` entry. |
+| `Dockerfile`, `*.Dockerfile`, `Containerfile*` | `FROM` images of the `eclipse-temurin`, `openjdk`, and `amazoncorretto` families; `maven` and `gradle` tags that name a JDK, such as `3.9-eclipse-temurin-17` or `8.10-jdk21`; and `sdk install java` or `asdf install java` `RUN` lines. |
+| `.github/workflows/*.yml` | The `java-version` input of `actions/setup-java`. A `${{ matrix.<key> }}` value is followed to the matrix list in the same job. |
+| `.gitlab-ci.yml`, `.circleci/config.yml` | `image` references of the same JDK and build-image families. |
+Every one of these is a `pin`: the JDK that builds or runs the project. There is no Java floor source in this collector.
+Reported as unresolved, never guessed:
+- a Maven property reference such as `${java.version}`;
+- a Gradle expression such as `JavaVersion.toVersion(libs.versions.java.get())`;
+- a matrix or other workflow expression that does not resolve to a literal;
+- `latest`, `lts`, `system`, or another floating version-file value;
+- an image with no tag, a floating tag, or an image reference containing a variable.
+`--align` rewrites only values it can select a release with:
+- Maven compiler properties and `maven-compiler-plugin` settings whose text is a literal version;
+- `.java-version`, `.sdkmanrc`, and `.tool-versions` entries with a literal version;
+- an image tag that is a plain major, such as `eclipse-temurin:17`, or the JDK segment of a Maven or Gradle tag, such as `3.9-eclipse-temurin-17`;
+- a single scalar `java-version` in `actions/setup-java`.
+It refuses Gradle toolchain and compatibility settings, `Dockerfile RUN` installs, property references, floating tags, matrix values, and image tags with a digest or a non-major suffix.
+# Drift
+`evergreen drift` reads every place a repository states a runtime version and reports, with exact file and line, when those values select different release lines. A repository with Python 3.10 in `.python-version`, 3.11 in its Dockerfile, and 3.12 in CI has drift: tests pass on one version while production runs another.
+Scans read repository files and nothing else. No drift path uses the network, runs a command, or evaluates repository code, and `--align` prints patches instead of writing files.
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
 - `--check` exits `1` when any runtime has drifted or has a floor conflict.
 - `--json` prints the `evergreen.drift.v1` document described by [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json).
 - `--runtime <id>` limits the report to one runtime.
 - `--align <release>` requires `--runtime`, and prints a unified diff that rewrites the pins it understands to `release`. It lists pins it refuses on stderr.
-
 Each runtime is reported as its own block. Every pin carries its location, the source it came from, the value as written, and the release line the value selects offline. A value that cannot be resolved carries the reason instead of a guess. A `floor` is a minimum the project supports, not the version that builds it; a floor above the lowest pin is reported as a floor conflict.
-
 Release granularity differs by runtime. Each section below states the granularity it reports and the values it leaves unresolved.
-
 ## .NET
-
 .NET pins are reported at `major.minor` granularity: the SDK `8.0.204`, the image tag `8.0-alpine`, and the moniker `net8.0` all select `8.0`.
-
 `netstandard*` and `netcoreapp` below 5 resolve to their own names (`netstandard2.0`, `netcoreapp3.1`) and are not compared with `netX.Y` releases. .NET Framework monikers such as `net48` are reported as unresolved.
-
 **Pins**
-
 | Source | Field | Align |
 | --- | --- | --- |
 | `global.json` | `sdk.version`, wherever the file appears | yes, keeping `rollForward` |
@@ -522,21 +581,13 @@ Release granularity differs by runtime. Each section below states the granularit
 | `.gitlab-ci.yml` | `image` and service values that name a Microsoft .NET image | no |
 | `.circleci/config.yml` | job and executor `docker`/`machine` image values that name a Microsoft .NET image | no |
 | `azure-pipelines.yml` | `container` and `resources.containers[].image` values that name a Microsoft .NET image | no |
-
 A Microsoft .NET image is `mcr.microsoft.com/dotnet/sdk`, `aspnet`, `runtime`, or `runtime-deps`, or the legacy `dotnet/core/*` equivalents. Image tags keep their suffix: `8.0-alpine` selects `8.0`.
-
 **Multi-targeting**
-
 `<TargetFrameworks>` with several entries is intentional multi-targeting. Each entry is reported as a pin with source `TargetFrameworks`, the entries share one group, and they are not counted against each other. A source outside the list still counts: `TargetFrameworks` of `net6.0;net8.0` agrees with a Dockerfile that selects `8.0`, but drifts when the Dockerfile selects `9.0`. `--align` refuses the multi-targeting form.
-
 **Unresolved**
-
 A .NET Framework moniker, an MSBuild property reference such as `$(Tfm)`, a version with no minor (`8`, `latest`), a dynamic image reference, an expression, an image with no tag, and any value Evergreen does not read are reported as pins with a one-sentence reason and no release. A value is never guessed from a newer version existing.
-
 **Align**
-
 `--align` rewrites `global.json` `sdk.version` (keeping `rollForward`), a single `TargetFramework`, `FROM` tags that preserve the image suffix, and a single-value `setup-dotnet` `dotnet-version`. It refuses `TargetFrameworks`, MSBuild property references, .NET Framework monikers, CI image references, and any line whose form it does not recognize.
-# Runtime drift
 `evergreen drift` reports every place a repository states a runtime version: Dockerfiles, CI configuration, version files, manifests, and toolchain files. Each value is listed with its exact file, line, source, and the release line it resolves to offline. When the values disagree, the runtime is marked `DRIFT`; when a minimum the project requires is above the version that builds it, the value is listed as a floor conflict.
 evergreen drift .              # what the repository states, by runtime
 evergreen drift . --check      # exit 1 when any runtime disagrees
@@ -592,7 +643,6 @@ Python pins are reported at `major.minor` granularity: `3.11.4`, `3.11`, and `py
 A Python image is `python`, `cimg/python`, or `circleci/python` on Docker Hub. A multi-version `.python-version` or `.tool-versions` line reports one pin per version.
 **Floors**
 | Source | Field |
-| --- | --- |
 | `pyproject.toml` | `[project]` `requires-python` |
 | `pyproject.toml` | `[tool.poetry.dependencies]` `python` |
 | `setup.cfg` | `[options]` `python_requires`, including continuation lines |

@@ -68,6 +68,24 @@ The baseline, date, and ignore options also apply to `explain`, `context`, and `
 
 The `mermaid` format prints a fenced `mermaid` block that GitHub renders natively. Each section is an ecosystem and each bar runs from the observation day (`--as-of`, or today) to the deadline. A subject that has already ended is a `crit` milestone at its deadline; one that ends within 30 days is a `crit` bar. A `today` milestone follows `--as-of`. The chart draws at most 40 bars; a final line counts the rest, and `--format json` still lists every finding. [Showcase](SHOWCASE.md#mermaid-support-windows) has a complete example.
 
+### `drift`
+
+```bash
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
+```
+
+Reports every runtime version a repository states, at its exact `path:line`, and whether the values agree. It reads repository files only: no runtime is executed and no network is used. `--align` prints a unified diff; nothing is written.
+
+| Flag | What it does |
+| --- | --- |
+| `[path]` | Repository root. Default `.`. |
+| `--json` | Print the drift document, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when a runtime's pins disagree or a floor is above the lowest pinned release. |
+| `--runtime <id>` | Read one runtime only, such as `ruby`. |
+| `--align <release>` | Print a patch that makes the alignable pins select `release`, such as `3.4`. Requires `--runtime`, refuses floors and ranges, and never writes a file. |
+
+[Drift](DRIFT.md) lists the sources each runtime collector reads, its release granularity, and what it reports as unresolved.
+
 ### `forecast`
 
 ```bash
@@ -172,11 +190,16 @@ Scans both refs and reports the findings the change introduced and the ones it f
 evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
 ```
 
+Reports every runtime version a repository states and whether the values agree. It reads repository files and nothing else: no network, no commands, and no file is written. See [Runtime drift](DRIFT.md) for the sources each runtime reads and how it resolves them.
 Reports every place a repository states a runtime version, with its exact file and line, the release it resolves to offline, and whether the versions agree. It reads files only: nothing is executed, no network is used, and no file is written. See [Runtime drift](DRIFT.md) for the sources each runtime reads.
 
 | Flag | What it does |
 | --- | --- |
 | `[path]` | Repository path. Default `.`. |
+| `--json` | Print the `evergreen.drift.v1` document, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when any runtime has more than one pinned release or a floor conflict. |
+| `--runtime <id>` | Report only this runtime, such as `java`. |
+| `--align <release>` | Print a unified diff for the pins of `--runtime` that can be rewritten to select `release`, and list the refused pins on stderr. Requires `--runtime`. |
 | `--json` | Print the drift report, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
 | `--check` | Exit `1` when any runtime's pins disagree or a floor is above the lowest pinned release. |
 | `--runtime <id>` | Limit the report to one runtime, such as `rust`. |

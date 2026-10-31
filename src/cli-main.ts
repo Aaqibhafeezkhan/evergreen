@@ -34,6 +34,7 @@ import { buildReceipt } from "./receipt.js";
 import { renderReceiptMarkdown } from "./receipt-markdown.js";
 import { severityValues } from "./domain.js";
 import { buildForecast, DEFAULT_FORECAST_MONTHS, MAX_FORECAST_MONTHS, renderForecastText } from "./forecast.js";
+import { renderForecastSvg } from "./forecast-svg.js";
 import { renderForecastTimeline } from "./forecast-timeline.js";
 import { buildPlan } from "./plan-build.js";
 import { renderPlanText } from "./plan-render.js";
@@ -43,6 +44,7 @@ import { renderVerification, verifyFix } from "./fix/verify.js";
 import { findRepositories, renderMultiScanText, scanProjects, scanRepository, applyScanSelection } from "./engine.js";
 import { renderStatusCard } from "./status-card.js";
 import { lookupProduct, renderLookupText } from "./lookup.js";
+import { driftCommand } from "./drift/command.js";
 import { upgradeCheck } from "./upgrade/command.js";
 import { inventoryCommand, InventoryUsageError } from "./inventory/command.js";
 import { scanDemo } from "./demo.js";
@@ -93,6 +95,7 @@ Usage:
   evergreen scan [path] --exclude <ecosystem|rule-prefix>   # drop matching findings; repeatable
   evergreen scan [path] --no-cache   # bypass the scan cache and re-scan all files fresh
   evergreen scan <path> <path>... [--all <dir>] [--json]   # several projects, per-project and combined counts
+  evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json | --format mermaid]   # what reaches end of life next, by month
   evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]   # what reaches end of life next, by month
   evergreen plan [path] [--json] [--wave <n>]   # migration waves from a scan; --wave prints one zero-based wave
   evergreen status-card [path] [--name <label>]   # print a static SVG summary of findings, next end of life, and data age
@@ -102,6 +105,7 @@ Usage:
   evergreen badge [path] --snippet <markdown|html|rst> [--repo <owner/name>] [--branch <name>]   # print README markup for the published badge
   evergreen badge [path] --shields   # print shields.io endpoint JSON for the current scan
   evergreen diff <base>..<head> [path] [--json]   # findings a change introduced or fixed; exit 1 only when it introduced some
+  evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]   # report every runtime version a repository states and whether they agree
   evergreen receipt [path] --before <scan.json> [--format markdown|json] [--fail-on-introduced]   # what a change resolved, left, or introduced; never runs a command
   evergreen scan [path] --by-owner [--json]   # group findings by CODEOWNERS owner; files with no owner are listed as unowned
   evergreen rollup <report.json>... [--owners <file>] [--json | --html]   # merge saved scan reports by product and owner; reads files only
@@ -788,7 +792,7 @@ async function main(rawArgs: string[]): Promise<number> {
   }
 
   const [command] = args;
-  if (command !== "sbom" && command !== "export" && command !== "scan" && command !== "check" && command !== "guard" && command !== "data" && command !== "new-detector" && command !== "new-rule" && command !== "rules" && command !== "init" && command !== "setup" && command !== "usage" && command !== "mcp" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "forecast" && command !== "plan" && command !== "diff" && command !== "rollup" && command !== "renovate-preset" && command !== "dependabot-config" && command !== "fix" && command !== "doctor" && command !== "report-issue" && command !== "capabilities" && command !== "watch" && command !== "completions" && command !== "status-card" && command !== "lookup" && command !== "inventory" && command !== "badge" && command !== "receipt" && command !== "upgrade-check") {
+  if (command !== "sbom" && command !== "export" && command !== "scan" && command !== "check" && command !== "guard" && command !== "data" && command !== "new-detector" && command !== "new-rule" && command !== "rules" && command !== "init" && command !== "setup" && command !== "usage" && command !== "mcp" && command !== "explain" && command !== "context" && command !== "baseline" && command !== "forecast" && command !== "plan" && command !== "diff" && command !== "rollup" && command !== "renovate-preset" && command !== "dependabot-config" && command !== "fix" && command !== "doctor" && command !== "report-issue" && command !== "capabilities" && command !== "watch" && command !== "completions" && command !== "status-card" && command !== "lookup" && command !== "inventory" && command !== "badge" && command !== "receipt" && command !== "upgrade-check" && command !== "drift") {
     return fail("usage", `Unknown command: ${command ?? ""}`, `\n${HELP}`);
   }
 
@@ -811,6 +815,7 @@ async function main(rawArgs: string[]): Promise<number> {
   if (command === "status-card") return statusCard(args.slice(1));
   if (command === "badge") return badge(args.slice(1));
   if (command === "lookup") return lookup(args.slice(1));
+  if (command === "drift") return driftCommand(args.slice(1));
   if (command === "upgrade-check") return upgradeCheck(args.slice(1));
   if (command === "inventory") {
     try {
@@ -1187,7 +1192,12 @@ async function main(rawArgs: string[]): Promise<number> {
   }
   if (command === "forecast") {
     const timeline = args.includes("--timeline");
+    const svg = args.includes("--svg");
+    const animate = args.includes("--animate");
+    if (animate && !svg) return fail("usage", "--animate needs --svg.");
+    if (svg && json) return fail("usage", "Use either --svg or --json, not both.");
     if (timeline && json) return fail("usage", "Use either --timeline or --json, not both.");
+    if (svg && timeline) return fail("usage", "Use either --svg or --timeline, not both.");
     if (timeline && format === "mermaid") return fail("usage", "Use either --timeline or --format mermaid, not both.");
     const monthsValue = optionValue("--months");
     const months = monthsValue === undefined ? DEFAULT_FORECAST_MONTHS : Number(monthsValue);
@@ -1195,6 +1205,10 @@ async function main(rawArgs: string[]): Promise<number> {
       return fail("usage", `--months must be a whole number from 1 to ${MAX_FORECAST_MONTHS}.`);
     }
     const forecast = buildForecast(await scanRepository(pathArgument, builtInDetectors, { noCache }), await bundledRules(), asOfValue ?? new Date().toISOString().slice(0, 10), months);
+    if (svg) {
+      process.stdout.write(`${renderForecastSvg(forecast, { animate })}\n`);
+      return 0;
+    }
     if (format === "mermaid") {
       process.stdout.write(`${renderForecastMermaid(forecast)}\n`);
       return 0;

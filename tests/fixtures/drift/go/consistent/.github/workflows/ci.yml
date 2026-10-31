@@ -1,0 +1,12 @@
+name: ci
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ["1.22.5", "1.22.6"]
+    steps:
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}

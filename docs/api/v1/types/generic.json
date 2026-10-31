@@ -67,59 +67,6 @@
       "type": "generic"
     },
     {
-      "earliestDeadline": "2023-02-28",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-aws-aurora-mysql",
-      "latestReview": "2026-10-30",
-      "name": "mysql",
-      "namespace": "aws-aurora",
-      "path": "products/generic-aws-aurora-mysql.json",
-      "purl": "pkg:generic/aws-aurora/mysql",
-      "rules": 2,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-02-29",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support",
-        "scheduled-end-of-life"
-      ],
-      "id": "generic-aws-aurora-postgresql",
-      "latestReview": "2026-10-30",
-      "name": "postgresql",
-      "namespace": "aws-aurora",
-      "path": "products/generic-aws-aurora-postgresql.json",
-      "purl": "pkg:generic/aws-aurora/postgresql",
-      "rules": 4,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2026-01-31",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support",
-        "scheduled-end-of-life"
-      ],
-      "id": "generic-aws-elasticache-redis",
-      "latestReview": "2026-10-30",
-      "name": "redis",
-      "namespace": "aws-elasticache",
-      "path": "products/generic-aws-elasticache-redis.json",
-      "purl": "pkg:generic/aws-elasticache/redis",
-      "rules": 3,
-      "type": "generic"
-    },
-    {
       "earliestDeadline": "2023-04-03",
       "ecosystems": [
         "serverless"
@@ -219,41 +166,6 @@
       "path": "products/generic-aws-lambda-runtime-ruby2-7.json",
       "purl": "pkg:generic/aws-lambda-runtime/ruby2.7",
       "rules": 1,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2024-02-29",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support"
-      ],
-      "id": "generic-aws-rds-mysql",
-      "latestReview": "2026-10-30",
-      "name": "mysql",
-      "namespace": "aws-rds",
-      "path": "products/generic-aws-rds-mysql.json",
-      "purl": "pkg:generic/aws-rds/mysql",
-      "rules": 2,
-      "type": "generic"
-    },
-    {
-      "earliestDeadline": "2022-04-30",
-      "ecosystems": [
-        "database"
-      ],
-      "events": [
-        "end-of-support",
-        "scheduled-end-of-life"
-      ],
-      "id": "generic-aws-rds-postgres",
-      "latestReview": "2026-10-30",
-      "name": "postgres",
-      "namespace": "aws-rds",
-      "path": "products/generic-aws-rds-postgres.json",
-      "purl": "pkg:generic/aws-rds/postgres",
-      "rules": 6,
       "type": "generic"
     },
     {
@@ -503,6 +415,21 @@
       "name": "deno",
       "path": "products/generic-deno.json",
       "purl": "pkg:generic/deno",
+      "rules": 2,
+      "type": "generic"
+    },
+    {
+      "ecosystems": [
+        "container"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-dockerfile",
+      "latestReview": "2026-10-31",
+      "name": "dockerfile",
+      "path": "products/generic-dockerfile.json",
+      "purl": "pkg:generic/dockerfile",
       "rules": 2,
       "type": "generic"
     },
@@ -1637,14 +1564,16 @@
         "terraform"
       ],
       "events": [
-        "end-of-support"
+        "deprecated",
+        "end-of-support",
+        "removed"
       ],
       "id": "generic-terraform",
-      "latestReview": "2026-10-30",
+      "latestReview": "2026-10-31",
       "name": "terraform",
       "path": "products/generic-terraform.json",
       "purl": "pkg:generic/terraform",
-      "rules": 6,
+      "rules": 8,
       "type": "generic"
     },
     {
@@ -1680,7 +1609,7 @@
       "type": "generic"
     }
   ],
-  "rules": 319,
+  "rules": 306,
   "schemaVersion": "evergreen.api-type.v1",
   "type": "generic"
 }

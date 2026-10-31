@@ -25,7 +25,7 @@ These 50 pages answer “Is it end of life?” for products people search for. E
 - [Is Rails end of life?](rails.html) — `pkg:gem/rails`, 2 rules
 - [Is Next.js end of life?](next.html) — `pkg:npm/next`, 4 rules
 - [Is Angular end of life?](npm-angular-core.html) — `pkg:npm/%40angular/core`, 5 rules
-- [Is Terraform end of life?](terraform.html) — `pkg:generic/terraform`, 6 rules
+- [Is Terraform end of life?](terraform.html) — `pkg:generic/terraform`, 8 rules
 - [Is Deno end of life?](deno.html) — `pkg:generic/deno`, 2 rules
 - [Is Bun end of life?](bun.html) — `pkg:generic/bun`, 2 rules
 - [Is Elixir end of life?](elixir.html) — `pkg:generic/elixir`, 2 rules

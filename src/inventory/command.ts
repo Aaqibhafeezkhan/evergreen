@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { access } from "node:fs/promises";
+import { access, constants, stat } from "node:fs/promises";
 
 import { ConfigError, loadConfig } from "../config.js";
 import { severityValues, type Severity } from "../domain.js";
@@ -132,7 +132,11 @@ export async function inventoryCommand(args: readonly string[]): Promise<number>
   const unreadable: string[] = [];
   for (const file of files) {
     try {
-      await access(file);
+      if (!(await stat(file)).isFile()) {
+        unreadable.push(file);
+        continue;
+      }
+      await access(file, constants.R_OK);
       readable.push(file);
     } catch {
       unreadable.push(file);

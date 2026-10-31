@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `evergreen drift`, which reports every place a repository states a runtime version, whether those versions agree, and `--align` patches that make them select one release. The first collector reads Python pins and floors. (#1838)
 - Add `evergreen drift`: report every runtime version a repository states, with its exact file and line, and exit `1` when they disagree; `--align <release>` prints a patch that never writes a file. The Go collector reads go.mod and go.work toolchains and `go` directives, `.go-version`, `.tool-versions`, Dockerfile images, `actions/setup-go` inputs, and GitLab, CircleCI, and Azure Pipelines images. (#1839)
 - Detect and rewrite deprecated Dockerfile `MAINTAINER` instructions and the legacy `ENV key value` form, with codemod refusals for values that cannot be quoted safely. (#1834)
 - Add a Terraform codemod for interpolation-only strings and the `list()` and `map()` functions removed in Terraform 0.15: two registry rules with upgrade-guide sources, exact detection that skips heredocs, type constraints, and strings with literal text, and patches that refuse multiline calls, invalid argument counts, expression map keys, block labels, and generated or `.terraform/` files. (#1835)

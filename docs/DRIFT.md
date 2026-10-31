@@ -36,3 +36,43 @@ Release granularity is `1.minor`: `go1.22.4` and the image tag `1.22.4-alpine` b
 The Go collector reuses the existing `go.mod` and `go.work` parsers and reads Dockerfile `FROM` lines with the container parser. It reports these values as unresolved, without a release: a floating image tag such as `golang:latest`, an image with no tag, a tag that is not `major.minor`, a `stable` or `oldstable` `go-version`, an expression that is not a `matrix` reference, a matrix entry that is not a plain version, and a `.go-version` or `.tool-versions` value that is not a Go version.
 
 `--align` rewrites `toolchain go1.x.y` lines, `.go-version`, the `golang` entry of `.tool-versions`, `FROM golang:<version>[-variant]` (keeping the variant suffix), and a single-value `actions/setup-go` `go-version`. It refuses floors, matrix and expression values, `go-version-file` pointers, and floating tags.
+
+## Python
+
+Python pins are reported at `major.minor` granularity: `3.11.4`, `3.11`, and `python-3.11` all select `3.11`.
+
+**Pins**
+
+| Source | Field | Align |
+| --- | --- | --- |
+| `.python-version` | every line | yes |
+| `.tool-versions` | the `python` line, one pin per version | yes |
+| `runtime.txt` | `python-<version>` | yes |
+| `Pipfile` | `[requires]` `python_version` and `python_full_version` | yes |
+| `Dockerfile`, `*.Dockerfile`, `Containerfile` | `FROM python:<version>[-variant]`, including `--platform` and all stages | yes |
+| GitHub Actions | `actions/setup-python` `python-version`, following a `${{ matrix.<key> }}` reference to its literal list; matrix values keep one pin each | single value only |
+| `.gitlab-ci.yml` | `image` and `service` values that name a Python image | no |
+| `.circleci/config.yml` | job and executor `docker`/`machine` `image` values that name a Python image | no |
+| `azure-pipelines.yml` | `container` and `resources.containers[].image` values that name a Python image | no |
+| `environment.yml`, `environment.yaml` | literal `python=...` entries under `dependencies`; a lower bound is a floor | no |
+
+A Python image is `python`, `cimg/python`, or `circleci/python` on Docker Hub. A multi-version `.python-version` or `.tool-versions` line reports one pin per version.
+
+**Floors**
+
+| Source | Field |
+| --- | --- |
+| `pyproject.toml` | `[project]` `requires-python` |
+| `pyproject.toml` | `[tool.poetry.dependencies]` `python` |
+| `setup.cfg` | `[options]` `python_requires`, including continuation lines |
+| `setup.py` | a literal `python_requires="..."` string; the file is read, never executed |
+
+A floor resolves from its first lower bound, so `>=3.10,<3.13`, `^3.10`, and `~=3.10.2` all report `3.10`.
+
+**Unresolved**
+
+`3`, `3.x`, a wildcard with no minor version, `latest`, a tag or image with no version, a dynamic image reference, an expression, a constraint with no lower bound, and any value Evergreen does not read are reported as pins with a one-sentence reason and no release. A value is never guessed from a newer version existing.
+
+**Align**
+
+`--align` rewrites `.python-version`, `.tool-versions`, `runtime.txt`, `Pipfile`, `FROM python:<version>[-variant]` (keeping the variant suffix and the rest of the instruction), and a single-value `setup-python` `python-version`. It refuses floors, matrix entries, CI image references, and any line whose form it does not recognize.

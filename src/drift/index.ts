@@ -1,9 +1,10 @@
 import type { DriftCollector, DriftReport, RuntimeDrift, RuntimePin } from "./types.js";
+import { rustDriftCollector } from "./rust.js";
 
 export type { DriftCollector, DriftReport, RuntimeDrift, RuntimePin } from "./types.js";
 
 /** Every built-in collector, one per runtime. Each task in the drift epic appends its own entry. */
-export const driftCollectors: DriftCollector[] = [];
+export const driftCollectors: DriftCollector[] = [rustDriftCollector];
 
 /** Compares dotted numeric releases such as `3.9` and `3.11`; non-numeric parts compare as text. */
 export function compareReleases(a: string, b: string): number {

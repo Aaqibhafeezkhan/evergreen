@@ -14,6 +14,7 @@ const severities = "info low medium high critical none";
 export const COMMANDS: CommandSpec[] = [
   { name: "scan", flags: ["--demo", "--json", "--format", "--baseline", "--baseline-warn-days", "--on-expired", "--today", "--write-status", "--interactive", "--fail-on", "--all", "--by-owner", "--data-version", "--only", "--exclude"], example: "evergreen scan . --fail-on high" },
   { name: "baseline", flags: ["--output", "--data-version"], example: "evergreen baseline . --output evergreen-baseline.json" },
+  { name: "forecast", flags: ["--months", "--as-of", "--today", "--svg", "--animate", "--timeline", "--json", "--format", "--data-version"], example: "evergreen forecast . --months 6" },
   { name: "forecast", flags: ["--months", "--as-of", "--today", "--timeline", "--json", "--format", "--data-version"], example: "evergreen forecast . --months 6" },
   { name: "plan", flags: ["--json", "--wave", "--data-version"], example: "evergreen plan . --json" },
   { name: "status-card", flags: ["--name"], example: "evergreen status-card . --name acme/widgets" },
@@ -22,6 +23,7 @@ export const COMMANDS: CommandSpec[] = [
   { name: "inventory", flags: ["--format", "--json", "--fail-on", "--redact"], example: "evergreen inventory lambda.json" },
   { name: "badge", flags: ["--snippet", "--repo", "--branch", "--shields"], example: "evergreen badge . --snippet markdown" },
   { name: "diff", flags: ["--json", "--data-version"], example: "evergreen diff main..HEAD" },
+  { name: "drift", flags: ["--json", "--check", "--runtime", "--align"], example: "evergreen drift . --check" },
   { name: "receipt", flags: ["--before", "--format", "--fail-on-introduced", "--json"], example: "evergreen receipt . --before before.json" },
   { name: "rollup", flags: ["--owners", "--json", "--html", "--format"], example: "evergreen rollup reports/*.json --owners owners.json --html" },
   { name: "renovate-preset", flags: ["--data-version"], example: "evergreen renovate-preset ." },

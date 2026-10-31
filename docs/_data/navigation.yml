@@ -21,6 +21,8 @@ docs:
         url: /IMPORTERS.html
       - title: "Migration packets"
         url: /MIGRATION_PACKETS.html
+      - title: "Runtime drift"
+        url: /DRIFT.html
       - title: "Local MCP server"
         url: /MCP.html
       - title: "Agent Skill"

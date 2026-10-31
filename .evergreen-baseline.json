@@ -581,6 +581,11 @@
       "fingerprint": "6541fcf6287bd868b009caf8746e1bbeb3e02665d24640e076265c304d886b02",
       "ruleId": "terraform.syntax.interpolation-only",
       "path": "examples/codemods/terraform-legacy/before.tf"
+    },
+    {
+      "fingerprint": "69a826873e764d37af9da6a6e1ade34d3dc39f384e27f42068926629aefe234e",
+      "ruleId": "serverless.aws-lambda.nodejs16.x",
+      "path": "examples/gallery/serverless/template.yml"
     }
   ],
   "history": [

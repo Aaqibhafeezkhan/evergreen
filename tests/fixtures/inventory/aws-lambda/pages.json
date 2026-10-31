@@ -1,0 +1,44 @@
+[
+  {
+    "Functions": [
+      {
+        "FunctionName": "page-one-worker",
+        "FunctionArn": "arn:aws:lambda:ca-central-1:123456789012:function:page-one-worker",
+        "Runtime": "nodejs18.x",
+        "Role": "arn:aws:iam::123456789012:role/lambda-page-one",
+        "Handler": "index.handler",
+        "CodeSize": 1024,
+        "Timeout": 30,
+        "MemorySize": 512,
+        "LastModified": "2025-07-01T00:00:00.000+0000",
+        "CodeSha256": "cGFnZS1vbmU=",
+        "Version": "$LATEST",
+        "PackageType": "Zip",
+        "Architectures": ["x86_64"]
+      }
+    ],
+    "NextMarker": "placeholder-marker"
+  },
+  {
+    "Functions": [
+      {
+        "FunctionName": "page-two-worker",
+        "FunctionArn": "arn:aws:lambda:ca-central-1:123456789012:function:page-two-worker",
+        "Runtime": "go1.x",
+        "Role": "arn:aws:iam::123456789012:role/lambda-page-two",
+        "Handler": "main",
+        "CodeSize": 4096,
+        "Timeout": 30,
+        "MemorySize": 512,
+        "LastModified": "2024-02-02T00:00:00.000+0000",
+        "CodeSha256": "cGFnZS10d28=",
+        "Version": "$LATEST",
+        "PackageType": "Zip",
+        "Architectures": ["x86_64"]
+      }
+    ]
+  },
+  {
+    "Functions": []
+  }
+]

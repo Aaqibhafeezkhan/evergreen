@@ -1,0 +1,41 @@
+{
+  "Functions": [
+    {
+      "FunctionName": "orders-worker",
+      "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:orders-worker",
+      "Runtime": "nodejs14.x",
+      "Role": "arn:aws:iam::123456789012:role/lambda-orders",
+      "Handler": "index.handler",
+      "CodeSize": 4096,
+      "Description": "Processes incoming orders",
+      "Timeout": 30,
+      "MemorySize": 1024,
+      "LastModified": "2025-04-02T09:12:33.000+0000",
+      "CodeSha256": "cGxhY2Vob2xkZXItY29kZS1zaGEyNTY=",
+      "Version": "$LATEST",
+      "Environment": {
+        "Variables": {
+          "ORDERS_TOKEN": "placeholder-token",
+          "ORDERS_QUEUE": "https://sqs.us-east-1.amazonaws.com/123456789012/orders"
+        }
+      },
+      "PackageType": "Zip",
+      "Architectures": ["x86_64"]
+    },
+    {
+      "FunctionName": "reports-job",
+      "FunctionArn": "arn:aws:lambda:eu-west-1:123456789012:function:reports-job",
+      "Runtime": "python3.7",
+      "Role": "arn:aws:iam::123456789012:role/lambda-reports",
+      "Handler": "reports.handler",
+      "CodeSize": 2048,
+      "Timeout": 900,
+      "MemorySize": 512,
+      "LastModified": "2024-11-18T21:04:02.000+0000",
+      "CodeSha256": "YW5vdGhlci1wbGFjZWhvbGRlcg==",
+      "Version": "$LATEST",
+      "PackageType": "Zip",
+      "Architectures": ["arm64"]
+    }
+  ]
+}

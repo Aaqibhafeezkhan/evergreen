@@ -41,9 +41,9 @@ test("reads .yml extension, a leading comment, and single-quoted Runtime", async
 
 test("returns supported runtimes too; the registry decides what is a finding", async () => {
   assert.deepEqual(parseTemplate(await fixture("zero", "template.yaml")), [
-    { value: "nodejs22.x", line: 6 },
-    { value: "python3.13", line: 13 },
-    { value: "java21", line: 18 },
+    { value: "nodejs26.x", line: 6 },
+    { value: "python3.15", line: 13 },
+    { value: "nodejs26.x", line: 18 },
   ]);
 });
 
@@ -104,8 +104,8 @@ test("reads provider.runtime and per-function runtime from serverless.yml", asyn
 
 test("returns supported serverless.yml runtimes too; the registry decides what is a finding", async () => {
   assert.deepEqual(parseServerlessYml(await fixture("zero", "serverless.yml")), [
-    { value: "nodejs22.x", line: 4 },
-    { value: "python3.13", line: 8 },
+    { value: "nodejs26.x", line: 4 },
+    { value: "python3.15", line: 8 },
   ]);
 });
 
@@ -176,7 +176,7 @@ test("reads Lambda, Azure function app, and Google function runtimes from *.tf",
 
 test("returns supported Terraform runtimes too; the registry decides what is a finding", async () => {
   assert.deepEqual(parseTf(await fixture("zero", "main.tf")), [
-    { value: "nodejs22.x", line: 3 },
+    { value: "nodejs26.x", line: 3 },
     { value: "22", line: 13 },
     { value: "python313", line: 23 },
   ]);

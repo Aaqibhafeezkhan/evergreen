@@ -1,0 +1,34 @@
+{
+  "Functions": [
+    {
+      "FunctionName": "search-indexer",
+      "FunctionArn": "arn:aws:lambda:ap-southeast-2:123456789012:function:search-indexer",
+      "Runtime": "nodejs22.x",
+      "Role": "arn:aws:iam::123456789012:role/lambda-search",
+      "Handler": "index.handler",
+      "CodeSize": 8192,
+      "Timeout": 60,
+      "MemorySize": 2048,
+      "LastModified": "2026-09-14T10:20:00.000+0000",
+      "CodeSha256": "c2VhcmNoLXBsYWNlaG9sZGVy",
+      "Version": "$LATEST",
+      "PackageType": "Zip",
+      "Architectures": ["arm64"]
+    },
+    {
+      "FunctionName": "exports-builder",
+      "FunctionArn": "arn:aws:lambda:ap-southeast-2:123456789012:function:exports-builder",
+      "Runtime": "ruby3.4",
+      "Role": "arn:aws:iam::123456789012:role/lambda-exports",
+      "Handler": "exports.handler",
+      "CodeSize": 4096,
+      "Timeout": 120,
+      "MemorySize": 1024,
+      "LastModified": "2026-08-02T16:44:00.000+0000",
+      "CodeSha256": "ZXhwb3J0cy1wbGFjZWhvbGRlcg==",
+      "Version": "$LATEST",
+      "PackageType": "Zip",
+      "Architectures": ["x86_64"]
+    }
+  ]
+}

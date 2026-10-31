@@ -3,17 +3,17 @@ Transform: AWS::Serverless-2016-10-31
 
 Globals:
   Function:
-    Runtime: nodejs22.x
+    Runtime: nodejs26.x
 
 Resources:
   Api:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: python3.13
+      Runtime: python3.15
   Worker:
     Type: AWS::Lambda::Function
     Properties:
       Handler: worker.handler
-      Runtime: java21
+      Runtime: nodejs26.x
       Role: arn:aws:iam::123456789012:role/worker

@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "api" {
   function_name = "api"
-  runtime       = "nodejs22.x"
+  runtime       = "nodejs26.x"
   handler       = "index.handler"
   role          = "arn:aws:iam::123456789012:role/api"
 }

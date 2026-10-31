@@ -1,0 +1,11 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: ruby:3.4
+    steps:
+      - checkout
+workflows:
+  test:
+    jobs:
+      - test

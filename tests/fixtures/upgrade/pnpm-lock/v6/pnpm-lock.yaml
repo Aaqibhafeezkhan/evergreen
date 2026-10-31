@@ -1,0 +1,42 @@
+lockfileVersion: '6.0'
+
+dependencies:
+  ready-prod:
+    specifier: ^1.0.0
+    version: 1.0.0
+  blocked-prod:
+    specifier: ^2.0.0
+    version: 2.0.0
+  invalid-range:
+    specifier: ^1.0.0
+    version: 1.0.0
+devDependencies:
+  dev-only:
+    specifier: ^1.0.0
+    version: 1.0.0
+
+packages:
+
+  /ready-prod@1.0.0:
+    resolution: {integrity: sha512-ready}
+    engines: {node: '>=20'}
+
+  /blocked-prod@2.0.0:
+    resolution: {integrity: sha512-blocked}
+    engines:
+      node: '>=24'
+    dev: false
+
+  /dev-only@1.0.0:
+    resolution: {integrity: sha512-dev}
+    engines: {node: '>=24'}
+    dev: true
+
+  /invalid-range@1.0.0:
+    resolution: {integrity: sha512-invalid}
+    engines: {node: '>=not-a-version'}
+
+  /blocked-prod@2.0.0(peer@1.0.0):
+    resolution: {integrity: sha512-blocked-peer}
+    engines: {node: '>=24'}
+    dev: false

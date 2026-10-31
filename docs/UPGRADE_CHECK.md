@@ -67,3 +67,71 @@ A target written as a release line (`8.4`) is tested as both `8.4.0` and `8.4.99
 - A `require.php` value that is not a constraint this matcher understands, such as a truncated OR (`^8.4 ||`) or a value containing an unevaluated `${...}` expression.
 
 A missing `require.php`, a `*` constraint, or a constraint that includes the target produces no issue. Composer itself is never run, and the lockfile is parsed as untrusted JSON.
+
+## Go modules and vendored requirements
+
+Analyzer id `go-modules`; runtime `go`. It applies when the repository root has a `go.mod`.
+
+**Files and fields it reads**
+
+- `go.mod`: the `go` directive and its line.
+- `go.work`: the `go` directive and its line, when the workspace file is in the repository root.
+- `vendor/modules.txt`: every `# <module> <version>` header and the `## explicit; go <version>` (or `## go <version>`) annotation that follows it. Package lines are ignored.
+- The bundled `registry/go.json` rules for `pkg:generic/golang`.
+
+**Version syntax it understands**
+
+Release numbers as Go writes them: `1.23`, `1.23.0`, and a leading `go` (`go1.23.0`) are accepted and compared part by part. A target that is not a release number, such as `nightly`, is reported as `unknown`; it is never compared.
+
+**What it reports**
+
+- `blocker`, `manifest`: the target is below the `go` directive of `go.mod` or `go.work`. Since Go 1.21 the `go` line is a required minimum, not advice: a Go toolchain refuses a module that declares a newer Go version. The evidence is the directive value as written, at its line.
+- `blocker`, `lockfile`: the target is below the `go` version `go mod vendor` recorded for a dependency in `vendor/modules.txt`. The subject is `<module>@<version>` and the evidence is the annotation line exactly as written.
+- `warning`, `rule`: the target itself matches a bundled lifecycle rule for Go, so it is deprecated or end-of-support. The evidence is the rule id.
+- `unknown`: `vendor/modules.txt` is absent, or records no `go` version. Dependencies' Go requirements are not in the repository without vendoring, so Evergreen reports `unknown` for them instead of assuming they are compatible. It does not run `go mod tidy` or any Go command to find out.
+
+**Sources**
+
+- [Go Modules Reference: `go` directive](https://go.dev/ref/mod#go-mod-file-go): the `go` line is a minimum required Go version since Go 1.21, and must be greater than or equal to the `go` line of every dependency.
+- [Go Modules Reference: `go.work` files](https://go.dev/ref/mod#go-work-file-go): the workspace `go` directive names the toolchain version the workspace is written for.
+- [Go Modules Reference: vendoring](https://go.dev/ref/mod#vendoring): `go mod vendor` writes `vendor/modules.txt` and records the `go` version from each dependency's `go.mod` since Go 1.17.
+- [Go toolchains](https://go.dev/doc/toolchain): how the `go` directive selects a toolchain.
+
+## Dart and Flutter
+
+Applies when `pubspec.lock` exists. Runtimes: `dart` and `flutter`.
+
+| File | Field | What it means |
+| --- | --- | --- |
+| `pubspec.lock` | `sdks.dart` | The Dart SDK bound shared by every resolved package: the intersection of their individual bounds. |
+| `pubspec.lock` | `sdks.flutter` | The Flutter SDK bound shared by every resolved package. |
+| `pubspec.yaml` | `environment.sdk` | The Dart SDK bound the project itself declares. |
+| `pubspec.yaml` | `environment.flutter` | The Flutter SDK bound the project itself declares. |
+
+A `dart@x` target is checked against the Dart bounds and a `flutter@x` target against the Flutter bounds; the other runtime's bounds are not consulted. A target outside a `pubspec.lock` bound is a `blocker` with subject `resolved package set` and `kind: "lockfile"`: the resolved set would not install. A target outside a `pubspec.yaml` bound is a `blocker` with subject `environment.sdk` or `environment.flutter` and `kind: "manifest"`. When neither file records a bound for the target runtime, one `unknown` issue is reported; it names the absent `sdks` key as evidence.
+
+A target with fewer than three components is checked as `x.0.0` or `x.y.0`, so `dart@3.5` is checked as `3.5.0`.
+
+Version syntax: a constraint is `any` or one or more space-joined terms, each `^`, `>=`, `<=`, `>`, `<`, or a bare version followed by `x.y.z` and an optional pre-release or build suffix. Caret follows pub's rules: `^1.2.3` means `>=1.2.3 <2.0.0`, `^0.2.3` means `>=0.2.3 <0.3.0`, and `^0.0.3` means `>=0.0.3 <0.0.4`. A bound the parser cannot read (a template, `||` range, or missing components) is treated as missing evidence, so the answer is `unknown` rather than `ready`.
+
+The parsers are the ones the Dart detector uses: `src/detectors/dart/parse-pubspec-lock.ts` and `parse-pubspec.ts`.
+
+```bash
+evergreen upgrade-check --to dart@3.5 examples/upgrade/dart-sdk
+```
+
+```text
+blocked: dart@3.5 (1 blocker, 0 warnings, 0 unknown)
+pubspec.lock:12  resolved package set  The resolved package set requires Dart >=3.6.0 <4.0.0, which excludes 3.5.0.  [lockfile >=3.6.0 <4.0.0]
+```
+
+## pnpm lockfile
+
+Runtime: `nodejs`. Applies when `pnpm-lock.yaml` exists with `lockfileVersion` 6.x or 9.x.
+
+- Files read: `pnpm-lock.yaml`. In 6.x, `packages` entries carry `engines`, `dev`, and `devOptional`. In 9.x, `engines` lives under `packages`, while the dev flag is resolved from `importers` and `snapshots`.
+- Fields read: `lockfileVersion`; for each `packages` entry, the key (`<name>@<version>`, with an optional leading `/` and an optional peer suffix) and `engines.node`; in 6.x, `dev` and `devOptional`; in 9.x, the `dependencies`, `optionalDependencies`, and `devDependencies` of every `importers` entry, and the `dependencies` and `optionalDependencies` of every `snapshots` entry.
+- Version syntax: semver ranges in `engines.node`, tested with `semver.satisfies` and `includePrerelease: false`. A bare target major such as `22` is tested as `22.0.0`; the bundled lifecycle data does not list per-minor Node.js releases.
+- Levels: `blocker` for a production dependency whose range excludes the target; `warning` for a dev dependency (`dev: true` or `devOptional: true` in 6.x, or reachable only from a dev dependency in 9.x); `unknown` for an `engines.node` value that is not a valid semver range.
+- Evidence: `engines.node: <range as written>`, at the line of the `engines` key.
+- Deduplication: identical name, version, and range across peer variants keep the first line.

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/drift.v1.schema.json",
+  "title": "Evergreen runtime drift v1",
+  "type": "object",
+  "required": ["schemaVersion", "runtimes"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.drift.v1" },
+    "runtimes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/runtime" }
+    }
+  },
+  "$defs": {
+    "runtime": {
+      "type": "object",
+      "required": ["runtime", "pins", "releases", "drifted", "floorConflicts"],
+      "additionalProperties": false,
+      "properties": {
+        "runtime": { "type": "string", "minLength": 1 },
+        "pins": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/pin" }
+        },
+        "releases": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "drifted": { "type": "boolean" },
+        "floorConflicts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/pin" }
+        }
+      }
+    },
+    "pin": {
+      "type": "object",
+      "required": ["path", "line", "source", "raw", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "line": { "type": "integer", "minimum": 1 },
+        "source": { "type": "string", "minLength": 1 },
+        "raw": { "type": "string" },
+        "kind": { "enum": ["pin", "floor"] },
+        "release": { "type": "string", "minLength": 1 },
+        "unresolved": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

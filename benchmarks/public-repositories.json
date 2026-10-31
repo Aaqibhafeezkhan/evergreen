@@ -3471,6 +3471,15 @@
           }
         },
         {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "frontend/Dockerfile",
+          "line": 31,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 31 of frontend/Dockerfile is ENV HOST 0.0.0.0, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal address, so key=value would not change it."
+          }
+        },
+        {
           "ruleId": "github-actions.checkout.node20",
           "path": ".github/workflows/backend-docker-nightly.yml",
           "line": 16,
@@ -3650,12 +3659,66 @@
           }
         },
         {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 18,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 18 of Dockerfile is ENV DATABASE_TYPE $DATABASE_TYPE, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is one variable reference, so key=\"$DATABASE_TYPE\" keeps it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 19,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 19 of Dockerfile is ENV BASE_PATH $BASE_PATH, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is one variable reference, so key=\"$BASE_PATH\" keeps it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 21,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 21 of Dockerfile is ENV NEXT_TELEMETRY_DISABLED 1, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal 1, so key=value would not change it."
+          }
+        },
+        {
           "ruleId": "container.node.eol-21-and-older",
           "path": "Dockerfile",
           "line": 26,
           "groundTruthSource": {
             "kind": "maintainer-review",
             "note": "Reviewed at this commit: line 26 of Dockerfile is FROM node:16-alpine AS runner, an image release line the vendor has ended."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 29,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 29 of Dockerfile is ENV NODE_ENV production, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal word, so key=value would not change it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 30,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 30 of Dockerfile is ENV NEXT_TELEMETRY_DISABLED 1, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal 1, so key=value would not change it."
+          }
+        },
+        {
+          "ruleId": "container.dockerfile.legacy-env-format",
+          "path": "Dockerfile",
+          "line": 53,
+          "groundTruthSource": {
+            "kind": "maintainer-review",
+            "note": "Reviewed at this commit: line 53 of Dockerfile is ENV PORT 3000, the space-separated legacy form that Docker's LegacyKeyValueFormat build check flags. The value is a literal port number, so key=value would not change it."
           }
         },
         {

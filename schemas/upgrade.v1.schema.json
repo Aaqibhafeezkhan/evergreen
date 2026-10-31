@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/arminazimi/evergreen/schemas/upgrade.v1.schema.json",
+  "title": "Evergreen upgrade check v1",
+  "description": "Whether a repository can move to a target runtime release, judged offline from its lockfiles and manifests. An unknown verdict means no analyzer found evidence for the runtime; it is not a statement that the upgrade is safe.",
+  "type": "object",
+  "required": ["schemaVersion", "target", "verdict", "analyzers", "issues"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "evergreen.upgrade.v1" },
+    "target": {
+      "type": "object",
+      "required": ["runtime", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "runtime": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "verdict": { "enum": ["ready", "blocked", "unknown"] },
+    "analyzers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["analyzer", "level", "subject", "path", "reason", "evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "analyzer": { "type": "string", "minLength": 1 },
+          "level": { "enum": ["blocker", "warning", "unknown"] },
+          "subject": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "line": { "type": "integer", "minimum": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "object",
+            "required": ["kind", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": { "enum": ["lockfile", "manifest", "rule"] },
+              "value": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

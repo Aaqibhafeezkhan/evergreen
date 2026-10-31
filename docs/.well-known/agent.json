@@ -65,6 +65,12 @@
       "name": "Plan migrations",
       "description": "Return a migration plan with waves of independent tasks a coordinating agent can hand out.",
       "tags": ["plan", "migration", "waves", "mcp"]
+    },
+    {
+      "id": "check_upgrade",
+      "name": "Check upgrade",
+      "description": "Answer offline whether a repository can move to a target runtime release, with each blocker's exact file, line, and evidence. An unknown verdict is not a statement that the upgrade is safe.",
+      "tags": ["upgrade", "runtime", "mcp"]
     }
   ]
 }

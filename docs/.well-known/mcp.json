@@ -67,6 +67,10 @@
     {
       "name": "plan_migrations",
       "description": "Run a fresh local scan and return a migration plan: waves of independent tasks a coordinating agent can hand to other agents."
+    },
+    {
+      "name": "check_upgrade",
+      "description": "Answer offline whether a repository can move to a target runtime release, listing each blocker with its exact file, line, and evidence. An unknown verdict is not a statement that the upgrade is safe."
     }
   ],
   "authentication": {

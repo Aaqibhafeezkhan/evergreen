@@ -206,6 +206,21 @@ Checks one Package URL against the bundled lifecycle rules and prints the status
 
 An unused package is not reported as safe: `no-data` means Evergreen has no rule for it.
 
+### `upgrade-check`
+
+```bash
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+```
+
+Answers offline whether a repository can move to a runtime release, from lockfiles and manifests already on disk. It lists blockers, warnings, and unknowns with the exact file, line, and evidence; it installs nothing and runs no project command.
+
+| Flag | What it does |
+| --- | --- |
+| `--to <runtime@version>` | Runtime and release to check, such as `python@3.13` or `nodejs@22`. Required. |
+| `--json` | Print the `evergreen.upgrade.v1` document, which conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
+
+Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict always prints: “Evergreen found no evidence for this runtime in this repository. This is not a statement that the upgrade is safe.”
+
 ### `guard`
 
 ```bash

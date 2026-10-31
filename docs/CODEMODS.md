@@ -46,3 +46,18 @@ Refused, with the reason in `fix --json`:
 - a call written through a rebinding, such as `reload = imp.reload; reload(m)`;
 - `from imp import ...`, `import imp as ...`, an `import imp` statement that also imports other modules, more than one `import imp`, or one that shares its line with other code;
 - a file that cannot be read, has syntax errors, or does not end with a newline.
+## node-buffer
+Rewrites the deprecated Node.js `Buffer` constructor (`nodejs.symbol.buffer.constructor`, DEP0005) and `SlowBuffer` (`nodejs.symbol.slowbuffer`, DEP0030) when the argument's kind is visible in the source text.
+| Before | After |
+|---|---|
+| `new Buffer(<number literal>)` / `Buffer(<number literal>)` | `Buffer.alloc(<number>)` |
+| `new Buffer(<string or template literal>[, <string literal encoding>])` | `Buffer.from(<string>[, <encoding>])` |
+| `new Buffer(<array literal>)` | `Buffer.from(<array>)` |
+| `new SlowBuffer(<number literal>)` | `Buffer.allocUnsafeSlow(<number>)` |
+`Buffer.alloc` zero-fills the new buffer. The `Buffer` constructor has zero-filled its numeric form since Node.js 8, so the rewrite keeps the old behavior; Node.js documents the deprecation as [DEP0005](https://nodejs.org/api/deprecations.html#dep0005-buffer-constructor-deprecation).
+- an identifier, call, member expression, binary expression, spread, or any other argument whose kind is not a number, string, template without substitutions, or array literal;
+- `new Buffer(buffer, offset, length)` and any argument count the table does not list;
+- an argument wrapped in a TypeScript type assertion (`as`, `satisfies`, `<T>x`, `!`);
+- a template literal with substitutions;
+- a `SlowBuffer` call without `new`, or a member-expression form such as `buffer.SlowBuffer(...)`;
+- a file that cannot be read, does not end with a newline, or does not parse.

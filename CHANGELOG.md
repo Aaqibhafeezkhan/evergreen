@@ -6,6 +6,7 @@
 - Add a Claude Code PreToolUse hook that blocks npm, pnpm, yarn, pip, and uv installs of packages Evergreen marks as deprecated or end-of-life. (#1273)
 - Add a Cursor rule that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1274)
 - Add a GitHub Copilot instructions file that tells the agent to check a dependency with the `check_dependency` MCP tool or `evergreen check` before adding it, documented alongside the hooks. (#1275)
+- Add a codemod that rewrites the removed `imp.reload`, `imp.new_module`, `imp.get_magic`, `imp.get_tag`, `imp.cache_from_source`, and `imp.source_from_cache` to their `importlib`, `types`, and `sys` equivalents, and drops `import imp` when no use remains. (#1830)
 
 ## 0.7.1 - 2026-10-27
 

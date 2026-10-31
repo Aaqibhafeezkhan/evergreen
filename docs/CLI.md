@@ -12,7 +12,7 @@ Every command runs locally. Scans read repository files and bundled lifecycle da
 | `-v`, `--version` | Print the package version and exit `0`. |
 | `--debug` | On an unexpected failure (`internal`, exit `5`), print the stack trace to stderr. |
 | `--json` | Print a machine-readable document where the command supports one. Same as `--format json` for `scan`, `check`, and `forecast`. |
-| `--format <name>` | Choose the output format. `scan` accepts all twelve formats below; `check` accepts `text` and `json`; `rollup` accepts `json` and `html`. |
+| `--format <name>` | Choose the output format. `scan` accepts all thirteen formats below; `forecast` accepts `text`, `json`, and `mermaid`; `check` accepts `text` and `json`; `rollup` accepts `json` and `html`. |
 | `--data-version <version>` | Pin the lifecycle data for this run, for example `2026.10.01` or `bundled`. Same as `EVERGREEN_DATA_VERSION`. Pinned data is read from disk; nothing is downloaded. |
 | `--no-cache` | Bypass the scan cache and re-read every file. Available on `scan`. Same as `EVERGREEN_NO_CACHE=1`. |
 
@@ -64,11 +64,15 @@ The baseline, date, and ignore options also apply to `explain`, `context`, and `
 | `slack` | Slack incoming-webhook payload. |
 | `teams` | Microsoft Teams Adaptive Card. |
 | `webhook` | Generic JSON payload with severity counts and every finding. |
+| `mermaid` | Fenced Mermaid Gantt chart of support windows, for READMEs, issues, and pull request comments. |
+
+The `mermaid` format prints a fenced `mermaid` block that GitHub renders natively. Each section is an ecosystem and each bar runs from the observation day (`--as-of`, or today) to the deadline. A subject that has already ended is a `crit` milestone at its deadline; one that ends within 30 days is a `crit` bar. A `today` milestone follows `--as-of`. The chart draws at most 40 bars; a final line counts the rest, and `--format json` still lists every finding. [Showcase](SHOWCASE.md#mermaid-support-windows) has a complete example.
 
 ### `forecast`
 
 ```bash
-evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json]
+evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--svg [--animate] | --timeline | --json]
+evergreen forecast [path] [--months <n>] [--as-of <YYYY-MM-DD>] [--timeline | --json | --format mermaid]
 ```
 
 Lists what reaches end of life next, grouped by month, from the current scan.
@@ -77,8 +81,14 @@ Lists what reaches end of life next, grouped by month, from the current scan.
 | --- | --- |
 | `--months <n>` | How many months ahead to look. Whole number from `1` to `36`; default `12`. |
 | `--as-of <YYYY-MM-DD>` | Treat this date as today. |
-| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json`. |
+| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--svg`. |
+| `--svg` | Print a self-contained SVG timeline for a README or a slide. Cannot be combined with `--timeline` or `--json`. |
+| `--animate` | With `--svg`, grow a bar from today to each event in date order and pulse the today marker twice with CSS. `prefers-reduced-motion: reduce` shows the final frame immediately. |
+| `--timeline` | Draw the forecast as a terminal timeline instead of a list. Cannot be combined with `--json` or `--format mermaid`. |
+| `--format mermaid` | Print a fenced Mermaid Gantt chart of the dated events, grouped by ecosystem. |
 | `--json` | Print the forecast document. |
+
+The SVG has no script and no external references, so it is safe to commit and embed as an image. [Showcase](SHOWCASE.md) covers embedding it in a README and refreshing it on a schedule.
 
 ### `status-card`
 
@@ -104,20 +114,27 @@ Resolves a product and optional version against the bundled lifecycle rules and 
 | --- | --- |
 | `--json` | Print the structured lookup result. |
 
-### `upgrade-check`
+### `drift`
 
 ```bash
-evergreen upgrade-check --to <runtime@version> [path] [--json]
+evergreen drift [path] [--json] [--check] [--runtime <id>] [--align <release>]
 ```
 
-Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
+Reports every place a repository states a runtime version and whether those values select the same release line. Each pin carries its file and line, the source it came from, the value as written, and the release it resolves to offline; a floor above the lowest pin is reported as a floor conflict. Nothing is written. See [Drift](DRIFT.md) for the sources and granularity of each runtime.
 
 | Flag | What it does |
 | --- | --- |
+| `[path]` | Repository path. Default `.`. |
+| `--json` | Print the `evergreen.drift.v1` document defined by [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
+| `--check` | Exit `1` when any runtime drifted or has a floor conflict. |
+| `--runtime <id>` | Report one runtime only. |
+| `--align <release>` | Print a unified diff that makes the pins Evergreen understands select `release`; requires `--runtime`. Refused pins are listed on stderr, and no file is written. |
+### `upgrade-check`
+evergreen upgrade-check --to <runtime@version> [path] [--json]
+Answers from files already in the repository whether the project can move to a target runtime. It reads lockfiles and manifests only: no package manager runs, nothing is installed, and nothing is fetched.
 | `--to <runtime@version>` | Required. Target runtime and release, for example `php@8.4` or `nodejs@22`. `node`, `py`, and `golang` are accepted as runtime aliases. |
 | `[path]` | Repository root, default `.`. |
 | `--json` | Print the `evergreen.upgrade.v1` document that conforms to [`schemas/upgrade.v1.schema.json`](../schemas/upgrade.v1.schema.json). |
-
 The text output starts with the verdict, then lists every blocker, warning, and unknown as `path:line  subject  reason  [evidence]`. Exit `1` when the verdict is `blocked`, `0` for `ready` and `unknown`, and `2` for bad input. An `unknown` verdict means no analyzer found evidence for that runtime in this repository; it is not a statement that the upgrade is safe. [Upgrade check](UPGRADE_CHECK.md) lists the files and fields each analyzer reads.
 
 ### `badge`
@@ -163,6 +180,7 @@ Reports every place a repository states a runtime version, with its exact file a
 | `--json` | Print the drift report, which conforms to [`schemas/drift.v1.schema.json`](../schemas/drift.v1.schema.json). |
 | `--check` | Exit `1` when any runtime's pins disagree or a floor is above the lowest pinned release. |
 | `--runtime <id>` | Limit the report to one runtime, such as `rust`. |
+| `--runtime <id>` | Limit the report to one runtime, such as `go`. |
 | `--align <release>` | Print a unified diff that makes every understood pin select `<release>`. Requires `--runtime`; values it will not rewrite are listed on stderr. |
 
 ### `rollup`

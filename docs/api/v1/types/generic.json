@@ -1369,6 +1369,889 @@
       "type": "generic"
     },
     {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go111",
+      "latestReview": "2026-10-30",
+      "name": "go111",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go111.json",
+      "purl": "pkg:generic/google-appengine-runtime/go111",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go112",
+      "latestReview": "2026-10-30",
+      "name": "go112",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go112.json",
+      "purl": "pkg:generic/google-appengine-runtime/go112",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go113",
+      "latestReview": "2026-10-30",
+      "name": "go113",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go113.json",
+      "purl": "pkg:generic/google-appengine-runtime/go113",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go114",
+      "latestReview": "2026-10-30",
+      "name": "go114",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go114.json",
+      "purl": "pkg:generic/google-appengine-runtime/go114",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go115",
+      "latestReview": "2026-10-30",
+      "name": "go115",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go115.json",
+      "purl": "pkg:generic/google-appengine-runtime/go115",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go116",
+      "latestReview": "2026-10-30",
+      "name": "go116",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go116.json",
+      "purl": "pkg:generic/google-appengine-runtime/go116",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go118",
+      "latestReview": "2026-10-30",
+      "name": "go118",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go118.json",
+      "purl": "pkg:generic/google-appengine-runtime/go118",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go119",
+      "latestReview": "2026-10-30",
+      "name": "go119",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go119.json",
+      "purl": "pkg:generic/google-appengine-runtime/go119",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-11-01",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go120",
+      "latestReview": "2026-10-30",
+      "name": "go120",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go120.json",
+      "purl": "pkg:generic/google-appengine-runtime/go120",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-03-03",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go121",
+      "latestReview": "2026-10-30",
+      "name": "go121",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go121.json",
+      "purl": "pkg:generic/google-appengine-runtime/go121",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-07-28",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go122",
+      "latestReview": "2026-10-30",
+      "name": "go122",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go122.json",
+      "purl": "pkg:generic/google-appengine-runtime/go122",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-08-21",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-go123",
+      "latestReview": "2026-10-30",
+      "name": "go123",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-go123.json",
+      "purl": "pkg:generic/google-appengine-runtime/go123",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-10-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-java11",
+      "latestReview": "2026-10-30",
+      "name": "java11",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-java11.json",
+      "purl": "pkg:generic/google-appengine-runtime/java11",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-java8",
+      "latestReview": "2026-10-30",
+      "name": "java8",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-java8.json",
+      "purl": "pkg:generic/google-appengine-runtime/java8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs10",
+      "latestReview": "2026-10-30",
+      "name": "nodejs10",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs10.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs12",
+      "latestReview": "2026-10-30",
+      "name": "nodejs12",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs12.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs12",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs14",
+      "latestReview": "2026-10-30",
+      "name": "nodejs14",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs14.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs14",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs16",
+      "latestReview": "2026-10-30",
+      "name": "nodejs16",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs16.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs16",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs18",
+      "latestReview": "2026-10-30",
+      "name": "nodejs18",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs18.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs18",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-04-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs20",
+      "latestReview": "2026-10-30",
+      "name": "nodejs20",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs20.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs20",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2018-06-27",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-nodejs8",
+      "latestReview": "2026-10-30",
+      "name": "nodejs8",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-nodejs8.json",
+      "purl": "pkg:generic/google-appengine-runtime/nodejs8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-php55",
+      "latestReview": "2026-10-30",
+      "name": "php55",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-php55.json",
+      "purl": "pkg:generic/google-appengine-runtime/php55",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-php72",
+      "latestReview": "2026-10-30",
+      "name": "php72",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-php72.json",
+      "purl": "pkg:generic/google-appengine-runtime/php72",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-php73",
+      "latestReview": "2026-10-30",
+      "name": "php73",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-php73.json",
+      "purl": "pkg:generic/google-appengine-runtime/php73",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-php74",
+      "latestReview": "2026-10-30",
+      "name": "php74",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-php74.json",
+      "purl": "pkg:generic/google-appengine-runtime/php74",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-12-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-php81",
+      "latestReview": "2026-10-30",
+      "name": "php81",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-php81.json",
+      "purl": "pkg:generic/google-appengine-runtime/php81",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-python27",
+      "latestReview": "2026-10-30",
+      "name": "python27",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-python27.json",
+      "purl": "pkg:generic/google-appengine-runtime/python27",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-10-04",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-python310",
+      "latestReview": "2026-10-30",
+      "name": "python310",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-python310.json",
+      "purl": "pkg:generic/google-appengine-runtime/python310",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-python37",
+      "latestReview": "2026-10-30",
+      "name": "python37",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-python37.json",
+      "purl": "pkg:generic/google-appengine-runtime/python37",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-10-14",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-python38",
+      "latestReview": "2026-10-30",
+      "name": "python38",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-python38.json",
+      "purl": "pkg:generic/google-appengine-runtime/python38",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-10-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-python39",
+      "latestReview": "2026-10-30",
+      "name": "python39",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-python39.json",
+      "purl": "pkg:generic/google-appengine-runtime/python39",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-ruby25",
+      "latestReview": "2026-10-30",
+      "name": "ruby25",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-ruby25.json",
+      "purl": "pkg:generic/google-appengine-runtime/ruby25",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-ruby26",
+      "latestReview": "2026-10-30",
+      "name": "ruby26",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-ruby26.json",
+      "purl": "pkg:generic/google-appengine-runtime/ruby26",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-ruby27",
+      "latestReview": "2026-10-30",
+      "name": "ruby27",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-ruby27.json",
+      "purl": "pkg:generic/google-appengine-runtime/ruby27",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2024-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-ruby30",
+      "latestReview": "2026-10-30",
+      "name": "ruby30",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-ruby30.json",
+      "purl": "pkg:generic/google-appengine-runtime/ruby30",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-support"
+      ],
+      "id": "generic-google-appengine-runtime-ruby32",
+      "latestReview": "2026-10-30",
+      "name": "ruby32",
+      "namespace": "google-appengine-runtime",
+      "path": "products/generic-google-appengine-runtime-ruby32.json",
+      "purl": "pkg:generic/google-appengine-runtime/ruby32",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-dotnet3",
+      "latestReview": "2026-10-30",
+      "name": "dotnet3",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-dotnet3.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/dotnet3",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-11-12",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-dotnet6",
+      "latestReview": "2026-10-30",
+      "name": "dotnet6",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-dotnet6.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/dotnet6",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go111",
+      "latestReview": "2026-10-30",
+      "name": "go111",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go111.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go111",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go113",
+      "latestReview": "2026-10-30",
+      "name": "go113",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go113.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go113",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go116",
+      "latestReview": "2026-10-30",
+      "name": "go116",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go116.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go116",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go118",
+      "latestReview": "2026-10-30",
+      "name": "go118",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go118.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go118",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go119",
+      "latestReview": "2026-10-30",
+      "name": "go119",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go119.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go119",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-05-01",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go120",
+      "latestReview": "2026-10-30",
+      "name": "go120",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go120.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go120",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-03-03",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go121",
+      "latestReview": "2026-10-30",
+      "name": "go121",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go121.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go121",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-07-28",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go122",
+      "latestReview": "2026-10-30",
+      "name": "go122",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go122.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go122",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-08-21",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go123",
+      "latestReview": "2026-10-30",
+      "name": "go123",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go123.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go123",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-03-02",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go124",
+      "latestReview": "2026-10-30",
+      "name": "go124",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go124.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go124",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-04-01",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-google-cloud-functions-runtime-go125",
+      "latestReview": "2026-10-30",
+      "name": "go125",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-go125.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/go125",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-10-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-java11",
+      "latestReview": "2026-10-30",
+      "name": "java11",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-java11.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/java11",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs10",
+      "latestReview": "2026-10-30",
+      "name": "nodejs10",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs10.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs10",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs12",
+      "latestReview": "2026-10-30",
+      "name": "nodejs12",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs12.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs12",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
       "earliestDeadline": "2025-01-30",
       "ecosystems": [
         "serverless"
@@ -1382,6 +2265,259 @@
       "namespace": "google-cloud-functions-runtime",
       "path": "products/generic-google-cloud-functions-runtime-nodejs14.json",
       "purl": "pkg:generic/google-cloud-functions-runtime/nodejs14",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs16",
+      "latestReview": "2026-10-30",
+      "name": "nodejs16",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs16.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs16",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-10-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs18",
+      "latestReview": "2026-10-30",
+      "name": "nodejs18",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs18.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs18",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-10-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs20",
+      "latestReview": "2026-10-30",
+      "name": "nodejs20",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs20.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs20",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs6",
+      "latestReview": "2026-10-30",
+      "name": "nodejs6",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs6.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs6",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-nodejs8",
+      "latestReview": "2026-10-30",
+      "name": "nodejs8",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-nodejs8.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/nodejs8",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-php74",
+      "latestReview": "2026-10-30",
+      "name": "php74",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-php74.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/php74",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-06-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-php81",
+      "latestReview": "2026-10-30",
+      "name": "php81",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-php81.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/php81",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2027-04-04",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "deprecated"
+      ],
+      "id": "generic-google-cloud-functions-runtime-python310",
+      "latestReview": "2026-10-30",
+      "name": "python310",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-python310.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/python310",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-python37",
+      "latestReview": "2026-10-30",
+      "name": "python37",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-python37.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/python37",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-10-14",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-python38",
+      "latestReview": "2026-10-30",
+      "name": "python38",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-python38.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/python38",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-04-05",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-python39",
+      "latestReview": "2026-10-30",
+      "name": "python39",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-python39.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/python39",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-ruby26",
+      "latestReview": "2026-10-30",
+      "name": "ruby26",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-ruby26.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/ruby26",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-01-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-ruby27",
+      "latestReview": "2026-10-30",
+      "name": "ruby27",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-ruby27.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/ruby27",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2025-03-31",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-ruby30",
+      "latestReview": "2026-10-30",
+      "name": "ruby30",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-ruby30.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/ruby30",
+      "rules": 1,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-09-30",
+      "ecosystems": [
+        "serverless"
+      ],
+      "events": [
+        "end-of-life"
+      ],
+      "id": "generic-google-cloud-functions-runtime-ruby32",
+      "latestReview": "2026-10-30",
+      "name": "ruby32",
+      "namespace": "google-cloud-functions-runtime",
+      "path": "products/generic-google-cloud-functions-runtime-ruby32.json",
+      "purl": "pkg:generic/google-cloud-functions-runtime/ruby32",
       "rules": 1,
       "type": "generic"
     },
@@ -1415,6 +2551,23 @@
       "path": "products/generic-google-cloud-sql-postgresql.json",
       "purl": "pkg:generic/google-cloud-sql-postgresql",
       "rules": 2,
+      "type": "generic"
+    },
+    {
+      "earliestDeadline": "2026-04-27",
+      "ecosystems": [
+        "kubernetes"
+      ],
+      "events": [
+        "end-of-support",
+        "end-of-life"
+      ],
+      "id": "generic-google-gke",
+      "latestReview": "2026-10-30",
+      "name": "google-gke",
+      "path": "products/generic-google-gke.json",
+      "purl": "pkg:generic/google-gke",
+      "rules": 5,
       "type": "generic"
     },
     {
@@ -2479,7 +3632,7 @@
       "type": "generic"
     }
   ],
-  "rules": 394,
+  "rules": 466,
   "schemaVersion": "evergreen.api-type.v1",
   "type": "generic"
 }

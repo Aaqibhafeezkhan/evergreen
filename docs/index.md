@@ -64,6 +64,7 @@ Found 5 lifecycle risks. The most urgent:
 - [Architecture and trust boundaries](ARCHITECTURE.md): the layers and what each one must not do.
 - [Threat model](THREAT_MODEL.md): trust boundaries, threats, and residual risks.
 - [Validation results](VALIDATION.md): the public corpus, precision thresholds, and measured results.
+- [Benchmarks](BENCHMARKS.md): the agent migration benchmark, its task set, and how it is scored.
 - [State of EOL](state-of-eol.md): corpus findings aggregated by product and release line.
 - [Evergreen compared with Renovate, Dependabot, and endoflife.date](compare/index.md): what each tool answers, and where each is stronger.
 - [Decision records](decisions/index.md): the decisions behind public contracts.

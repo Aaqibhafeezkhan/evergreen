@@ -75,6 +75,7 @@ Found 5 lifecycle risks. The most urgent:
 - [Codex plugin submission](CODEX_SUBMISSION.md): how the plugin is submitted to the Codex directory.
 - [Brand guide](https://github.com/arminazimi/evergreen/blob/main/brand/BRAND_GUIDE.md), [brand asset terms](https://github.com/arminazimi/evergreen/blob/main/brand/LICENSE.md), and the [distribution brand checklist](DISTRIBUTION_BRAND.md).
 - [Support](SUPPORT.md) and [terms](TERMS.md).
+- [Persian (فارسی)](fa/index.md): the quickstart in Persian, rendered right to left.
 
 [Source code](https://github.com/arminazimi/evergreen) · [Report an issue](https://github.com/arminazimi/evergreen/issues) · [npm package](https://www.npmjs.com/package/evergreen-deprecation)
 

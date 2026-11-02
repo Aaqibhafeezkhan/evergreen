@@ -1,0 +1,1 @@
+- Define reference quality as eight measurable criteria, each enforced by a failing check: new debt fails, and existing debt is allowlisted with an expiry of 2027-01-26. (#2041)

@@ -3,6 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import type { Finding, ScanResult, SuppressionRef, SuppressionState } from "./domain.js";
 import { isIsoDate } from "./registry.js";
+import { required } from "./required.js";
 
 /**
  * Why a finding is accepted, and until when. All four fields are optional, so a baseline written before they
@@ -69,11 +70,18 @@ function seedHistory(baseline: Baseline): BaselineHistoryEntry[] {
     : [{ at: baseline.createdAt, count: baseline.findings.length }];
 }
 
+/** Narrows a two-element slice so its entries need no assertion; the only slice `debtTrendLine` compares. */
+function isHistoryPair(
+  history: readonly BaselineHistoryEntry[],
+): history is readonly [BaselineHistoryEntry, BaselineHistoryEntry] {
+  return history.length === 2;
+}
+
 /** The line printed after a baseline is written: the change in findings since the last history entry. */
 export function debtTrendLine(history: readonly BaselineHistoryEntry[]): string {
-  if (history.length < 2) return "No earlier baseline to compare with.";
-  const previous = history[history.length - 2]!;
-  const current = history[history.length - 1]!;
+  const lastTwo = history.slice(-2);
+  if (!isHistoryPair(lastTwo)) return "No earlier baseline to compare with.";
+  const [previous, current] = lastTwo;
   const delta = current.count - previous.count;
   if (delta === 0) return `Debt is unchanged at ${current.count} since ${previous.at}.`;
   return `Debt ${delta < 0 ? "fell" : "rose"} by ${Math.abs(delta)} (${previous.count} to ${current.count}) since ${previous.at}: ${delta < 0 ? "better" : "worse"}.`;
@@ -169,8 +177,8 @@ export async function readBaseline(path: string): Promise<Baseline> {
  */
 export function mergeBaselines(baselines: readonly Baseline[]): Baseline {
   if (baselines.length === 0) throw new Error("At least one baseline is required.");
-  if (baselines.length === 1) return baselines[0]!;
-  const createdAt = [...baselines].map((baseline) => baseline.createdAt).sort()[0]!;
+  if (baselines.length === 1) return required(baselines[0], "the only baseline");
+  const createdAt = required([...baselines].map((baseline) => baseline.createdAt).sort()[0], "earliest baseline date");
   return {
     schemaVersion: "evergreen.baseline.v1",
     createdAt,
@@ -287,7 +295,7 @@ export function evaluateBaseline(
             ruleId: entry.ruleId,
             path: entry.path,
             expires: entry.expires,
-            daysAgo: daysBetween(entry.expires, options.today!),
+            daysAgo: daysBetween(entry.expires, required(options.today, "reference day")),
             ...(entry.owner ? { owner: entry.owner } : {}),
             ...(entry.reason ? { reason: entry.reason } : {}),
           });

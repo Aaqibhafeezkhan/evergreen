@@ -1,4 +1,5 @@
-import type { Forecast } from "./forecast.js";
+import type { Forecast, ForecastEvent } from "./forecast.js";
+import { required } from "./required.js";
 
 /** How far ahead the forecast behind a countdown looks, in months. */
 export const COUNTDOWN_WINDOW_MONTHS = 24;
@@ -69,6 +70,15 @@ export function formatCountdown(remainingSeconds: number): string {
   return `${days}d ${pad(Math.floor((remainingSeconds % DAY_SECONDS) / 3600))}h ${pad(Math.floor((remainingSeconds % 3600) / 60))}m ${pad(remainingSeconds % 60)}s`;
 }
 
+/** A forecast event that still affects a finding in this repository, so its first finding is there. */
+interface AffectingEvent extends ForecastEvent {
+  findings: [ForecastEvent["findings"][number], ...ForecastEvent["findings"][number][]];
+}
+
+function affectsRepository(event: ForecastEvent): event is AffectingEvent {
+  return event.findings.length > 0;
+}
+
 /**
  * One row per subject in the forecast that affects a finding in the scanned repository, earliest deadline first.
  * Rows for the same subject are folded into the earliest one, and `limit` keeps the soonest.
@@ -76,7 +86,7 @@ export function formatCountdown(remainingSeconds: number): string {
 export function buildCountdownRows(forecast: Forecast, options: CountdownRowsOptions): CountdownRow[] {
   const events = forecast.groups
     .flatMap((group) => group.events)
-    .filter((event) => event.findings.length > 0)
+    .filter(affectsRepository)
     .sort(
       (left, right) =>
         left.date.localeCompare(right.date) ||
@@ -88,7 +98,7 @@ export function buildCountdownRows(forecast: Forecast, options: CountdownRowsOpt
   for (const event of events) {
     if (seen.has(event.title)) continue;
     seen.add(event.title);
-    const finding = event.findings[0]!;
+    const finding = required(event.findings[0], "affecting finding");
     rows.push({
       subject: event.title,
       deadline: event.date,
@@ -121,9 +131,9 @@ export function renderCountdown(rows: readonly CountdownRow[], options: Countdow
   const subjectWidth = Math.max(...rows.map((row) => row.subject.length));
   const durationWidth = Math.max(...durations.map((duration) => duration.length));
   const lines = [header, ""];
-  rows.forEach((row, index) => {
+  rows.forEach((row) => {
     lines.push(
-      `${row.subject.padEnd(subjectWidth)}  ${renderBar(row.remainingSeconds, width, options.color === true)}  ${durations[index]!.padStart(durationWidth)}`,
+      `${row.subject.padEnd(subjectWidth)}  ${renderBar(row.remainingSeconds, width, options.color === true)}  ${formatCountdown(row.remainingSeconds).padStart(durationWidth)}`,
     );
   });
   return lines.join("\n");

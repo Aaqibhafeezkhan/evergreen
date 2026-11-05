@@ -1,6 +1,7 @@
 import type { Finding, ScanResult, Severity } from "./domain.js";
 import { isIsoDate } from "./registry.js";
 import type { RegistryV2Rule } from "./registry.js";
+import { required } from "./required.js";
 
 export function addDays(date: string, days: number): string {
   const result = new Date(`${date}T00:00:00Z`);
@@ -52,6 +53,9 @@ export interface Forecast {
 const order = (left: ForecastEvent, right: ForecastEvent) =>
   left.date.localeCompare(right.date) || left.ruleId.localeCompare(right.ruleId);
 
+/** A registry rule with the dated end of life the forecast places on the calendar. */
+type DatedRule = RegistryV2Rule & { deadline: string };
+
 /**
  * Lists what reaches a dated end of life between `today` and `months` later. Only events that carry a date are
  * listed; nothing is estimated. Reads no clock: the caller passes the day, so output is deterministic.
@@ -78,9 +82,9 @@ export function buildForecast(
     }));
 
   const events: ForecastEvent[] = rules
-    .filter((rule) => inWindow(rule.deadline))
+    .filter((rule): rule is DatedRule => inWindow(rule.deadline))
     .map((rule) => ({
-      date: rule.deadline!,
+      date: rule.deadline,
       ruleId: rule.id,
       ecosystem: rule.ecosystem,
       title: rule.title,
@@ -90,7 +94,7 @@ export function buildForecast(
     }));
   const known = new Set(rules.map((rule) => rule.id));
   for (const [ruleId, findings] of findingsByRule) {
-    const first = findings[0]!;
+    const first = required(findings[0], "finding for the rule");
     if (known.has(ruleId) || !inWindow(first.deadline)) continue;
     events.push({
       date: first.deadline,

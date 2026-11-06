@@ -41,11 +41,13 @@
    "sources": [
     {
      "title": "Node 20 is no longer available in GitHub Actions",
-     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/"
+     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "actions/cache runtime and service guidance",
-     "url": "https://github.com/actions/cache#whats-new"
+     "url": "https://github.com/actions/cache#whats-new",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "github-actions",
@@ -91,11 +93,13 @@
    "sources": [
     {
      "title": "Node 20 is no longer available in GitHub Actions",
-     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/"
+     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "actions/checkout runtime guidance",
-     "url": "https://github.com/actions/checkout#checkout-v5"
+     "url": "https://github.com/actions/checkout#checkout-v5",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "github-actions",
@@ -141,11 +145,13 @@
    "sources": [
     {
      "title": "Node 20 is no longer available in GitHub Actions",
-     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/"
+     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "Deprecation notice for artifact actions v3",
-     "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/"
+     "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "github-actions",
@@ -191,11 +197,13 @@
    "sources": [
     {
      "title": "Node 20 is no longer available in GitHub Actions",
-     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/"
+     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "actions/setup-node v5 runtime guidance",
-     "url": "https://github.com/actions/setup-node#breaking-changes-in-v5"
+     "url": "https://github.com/actions/setup-node#breaking-changes-in-v5",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "github-actions",
@@ -241,11 +249,13 @@
    "sources": [
     {
      "title": "Node 20 is no longer available in GitHub Actions",
-     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/"
+     "url": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "Deprecation notice for artifact actions v3",
-     "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/"
+     "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "github-actions",
@@ -301,7 +311,8 @@
    "sources": [
     {
      "title": "Node.js Release Working Group schedule",
-     "url": "https://github.com/nodejs/Release/blob/main/schedule.json"
+     "url": "https://github.com/nodejs/Release/blob/main/schedule.json",
+     "accessedAt": "2026-10-17"
     }
    ],
    "detector": "npm"
@@ -356,7 +367,8 @@
    "sources": [
     {
      "title": "Node.js Release Working Group schedule",
-     "url": "https://github.com/nodejs/Release/blob/main/schedule.json"
+     "url": "https://github.com/nodejs/Release/blob/main/schedule.json",
+     "accessedAt": "2026-10-17"
     }
    ],
    "detector": "npm"
@@ -411,7 +423,8 @@
    "sources": [
     {
      "title": "Node.js Release Working Group schedule",
-     "url": "https://github.com/nodejs/Release/blob/main/schedule.json"
+     "url": "https://github.com/nodejs/Release/blob/main/schedule.json",
+     "accessedAt": "2026-10-17"
     }
    ],
    "detector": "npm"
@@ -466,7 +479,8 @@
    "sources": [
     {
      "title": "Node.js Release Working Group schedule",
-     "url": "https://github.com/nodejs/Release/blob/main/schedule.json"
+     "url": "https://github.com/nodejs/Release/blob/main/schedule.json",
+     "accessedAt": "2026-10-17"
     }
    ],
    "detector": "npm"
@@ -521,7 +535,8 @@
    "sources": [
     {
      "title": "Node.js Release Working Group schedule",
-     "url": "https://github.com/nodejs/Release/blob/main/schedule.json"
+     "url": "https://github.com/nodejs/Release/blob/main/schedule.json",
+     "accessedAt": "2026-10-17"
     }
    ],
    "detector": "npm"
@@ -581,7 +596,8 @@
    "sources": [
     {
      "title": "Node.js end-of-life releases",
-     "url": "https://nodejs.org/en/about/eol"
+     "url": "https://nodejs.org/en/about/eol",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "npm"
@@ -630,7 +646,8 @@
    "sources": [
     {
      "title": "left-pad package deprecation notice",
-     "url": "https://www.npmjs.com/package/left-pad"
+     "url": "https://www.npmjs.com/package/left-pad",
+     "accessedAt": "2026-10-13"
     }
    ],
    "usages": [
@@ -714,11 +731,13 @@
    "sources": [
     {
      "title": "node-sass package deprecation notice",
-     "url": "https://www.npmjs.com/package/node-sass"
+     "url": "https://www.npmjs.com/package/node-sass",
+     "accessedAt": "2026-10-30"
     },
     {
      "title": "node-sass registry metadata",
-     "url": "https://registry.npmjs.org/node-sass"
+     "url": "https://registry.npmjs.org/node-sass",
+     "accessedAt": "2026-10-30"
     }
    ],
    "usages": [],
@@ -780,7 +799,8 @@
    "sources": [
     {
      "title": "Node Sass is end-of-life",
-     "url": "https://sass-lang.com/blog/node-sass-is-end-of-life/"
+     "url": "https://sass-lang.com/blog/node-sass-is-end-of-life/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "usages": [],
@@ -842,7 +862,8 @@
    "sources": [
     {
      "title": "request package deprecation notice",
-     "url": "https://www.npmjs.com/package/request"
+     "url": "https://www.npmjs.com/package/request",
+     "accessedAt": "2026-10-13"
     }
    ],
    "usages": [
@@ -932,7 +953,8 @@
    "sources": [
     {
      "title": "django-nose project notice",
-     "url": "https://pypi.org/project/django-nose/"
+     "url": "https://pypi.org/project/django-nose/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "usages": [],
@@ -997,7 +1019,8 @@
    "sources": [
     {
      "title": "nose note to users",
-     "url": "https://nose.readthedocs.io/en/latest/"
+     "url": "https://nose.readthedocs.io/en/latest/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "usages": [
@@ -1078,7 +1101,8 @@
    "sources": [
     {
      "title": "Archived PyCrypto repository warning",
-     "url": "https://github.com/pycrypto/pycrypto"
+     "url": "https://github.com/pycrypto/pycrypto",
+     "accessedAt": "2026-10-16"
     }
    ],
    "usages": [
@@ -1156,11 +1180,13 @@
    "sources": [
     {
      "title": "Status of Python versions",
-     "url": "https://devguide.python.org/versions/"
+     "url": "https://devguide.python.org/versions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "PEP 596 — Python 3.9 release schedule",
-     "url": "https://peps.python.org/pep-0596/"
+     "url": "https://peps.python.org/pep-0596/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "python",
@@ -1215,11 +1241,13 @@
    "sources": [
     {
      "title": "Status of Python versions",
-     "url": "https://devguide.python.org/versions/"
+     "url": "https://devguide.python.org/versions/",
+     "accessedAt": "2026-10-16"
     },
     {
      "title": "PEP 596 — Python 3.9 release schedule",
-     "url": "https://peps.python.org/pep-0596/"
+     "url": "https://peps.python.org/pep-0596/",
+     "accessedAt": "2026-10-16"
     }
    ],
    "detector": "python",

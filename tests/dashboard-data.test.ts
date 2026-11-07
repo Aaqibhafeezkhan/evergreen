@@ -97,9 +97,11 @@ test("the evidence counts agree with the reviewed corpus", () => {
   // The Ruby and PHP stable corpus added 48 and 96 repositories; the new repositories carry the other detectors' findings too (GitHub Actions, npm, C/C++, database, Terraform), recorded from a full offline scan.
   // The pinned Go, Java, and Rust workflows add 36 command findings in seven repositories (#2447).
   // The Swift and .NET stable promotion (#1900) added 63 Swift corpus repositories; they also carry GitHub Actions, Ruby, npm, Node.js, container, Android, Rust, and .NET findings recorded from a full offline scan.
+  // Issue #1897 added shell and cpp corpus pins; their workflows and project files also raise
+  // GitHub Actions and .NET evidence. Cpp and shell now meet the Supported zero-finding gates.
   assert.deepEqual(counts(evidence["github-actions"]!), {
-    repositoriesWithFindings: 355,
-    expectedFindings: 2212,
+    repositoriesWithFindings: 363,
+    expectedFindings: 2251,
     zeroFindingRepositories: 4,
   });
   assert.deepEqual(counts(evidence["npm"]!), {
@@ -108,8 +110,8 @@ test("the evidence counts agree with the reviewed corpus", () => {
     zeroFindingRepositories: 18,
   });
   assert.deepEqual(counts(evidence["dotnet"]!), {
-    repositoriesWithFindings: 55,
-    expectedFindings: 547,
+    repositoriesWithFindings: 63,
+    expectedFindings: 581,
     zeroFindingRepositories: 9,
   });
   assert.deepEqual(counts(evidence["php"]!), {
@@ -130,7 +132,7 @@ test("the evidence counts agree with the reviewed corpus", () => {
   assert.deepEqual(counts(evidence["cpp"]!), {
     repositoriesWithFindings: 20,
     expectedFindings: 242,
-    zeroFindingRepositories: 1,
+    zeroFindingRepositories: 4,
   });
   assert.deepEqual(counts(evidence["ci-images"]!), {
     repositoriesWithFindings: 29,
@@ -153,9 +155,9 @@ test("the evidence counts agree with the reviewed corpus", () => {
     zeroFindingRepositories: 1,
   });
   assert.deepEqual(counts(evidence["shell"]!), {
-    repositoriesWithFindings: 5,
-    expectedFindings: 12,
-    zeroFindingRepositories: 2,
+    repositoriesWithFindings: 29,
+    expectedFindings: 102,
+    zeroFindingRepositories: 9,
   });
 });
 

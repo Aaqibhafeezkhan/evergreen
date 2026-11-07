@@ -96,12 +96,11 @@ test("the evidence counts agree with the reviewed corpus", () => {
   // Workflow-command rules add three set-output findings in actions/toolkit and dai-shi/reactive-react-redux, and 10 more set-output and set-env findings in six repositories already counted.
   // The Ruby and PHP stable corpus added 48 and 96 repositories; the new repositories carry the other detectors' findings too (GitHub Actions, npm, C/C++, database, Terraform), recorded from a full offline scan.
   // The pinned Go, Java, and Rust workflows add 36 command findings in seven repositories (#2447).
-  // The Swift and .NET stable promotion (#1900) added 63 Swift corpus repositories; they also carry GitHub Actions, Ruby, npm, Node.js, container, Android, Rust, and .NET findings recorded from a full offline scan.
-  // Issue #1897 added shell and cpp corpus pins; their workflows and project files also raise
-  // GitHub Actions and .NET evidence. Cpp and shell now meet the Supported zero-finding gates.
+  // The Java and Scala stable corpus (#1896), Swift/.NET (#1900), and C/C++/Shell (#1897)
+  // promotions together raise cross-detector evidence counted here.
   assert.deepEqual(counts(evidence["github-actions"]!), {
-    repositoriesWithFindings: 363,
-    expectedFindings: 2251,
+    repositoriesWithFindings: 381,
+    expectedFindings: 2444,
     zeroFindingRepositories: 4,
   });
   assert.deepEqual(counts(evidence["npm"]!), {
@@ -110,18 +109,18 @@ test("the evidence counts agree with the reviewed corpus", () => {
     zeroFindingRepositories: 18,
   });
   assert.deepEqual(counts(evidence["dotnet"]!), {
-    repositoriesWithFindings: 63,
-    expectedFindings: 581,
+    repositoriesWithFindings: 64,
+    expectedFindings: 586,
     zeroFindingRepositories: 9,
   });
   assert.deepEqual(counts(evidence["php"]!), {
-    repositoriesWithFindings: 34,
-    expectedFindings: 70,
+    repositoriesWithFindings: 35,
+    expectedFindings: 72,
     zeroFindingRepositories: 53,
   });
   assert.deepEqual(counts(evidence["ruby"]!), {
-    repositoriesWithFindings: 57,
-    expectedFindings: 257,
+    repositoriesWithFindings: 59,
+    expectedFindings: 272,
     zeroFindingRepositories: 23,
   });
   assert.deepEqual(counts(evidence["swift"]!), {
@@ -130,8 +129,8 @@ test("the evidence counts agree with the reviewed corpus", () => {
     zeroFindingRepositories: 15,
   });
   assert.deepEqual(counts(evidence["cpp"]!), {
-    repositoriesWithFindings: 20,
-    expectedFindings: 242,
+    repositoriesWithFindings: 21,
+    expectedFindings: 247,
     zeroFindingRepositories: 4,
   });
   assert.deepEqual(counts(evidence["ci-images"]!), {
@@ -145,8 +144,8 @@ test("the evidence counts agree with the reviewed corpus", () => {
     zeroFindingRepositories: 3,
   });
   assert.deepEqual(counts(evidence["terraform"]!), {
-    repositoriesWithFindings: 14,
-    expectedFindings: 472,
+    repositoriesWithFindings: 15,
+    expectedFindings: 482,
     zeroFindingRepositories: 1,
   });
   assert.deepEqual(counts(evidence["database"]!), {
@@ -158,6 +157,16 @@ test("the evidence counts agree with the reviewed corpus", () => {
     repositoriesWithFindings: 29,
     expectedFindings: 102,
     zeroFindingRepositories: 9,
+  });
+  assert.deepEqual(counts(evidence["java"]!), {
+    repositoriesWithFindings: 21,
+    expectedFindings: 71,
+    zeroFindingRepositories: 4,
+  });
+  assert.deepEqual(counts(evidence["scala"]!), {
+    repositoriesWithFindings: 51,
+    expectedFindings: 77,
+    zeroFindingRepositories: 12,
   });
 });
 

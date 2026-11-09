@@ -5,7 +5,7 @@ import { join, resolve } from "node:path";
 import { test, after } from "node:test";
 
 import type { Finding, ScanResult, Severity } from "../src/domain.js";
-import type { Forecast, ForecastEvent } from "../src/forecast.js";
+import type { Forecast, ForecastEvent } from "@velella/ebb/forecast";
 import { MERMAID_MAX_BARS, renderForecastMermaid, renderScanMermaid } from "../src/mermaid.js";
 import { runCli } from "./cli-runner.js";
 
@@ -59,7 +59,7 @@ const forecastOf = (events: ForecastEvent[], today = asOf): Forecast => {
     months.set(month, [...(months.get(month) ?? []), item]);
   }
   return {
-    schemaVersion: "evergreen.forecast.v1",
+    schemaVersion: "ebb.forecast.v1",
     root: ".",
     today,
     until: "2027-10-30",

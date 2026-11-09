@@ -3,8 +3,8 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { test } from "node:test";
 
-import { legacyRule, loadRegistryRules } from "../src/registry.js";
-import type { RegistryV2 } from "../src/registry.js";
+import { legacyRule, loadRegistryRules } from "@velella/ebb/registry";
+import type { RegistryV2 } from "@velella/ebb/registry";
 import { isDeprecationRule, RegistryValidationError, validateRegistry } from "../src/sdk.js";
 import type { RegistryDefinition } from "../src/sdk.js";
 
@@ -52,7 +52,7 @@ test("loads v1 registries exactly as before", () => {
 test("rejects other schema versions and a missing version", () => {
   assert.throws(
     () => loadRegistryRules({ ...v1, schemaVersion: "evergreen.pypi-registry.v1" }, definition),
-    /expected evergreen\.npm-registry\.v1 or evergreen\.registry\.v2/,
+    /expected evergreen\.npm-registry\.v1 or ebb\.registry\.v2/,
   );
   assert.throws(() => loadRegistryRules({ rules: [] }, definition), /Unsupported registry schema: missing/);
 });

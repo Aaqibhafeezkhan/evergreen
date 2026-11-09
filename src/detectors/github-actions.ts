@@ -4,12 +4,12 @@ import { resolve } from "node:path";
 import { workflowCommandFindings, workflowCommandPrefix } from "./github-actions-workflow-commands.js";
 import { relativePosix } from "../paths.js";
 import type { DeprecationRule } from "../domain.js";
-import { loadDataFile } from "../data-source.js";
+import { loadDataFile } from "@velella/ebb/data-source";
 import { DETECTOR_API_VERSION, isDeprecationRule } from "../sdk.js";
 import { ruleFinding } from "../rule-finding.js";
-import { loadRegistryRules, validateRegistryV2 } from "../registry.js";
-import type { RegistryV2Rule } from "../registry.js";
-import { versContains } from "../vers.js";
+import { loadRegistryRules, validateRegistryV2 } from "@velella/ebb/registry";
+import type { RegistryV2Rule } from "@velella/ebb/registry";
+import { versContains } from "@velella/ebb/vers";
 import { classifyDotnetVersion, setupDotnetVersions } from "./github-actions-dotnet.js";
 import { classifyNodeVersion, setupNodeVersions } from "./github-actions-node.js";
 import type {
@@ -27,7 +27,7 @@ export interface GitHubActionRule extends DeprecationRule {
 }
 
 interface GitHubActionsShaRegistry {
-  schemaVersion: "evergreen.github-actions-shas.v1";
+  schemaVersion: "ebb.github-actions-shas.v1";
   actions: Record<string, Record<string, string>>;
 }
 
@@ -80,7 +80,7 @@ async function loadRegistry(): Promise<GitHubActionRule[]> {
 async function loadShaRegistry(): Promise<Map<string, ReadonlyMap<string, string>>> {
   const value = (await loadDataFile("registry/github-actions-shas.json")) as GitHubActionsShaRegistry;
   if (
-    value.schemaVersion !== "evergreen.github-actions-shas.v1" ||
+    value.schemaVersion !== "ebb.github-actions-shas.v1" ||
     !value.actions ||
     typeof value.actions !== "object" ||
     Array.isArray(value.actions)

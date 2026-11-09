@@ -8,7 +8,7 @@ import { promisify } from "node:util";
 
 import { parse } from "yaml";
 
-import type { RegistryV2, RegistryV2Rule } from "../src/registry.js";
+import type { RegistryV2, RegistryV2Rule } from "@velella/ebb/registry";
 import {
   BUILD_TIME_REFERENCE_PATHS,
   LOOKUP_PAGE,
@@ -58,7 +58,7 @@ const rule = (overrides: Partial<RegistryV2Rule> = {}): RegistryV2Rule => ({
 });
 
 const registry = (rules: RegistryV2Rule[], maxReviewAgeDays?: number): RegistryV2 => ({
-  schemaVersion: "evergreen.registry.v2",
+  schemaVersion: "ebb.registry.v2",
   ecosystem: "demo",
   ...(maxReviewAgeDays ? { freshness: { maxReviewAgeDays } } : {}),
   rules,
@@ -98,7 +98,7 @@ test("every bundled rule has a page and a JSON twin, and the committed files mat
   assert.deepEqual(await drift(files, ".", { skipContentCheck: BUILD_TIME_REFERENCE_PATHS }), []);
 });
 
-test("a page links its JSON twin, and the twin is the evergreen.rule.v1 document", () => {
+test("a page links its JSON twin, and the twin is the ebb.rule.v1 document", () => {
   const fixture = rule({
     sources: [{ title: "Demo lifecycle", url: "https://example.com/demo", accessedAt: "2026-10-03" }],
     migration: {
@@ -115,7 +115,7 @@ test("a page links its JSON twin, and the twin is the evergreen.rule.v1 document
   const contents = renderRuleData(fixture);
   assert.ok(contents.endsWith("\n"));
   const twin = JSON.parse(contents) as Record<string, unknown>;
-  assert.equal(twin.schemaVersion, "evergreen.rule.v1");
+  assert.equal(twin.schemaVersion, "ebb.rule.v1");
   assert.equal(twin.id, fixture.id);
   assert.equal(twin.ecosystem, fixture.ecosystem);
   assert.equal(twin.purl, fixture.purl);
@@ -131,10 +131,10 @@ test("a page links its JSON twin, and the twin is the evergreen.rule.v1 document
   assert.deepEqual(twin.migration, fixture.migration);
 });
 
-test("every published rule twin is a valid evergreen.rule.v1 document", async () => {
+test("every published rule twin is a valid ebb.rule.v1 document", async () => {
   const { Ajv2020 } = await import("ajv/dist/2020.js");
   const validate = new Ajv2020({ allErrors: true }).compile(
-    JSON.parse(await readFile(resolve("schemas/rule.v1.schema.json"), "utf8")) as object,
+    JSON.parse(await readFile(resolve("node_modules/@velella/ebb/schemas/rule.v1.schema.json"), "utf8")) as object,
   );
   for (const item of await loadRegistries()) {
     for (const entry of item.rules) {
@@ -574,7 +574,7 @@ test("only v2 rule registries are read from the registry directory", async () =>
   await writeFile(join(root, "demo.json"), JSON.stringify(registry([rule()])));
   await writeFile(
     join(root, "sources.lock.json"),
-    JSON.stringify({ schemaVersion: "evergreen.source-lock.v1", sources: {} }),
+    JSON.stringify({ schemaVersion: "ebb.source-lock.v1", sources: {} }),
   );
   await writeFile(join(root, "shas.json"), JSON.stringify({ schemaVersion: "other", entries: [] }));
   assert.deepEqual(
@@ -689,8 +689,8 @@ async function checkIn(directory: string): Promise<{ code: number; stderr: strin
 test("--check passes on fresh pages and fails, naming the page, when one drifts", async () => {
   const root = await mkdtemp(join(tmpdir(), "evergreen-reference-cli-"));
   temporaryRoots.push(root);
-  await mkdir(join(root, "registry"), { recursive: true });
-  await writeFile(join(root, "registry/demo.json"), JSON.stringify(registry([rule()])));
+  await mkdir(join(root, "node_modules/@velella/ebb/registry"), { recursive: true });
+  await writeFile(join(root, "node_modules/@velella/ebb/registry/demo.json"), JSON.stringify(registry([rule()])));
   await write(buildFiles([registry([rule()])]), root);
   assert.deepEqual(await checkIn(root), { code: 0, stderr: "" });
 
@@ -701,7 +701,7 @@ test("--check passes on fresh pages and fails, naming the page, when one drifts"
 
   // The registry changes, but the pages are not regenerated.
   await writeFile(
-    join(root, "registry/demo.json"),
+    join(root, "node_modules/@velella/ebb/registry/demo.json"),
     JSON.stringify(registry([rule({ summary: "A different claim." })])),
   );
   const drifted = await checkIn(root);
@@ -712,7 +712,7 @@ test("--check passes on fresh pages and fails, naming the page, when one drifts"
   assert.doesNotMatch(drifted.stderr, /docs\/sitemap\.xml|docs\/rules\/index\.md/);
 
   // A rule is removed: its page and its JSON twin are stale.
-  await writeFile(join(root, "registry/demo.json"), JSON.stringify(registry([])));
+  await writeFile(join(root, "node_modules/@velella/ebb/registry/demo.json"), JSON.stringify(registry([])));
   assert.match((await checkIn(root)).stderr, /stale: docs\/rules\/demo\.thing\.eol-1\.md/);
   assert.match((await checkIn(root)).stderr, /stale: docs\/rules\/demo\.thing\.eol-1\.json/);
 });

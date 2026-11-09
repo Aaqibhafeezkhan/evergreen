@@ -8,7 +8,7 @@ import { promisify } from "node:util";
 
 import { Ajv2020 } from "ajv/dist/2020.js";
 
-import type { RegistryV2, RegistryV2Rule } from "../src/registry.js";
+import type { RegistryV2, RegistryV2Rule } from "@velella/ebb/registry";
 import {
   API_DIRECTORY,
   PRODUCTS_DIRECTORY,
@@ -48,7 +48,7 @@ const rule = (id: string, overrides: Partial<RegistryV2Rule> = {}): RegistryV2Ru
 });
 
 const registry = (ecosystem: string, rules: RegistryV2Rule[]): RegistryV2 => ({
-  schemaVersion: "evergreen.registry.v2",
+  schemaVersion: "ebb.registry.v2",
   ecosystem,
   rules,
 });
@@ -60,8 +60,12 @@ function documentAt(documents: readonly ApiDocumentFile[], path: string): ApiDoc
 }
 
 async function apiValidator() {
-  const apiSchema = JSON.parse(await readFile(resolve("schemas/api-product.v1.schema.json"), "utf8")) as object;
-  const registrySchema = JSON.parse(await readFile(resolve("schemas/registry.v2.schema.json"), "utf8")) as object;
+  const apiSchema = JSON.parse(
+    await readFile(resolve("node_modules/@velella/ebb/schemas/api-product.v1.schema.json"), "utf8"),
+  ) as object;
+  const registrySchema = JSON.parse(
+    await readFile(resolve("node_modules/@velella/ebb/schemas/registry.v2.schema.json"), "utf8"),
+  ) as object;
   const ajv = new Ajv2020({ allErrors: true });
   ajv.addSchema(registrySchema);
   return ajv.compile(apiSchema);
@@ -99,7 +103,7 @@ test("emits an index, one document per product PURL, one per PURL type, one per 
   );
 
   const index = documentAt(documents, `${API_DIRECTORY}/index.json`).document as ApiIndex;
-  assert.equal(index.schemaVersion, "evergreen.api-index.v1");
+  assert.equal(index.schemaVersion, "ebb.api-index.v1");
   assert.equal(index.recent, "recent.json");
   assert.equal(index.rules, 4);
   assert.equal(index.latestReview, "2026-10-09");
@@ -114,7 +118,7 @@ test("emits an index, one document per product PURL, one per PURL type, one per 
   assert.deepEqual(index.types, [{ type: "npm", products: 2, rules: 4, path: "types/npm.json" }]);
 
   const product = documentAt(documents, `${PRODUCTS_DIRECTORY}/npm-b.json`).document as ApiProduct;
-  assert.equal(product.schemaVersion, "evergreen.api-product.v1");
+  assert.equal(product.schemaVersion, "ebb.api-product.v1");
   assert.equal(product.purl, "pkg:npm/b");
   assert.deepEqual(product.ecosystems, ["npm", "osv"], "rules from several ecosystems share one product");
   assert.deepEqual(
@@ -124,7 +128,7 @@ test("emits an index, one document per product PURL, one per PURL type, one per 
   assert.equal(product.latestReview, "2026-10-09");
 
   const type = documentAt(documents, `${TYPES_DIRECTORY}/npm.json`).document as ApiType;
-  assert.equal(type.schemaVersion, "evergreen.api-type.v1");
+  assert.equal(type.schemaVersion, "ebb.api-type.v1");
   assert.equal(type.type, "npm");
   assert.equal(type.rules, 4);
   assert.deepEqual(
@@ -133,14 +137,14 @@ test("emits an index, one document per product PURL, one per PURL type, one per 
   );
 
   const ruleDocument = documentAt(documents, `${RULES_DIRECTORY}/npm.b.new.json`).document as ApiRule;
-  assert.equal(ruleDocument.schemaVersion, "evergreen.api-rule.v1");
+  assert.equal(ruleDocument.schemaVersion, "ebb.api-rule.v1");
   assert.equal(ruleDocument.productId, "npm-b");
   assert.equal(ruleDocument.productPath, "products/npm-b.json");
   assert.equal(ruleDocument.rule.id, "npm.b.new");
   assert.equal(ruleDocument.rule.purl, "pkg:npm/b");
 
   const recent = documentAt(documents, `${API_DIRECTORY}/recent.json`).document as ApiRecent;
-  assert.equal(recent.schemaVersion, "evergreen.api-recent.v1");
+  assert.equal(recent.schemaVersion, "ebb.api-recent.v1");
   assert.deepEqual(
     recent.changes.map((entry) => entry.ruleId),
     ["npm.b.new", "npm.a.one", "npm.b.old", "osv.b"],
@@ -188,7 +192,7 @@ test("the recent file keeps the newest rules by review date, capped at the limit
 });
 
 test("the same registry always renders the same bytes, independent of input order and key order", async () => {
-  const registries = await loadRegistries(resolve("registry"));
+  const registries = await loadRegistries(resolve("node_modules/@velella/ebb/registry"));
   const first = buildFiles(registries);
   const second = buildFiles(registries);
   assert.deepEqual(second, first);
@@ -206,7 +210,7 @@ test("the same registry always renders the same bytes, independent of input orde
 });
 
 test("every generated document matches schemas/api-product.v1.schema.json", async () => {
-  const documents = buildDocuments(await loadRegistries(resolve("registry")));
+  const documents = buildDocuments(await loadRegistries(resolve("node_modules/@velella/ebb/registry")));
   await validateDocuments(documents, resolve("."));
 
   const validate = await apiValidator();
@@ -223,7 +227,7 @@ test("every generated document matches schemas/api-product.v1.schema.json", asyn
 });
 
 test("the generated API matches the registry schemas and covers every product", async () => {
-  const registries = await loadRegistries(resolve("registry"));
+  const registries = await loadRegistries(resolve("node_modules/@velella/ebb/registry"));
   const files = buildFiles(registries);
   assert.ok(isWellFormedDataApi(files));
   await validateDocuments(buildDocuments(registries), resolve("."));
@@ -257,12 +261,14 @@ test("the generated API matches the registry schemas and covers every product", 
 test("the CLI rebuilds identically, removes stale files, and --check confirms the API is buildable", async () => {
   const root = await mkdtemp(join(tmpdir(), "evergreen-data-api-"));
   temporaryRoots.push(root);
-  await mkdir(join(root, "registry"), { recursive: true });
-  await cp(resolve("schemas"), join(root, "schemas"), { recursive: true });
+  await mkdir(join(root, "node_modules/@velella/ebb/registry"), { recursive: true });
+  await cp(resolve("node_modules/@velella/ebb/schemas"), join(root, "node_modules/@velella/ebb/schemas"), {
+    recursive: true,
+  });
   const demo = registry("demo", [
     rule("demo.one", { ecosystem: "demo", purl: "pkg:generic/demo", vers: "vers:semver/<2.0.0" }),
   ]);
-  await writeFile(join(root, "registry", "demo.json"), `${JSON.stringify(demo, null, 2)}\n`);
+  await writeFile(join(root, "node_modules/@velella/ebb/registry", "demo.json"), `${JSON.stringify(demo, null, 2)}\n`);
 
   const cli = resolve("dist/tools/build-data-api.js");
   const run = (...args: string[]) => execute(process.execPath, [cli, "--root", root, ...args]);
@@ -272,13 +278,16 @@ test("the CLI rebuilds identically, removes stale files, and --check confirms th
   const index = await readFile(join(root, API_DIRECTORY, "index.json"), "utf8");
   await run();
   assert.equal(await readFile(join(root, API_DIRECTORY, "index.json"), "utf8"), index);
-  assert.deepEqual(await drift(buildFiles(await loadRegistries(join(root, "registry"))), root), []);
+  assert.deepEqual(
+    await drift(buildFiles(await loadRegistries(join(root, "node_modules/@velella/ebb/registry"))), root),
+    [],
+  );
 
   const stale = join(root, PRODUCTS_DIRECTORY, "stale.json");
   await writeFile(stale, "{}\n");
   assert.ok(
-    (await drift(buildFiles(await loadRegistries(join(root, "registry"))), root)).some((problem) =>
-      problem.includes("stale.json"),
+    (await drift(buildFiles(await loadRegistries(join(root, "node_modules/@velella/ebb/registry"))), root)).some(
+      (problem) => problem.includes("stale.json"),
     ),
   );
   await run();

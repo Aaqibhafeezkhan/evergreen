@@ -7,7 +7,10 @@ import { join } from "node:path";
  * fast (`evergreen prompt`) can locate the scan cache without loading the data and signature code.
  */
 
-/** Where downloaded data lives: `EVERGREEN_DATA_DIR`, else the platform's cache directory. */
+/**
+ * Evergreen's own cache directory (scan cache, usage log): `EVERGREEN_DATA_DIR`, else the platform's cache directory.
+ * Downloaded lifecycle data is Ebb's and lives in Ebb's cache directory instead.
+ */
 export function defaultCacheDirectory(
   env: NodeJS.ProcessEnv = process.env,
   platform: NodeJS.Platform = process.platform,

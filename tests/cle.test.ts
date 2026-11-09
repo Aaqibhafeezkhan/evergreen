@@ -5,10 +5,10 @@ import { resolve } from "node:path";
 import { test } from "node:test";
 import { Ajv2020 } from "ajv/dist/2020.js";
 
-import { BUNDLED_ECOSYSTEMS } from "../src/data-bundle.js";
-import type { ActiveData } from "../src/data-source.js";
-import { CLE_SCHEMA, exportActiveCle, exportCle } from "../src/export/cle.js";
-import type { RegistryV2Rule } from "../src/registry.js";
+import { BUNDLED_ECOSYSTEMS } from "@velella/ebb/data-bundle";
+import type { ActiveData } from "@velella/ebb/data-source";
+import { CLE_SCHEMA, exportActiveCle, exportCle } from "@velella/ebb/export/cle";
+import type { RegistryV2Rule } from "@velella/ebb/registry";
 import { runCli } from "./cli-runner.js";
 
 const rule: RegistryV2Rule = {
@@ -105,7 +105,7 @@ test("CLE reads every ecosystem from the supplied active data, including rules a
       paths.push(path);
       const ecosystem = path.slice("registry/".length, -".json".length);
       return {
-        schemaVersion: "evergreen.registry.v2",
+        schemaVersion: "ebb.registry.v2",
         ecosystem,
         rules:
           ecosystem === "rust" ? [{ ...rule, ecosystem, purl: "pkg:cargo/example", vers: "vers:cargo/<2.0.0" }] : [],

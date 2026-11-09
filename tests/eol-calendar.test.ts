@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 
-import type { RegistryV2Rule } from "../src/registry.js";
+import type { RegistryV2Rule } from "@velella/ebb/registry";
 import {
   buildCalendar,
   buildWeeklyPost,
@@ -146,10 +146,10 @@ test("loads rules from a data bundle file", async () => {
   try {
     const bundlePath = join(directory, "bundle.json");
     const fakeBundle = {
-      manifest: { schemaVersion: "evergreen.data-bundle.v1" },
+      manifest: { schemaVersion: "ebb.data-bundle.v1" },
       files: {
         "registry/demo.json": {
-          schemaVersion: "evergreen.registry.v2",
+          schemaVersion: "ebb.registry.v2",
           ecosystem: "demo",
           rules: [rule("b.bundle", "2026-12-01", "Bundle rule")],
         },

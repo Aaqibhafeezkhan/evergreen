@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { after, test } from "node:test";
 
 import type { Severity } from "../src/domain.js";
-import type { Forecast, ForecastEvent } from "../src/forecast.js";
+import type { Forecast, ForecastEvent } from "@velella/ebb/forecast";
 import { renderForecastSvg } from "../src/forecast-svg.js";
 import { runCli } from "./cli-runner.js";
 
@@ -33,7 +33,7 @@ const forecastOf = (events: ForecastEvent[]): Forecast => {
     months.set(month, [...(months.get(month) ?? []), item]);
   }
   return {
-    schemaVersion: "evergreen.forecast.v1",
+    schemaVersion: "ebb.forecast.v1",
     root: ".",
     today: "2026-11-01",
     until: "2027-10-31",

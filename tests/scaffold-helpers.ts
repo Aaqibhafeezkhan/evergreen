@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { cp, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { promisify } from "node:util";
@@ -13,13 +13,14 @@ async function newRoot(roots: string[]): Promise<string> {
 }
 
 /**
- * A throwaway copy of the parts of the repository a skeleton is checked against: `package.json`, `src/detectors` and
- * `registry`, which is all the checkout check and the collision scan read. A skeleton is written into this copy.
+ * A throwaway copy of the parts of the repository a skeleton is checked against: `package.json`, `src/detectors`, and
+ * the installed Ebb registries as `registry/`, which is all the checkout check and the collision scan read. A skeleton
+ * is written into this copy.
  */
 export async function scaffoldCheckout(roots: string[]): Promise<string> {
   const root = await newRoot(roots);
   await cp(resolve("src", "detectors"), join(root, "src", "detectors"), { recursive: true });
-  await cp(resolve("registry"), join(root, "registry"), { recursive: true });
+  await cp(resolve("node_modules/@velella/ebb/registry"), join(root, "registry"), { recursive: true });
   await writeFile(join(root, "package.json"), await readFile(resolve("package.json"), "utf8"));
   return root;
 }
@@ -35,14 +36,22 @@ export async function compileCheckout(roots: string[]): Promise<string> {
   const root = await newRoot(roots);
   await cp(resolve("src"), join(root, "src"), { recursive: true });
   await cp(resolve("tools", "scaffold"), join(root, "tools", "scaffold"), { recursive: true });
-  await cp(resolve("registry"), join(root, "registry"), { recursive: true });
-  await cp(resolve("data"), join(root, "data"), { recursive: true });
   await cp(resolve("schemas"), join(root, "schemas"), { recursive: true });
   await writeFile(join(root, "package.json"), await readFile(resolve("package.json"), "utf8"));
+  await writeFile(join(root, "tsconfig.base.json"), await readFile(resolve("tsconfig.base.json"), "utf8"));
   const tsconfig = JSON.parse(await readFile(resolve("tsconfig.json"), "utf8")) as { include: string[] };
   tsconfig.include = ["tests/**/*.ts"];
   await writeFile(join(root, "tsconfig.json"), JSON.stringify(tsconfig, null, 2));
-  await symlink(resolve("node_modules"), join(root, "node_modules"), "dir");
+  // The installed @velella/ebb is copied in as this checkout's own, so data a test adds under
+  // node_modules/@velella/ebb/registry is what Ebb reads; every other dependency links to this checkout's node_modules.
+  await mkdir(join(root, "node_modules", "@velella"), { recursive: true });
+  for (const entry of await readdir(resolve("node_modules"))) {
+    if (entry !== "@velella") await symlink(resolve("node_modules", entry), join(root, "node_modules", entry), "dir");
+  }
+  await cp(resolve("node_modules/@velella/ebb"), join(root, "node_modules/@velella/ebb"), {
+    recursive: true,
+    dereference: true,
+  });
   return root;
 }
 

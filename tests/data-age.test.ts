@@ -9,8 +9,9 @@ import { Ajv2020 } from "ajv/dist/2020.js";
 
 import { EvergreenAgentTools } from "../src/agent-tools.js";
 import { checkDependency } from "../src/check-dependency.js";
-import { buildDataBundle, serializeDataBundle } from "../src/data-bundle.js";
-import { BUNDLE_FILE, cachedBundleDirectory, configureActiveData, SIGNATURE_FILE } from "../src/data-source.js";
+import { VERSION } from "@velella/ebb/version";
+import { buildDataBundle, serializeDataBundle } from "@velella/ebb/data-bundle";
+import { BUNDLE_FILE, cachedBundleDirectory, configureActiveData, SIGNATURE_FILE } from "@velella/ebb/data-source";
 import { builtInDetectors } from "../src/detectors/index.js";
 import { scanRepository } from "../src/engine/index.js";
 import { renderCheckText, renderSarif, renderText } from "../src/reporters.js";
@@ -48,9 +49,9 @@ async function project(): Promise<string> {
 /** A cache with one old, "verified" bundle, pinned so that it is used whatever its age. */
 async function pinOldData(createdAt: string): Promise<string> {
   const root = await scratch("registry");
-  await cp(resolve("registry"), join(root, "registry"), { recursive: true });
+  await cp(resolve("node_modules/@velella/ebb/registry"), join(root, "registry"), { recursive: true });
   await writeFile(join(root, "package.json"), await readFile(resolve("package.json"), "utf8"));
-  const bundle = await buildDataBundle({ root, createdAt, minimumEvergreenVersion: "0.1.0" });
+  const bundle = await buildDataBundle({ root, createdAt, minimumEbbVersion: VERSION });
   const cache = await scratch("cache");
   const directory = cachedBundleDirectory(cache, bundle.manifest.version);
   await mkdir(directory, { recursive: true });
@@ -135,7 +136,9 @@ test("SARIF records which data was used without anything that changes with the c
 
 test("the CLI and the Action carry the data information too", async () => {
   const directory = await project();
-  const scanned = await runCli(["scan", directory, "--json"], { env: { EVERGREEN_DATA_DIR: await scratch("empty") } });
+  const scanned = await runCli(["scan", directory, "--json"], {
+    env: { EVERGREEN_DATA_DIR: await scratch("empty"), EBB_DATA_DIR: await scratch("empty") },
+  });
   const json = JSON.parse(scanned.stdout) as { data: { source: string } };
   assert.equal(json.data.source, "bundled");
   const checked = await runCli(["check", "pkg:npm/express", "--json"]);

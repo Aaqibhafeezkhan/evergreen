@@ -163,7 +163,6 @@ export interface AuditAdvisory {
 
 export interface QualityInput {
   files: FileMeasure[];
-  registryNonJson: string[];
   allowlist: Allowlist;
   /** Structural problems found while reading the allowlist. */
   allowlistProblems: Finding[];
@@ -181,7 +180,6 @@ const BOUNDARY_RULES = {
   engineNoDetectors: "engine-no-detectors",
   detectorsNoNetwork: "no-network",
   adaptersNoDetectors: "adapters-no-detectors",
-  registryJsonOnly: "registry-json-only",
 } as const;
 
 export const BOUNDARY_RULE_IDS: readonly string[] = Object.values(BOUNDARY_RULES);
@@ -812,9 +810,6 @@ export function evaluateQuality(input: QualityInput): Finding[] {
   for (const file of files) {
     for (const [rule, count] of file.boundary) boundaryCounts.set(`${file.path}\u0000${rule}`, count);
   }
-  for (const file of input.registryNonJson) {
-    boundaryCounts.set(`${file}\u0000${BOUNDARY_RULES.registryJsonOnly}`, 1);
-  }
   for (const [key, count] of boundaryCounts) {
     const [file, rule] = key.split("\u0000") as [string, string];
     const entry = boundaryEntries.get(key);
@@ -901,9 +896,8 @@ export async function readRepository(root: string, today: string, auditPath?: st
   for (const path of sourcePaths) {
     files.push(measureFile(path, await readFile(resolve(root, path), "utf8")));
   }
-  const registryNonJson = (await listFiles(root, "registry")).filter((path) => !path.endsWith(".json"));
   const { allowlist, problems } = parseAllowlist(JSON.parse(await readFile(resolve(root, ALLOWLIST_PATH), "utf8")));
-  const input: QualityInput = { files, registryNonJson, allowlist, allowlistProblems: problems, today };
+  const input: QualityInput = { files, allowlist, allowlistProblems: problems, today };
   if (auditPath) {
     input.audit = parseAudit(JSON.parse(await readFile(resolve(root, auditPath), "utf8")));
   }

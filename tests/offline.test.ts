@@ -10,16 +10,16 @@ import { promisify } from "node:util";
 
 import { EvergreenAgentTools } from "../src/agent-tools.js";
 import { checkDependency } from "../src/check-dependency.js";
-import { buildDataBundle, serializeDataBundle } from "../src/data-bundle.js";
-import { verifyArtifactSignature } from "../src/data-signature.js";
+import { buildDataBundle, serializeDataBundle } from "@velella/ebb/data-bundle";
+import { verifyArtifactSignature } from "@velella/ebb/data-signature";
 import {
   ACTIVE_FILE,
   BUNDLE_FILE,
   cachedBundleDirectory,
   configureActiveData,
   SIGNATURE_FILE,
-} from "../src/data-source.js";
-import { getDataStatus } from "../src/data-status.js";
+} from "@velella/ebb/data-source";
+import { getDataStatus } from "@velella/ebb/data-status";
 import { builtInDetectors } from "../src/detectors/index.js";
 import { scanRepository } from "../src/engine/index.js";
 
@@ -62,7 +62,6 @@ test("only the update command, the CLI entry point, and the Action's GitHub API 
     "src/action-fix-pr.ts",
     "src/action-tracking-issue.ts",
     "src/commands/data.ts",
-    "src/data-update.ts",
     "src/pr-comment.ts",
   ]);
   // The data command only imports `http` to configure proxy support inside `data update`.
@@ -135,9 +134,9 @@ async function projectWithEverything(): Promise<string> {
 /** A cache holding a bundle that cannot verify (a placeholder signature), so loading it exercises verification too. */
 async function cacheWithUnverifiableBundle(): Promise<string> {
   const root = await scratch("registry");
-  await cp(resolve("registry"), join(root, "registry"), { recursive: true });
+  await cp(resolve("node_modules/@velella/ebb/registry"), join(root, "registry"), { recursive: true });
   await writeFile(join(root, "package.json"), await readFile(resolve("package.json"), "utf8"));
-  const bundle = await buildDataBundle({ root, createdAt: "2999-01-01T00:00:00Z", minimumEvergreenVersion: "0.1.0" });
+  const bundle = await buildDataBundle({ root, createdAt: "2999-01-01T00:00:00Z", minimumEbbVersion: "0.1.0" });
   const cache = await scratch("cache");
   await mkdir(cachedBundleDirectory(cache, "2999.01.01"), { recursive: true });
   await writeFile(join(cachedBundleDirectory(cache, "2999.01.01"), BUNDLE_FILE), serializeDataBundle(bundle));
@@ -221,7 +220,13 @@ globalThis.fetch = function (input, ...rest) { record("fetch " + input); return 
     await writeFile(log, "");
     try {
       await execute(process.execPath, [resolve("dist/src/cli.js"), ...args], {
-        env: { ...process.env, EVERGREEN_DATA_DIR: cache, NODE_OPTIONS: `--require ${preload}`, ...extra },
+        env: {
+          ...process.env,
+          EVERGREEN_DATA_DIR: cache,
+          EBB_DATA_DIR: cache,
+          NODE_OPTIONS: `--require ${preload}`,
+          ...extra,
+        },
       });
     } catch {
       // Exit codes do not matter here; only what the process tried to reach does.
@@ -233,7 +238,7 @@ globalThis.fetch = function (input, ...rest) { record("fetch " + input); return 
     JSON.parse(
       (
         await execute(process.execPath, [resolve("dist/src/cli.js"), "scan", project, "--json"], {
-          env: { ...process.env, EVERGREEN_DATA_DIR: cache },
+          env: { ...process.env, EVERGREEN_DATA_DIR: cache, EBB_DATA_DIR: cache },
         }).catch((error: { stdout: string }) => error)
       ).stdout,
     ) as { findings: Array<{ id: string }> }
@@ -252,7 +257,7 @@ globalThis.fetch = function (input, ...rest) { record("fetch " + input); return 
   ])
     assert.deepEqual(await run(args), [], `evergreen ${args[0]} reached the network`);
 
-  const update = await run(["data", "update"], { EVERGREEN_DATA_URL: "http://127.0.0.1:9/releases" });
+  const update = await run(["data", "update"], { EBB_DATA_URL: "http://127.0.0.1:9/releases" });
   assert.ok(
     update.some((entry) => entry.startsWith("fetch ") || entry.startsWith("connect ")),
     `data update is the one command that uses the network: ${update.join(", ")}`,

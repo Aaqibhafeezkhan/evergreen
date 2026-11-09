@@ -10,8 +10,8 @@ import {
   registryV2Issues,
   staleRules,
   validateRegistryV2,
-} from "../src/registry.js";
-import type { RegistryV2 } from "../src/registry.js";
+} from "@velella/ebb/registry";
+import type { RegistryV2 } from "@velella/ebb/registry";
 import { RegistryValidationError } from "../src/sdk.js";
 
 async function example(): Promise<RegistryV2> {
@@ -25,9 +25,11 @@ test("accepts the v2 registry example", async () => {
 });
 
 test("every bundled v2 registry validates", async () => {
-  for (const name of await readdir(resolve("registry"))) {
-    const registry = JSON.parse(await readFile(resolve("registry", name), "utf8")) as { schemaVersion?: string };
-    if (registry.schemaVersion !== "evergreen.registry.v2") continue;
+  for (const name of await readdir(resolve("node_modules/@velella/ebb/registry"))) {
+    const registry = JSON.parse(await readFile(resolve("node_modules/@velella/ebb/registry", name), "utf8")) as {
+      schemaVersion?: string;
+    };
+    if (registry.schemaVersion !== "ebb.registry.v2") continue;
     assert.deepEqual(registryV2Issues(registry), [], name);
   }
 });
@@ -269,7 +271,7 @@ const invalidCases: [name: string, mutate: (registry: any) => void, expected: Re
     (r) => {
       r.schemaVersion = "evergreen.npm-registry.v1";
     },
-    /schemaVersion must be "evergreen\.registry\.v2"/,
+    /schemaVersion must be "ebb\.registry\.v2"/,
   ],
   [
     "zero freshness window",
@@ -296,7 +298,9 @@ const invalidCases: [name: string, mutate: (registry: any) => void, expected: Re
 
 test("rejects invalid rules with errors that name the rule and field", async (t) => {
   const ajv = new Ajv2020({ allErrors: true });
-  const validateSchema = ajv.compile(JSON.parse(await readFile(resolve("schemas/registry.v2.schema.json"), "utf8")));
+  const validateSchema = ajv.compile(
+    JSON.parse(await readFile(resolve("node_modules/@velella/ebb/schemas/registry.v2.schema.json"), "utf8")),
+  );
   const base = await example();
   for (const [name, mutate, expected] of invalidCases) {
     await t.test(name, () => {

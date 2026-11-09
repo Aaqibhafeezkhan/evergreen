@@ -20,7 +20,6 @@ export const EVAL_INPUTS: readonly string[] = [
   "skills",
   "plugins",
   "src",
-  "registry",
   "schemas",
   "package.json",
   "package-lock.json",

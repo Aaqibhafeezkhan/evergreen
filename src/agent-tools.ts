@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 
 import { findingFingerprint } from "./baseline.js";
-import { bundledRules } from "./check-dependency.js";
+import { bundledRules } from "@velella/ebb/bundled-rules";
 import type { DataInfo, Finding, ScanResult, Severity, SourceLocation, VerificationCommand } from "./domain.js";
 import { createMigrationPacket } from "./migration-packet.js";
 import type { Receipt } from "./receipt.js";

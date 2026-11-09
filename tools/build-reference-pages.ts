@@ -16,8 +16,8 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { getCapabilityManifest } from "../src/capabilities.js";
-import { DEFAULT_MAX_REVIEW_AGE_DAYS, REGISTRY_V2_SCHEMA_VERSION, validateRegistryV2 } from "../src/registry.js";
-import type { RegistryV2, RegistryV2Rule } from "../src/registry.js";
+import { DEFAULT_MAX_REVIEW_AGE_DAYS, REGISTRY_V2_SCHEMA_VERSION, validateRegistryV2 } from "@velella/ebb/registry";
+import type { RegistryV2, RegistryV2Rule } from "@velella/ebb/registry";
 import { toRuleDocument } from "../src/rule-resources.js";
 import { answerIndexUrl, answerPageEntries } from "./build-answer-pages.js";
 
@@ -61,7 +61,7 @@ const ruleDataPath = (id: string) => `/rules/${id}.json`;
 const rulePagePath = (id: string) => `/rules/${id}.html`;
 const dataUrl = (ecosystem: string) => `${REPOSITORY_URL}/blob/main/registry/${ecosystem}.json`;
 
-/** A rule as an `evergreen.rule.v1` document: the same facts the page renders, for agents that read JSON. */
+/** A rule as an `ebb.rule.v1` document: the same facts the page renders, for agents that read JSON. */
 export function renderRuleData(rule: RegistryV2Rule): string {
   return `${JSON.stringify(toRuleDocument(rule), null, 2)}\n`;
 }
@@ -856,7 +856,7 @@ export function renderSitemap(registries: readonly RegistryV2[]): string {
 }
 
 /** The v2 registries in `registry/`, in ecosystem order. Other JSON files there are not rule registries. */
-export async function loadRegistries(directory = "registry"): Promise<RegistryV2[]> {
+export async function loadRegistries(directory = "node_modules/@velella/ebb/registry"): Promise<RegistryV2[]> {
   const registries: RegistryV2[] = [];
   for (const name of (await readdir(directory)).filter((file) => file.endsWith(".json")).sort()) {
     const value = JSON.parse(await readFile(join(directory, name), "utf8")) as { schemaVersion?: string };

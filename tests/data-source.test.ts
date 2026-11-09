@@ -4,9 +4,10 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { after, afterEach, test } from "node:test";
 
-import { buildDataBundle, canonicalJson, serializeDataBundle } from "../src/data-bundle.js";
-import type { DataBundle } from "../src/data-bundle.js";
-import { DataSignatureError } from "../src/data-signature.js";
+import { VERSION } from "@velella/ebb/version";
+import { buildDataBundle, canonicalJson, serializeDataBundle } from "@velella/ebb/data-bundle";
+import type { DataBundle } from "@velella/ebb/data-bundle";
+import { DataSignatureError } from "@velella/ebb/data-signature";
 import {
   ACTIVE_FILE,
   BUNDLE_FILE,
@@ -16,15 +17,15 @@ import {
   resolveActiveData,
   SIGNATURE_FILE,
   verifyDataBundle,
-} from "../src/data-source.js";
-import type { DataSourceOptions } from "../src/data-source.js";
+} from "@velella/ebb/data-source";
+import type { DataSourceOptions } from "@velella/ebb/data-source";
 import { builtInDetectors } from "../src/detectors/index.js";
 import { scanRepository } from "../src/engine/index.js";
 import { checkDependency } from "../src/check-dependency.js";
 
 const roots: string[] = [];
 const signer = {
-  identity: "https://github.com/arminazimi/evergreen/.github/workflows/data-release.yml@refs/tags/data-v2999.01.01",
+  identity: "https://github.com/velella-sh/ebb/.github/workflows/data-release.yml@refs/tags/data-v2999.01.01",
   issuer: "https://token.actions.githubusercontent.com",
 };
 const accepting = { verifySignature: () => signer };
@@ -46,7 +47,7 @@ async function registryRoot(
   mutate: (npm: { rules: Array<Record<string, unknown>> }) => void = () => undefined,
 ): Promise<string> {
   const root = await scratch("registry");
-  await cp(resolve("registry"), join(root, "registry"), { recursive: true });
+  await cp(resolve("node_modules/@velella/ebb/registry"), join(root, "registry"), { recursive: true });
   await writeFile(join(root, "package.json"), await readFile(resolve("package.json"), "utf8"));
   const npm = JSON.parse(await readFile(join(root, "registry/npm.json"), "utf8")) as {
     rules: Array<Record<string, unknown>>;
@@ -85,7 +86,7 @@ async function cacheWith(bundle: DataBundle, options: { version?: string; bytes?
 }
 
 const newerBundle = async (mutate?: Parameters<typeof registryRoot>[0]) =>
-  buildDataBundle({ root: await registryRoot(mutate), createdAt: NEWER, minimumEvergreenVersion: "0.1.0" });
+  buildDataBundle({ root: await registryRoot(mutate), createdAt: NEWER, minimumEbbVersion: VERSION });
 
 const resolveWith = (cache: Cache | string, extra: DataSourceOptions = {}) =>
   resolveActiveData({ cacheDirectory: typeof cache === "string" ? cache : cache.directory, ...accepting, ...extra });
@@ -144,7 +145,7 @@ test("a tampered download fails closed: bundled data is used and the scan says s
   assert.equal(data.info.source, "bundled");
   assert.match(
     data.info.warnings[0]!,
-    /Ignoring downloaded lifecycle data 2999\.01\.01: registry\/npm\.json does not match its digest\. Using the data bundled with Evergreen/,
+    /Ignoring downloaded lifecycle data 2999\.01\.01: registry\/npm\.json does not match its digest\. Using the data bundled with Ebb/,
   );
   assert.ok(
     !((await data.read("registry/npm.json")) as { rules: Array<{ id: string }> }).rules.some(
@@ -189,16 +190,16 @@ test("everything after the signature is checked too", async () => {
     [
       "a newer format",
       (bundle) => {
-        (bundle.manifest as unknown as Record<string, unknown>).schemaVersion = "evergreen.data-bundle.v2";
+        (bundle.manifest as unknown as Record<string, unknown>).schemaVersion = "ebb.data-bundle.v2";
       },
       /Unsupported bundle format/,
     ],
     [
-      "a bundle that needs a newer Evergreen",
+      "a bundle that needs a newer Ebb",
       (bundle) => {
-        bundle.manifest.minimumEvergreenVersion = "99.0.0";
+        bundle.manifest.minimumEbbVersion = "99.0.0";
       },
-      /needs Evergreen 99\.0\.0 or newer/,
+      /needs Ebb 99\.0\.0 or newer/,
     ],
     [
       "an incomplete bundle",
@@ -242,13 +243,13 @@ test("everything after the signature is checked too", async () => {
 test("downloaded data that is not newer than the bundled data is not used", async () => {
   const bundled = await resolveWith(await scratch("none"));
   const sameDay = await buildDataBundle({
-    root: resolve("."),
+    root: resolve("node_modules/@velella/ebb"),
     createdAt: `${bundled.info.reviewedThrough}T12:00:00Z`,
-    minimumEvergreenVersion: "0.1.0",
+    minimumEbbVersion: VERSION,
   });
   const data = await resolveWith(await cacheWith(sameDay));
   assert.equal(data.info.source, "bundled");
-  assert.match(data.info.warnings[0]!, /is not newer than the data bundled with Evergreen/);
+  assert.match(data.info.warnings[0]!, /is not newer than the data bundled with Ebb/);
 });
 
 test("missing or damaged cache bookkeeping is reported and bundled data is used", async () => {
@@ -294,12 +295,12 @@ test("a bundle verifies only with a good signature, and the bytes that were sign
 });
 
 test("the cache directory follows the platform's conventions", () => {
-  assert.equal(defaultCacheDirectory({ EVERGREEN_DATA_DIR: "/custom" }, "linux", "/home/me"), "/custom");
-  assert.equal(defaultCacheDirectory({}, "darwin", "/Users/me"), join("/Users/me", "Library", "Caches", "evergreen"));
-  assert.equal(defaultCacheDirectory({}, "linux", "/home/me"), join("/home/me", ".cache", "evergreen"));
-  assert.equal(defaultCacheDirectory({ XDG_CACHE_HOME: "/xdg" }, "linux", "/home/me"), join("/xdg", "evergreen"));
+  assert.equal(defaultCacheDirectory({ EBB_DATA_DIR: "/custom" }, "linux", "/home/me"), "/custom");
+  assert.equal(defaultCacheDirectory({}, "darwin", "/Users/me"), join("/Users/me", "Library", "Caches", "ebb"));
+  assert.equal(defaultCacheDirectory({}, "linux", "/home/me"), join("/home/me", ".cache", "ebb"));
+  assert.equal(defaultCacheDirectory({ XDG_CACHE_HOME: "/xdg" }, "linux", "/home/me"), join("/xdg", "ebb"));
   assert.equal(
     defaultCacheDirectory({ LOCALAPPDATA: "C:\\Users\\me\\AppData\\Local" }, "win32", "C:\\Users\\me"),
-    join("C:\\Users\\me\\AppData\\Local", "evergreen", "Cache"),
+    join("C:\\Users\\me\\AppData\\Local", "ebb", "Cache"),
   );
 });

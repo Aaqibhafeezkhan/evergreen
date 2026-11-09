@@ -2,7 +2,7 @@ import { completable, McpServer, ResourceNotFoundError, ResourceTemplate } from 
 import * as z from "zod/v4";
 
 import { EvergreenAgentTools } from "./agent-tools.js";
-import { bundledRules } from "./check-dependency.js";
+import { bundledRules } from "@velella/ebb/bundled-rules";
 import { registerMcpTools } from "./mcp/registry.js";
 import { MIGRATE_FINDING_PROMPT, renderMigrationPrompt } from "./migration-prompt.js";
 import { ruleUri, RULE_URI_PREFIX, toRuleDocument } from "./rule-resources.js";
@@ -35,7 +35,7 @@ function registerRuleResource(server: McpServer): void {
     {
       title: "Lifecycle rule",
       description:
-        "One evidence-backed lifecycle rule as an evergreen.rule.v1 document: what is affected, the event, severity, replacement, deadline, sources, review provenance, and migration guidance. Reading a rule scans nothing.",
+        "One evidence-backed lifecycle rule as an ebb.rule.v1 document: what is affected, the event, severity, replacement, deadline, sources, review provenance, and migration guidance. Reading a rule scans nothing.",
       mimeType: "application/json",
     },
     async (uri, variables) => {

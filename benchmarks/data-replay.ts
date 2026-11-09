@@ -20,10 +20,10 @@ import {
   computeContentDigest,
   serializeDataBundle,
   sha256Hex,
-} from "../src/data-bundle.js";
-import { BUNDLE_FILE, configureActiveData, SIGNATURE_FILE } from "../src/data-source.js";
+} from "@velella/ebb/data-bundle";
+import { BUNDLE_FILE, configureActiveData, SIGNATURE_FILE } from "@velella/ebb/data-source";
 import { scanRepository } from "../src/engine/index.js";
-import { VERSION } from "../src/version.js";
+import { VERSION } from "@velella/ebb/version";
 import { ensureCorpusCacheEntry, resolveCorpusCacheDir } from "./corpus-cache.js";
 import { inBatches, resolveCorpusConcurrency } from "./corpus-harness.js";
 import { fetchWith, isCheckoutUsable, resolveFetchStrategy } from "./corpus-fetch.js";
@@ -195,23 +195,35 @@ const utc = async (revision: string): Promise<string> =>
 
 const isRegistryOrShaMap = (value: unknown): boolean => {
   const version = (value as { schemaVersion?: unknown } | null)?.schemaVersion;
-  return typeof version === "string" && (version === "evergreen.registry.v2" || /sha/i.test(version));
+  return (
+    typeof version === "string" &&
+    (version === "ebb.registry.v2" || version === "evergreen.registry.v2" || /sha/i.test(version))
+  );
+};
+
+/** Releases made before Ebb had its own name carry `evergreen.*` schema versions for the same formats. */
+const renamedSchema = (value: unknown): unknown => {
+  const record = value as { schemaVersion?: unknown };
+  return typeof record.schemaVersion === "string" && record.schemaVersion.startsWith("evergreen.")
+    ? { ...record, schemaVersion: record.schemaVersion.replace(/^evergreen\./, "ebb.") }
+    : value;
 };
 
 /** A registry with no rules, standing in for a file a release did not have yet (its rules then count as added). */
 const emptyFile = (path: string): unknown =>
   path === SHA_MAP_PATH
-    ? { schemaVersion: "evergreen.github-actions-shas.v1", actions: {} }
-    : { schemaVersion: "evergreen.registry.v2", ecosystem: path.replace(/^registry\/|\.json$/g, ""), rules: [] };
+    ? { schemaVersion: "ebb.github-actions-shas.v1", actions: {} }
+    : { schemaVersion: "ebb.registry.v2", ecosystem: path.replace(/^registry\/|\.json$/g, ""), rules: [] };
 
 /**
  * Brings a release published before a stricter registry schema up to what the current loader accepts, without
- * touching anything a scan reads: a source with no `accessedAt` gets the rule's `observedAt`, and a file the
- * release lacked becomes an empty registry. Without this the oldest releases could not be replayed at all.
+ * touching anything a scan reads: an `evergreen.*` schema version becomes its `ebb.*` name, a source with no
+ * `accessedAt` gets the rule's `observedAt`, and a file the release lacked becomes an empty registry. Without this the oldest releases could not be replayed at all.
  */
 function normalizeRelease(files: ReleaseFiles): ReleaseFiles {
   const result: ReleaseFiles = {};
-  for (const [path, value] of Object.entries(files)) {
+  for (const [path, original] of Object.entries(files)) {
+    const value = renamedSchema(original);
     const registry = value as { rules?: Array<Record<string, any>> };
     result[path] = Array.isArray(registry.rules)
       ? {
@@ -237,17 +249,24 @@ function normalizeRelease(files: ReleaseFiles): ReleaseFiles {
 /** Reads every data file as it was at `revision`. */
 async function releaseAt(label: string, revision: string): Promise<Release> {
   const files: ReleaseFiles = {};
-  for (const path of (await git("ls-tree", "--name-only", revision, "registry/")).split("\n").filter(isDataFile)) {
-    const value = JSON.parse(await git("show", `${revision}:${path}`)) as unknown;
-    if (isRegistryOrShaMap(value)) files[path] = value;
+  // Data releases before Ebb was split out kept the registry at the repository root.
+  for (const prefix of ["", "packages/ebb/"]) {
+    const listed = (await git("ls-tree", "--name-only", revision, `${prefix}registry/`)).split("\n").filter(Boolean);
+    for (const path of listed.map((entry) => entry.slice(prefix.length)).filter(isDataFile)) {
+      const value = JSON.parse(await git("show", `${revision}:${prefix}${path}`)) as unknown;
+      if (isRegistryOrShaMap(value)) files[path] = value;
+    }
   }
   return { label, createdAt: await utc(revision), files: normalizeRelease(files) };
 }
 
 async function workingTreeRelease(): Promise<Release> {
   const files: ReleaseFiles = {};
-  for (const name of (await readdir(resolve("registry"))).map((entry) => `registry/${entry}`).filter(isDataFile)) {
-    const value = JSON.parse(await readFile(resolve(name), "utf8")) as unknown;
+  // The working tree's data is the installed @velella/ebb.
+  for (const name of (await readdir(resolve("node_modules/@velella/ebb/registry")))
+    .map((entry) => `registry/${entry}`)
+    .filter(isDataFile)) {
+    const value = JSON.parse(await readFile(resolve("node_modules/@velella/ebb", name), "utf8")) as unknown;
     if (isRegistryOrShaMap(value)) files[name] = value;
   }
   return { label: "working-tree", createdAt: await utc("HEAD"), files: normalizeRelease(files) };
@@ -276,7 +295,7 @@ async function installRelease(cache: string, release: Release, revision: number)
       root,
       createdAt: release.createdAt,
       revision,
-      minimumEvergreenVersion: VERSION,
+      minimumEbbVersion: VERSION,
     });
     for (const [path, value] of Object.entries(release.files)) {
       if (path in bundle.files || path === SHA_MAP_PATH) continue;

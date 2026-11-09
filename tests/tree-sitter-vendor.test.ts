@@ -120,6 +120,9 @@ test("an installed package scans source usage offline from the base64 payloads",
     join(packageDirectory, "package.json"),
     JSON.stringify({ name: "evergreen-deprecation", version: "0.0.0", type: "module" }),
   );
+  // Evergreen depends on Ebb, which an install puts beside it.
+  const ebbDirectory = join(root, "node_modules", "@velella", "ebb");
+  await cp(resolve("node_modules/@velella/ebb"), ebbDirectory, { recursive: true, dereference: true });
 
   // An installed package ships the base64 payloads only; drop any stale build output before importing.
   const vendor = join(packageDirectory, "dist", "src", "usage", "vendor", "tree-sitter");

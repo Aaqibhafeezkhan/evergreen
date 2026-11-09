@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 import { test } from "node:test";
 
 import { bundledEvents, convertRegistryV1 } from "../tools/registry-v1-to-v2.js";
-import { legacyRule, registryV2Issues } from "../src/registry.js";
+import { legacyRule, registryV2Issues } from "@velella/ebb/registry";
 
 const run = promisify(execFile);
 const options = { observedAt: "2026-10-13", reviewedAt: "2026-10-14", reviewer: "arminazimi" };
@@ -116,7 +116,7 @@ test("refuses input it cannot convert faithfully", () => {
     () => convertRegistryV1(registry([{ ...base, id: "npm.package.request.deprecated" }]), options),
     /needs package/,
   );
-  assert.throws(() => convertRegistryV1(registry([], "evergreen.registry.v2"), options), /Not a v1 registry/);
+  assert.throws(() => convertRegistryV1(registry([], "ebb.registry.v2"), options), /Not a v1 registry/);
   assert.throws(() => convertRegistryV1(registry([], "evergreen.cobol-registry.v1"), options), /No v1 → v2 mapping/);
   assert.throws(() => convertRegistryV1({}, options), /v1 registry object/);
   assert.throws(
@@ -175,7 +175,7 @@ test("runs from the command line", async () => {
 
     const output = join(directory, "out.json");
     await run(process.execPath, [script, input, ...flags, "--out", output]);
-    assert.equal(JSON.parse(await readFile(output, "utf8")).schemaVersion, "evergreen.registry.v2");
+    assert.equal(JSON.parse(await readFile(output, "utf8")).schemaVersion, "ebb.registry.v2");
 
     await assert.rejects(run(process.execPath, [script, input]), /--observed-at is required/);
   } finally {

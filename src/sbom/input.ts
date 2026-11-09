@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 
 import { checkDependency } from "../check-dependency.js";
 import type { DependencyCheck } from "../check-dependency.js";
-import { parsePurl } from "../purl.js";
+import { parsePurl } from "@velella/ebb/purl";
 import { required } from "../required.js";
 import { CycloneDxError } from "./cyclonedx.js";
 import { EvergreenError } from "../evergreen-error.js";
